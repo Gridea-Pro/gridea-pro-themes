@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Gridea Pro 应用本身的问题
+    url: https://github.com/Gridea-Pro/gridea-pro/issues/new/choose
+    about: 如果是应用崩溃、发布失败、编辑器问题等，请到主仓库反馈
+  - name: 想直接交流
+    url: https://github.com/Gridea-Pro/gridea-pro-themes/discussions
+    about: 不是 bug、也不是需求，就想聊聊 → 去 Discussions

@@ -1,0 +1,35 @@
+name: 🎨 求主题 / 点单
+description: 想要某种风格的主题，但画廊里还没有
+title: "[request] 想要一个 xxx 风格的主题"
+labels: ["request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        帮你把需求描述清楚，愿意接单的作者就能看得更明白。
+
+  - type: textarea
+    id: vibe
+    attributes:
+      label: 想要什么风格？
+      description: 可以贴灵感图、参考站点、形容词都行
+      placeholder: |
+        例如：类似 Medium 那种偏阅读的风格，字体大、行距宽、偏暖色调
+    validations:
+      required: true
+
+  - type: textarea
+    id: features
+    attributes:
+      label: 希望有哪些特性？
+      description: 可选
+      placeholder: |
+        - [ ] 双栏布局
+        - [ ] 支持暗色模式
+        - [ ] 首页有作者简介区
+
+  - type: textarea
+    id: references
+    attributes:
+      label: 参考链接 / 图片
+      description: 贴链接或拖图片都可以

@@ -1,0 +1,12 @@
+name: 💬 讨论 / 其它
+description: 不是 bug 也不是需求，想讨论一下某个话题
+title: "[discuss] "
+labels: ["discussion"]
+body:
+  - type: textarea
+    id: content
+    attributes:
+      label: 想聊什么？
+      description: 随便写，主题生态的任何事都欢迎
+    validations:
+      required: true

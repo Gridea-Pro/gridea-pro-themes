@@ -1,0 +1,146 @@
+name: Validate Themes
+
+on:
+  pull_request:
+    paths:
+      - 'themes/**'
+  push:
+    branches: [main]
+    paths:
+      - 'themes/**'
+
+jobs:
+  validate:
+    name: Validate changed themes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Find changed theme directories
+        id: changed
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            BASE="${{ github.event.pull_request.base.sha }}"
+            HEAD="${{ github.event.pull_request.head.sha }}"
+          else
+            BASE="${{ github.event.before }}"
+            HEAD="${{ github.sha }}"
+          fi
+
+          # 找出所有在 themes/ 下有改动的一级子目录
+          CHANGED=$(git diff --name-only "$BASE" "$HEAD" -- 'themes/' \
+            | awk -F/ 'NF>=2 && $1=="themes" {print $2}' \
+            | sort -u)
+
+          if [ -z "$CHANGED" ]; then
+            echo "没有检测到 themes/ 下的改动"
+            echo "dirs=" >> "$GITHUB_OUTPUT"
+          else
+            echo "检测到以下主题有改动:"
+            echo "$CHANGED"
+            # 用换行分隔转成空格分隔
+            echo "dirs=$(echo "$CHANGED" | tr '\n' ' ')" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Validate each theme
+        if: steps.changed.outputs.dirs != ''
+        run: |
+          set -e
+          FAIL=0
+          for dir in ${{ steps.changed.outputs.dirs }}; do
+            THEME_DIR="themes/$dir"
+            echo ""
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "🔍 校验主题: $dir"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+            # 如果主题目录被整体删除，跳过（下架场景）
+            if [ ! -d "$THEME_DIR" ]; then
+              echo "  ℹ️  目录已删除，跳过校验"
+              continue
+            fi
+
+            # 目录命名：kebab-case
+            if ! echo "$dir" | grep -qE '^[a-z0-9][a-z0-9-]{0,29}$'; then
+              echo "  ❌ 目录名不合规（应为 kebab-case，小写字母/数字/连字符，不超过 30 字符）"
+              FAIL=1
+              continue
+            fi
+
+            # config.json
+            if [ ! -f "$THEME_DIR/config.json" ]; then
+              echo "  ❌ 缺少 config.json"
+              FAIL=1
+            else
+              if ! jq empty "$THEME_DIR/config.json" 2>/dev/null; then
+                echo "  ❌ config.json 不是合法 JSON"
+                FAIL=1
+              else
+                # 必需字段
+                for field in name version author description engine templateEngine; do
+                  if ! jq -e "has(\"$field\")" "$THEME_DIR/config.json" >/dev/null; then
+                    echo "  ❌ config.json 缺少必需字段: $field"
+                    FAIL=1
+                  fi
+                done
+                # name 和目录名一致
+                NAME=$(jq -r '.name' "$THEME_DIR/config.json")
+                if [ "$NAME" != "$dir" ]; then
+                  echo "  ❌ config.json 中 name=\"$NAME\"，但目录名是 \"$dir\"，两者需要一致"
+                  FAIL=1
+                fi
+                # engine 白名单
+                ENGINE=$(jq -r '.engine' "$THEME_DIR/config.json")
+                case "$ENGINE" in
+                  jinja2|pongo2|ejs|go-template) ;;
+                  *)
+                    echo "  ⚠️  engine=\"$ENGINE\" 不在推荐值内（jinja2/pongo2/ejs/go-template）"
+                    ;;
+                esac
+              fi
+            fi
+
+            # preview.png
+            if [ ! -f "$THEME_DIR/preview.png" ]; then
+              echo "  ❌ 缺少 preview.png"
+              FAIL=1
+            else
+              SIZE=$(stat -c%s "$THEME_DIR/preview.png" 2>/dev/null || stat -f%z "$THEME_DIR/preview.png")
+              if [ "$SIZE" -gt 512000 ]; then
+                echo "  ⚠️  preview.png 超过 500KB（当前 ${SIZE} 字节），建议压缩"
+              fi
+            fi
+
+            # README
+            if [ ! -f "$THEME_DIR/README.md" ]; then
+              echo "  ❌ 缺少 README.md"
+              FAIL=1
+            fi
+
+            # templates/
+            if [ ! -d "$THEME_DIR/templates" ]; then
+              echo "  ❌ 缺少 templates/ 目录"
+              FAIL=1
+            fi
+
+            if [ $FAIL -eq 0 ]; then
+              echo "  ✅ 通过"
+            fi
+          done
+
+          if [ $FAIL -ne 0 ]; then
+            echo ""
+            echo "═════════════════════════════════════════"
+            echo "❌ 校验失败，请根据上方提示修改"
+            echo "   详细规范: docs/theme-spec.md"
+            echo "═════════════════════════════════════════"
+            exit 1
+          fi
+
+          echo ""
+          echo "═════════════════════════════════════════"
+          echo "✅ 所有主题校验通过"
+          echo "═════════════════════════════════════════"

@@ -1,0 +1,76 @@
+name: 🐛 主题 Bug
+description: 某个主题渲染异常、样式错位、报错
+title: "[bug] <主题名>: 简短描述"
+labels: ["bug", "theme"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢反馈！请尽量提供信息，方便我们和主题作者定位问题。
+        > **应用本身**的 bug（崩溃、发布失败、编辑器问题等）请到[主仓库](https://github.com/Gridea-Pro/gridea-pro/issues)反馈。
+
+  - type: input
+    id: theme
+    attributes:
+      label: 主题名
+      description: 哪个主题？（填 `themes/` 下的目录名）
+      placeholder: e.g. flavor
+    validations:
+      required: true
+
+  - type: input
+    id: theme-version
+    attributes:
+      label: 主题版本
+      description: 看主题 `config.json` 里的 `version` 字段
+      placeholder: e.g. 1.0.0
+    validations:
+      required: true
+
+  - type: input
+    id: app-version
+    attributes:
+      label: Gridea Pro 版本
+      description: 在应用「关于」页查看
+      placeholder: e.g. 0.4.2
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: 操作系统
+      options:
+        - macOS
+        - Windows
+        - Linux
+        - 其它
+    validations:
+      required: true
+
+  - type: textarea
+    id: describe
+    attributes:
+      label: 问题描述
+      description: 发生了什么？
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: false
+
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: 截图 / 录屏
+      description: 直接把图片拖到下面的输入框里即可
+    validations:
+      required: false
