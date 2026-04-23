@@ -8,27 +8,28 @@
 
 ```
 themes/<theme-name>/
-├── config.json               ✅ 必需 · 主题元信息 + 自定义参数
-├── preview.png               ✅ 必需 · 画廊展示图（1200×800，< 500KB）
-├── README.md                 ✅ 必需 · 主题自己的说明
-├── templates/                ✅ 必需 · 模板文件目录
-│   ├── index.html
-│   ├── post.html
-│   ├── tag.html
-│   ├── category.html
-│   ├── archives.html
-│   ├── 404.html
-│   └── includes/             · 模板片段（可选）
-├── assets/                   💡 推荐 · 静态资源
-│   ├── styles/
-│   ├── scripts/
-│   └── media/
-├── LICENSE                   💡 推荐 · 作者自选授权（未放默认 MIT）
-├── CHANGELOG.md              💡 可选 · 版本变更记录
-└── <theme-name>-preview.html 💡 可选 · 本地开发预览页
+├── config.json                     ✅ 必需 · 主题元信息 + 自定义参数
+├── README.md                       ✅ 必需 · 主题自己的说明
+├── templates/                      ✅ 必需 · 模板文件目录
+│   ├── index.*         (ejs / html)
+│   ├── post.*
+│   ├── tag.*
+│   ├── category.*
+│   ├── archives.*
+│   ├── 404.*
+│   └── includes/                   · 模板片段（可选）
+├── assets/                         ✅ 静态资源
+│   ├── media/
+│   │   └── preview.png             ✅ 必需 · 画廊与应用内预览图
+│   ├── styles/                     💡 推荐
+│   ├── scripts/                    💡 推荐
+│   └── media/                      💡 图片等其它媒体
+├── LICENSE                         💡 推荐 · 作者自选授权（未放默认 MIT）
+├── CHANGELOG.md                    💡 可选 · 版本变更记录
+└── <theme-name>-preview.html       💡 可选 · 本地开发预览页
 ```
 
-> 目录名约束：`kebab-case`，小写字母/数字/连字符，首字符必须是字母或数字，不超过 30 字符。正则 `^[a-z0-9][a-z0-9-]{0,29}$`。
+> 目录名约束：`kebab-case`，小写字母 / 数字 / 连字符，首字符必须是字母或数字，不超过 30 字符。正则 `^[a-z0-9][a-z0-9-]{0,29}$`。
 
 ---
 
@@ -38,24 +39,25 @@ themes/<theme-name>/
 
 | 字段 | 类型 | 必需 | 说明 |
 |---|---|---|---|
-| `name` | string | ✅ | 主题名，必须与目录名一致 |
+| `name` | string | ✅ | 主题展示名（可以是 `My Theme`、中文名等，**无需**与目录名一致） |
 | `version` | string | ✅ | 语义化版本，如 `1.0.0` |
 | `author` | string | ✅ | 作者名或 GitHub 用户名 |
 | `description` | string | ✅ | 一句话描述。中英文皆可，建议不超过 100 字符 |
 | `engine` | string | ✅ | 模板引擎，见下方「引擎白名单」 |
-| `templateEngine` | string | ✅ | 通常与 `engine` 相同，保留给将来不同层分别指定的可能 |
+| `templateEngine` | string | ✅ | 通常与 `engine` 相同，保留给将来分层指定的可能 |
 | `customConfig` | array | ✅ | 自定义参数列表，可为 `[]`，见下方「customConfig 项」 |
+
+> **关于 `name` 与目录名**：目录名是 Gridea Pro 应用加载主题的 ID，必须合规（kebab-case）；`name` 是展示名，允许空格、大小写、中文。两者无需一致（例如目录名 `amore-jinja2`，`name` 可以写 `Amore Jinja2`）。
 
 ### 引擎白名单
 
-| 值 | 语法 |
-|---|---|
-| `jinja2` | Jinja2（Python 风格） |
-| `pongo2` | Pongo2（Go 的 Jinja2 实现） |
-| `ejs` | EJS |
-| `go-template` | Go `html/template` |
+| `engine` 值 | 别名 | 模板后缀 |
+|---|---|---|
+| `jinja2` | `jinja`、`j2` | `.html` |
+| `ejs` | —— | `.ejs` |
+| `go` | `gotemplate`、`gotemplates` | `.html` |
 
-> 不在白名单内的 `engine` 值，CI 会给警告但不阻塞合并。
+> 不在白名单内的值 CI 会报警告但不阻塞。应用本身只认白名单内的字符串。
 
 ### `customConfig` 项
 
@@ -76,7 +78,7 @@ themes/<theme-name>/
 |---|---|---|
 | `name` | ✅ | 参数标识，英文，在模板里用这个名字读取 |
 | `label` | ✅ | 界面显示名 |
-| `group` | | 分组，相同 `group` 的控件会聚合到同一分组下 |
+| `group` | | 分组，相同 `group` 的控件会聚合到同一分组 |
 | `type` | ✅ | 控件类型，见下表 |
 | `value` | ✅ | 默认值（首次使用时填入） |
 | `note` | | 控件下方的辅助说明 |
@@ -107,7 +109,7 @@ themes/<theme-name>/
 
 ```json
 {
-  "name": "minimal-dark",
+  "name": "Minimal Dark",
   "version": "1.0.0",
   "author": "alice",
   "description": "A minimal dark theme focused on reading experience.",
@@ -145,14 +147,15 @@ themes/<theme-name>/
 
 ---
 
-## `preview.png` 规范
+## 预览图规范
 
-- **尺寸**：1200×800（3:2）
-- **格式**：PNG
+- **路径**：`themes/<theme-name>/assets/media/preview.<ext>`
+- **扩展名**：`.png` / `.jpg` / `.jpeg` / `.webp`（按此顺序优先查找）
+- **推荐尺寸**：1200×800（3:2）
 - **大小**：< 500KB（建议用 [TinyPNG](https://tinypng.com) 压缩）
 - **内容**：真实的主题首页截图，能一眼看出风格
 
-> 画廊会直接引用 `preview.png`，放错尺寸或过大会影响整体观感。
+> **一处放、两处用**：Gridea Pro 应用内「主题选择器」和本仓库的主题画廊都从这个路径读取。作者只需要维护这一份。
 
 ---
 
@@ -161,7 +164,7 @@ themes/<theme-name>/
 推荐在主题目录内放一个 `LICENSE` 文件：
 
 ```
-themes/minimal-dark/LICENSE
+themes/<theme-name>/LICENSE
 ```
 
 未放时默认视为 **MIT**。更多说明见 [CONTRIBUTING.md — 关于授权](../CONTRIBUTING.md#关于授权)。
@@ -172,15 +175,15 @@ themes/minimal-dark/LICENSE
 
 自动校验**只检查**：
 
-- 目录名是否合规
-- 必需文件是否齐全
+- 目录名是否合规（kebab-case）
+- 必需文件是否齐全（`config.json` / `README.md` / `templates/` / `assets/media/preview.*`）
 - `config.json` 是否为合法 JSON
-- `config.json` 是否包含必需顶层字段
-- `config.json` 的 `name` 是否与目录名一致
-- `preview.png` 是否存在且不过大
+- `config.json` 是否包含必需顶层字段且非空
+- `engine` 是否在白名单内（不在只警告）
 
 **不会检查**：
 
+- `config.json` 的 `name` 是否与目录名一致（两者语义不同）
 - 模板语法是否正确
 - CSS / JS 是否有 bug
 - 审美 / 代码风格

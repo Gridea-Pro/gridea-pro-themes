@@ -9,6 +9,13 @@ on:
     paths:
       - 'themes/**'
 
+# 豁免名单：仅限仓库初始化时带入的老主题 —— preview 缺失时只警告不阻塞
+#
+# ⚠️ 此名单是一次性历史遗留，请勿再添加新条目。
+# 所有社区新提交的主题必须满足 preview 要求，没有例外。
+env:
+  GRANDFATHERED: "fly notes simple"
+
 jobs:
   validate:
     name: Validate changed themes
@@ -30,10 +37,14 @@ jobs:
             HEAD="${{ github.sha }}"
           fi
 
-          # 找出所有在 themes/ 下有改动的一级子目录
-          CHANGED=$(git diff --name-only "$BASE" "$HEAD" -- 'themes/' \
-            | awk -F/ 'NF>=2 && $1=="themes" {print $2}' \
-            | sort -u)
+          # 处理首次 push（before 是全 0）
+          if [ "$BASE" = "0000000000000000000000000000000000000000" ] || [ -z "$BASE" ]; then
+            CHANGED=$(find themes -maxdepth 1 -mindepth 1 -type d -printf '%f\n' 2>/dev/null | sort -u)
+          else
+            CHANGED=$(git diff --name-only "$BASE" "$HEAD" -- 'themes/' \
+              | awk -F/ 'NF>=2 && $1=="themes" {print $2}' \
+              | sort -u)
+          fi
 
           if [ -z "$CHANGED" ]; then
             echo "没有检测到 themes/ 下的改动"
@@ -41,7 +52,6 @@ jobs:
           else
             echo "检测到以下主题有改动:"
             echo "$CHANGED"
-            # 用换行分隔转成空格分隔
             echo "dirs=$(echo "$CHANGED" | tr '\n' ' ')" >> "$GITHUB_OUTPUT"
           fi
 
@@ -57,11 +67,21 @@ jobs:
             echo "🔍 校验主题: $dir"
             echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-            # 如果主题目录被整体删除，跳过（下架场景）
+            # 目录被整体删除：跳过（下架场景）
             if [ ! -d "$THEME_DIR" ]; then
               echo "  ℹ️  目录已删除，跳过校验"
               continue
             fi
+
+            # 判断是否豁免
+            IS_GRANDFATHERED=0
+            for g in $GRANDFATHERED; do
+              if [ "$g" = "$dir" ]; then
+                IS_GRANDFATHERED=1
+                echo "  ℹ️  此主题为初始种子主题，preview 缺失仅警告"
+                break
+              fi
+            done
 
             # 目录命名：kebab-case
             if ! echo "$dir" | grep -qE '^[a-z0-9][a-z0-9-]{0,29}$'; then
@@ -81,40 +101,46 @@ jobs:
               else
                 # 必需字段
                 for field in name version author description engine templateEngine; do
-                  if ! jq -e "has(\"$field\")" "$THEME_DIR/config.json" >/dev/null; then
-                    echo "  ❌ config.json 缺少必需字段: $field"
+                  VAL=$(jq -r ".$field // empty" "$THEME_DIR/config.json")
+                  if [ -z "$VAL" ]; then
+                    echo "  ❌ config.json 缺少必需字段或字段为空: $field"
                     FAIL=1
                   fi
                 done
-                # name 和目录名一致
-                NAME=$(jq -r '.name' "$THEME_DIR/config.json")
-                if [ "$NAME" != "$dir" ]; then
-                  echo "  ❌ config.json 中 name=\"$NAME\"，但目录名是 \"$dir\"，两者需要一致"
-                  FAIL=1
-                fi
-                # engine 白名单
-                ENGINE=$(jq -r '.engine' "$THEME_DIR/config.json")
+                # engine 白名单（包含应用支持的别名）
+                ENGINE=$(jq -r '.engine // empty' "$THEME_DIR/config.json")
                 case "$ENGINE" in
-                  jinja2|pongo2|ejs|go-template) ;;
+                  jinja2|jinja|j2|ejs|go|gotemplate|gotemplates) ;;
+                  "") ;;  # 已在上面报错
                   *)
-                    echo "  ⚠️  engine=\"$ENGINE\" 不在推荐值内（jinja2/pongo2/ejs/go-template）"
+                    echo "  ⚠️  engine=\"$ENGINE\" 不在支持列表内（jinja2 / ejs / go）"
                     ;;
                 esac
               fi
             fi
 
-            # preview.png
-            if [ ! -f "$THEME_DIR/preview.png" ]; then
-              echo "  ❌ 缺少 preview.png"
-              FAIL=1
-            else
-              SIZE=$(stat -c%s "$THEME_DIR/preview.png" 2>/dev/null || stat -f%z "$THEME_DIR/preview.png")
-              if [ "$SIZE" -gt 512000 ]; then
-                echo "  ⚠️  preview.png 超过 500KB（当前 ${SIZE} 字节），建议压缩"
+            # preview 图：assets/media/preview.{png,jpg,jpeg,webp}
+            PREVIEW_FOUND=0
+            for ext in png jpg jpeg webp; do
+              if [ -f "$THEME_DIR/assets/media/preview.$ext" ]; then
+                PREVIEW_FOUND=1
+                SIZE=$(stat -c%s "$THEME_DIR/assets/media/preview.$ext" 2>/dev/null || stat -f%z "$THEME_DIR/assets/media/preview.$ext")
+                if [ "$SIZE" -gt 512000 ]; then
+                  echo "  ⚠️  preview.$ext 超过 500KB（当前 ${SIZE} 字节），建议压缩"
+                fi
+                break
+              fi
+            done
+            if [ $PREVIEW_FOUND -eq 0 ]; then
+              if [ $IS_GRANDFATHERED -eq 1 ]; then
+                echo "  ⚠️  缺少 assets/media/preview.{png,jpg,jpeg,webp}（豁免，仅警告）"
+              else
+                echo "  ❌ 缺少 assets/media/preview.{png,jpg,jpeg,webp}"
+                FAIL=1
               fi
             fi
 
-            # README
+            # README.md
             if [ ! -f "$THEME_DIR/README.md" ]; then
               echo "  ❌ 缺少 README.md"
               FAIL=1

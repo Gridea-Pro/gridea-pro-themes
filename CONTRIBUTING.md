@@ -49,13 +49,16 @@ git checkout -b add-theme-<主题名>
 ```
 themes/
 └── your-theme-name/
-    ├── config.json        ← 必需
-    ├── preview.png        ← 必需，1200×800，< 500KB
-    ├── README.md          ← 必需
-    ├── templates/         ← 必需（模板文件）
-    ├── assets/            ← 推荐（样式、脚本、图片）
-    └── LICENSE            ← 推荐（作者自选，未放默认 MIT）
+    ├── config.json                        ← 必需
+    ├── README.md                          ← 必需
+    ├── templates/                         ← 必需（模板文件）
+    ├── assets/
+    │   └── media/
+    │       └── preview.png                ← 必需，1200×800，< 500KB
+    └── LICENSE                            ← 推荐（作者自选，未放默认 MIT）
 ```
+
+> **预览图路径固定为 `assets/media/preview.<ext>`**，Gridea Pro 应用内「主题选择器」和本仓库画廊都从这里读取。支持 `.png` / `.jpg` / `.jpeg` / `.webp`。
 
 详细字段请看 [docs/theme-spec.md](./docs/theme-spec.md)。
 
@@ -73,7 +76,7 @@ themes/
 }
 ```
 
-支持的 `engine` / `templateEngine`：`jinja2`、`pongo2`、`ejs`、`go-template`。详见主题规范。
+支持的 `engine` / `templateEngine`：`jinja2`、`ejs`、`go`。详见主题规范。
 
 ### 4. 主题自己的 `README.md`
 
@@ -187,9 +190,9 @@ themes/your-theme-name/LICENSE
 ## 命名与规范
 
 - **主题目录名**：`kebab-case`，小写，纯英文/数字/连字符，不超过 30 字符
-- **主题 `name` 字段**：与目录名一致
-- **唯一性**：不能和已有主题重名
-- **预览图**：`preview.png`，1200×800，< 500KB，别放过期截图
+- **主题 `name` 字段**：展示名，允许空格、中英文，无需与目录名一致
+- **唯一性**：目录名不能和已有主题重名
+- **预览图**：`assets/media/preview.png`（也接受 `.jpg` / `.jpeg` / `.webp`），1200×800，< 500KB，别放过期截图
 - **版本号**：`major.minor.patch`，首次提交从 `1.0.0` 起
 
 ---

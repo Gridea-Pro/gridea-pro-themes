@@ -23,11 +23,13 @@ your-theme/
 
 在应用里用你的主题预览站点，截一张首页图，处理成 **1200×800** PNG，压缩到 **500KB 以内**。
 
-放到主题目录根：
+放到主题资源目录下：
 
 ```
-your-theme/preview.png
+your-theme/assets/media/preview.png
 ```
+
+> 也接受 `.jpg` / `.jpeg` / `.webp`。这张图 Gridea Pro 应用的「主题选择器」也会用到，所以路径固定。
 
 ### 2.2 主题说明 `README.md`
 

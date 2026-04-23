@@ -41,8 +41,8 @@
 <!-- 如果是 [new] 新增主题，请确认： -->
 
 - [ ] 已在 `themes/<主题名>/` 创建目录
-- [ ] 包含 `config.json`（必需字段完整）
-- [ ] 包含 `preview.png`（1200×800，< 500KB）
+- [ ] 包含 `config.json`（必需字段完整，`engine` 在 `jinja2`/`ejs`/`go` 里取值）
+- [ ] 包含 `assets/media/preview.png`（1200×800，< 500KB；也接受 `.jpg`/`.jpeg`/`.webp`）
 - [ ] 包含 `README.md`（主题自己的介绍）
 - [ ] 包含 `templates/` 目录（主题模板）
 - [ ] 已确认这是原创作品，或有权发布为开源
