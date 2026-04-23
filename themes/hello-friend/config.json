@@ -1,0 +1,253 @@
+{
+  "name": "Hello Friend",
+  "version": "1.0.0",
+  "author": "Djordje Atlialp (原版), Gridea Pro 社区（Jinja2 移植）",
+  "description": "Minimal, clean, bilingual-ready personal blog theme. Jinja2 port of the Hugo hello-friend-ng theme by @rhazdon. Dark/light toggle, Inter font, Prism code highlighting.",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "customConfig": [
+    {
+      "name": "faviconPath",
+      "label": "Favicon",
+      "group": "Logo 设置",
+      "type": "picture-upload",
+      "value": "",
+      "note": "浏览器标签页图标；推荐 32×32 PNG / ICO"
+    },
+    {
+      "name": "logoImage",
+      "label": "Logo 图片",
+      "group": "Logo 设置",
+      "type": "picture-upload",
+      "value": "",
+      "note": "上传图片作为 Logo；若为空则使用下方的文字 Logo"
+    },
+    {
+      "name": "logoText",
+      "label": "Logo 文字",
+      "group": "Logo 设置",
+      "type": "input",
+      "value": "hello",
+      "note": "显示在左上角的 Logo 文字（未上传 Logo 图片时生效）"
+    },
+    {
+      "name": "logoMark",
+      "label": "Logo 符号",
+      "group": "Logo 设置",
+      "type": "input",
+      "value": ">",
+      "note": "Logo 文字前的符号，类似终端提示符"
+    },
+    {
+      "name": "logoCursorAnimate",
+      "label": "Logo 光标动画速度",
+      "group": "Logo 设置",
+      "type": "input",
+      "value": "2s",
+      "note": "CSS 动画时长，如 2s；留空则使用主题默认"
+    },
+    {
+      "name": "logoCursorColor",
+      "label": "Logo 光标颜色",
+      "group": "Logo 设置",
+      "type": "input",
+      "value": "",
+      "note": "CSS 颜色值，如 #67a2c9；留空则使用主题默认"
+    },
+    {
+      "name": "homeSubtitle",
+      "label": "首页副标题",
+      "group": "首页设置",
+      "type": "textarea",
+      "value": "",
+      "note": "显示在首页个人卡片下方；可包含 HTML"
+    },
+    {
+      "name": "portraitPath",
+      "label": "首页头像路径",
+      "group": "首页设置",
+      "type": "picture-upload",
+      "value": "",
+      "note": "圆形头像，展示在首页个人卡片顶部"
+    },
+    {
+      "name": "portraitAlt",
+      "label": "头像 alt 文字",
+      "group": "首页设置",
+      "type": "input",
+      "value": "",
+      "note": "替代文字，供屏幕阅读器使用"
+    },
+    {
+      "name": "portraitMaxWidth",
+      "label": "头像最大宽度",
+      "group": "首页设置",
+      "type": "input",
+      "value": "200px",
+      "note": "CSS 单位，如 200px"
+    },
+    {
+      "name": "showLatestOnHome",
+      "label": "首页显示最新文章列表",
+      "group": "首页设置",
+      "type": "toggle",
+      "value": true,
+      "note": "关闭后首页仅显示个人卡片"
+    },
+    {
+      "name": "enableThemeToggle",
+      "label": "启用暗色/亮色切换",
+      "group": "外观",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "defaultTheme",
+      "label": "默认配色",
+      "group": "外观",
+      "type": "select",
+      "value": "auto",
+      "options": [
+        { "label": "跟随系统", "value": "auto" },
+        { "label": "浅色", "value": "light" },
+        { "label": "深色", "value": "dark" }
+      ],
+      "note": "访客首次访问时的默认配色"
+    },
+    {
+      "name": "backgroundImage",
+      "label": "首页背景图",
+      "group": "外观",
+      "type": "picture-upload",
+      "value": "",
+      "note": "仅在首页生效；留空则为纯色背景"
+    },
+    {
+      "name": "enableReadingTime",
+      "label": "显示阅读时间",
+      "group": "文章",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "enableWordCount",
+      "label": "显示字数统计",
+      "group": "文章",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "enableSharingButtons",
+      "label": "显示文章分享按钮",
+      "group": "文章",
+      "type": "toggle",
+      "value": false
+    },
+    {
+      "name": "socialGithub",
+      "label": "GitHub URL",
+      "group": "社交链接（首页显示）",
+      "type": "input",
+      "value": "",
+      "note": "完整 URL，留空则不显示"
+    },
+    {
+      "name": "socialTwitter",
+      "label": "Twitter / X URL",
+      "group": "社交链接（首页显示）",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "socialLinkedin",
+      "label": "LinkedIn URL",
+      "group": "社交链接（首页显示）",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "socialMastodon",
+      "label": "Mastodon URL",
+      "group": "社交链接（首页显示）",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "socialEmail",
+      "label": "Email",
+      "group": "社交链接（首页显示）",
+      "type": "input",
+      "value": "",
+      "note": "不带 mailto: 前缀，模板会自动加"
+    },
+    {
+      "name": "socialRssUrl",
+      "label": "RSS URL",
+      "group": "社交链接（首页显示）",
+      "type": "input",
+      "value": "",
+      "note": "一般为 /atom.xml"
+    },
+    {
+      "name": "socialTelegram",
+      "label": "Telegram URL",
+      "group": "社交链接（首页显示）",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "socialYoutube",
+      "label": "YouTube URL",
+      "group": "社交链接（首页显示）",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "footerCopyright",
+      "label": "页脚版权声明",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "如 © 2026 Your Name，留空不显示"
+    },
+    {
+      "name": "footerShowRss",
+      "label": "页脚显示 RSS 图标",
+      "group": "页脚",
+      "type": "toggle",
+      "value": false
+    },
+    {
+      "name": "footerBottomText",
+      "label": "页脚底部文字",
+      "group": "页脚",
+      "type": "textarea",
+      "value": "",
+      "note": "支持 HTML；用于备案号等"
+    },
+    {
+      "name": "customCss",
+      "label": "自定义 CSS",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到主样式后面"
+    },
+    {
+      "name": "customJs",
+      "label": "自定义 JavaScript",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到页面底部"
+    },
+    {
+      "name": "analyticsCode",
+      "label": "分析代码（原样插入）",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "例如 Google Analytics、Plausible 等的完整 <script> 标签"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+<a href="{{ config.domain }}" style="text-decoration: none;">
+    <div class="logo">
+        {% if theme_config.logoImage %}
+            <img src="{{ theme_config.logoImage }}" alt="{{ config.siteName }}" />
+        {% else %}
+            <span class="logo__mark">{{ theme_config.logoMark|default:">" }}</span>
+            <span class="logo__text">{{ theme_config.logoText|default:"hello" }}</span>
+            <span class="logo__cursor" style="{% if theme_config.logoCursorColor %}background-color:{{ theme_config.logoCursorColor }};{% endif %}{% if theme_config.logoCursorAnimate %}animation-duration:{{ theme_config.logoCursorAnimate }};{% endif %}"></span>
+        {% endif %}
+    </div>
+</a>

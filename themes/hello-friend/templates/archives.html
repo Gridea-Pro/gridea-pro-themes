@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}归档 — {{ config.siteName }}{% endblock %}
+
+{% block main %}
+    <div class="content">
+        <main class="posts">
+            <h1>归档</h1>
+
+            {% if posts|length > 0 %}
+                {% for group in posts|group_by:"year" %}
+                    <div class="posts-group">
+                        <div class="post-year">{{ group.key }}</div>
+
+                        <ul class="posts-list">
+                            {% for post in group.items %}
+                                <li class="post-item">
+                                    <a href="{{ post.link }}" class="post-item-inner">
+                                        <span class="post-title">{{ post.title }}</span>
+                                        <span class="post-day">{{ post.date }}</span>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>暂无文章。</p>
+            {% endif %}
+        </main>
+    </div>
+{% endblock %}

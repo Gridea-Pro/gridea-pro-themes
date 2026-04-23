@@ -1,0 +1,22 @@
+{% if pagination and (pagination.prev or pagination.next) %}
+<div class="pagination">
+    <div class="pagination__buttons">
+        {% if pagination.prev %}
+            <span class="button previous">
+                <a href="{{ pagination.prev }}">
+                    <span class="button__icon">←</span>
+                    <span class="button__text">较新文章</span>
+                </a>
+            </span>
+        {% endif %}
+        {% if pagination.next %}
+            <span class="button next">
+                <a href="{{ pagination.next }}">
+                    <span class="button__text">较旧文章</span>
+                    <span class="button__icon">→</span>
+                </a>
+            </span>
+        {% endif %}
+    </div>
+</div>
+{% endif %}

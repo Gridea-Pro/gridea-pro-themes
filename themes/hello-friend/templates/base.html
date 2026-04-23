@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh-CN"{% if theme_config.defaultTheme and theme_config.defaultTheme != "auto" %} data-theme="{{ theme_config.defaultTheme }}"{% endif %}>
+<head>
+    {% include "partials/head.html" %}
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}" style="{% block body_style %}{% endblock %}">
+    <div class="container">
+        {% include "partials/header.html" %}
+        {% block main %}{% endblock %}
+        {% block footer %}
+            {% include "partials/footer.html" %}
+        {% endblock %}
+    </div>
+    {% include "partials/javascript.html" %}
+</body>
+</html>

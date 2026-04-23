@@ -1,0 +1,44 @@
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="author" content="{{ config.siteName }}">
+<meta name="description" content="{% block meta_description %}{{ config.siteDescription|default:"" }}{% endblock %}">
+<meta name="robots" content="noodp">
+<meta name="theme-color" content="{% if theme_config.defaultTheme == "light" %}#ffffff{% else %}#232425{% endif %}">
+<link rel="canonical" href="{% block canonical %}{{ config.domain }}{% endblock %}">
+
+<title>{% block title %}{{ config.siteName }}{% endblock %}</title>
+
+<link rel="stylesheet" href="/styles/main.css">
+
+{% if theme_config.faviconPath %}
+<link rel="icon" href="{{ theme_config.faviconPath }}">
+{% endif %}
+
+{% if theme_config.customCss %}
+<style>{{ theme_config.customCss|safe }}</style>
+{% endif %}
+
+{% if theme_config.analyticsCode %}
+{{ theme_config.analyticsCode|safe }}
+{% endif %}
+
+{# 提前执行的主题探测脚本，避免首次渲染出现明暗闪烁 #}
+<script>
+(function() {
+  var stored = null;
+  try { stored = window.localStorage && localStorage.getItem("theme"); } catch (e) {}
+  var defaultTheme = "{{ theme_config.defaultTheme|default:"auto" }}";
+  var theme;
+  if (stored === "dark" || stored === "light") {
+    theme = stored;
+  } else if (defaultTheme === "dark" || defaultTheme === "light") {
+    theme = defaultTheme;
+  } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    theme = "dark";
+  } else {
+    theme = "light";
+  }
+  document.documentElement.setAttribute("data-theme", theme);
+})();
+</script>
