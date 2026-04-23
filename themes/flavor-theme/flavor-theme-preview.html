@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Flavor Blog</title>
+
+  <!-- Google Fonts: Spectral serif family -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <style>
+/* ============================================================================
+   FLAVOR THEME — Dark Editorial Blog CSS
+   ============================================================================ */
+
+:root {
+  --color-bg:             #000000;
+  --color-surface:        #111111;
+  --color-border:         #222222;
+  --color-border-light:   #1a1a1a;
+  --color-border-hover:   #444444;
+  --color-text-primary:   #ffffff;
+  --color-text-secondary: #999999;
+  --color-text-muted:     #666666;
+  --color-text-body:      #e0e0e0;
+  --color-accent:         #54675e;
+  --color-accent-hover:   #637a6f;
+  --color-badge-gold:     #e8c547;
+
+  --font-body:    system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: "Spectral", Georgia, serif;
+  --font-mono:    "JetBrains Mono", "Fira Code", Menlo, Monaco, Consolas, monospace;
+  --font-size-base: 16px;
+  --line-height-base: 1.6;
+
+  --max-width:     1200px;
+  --content-width: 728px;
+  --sidebar-width: 280px;
+  --grid-gap:      48px;
+
+  --spacing-xs:  4px;
+  --spacing-sm:  8px;
+  --spacing-md:  16px;
+  --spacing-lg:  24px;
+  --spacing-xl:  32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 80px;
+
+  --transition-fast:   0.2s ease;
+  --transition-normal: 0.3s ease;
+
+  --top-bar-height:    56px;
+  --section-bar-height: 44px;
+  --header-total:      100px;
+}
+
+/* Reset & Base */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  font-size: var(--font-size-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg);
+  word-break: break-word;
+  overflow-wrap: break-word;
+  min-height: 100vh;
+  scrollbar-width: thin;
+  scrollbar-color: #333333 var(--color-bg);
+}
+
+a { color: inherit; text-decoration: none; transition: color var(--transition-fast); }
+img { max-width: 100%; height: auto; display: block; }
+ul, ol { list-style: none; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+input, textarea { font-family: inherit; border: none; background: none; color: inherit; outline: none; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-text-primary);
+}
+h1 { font-size: 2.2rem; }
+h2 { font-size: 1.6rem; }
+h3 { font-size: 1.3rem; }
+
+/* Scrollbar */
+body::-webkit-scrollbar { width: 8px; }
+body::-webkit-scrollbar-track { background: var(--color-bg); }
+body::-webkit-scrollbar-thumb { background: #333333; border-radius: 4px; }
+body::-webkit-scrollbar-thumb:hover { background: #555555; }
+
+/* Utilities */
+.container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+.meta-text { font-family: var(--font-body); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; }
+.clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+/* ── Site Header ── */
+.site-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.top-bar {
+  position: relative; display: flex; align-items: center; justify-content: space-between;
+  height: var(--top-bar-height); max-width: var(--max-width); margin: 0 auto; padding: 0 24px;
+}
+.top-bar__left { display: flex; align-items: center; z-index: 2; }
+.top-bar__center { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 1; }
+
+.site-logo-text {
+  display: flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px; border-radius: 6px;
+  background-color: var(--color-surface); border: 1px solid var(--color-border);
+  font-family: var(--font-heading); font-size: 18px; font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.site-name-link {
+  font-family: var(--font-heading); font-size: 18px; font-weight: 600;
+  color: var(--color-text-primary); white-space: nowrap; text-decoration: none;
+}
+.site-name-link:hover { color: var(--color-text-primary); }
+
+.top-bar__right { display: flex; align-items: center; gap: 8px; z-index: 2; }
+
+.btn-icon {
+  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px; border-radius: 6px;
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast), background-color var(--transition-fast);
+  cursor: pointer;
+}
+.btn-icon:hover { color: var(--color-text-primary); background-color: var(--color-surface); }
+.btn-icon svg { width: 18px; height: 18px; }
+
+.btn-nav-toggle { display: none; }
+
+/* Section Bar */
+.section-bar {
+  height: var(--section-bar-height);
+  border-bottom: 1px solid var(--color-border);
+  background-color: var(--color-bg);
+}
+.section-bar__inner {
+  display: flex; align-items: stretch; gap: 0;
+  max-width: var(--max-width); margin: 0 auto; padding: 0 24px; height: 100%;
+}
+.nav-item {
+  display: inline-flex; align-items: center; padding: 0 16px;
+  line-height: var(--section-bar-height);
+  font-family: var(--font-body); font-size: 13px; font-weight: 500;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--color-text-secondary); text-decoration: none; white-space: nowrap;
+  transition: color var(--transition-fast); position: relative;
+}
+.nav-item:hover { color: var(--color-text-primary); box-shadow: inset 0 -2px 0 var(--color-text-primary); }
+.nav-item--active { color: var(--color-text-primary); box-shadow: inset 0 -2px 0 var(--color-text-primary); }
+
+.header-spacer { height: var(--header-total); }
+
+/* ── Content Grid ── */
+.content-grid { display: flex; gap: var(--grid-gap); max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+.main-content { flex: 1; min-width: 0; }
+
+/* ── Hero Section ── */
+.hero-section { position: relative; height: 400px; overflow: hidden; }
+.hero-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+.hero-overlay {
+  position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+  z-index: 1;
+}
+.hero-content { position: absolute; bottom: 48px; left: 48px; right: 48px; z-index: 2; }
+.hero-title { font-family: var(--font-heading); font-size: 2rem; font-weight: 700; color: var(--color-text-primary); line-height: 1.3; max-width: 600px; }
+.hero-subtitle { font-size: 15px; color: var(--color-text-secondary); margin-top: 8px; max-width: 600px; }
+.hero-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; color: var(--color-text-primary); text-decoration: none; transition: opacity var(--transition-fast); }
+.hero-cta:hover { opacity: 0.7; }
+
+/* ── Section Headers ── */
+.section-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 16px; border-bottom: 1px solid var(--color-border); margin-bottom: 24px; }
+.section-title { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 600; color: var(--color-text-primary); }
+.section-more { font-size: 12px; color: var(--color-text-secondary); text-decoration: none; transition: color var(--transition-fast); }
+.section-more:hover { color: var(--color-text-primary); }
+
+/* ── Compact Post Grid ── */
+.compact-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background-color: var(--color-border); margin-bottom: 48px; }
+
+/* ── Compact Post Card ── */
+.post-card--compact { background-color: var(--color-bg); padding: 20px; }
+.post-card--compact .post-card__inner { display: flex; gap: 16px; align-items: flex-start; text-decoration: none; color: inherit; }
+.post-card--compact .post-card__body { flex: 1; min-width: 0; }
+.post-card--compact .post-card__title { font-family: var(--font-heading); font-size: 15px; font-weight: 600; color: var(--color-text-primary); line-height: 1.4; transition: color var(--transition-fast); }
+.post-card--compact .post-card__meta { font-family: var(--font-body); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; color: var(--color-text-muted); margin-top: 8px; }
+.post-card__thumb-square { width: 72px; height: 72px; border-radius: 4px; object-fit: cover; flex-shrink: 0; }
+.post-card--compact .post-card__inner:hover .post-card__title { color: var(--color-accent); }
+
+/* ── List Post Card ── */
+.post-card--list { padding: 24px 0; border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; gap: 24px; align-items: flex-start; }
+.post-card--list .post-card__body { flex: 1; min-width: 0; }
+.post-card--list .post-card__title { font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; color: var(--color-text-primary); line-height: 1.4; margin-bottom: 8px; transition: color var(--transition-fast); }
+.post-card__title-link { text-decoration: none; color: inherit; display: block; }
+.post-card__title-link:hover .post-card__title { color: var(--color-accent); }
+.post-card--list .post-card__excerpt { font-size: 14px; color: var(--color-text-secondary); line-height: 1.5; margin-bottom: 12px; text-decoration: none; display: block; }
+.post-card--list .post-card__meta { font-family: var(--font-body); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; color: var(--color-text-muted); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.badge--top { display: inline-block; background-color: var(--color-badge-gold); color: var(--color-bg); padding: 2px 6px; border-radius: 2px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.4; }
+.post-card__thumb-link { flex-shrink: 0; display: block; }
+.post-card__thumb { width: 200px; height: 134px; border-radius: 8px; object-fit: cover; display: block; transition: opacity var(--transition-fast); }
+.post-card__thumb-link:hover .post-card__thumb { opacity: 0.85; }
+
+/* ── Sidebar ── */
+.sidebar { width: var(--sidebar-width); flex-shrink: 0; position: sticky; top: 120px; }
+.sidebar__section { padding: 24px 0; border-bottom: 1px solid var(--color-border); }
+.sidebar__section:first-child { padding-top: 0; }
+.sidebar__section:last-child { border-bottom: none; }
+.sidebar__avatar { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; margin-bottom: 12px; }
+.sidebar__title { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; color: var(--color-text-primary); margin-bottom: 8px; }
+.sidebar__desc { font-size: 14px; color: var(--color-text-secondary); line-height: 1.5; }
+.sidebar__section-title { font-family: var(--font-body); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 500; color: var(--color-text-muted); margin-bottom: 12px; }
+.sidebar__tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+/* ── Tag Pill ── */
+.tag-pill { display: inline-block; padding: 4px 12px; background-color: var(--color-surface); border: 1px solid var(--color-border); border-radius: 20px; font-size: 13px; color: var(--color-text-secondary); text-decoration: none; transition: border-color var(--transition-fast), color var(--transition-fast); }
+.tag-pill:hover { border-color: var(--color-border-hover); color: var(--color-text-primary); }
+
+/* ── Search Modal ── */
+.search-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.8); z-index: 2000;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 120px;
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+.search-modal {
+  width: 600px; max-width: calc(100vw - 32px);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border); border-radius: 12px;
+  overflow: hidden; max-height: 70vh;
+  display: flex; flex-direction: column;
+  animation: slideDown 0.2s ease;
+}
+.search-header { display: flex; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--color-border); gap: 12px; }
+.search-icon { width: 20px; height: 20px; color: var(--color-text-muted); flex-shrink: 0; }
+.search-icon svg { width: 100%; height: 100%; }
+.search-input { flex: 1; background: none; border: none; color: var(--color-text-primary); font-size: 16px; font-family: var(--font-body); outline: none; line-height: 1.5; }
+.search-input::placeholder { color: var(--color-text-muted); }
+.search-close { display: flex; align-items: center; justify-content: center; background: none; border: none; color: var(--color-text-muted); cursor: pointer; padding: 4px; border-radius: 4px; transition: color var(--transition-fast); }
+.search-close:hover { color: var(--color-text-primary); }
+.search-close svg { width: 18px; height: 18px; }
+.search-results { overflow-y: auto; padding: 8px 0; }
+.search-result-item { display: block; padding: 12px 20px; text-decoration: none; border-bottom: 1px solid var(--color-border-light); transition: background-color var(--transition-fast); }
+.search-result-item:last-child { border-bottom: none; }
+.search-result-item:hover { background-color: var(--color-border-light); }
+.search-result-item__title { font-size: 15px; color: var(--color-text-primary); margin-bottom: 4px; font-weight: 500; }
+.search-result-item__excerpt { font-size: 13px; color: var(--color-text-muted); line-height: 1.4; }
+.search-result-item__date { font-size: 11px; color: #444444; margin-top: 4px; }
+.search-empty { padding: 40px 20px; text-align: center; color: var(--color-text-muted); font-size: 14px; }
+
+/* ── Pagination ── */
+.pagination { display: flex; justify-content: center; gap: 16px; padding: 40px 0; margin-top: 16px; }
+
+/* ── Buttons ── */
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: 6px; font-size: 14px; font-weight: 500; text-decoration: none; transition: all var(--transition-fast); cursor: pointer; border: none; font-family: var(--font-body); line-height: 1.4; }
+.btn--secondary { background-color: var(--color-surface); color: var(--color-text-primary); border: 1px solid var(--color-border); }
+.btn--secondary:hover { border-color: var(--color-border-hover); background-color: var(--color-border-light); }
+
+/* ── Footer ── */
+.site-footer { border-top: 1px solid var(--color-border); padding: 40px 0; margin-top: 48px; }
+.footer-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; text-align: center; }
+.footer-nav { display: flex; justify-content: center; flex-wrap: wrap; gap: 24px; margin-bottom: 20px; }
+.footer-nav__link { font-size: 13px; color: var(--color-text-muted); text-decoration: none; transition: color var(--transition-fast); }
+.footer-nav__link:hover { color: var(--color-text-primary); }
+.footer-social { display: flex; justify-content: center; gap: 16px; margin-bottom: 20px; }
+.footer-social__link { color: var(--color-text-muted); transition: color var(--transition-fast); }
+.footer-social__link:hover { color: var(--color-text-primary); }
+.footer-social__link svg { width: 20px; height: 20px; }
+.footer-copyright { font-size: 13px; color: var(--color-text-muted); margin-bottom: 8px; }
+.footer-powered { font-size: 12px; color: #444; }
+.footer-powered a { color: var(--color-text-muted); text-decoration: underline; text-underline-offset: 2px; }
+.footer-powered a:hover { color: var(--color-text-primary); }
+
+/* ── Section spacing ── */
+.section-popular { margin-top: 32px; }
+
+/* ── Kbd shortcut badge ── */
+.search-kbd {
+  display: inline-flex; align-items: center; gap: 2px;
+  margin-left: 8px; padding: 2px 6px;
+  background: var(--color-bg); border: 1px solid var(--color-border);
+  border-radius: 4px; font-size: 11px; color: var(--color-text-muted);
+  font-family: var(--font-body); line-height: 1;
+}
+
+/* ── Animations ── */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideDown { from { transform: translateY(-10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+/* ── Global transitions ── */
+a, button, input, .post-card__title, .post-card__thumb, .tag-pill, .btn, .nav-item {
+  transition: color var(--transition-fast), border-color var(--transition-fast), background-color var(--transition-fast);
+}
+
+/* ── Responsive: Tablet ── */
+@media (max-width: 768px) {
+  .btn-nav-toggle { display: flex; }
+  .section-bar { overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; display: none; }
+  .section-bar::-webkit-scrollbar { display: none; }
+  .section-bar--open {
+    display: flex; flex-direction: column; position: absolute;
+    top: var(--top-bar-height); left: 0; right: 0;
+    background-color: var(--color-bg); border-bottom: 1px solid var(--color-border);
+    z-index: 999; height: auto;
+  }
+  .section-bar--open .section-bar__inner { flex-direction: column; padding: 0; height: auto; }
+  .section-bar--open .nav-item { padding: 12px 24px; line-height: 1.4; border-bottom: 1px solid var(--color-surface); box-shadow: none; }
+  .section-bar--open .nav-item:hover, .section-bar--open .nav-item--active { box-shadow: none; background-color: var(--color-surface); }
+  .section-bar--open .nav-item:last-child { border-bottom: none; }
+  .content-grid { flex-direction: column; gap: 32px; padding: 0 16px; }
+  .sidebar { width: 100%; position: static; }
+  .compact-grid { grid-template-columns: repeat(2, 1fr); }
+  .post-card__thumb { width: 120px; height: auto; aspect-ratio: 3 / 2; }
+  .hero-section { height: 280px; }
+  .hero-content { bottom: 24px; left: 24px; right: 24px; }
+  .hero-title { font-size: 1.5rem; }
+  .header-spacer { height: var(--top-bar-height); }
+  .container { padding: 0 16px; }
+  .footer-inner { padding: 0 16px; }
+}
+
+@media (max-width: 480px) {
+  .compact-grid { grid-template-columns: 1fr; }
+  .post-card--list { flex-direction: column; gap: 16px; }
+  .post-card--list .post-card__thumb-link { order: -1; width: 100%; }
+  .post-card--list .post-card__thumb { width: 100%; height: auto; aspect-ratio: 16 / 9; order: -1; }
+  .hero-content { bottom: 20px; left: 16px; right: 16px; }
+  .hero-title { font-size: 1.3rem; }
+}
+  </style>
+</head>
+<body class="flavor-theme">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       SITE HEADER
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+
+      <!-- Top Bar -->
+      <div class="top-bar">
+        <div class="top-bar__left">
+          <a href="#" class="site-logo-link" aria-label="返回首页">
+            <span class="site-logo-text">F</span>
+          </a>
+        </div>
+
+        <div class="top-bar__center">
+          <a href="#" class="site-name-link">Flavor Blog</a>
+        </div>
+
+        <div class="top-bar__right">
+          <button class="btn-icon btn-search" id="btnSearch" type="button" aria-label="搜索">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </button>
+          <button class="btn-icon btn-nav-toggle" id="btnNavToggle" type="button" aria-label="切换导航">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Section Bar (Navigation) -->
+      <nav class="section-bar" id="sectionBar">
+        <div class="section-bar__inner">
+          <a class="nav-item nav-item--active" href="#">首页</a>
+          <a class="nav-item" href="#">博客</a>
+          <a class="nav-item" href="#">闪念</a>
+          <a class="nav-item" href="#">标签</a>
+          <a class="nav-item" href="#">友链</a>
+          <a class="nav-item" href="#">关于</a>
+        </div>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- Header Spacer -->
+  <div class="header-spacer"></div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       MAIN CONTENT
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <main class="site-main" role="main">
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <img class="hero-image" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1400&h=600&fit=crop" alt="" />
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h2 class="hero-title clamp-3">探索数字世界的无限可能</h2>
+        <p class="hero-subtitle">技术、设计与创造力的交汇点</p>
+        <a href="#" class="hero-cta">
+          <span class="meta-text">阅读全文</span>
+          <span>&rarr;</span>
+        </a>
+      </div>
+    </section>
+
+    <div class="container">
+
+      <!-- ── Most Popular Section ── -->
+      <section class="section-popular">
+        <div class="section-header">
+          <h2 class="section-title">热门文章</h2>
+          <a href="#" class="section-more meta-text">查看全部 &rarr;</a>
+        </div>
+        <div class="compact-grid">
+
+          <!-- Compact Card 1 -->
+          <article class="post-card post-card--compact">
+            <a href="#" class="post-card__inner">
+              <div class="post-card__body">
+                <h3 class="post-card__title clamp-2">AI Agent：重塑数字世界的自主智能体</h3>
+                <div class="post-card__meta meta-text">2026-02-20</div>
+              </div>
+              <img class="post-card__thumb-square" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=300&fit=crop" alt="AI Agent：重塑数字世界的自主智能体" loading="lazy" />
+            </a>
+          </article>
+
+          <!-- Compact Card 2 -->
+          <article class="post-card post-card--compact">
+            <a href="#" class="post-card__inner">
+              <div class="post-card__body">
+                <h3 class="post-card__title clamp-2">深入解析 Gridea Pro 架构演进</h3>
+                <div class="post-card__meta meta-text">2026-02-15</div>
+              </div>
+              <img class="post-card__thumb-square" src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=300&fit=crop" alt="深入解析 Gridea Pro 架构演进" loading="lazy" />
+            </a>
+          </article>
+
+          <!-- Compact Card 3 -->
+          <article class="post-card post-card--compact">
+            <a href="#" class="post-card__inner">
+              <div class="post-card__body">
+                <h3 class="post-card__title clamp-2">从 MVP 到生产级架构：Go 后端深度重构</h3>
+                <div class="post-card__meta meta-text">2026-02-10</div>
+              </div>
+              <img class="post-card__thumb-square" src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop" alt="从 MVP 到生产级架构：Go 后端深度重构" loading="lazy" />
+            </a>
+          </article>
+
+          <!-- Compact Card 4 -->
+          <article class="post-card post-card--compact">
+            <a href="#" class="post-card__inner">
+              <div class="post-card__body">
+                <h3 class="post-card__title clamp-2">为什么 Chat 模式正在消亡：Agentic Workflow 的崛起</h3>
+                <div class="post-card__meta meta-text">2026-02-05</div>
+              </div>
+              <img class="post-card__thumb-square" src="https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=400&h=300&fit=crop" alt="为什么 Chat 模式正在消亡：Agentic Workflow 的崛起" loading="lazy" />
+            </a>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ── Main Content Grid (Posts + Sidebar) ── -->
+      <div class="content-grid">
+        <div class="main-content">
+
+          <!-- Latest Posts -->
+          <section class="section-latest">
+            <div class="section-header">
+              <h2 class="section-title">最新文章</h2>
+            </div>
+            <div class="post-list">
+
+              <!-- Post 1 — Pinned -->
+              <article class="post-card post-card--list">
+                <div class="post-card__body">
+                  <a href="#" class="post-card__title-link">
+                    <h3 class="post-card__title clamp-3">AI Agent：重塑数字世界的自主智能体</h3>
+                  </a>
+                  <a href="#" class="post-card__excerpt clamp-2">从 LLM 到自主智能体，AI Agent 正在从概念走向现实。本文深入探讨 Agent 架构的核心模式、工具调用机制以及在真实产品中的落地实践，帮助你理解这场范式转移。</a>
+                  <div class="post-card__meta meta-text">
+                    2026-02-20
+                    <span class="badge badge--top">置顶</span>
+                  </div>
+                </div>
+                <a href="#" class="post-card__thumb-link">
+                  <img class="post-card__thumb" src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=300&fit=crop" alt="AI Agent：重塑数字世界的自主智能体" loading="lazy" />
+                </a>
+              </article>
+
+              <!-- Post 2 -->
+              <article class="post-card post-card--list">
+                <div class="post-card__body">
+                  <a href="#" class="post-card__title-link">
+                    <h3 class="post-card__title clamp-3">深入解析 Gridea Pro 架构演进</h3>
+                  </a>
+                  <a href="#" class="post-card__excerpt clamp-2">Gridea Pro 从桌面应用到全栈平台的架构演进之路。分析前后端分离、模板引擎选型、静态生成与动态渲染的权衡，以及插件化设计的思考。</a>
+                  <div class="post-card__meta meta-text">
+                    2026-02-15
+                  </div>
+                </div>
+                <a href="#" class="post-card__thumb-link">
+                  <img class="post-card__thumb" src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?w=400&h=300&fit=crop" alt="深入解析 Gridea Pro 架构演进" loading="lazy" />
+                </a>
+              </article>
+
+              <!-- Post 3 -->
+              <article class="post-card post-card--list">
+                <div class="post-card__body">
+                  <a href="#" class="post-card__title-link">
+                    <h3 class="post-card__title clamp-3">从 MVP 到生产级架构：Go 后端深度重构</h3>
+                  </a>
+                  <a href="#" class="post-card__excerpt clamp-2">记录一次 Go 后端服务的完整重构过程：从混乱的单体到清晰的分层架构，涵盖依赖注入、错误处理、中间件设计和数据库迁移策略。</a>
+                  <div class="post-card__meta meta-text">
+                    2026-02-10
+                  </div>
+                </div>
+                <a href="#" class="post-card__thumb-link">
+                  <img class="post-card__thumb" src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=400&h=300&fit=crop" alt="从 MVP 到生产级架构：Go 后端深度重构" loading="lazy" />
+                </a>
+              </article>
+
+              <!-- Post 4 -->
+              <article class="post-card post-card--list">
+                <div class="post-card__body">
+                  <a href="#" class="post-card__title-link">
+                    <h3 class="post-card__title clamp-3">探索 Model Context Protocol：连接 AI 的开放标准</h3>
+                  </a>
+                  <a href="#" class="post-card__excerpt clamp-2">MCP 正在成为 AI 应用与外部世界交互的通用协议。深入解析其设计哲学、消息格式、工具定义规范，以及如何构建自己的 MCP Server。</a>
+                  <div class="post-card__meta meta-text">
+                    2026-01-28
+                  </div>
+                </div>
+                <a href="#" class="post-card__thumb-link">
+                  <img class="post-card__thumb" src="https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop" alt="探索 Model Context Protocol：连接 AI 的开放标准" loading="lazy" />
+                </a>
+              </article>
+
+              <!-- Post 5 -->
+              <article class="post-card post-card--list">
+                <div class="post-card__body">
+                  <a href="#" class="post-card__title-link">
+                    <h3 class="post-card__title clamp-3">Wails 应用实战：启动逻辑与国际化最佳实践</h3>
+                  </a>
+                  <a href="#" class="post-card__excerpt clamp-2">使用 Wails 构建跨平台桌面应用的实战经验总结。从项目初始化、Go 后端与前端通信，到多语言支持和构建发布的完整工作流。</a>
+                  <div class="post-card__meta meta-text">
+                    2026-01-20
+                  </div>
+                </div>
+                <a href="#" class="post-card__thumb-link">
+                  <img class="post-card__thumb" src="https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=400&h=300&fit=crop" alt="Wails 应用实战：启动逻辑与国际化最佳实践" loading="lazy" />
+                </a>
+              </article>
+
+              <!-- Post 6 -->
+              <article class="post-card post-card--list">
+                <div class="post-card__body">
+                  <a href="#" class="post-card__title-link">
+                    <h3 class="post-card__title clamp-3">Rust vs Go：2026 年系统编程语言的选择</h3>
+                  </a>
+                  <a href="#" class="post-card__excerpt clamp-2">在 2026 年的技术格局下，Rust 和 Go 各自在什么场景下更有优势？从性能、开发效率、生态系统和团队适配四个维度进行深度对比分析。</a>
+                  <div class="post-card__meta meta-text">
+                    2026-01-12
+                  </div>
+                </div>
+                <a href="#" class="post-card__thumb-link">
+                  <img class="post-card__thumb" src="https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=400&h=300&fit=crop" alt="Rust vs Go：2026 年系统编程语言的选择" loading="lazy" />
+                </a>
+              </article>
+
+            </div>
+          </section>
+
+          <!-- Pagination -->
+          <nav class="pagination">
+            <a href="#" class="btn btn--secondary">&larr; 上一页</a>
+            <a href="#" class="btn btn--secondary">下一页 &rarr;</a>
+          </nav>
+
+        </div>
+
+        <!-- ── Sidebar ── -->
+        <aside class="sidebar">
+          <div class="sidebar__section sidebar__about">
+            <img class="sidebar__avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=112&h=112&fit=crop&crop=face" alt="Flavor Blog" />
+            <h3 class="sidebar__title">Flavor Blog</h3>
+            <p class="sidebar__desc">探索技术与设计的交汇点。分享关于 AI、架构、前端和产品思考的独立博客。</p>
+          </div>
+
+          <div class="sidebar__section">
+            <h4 class="sidebar__section-title meta-text">标签</h4>
+            <div class="sidebar__tags">
+              <a href="#" class="tag-pill">AI</a>
+              <a href="#" class="tag-pill">Go</a>
+              <a href="#" class="tag-pill">Rust</a>
+              <a href="#" class="tag-pill">架构</a>
+              <a href="#" class="tag-pill">博客</a>
+              <a href="#" class="tag-pill">设计</a>
+              <a href="#" class="tag-pill">前端</a>
+              <a href="#" class="tag-pill">产品</a>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       FOOTER
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <nav class="footer-nav" aria-label="页脚导航">
+        <a class="footer-nav__link" href="#">首页</a>
+        <a class="footer-nav__link" href="#">博客</a>
+        <a class="footer-nav__link" href="#">闪念</a>
+        <a class="footer-nav__link" href="#">标签</a>
+        <a class="footer-nav__link" href="#">友链</a>
+        <a class="footer-nav__link" href="#">关于</a>
+      </nav>
+      <div class="footer-social">
+        <a class="footer-social__link" href="#" aria-label="GitHub">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        </a>
+        <a class="footer-social__link" href="#" aria-label="Twitter/X">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+      </div>
+      <div class="footer-copyright">
+        <p>&copy; 2026 Flavor Blog. All rights reserved.</p>
+      </div>
+      <div class="footer-powered">
+        <span>Powered by <a href="https://gridea.pro" target="_blank" rel="noopener noreferrer">Gridea Pro</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       SEARCH MODAL
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <div class="search-overlay" id="searchOverlay" style="display:none;">
+    <div class="search-modal">
+      <div class="search-header">
+        <svg class="search-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" class="search-input" id="searchInput" placeholder="搜索文章..." autocomplete="off" />
+        <span class="search-kbd">&#8984;K</span>
+        <button class="search-close" id="searchClose" type="button" aria-label="关闭搜索">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="search-results" id="searchResults">
+        <a href="#" class="search-result-item">
+          <div class="search-result-item__title">AI Agent：重塑数字世界的自主智能体</div>
+          <div class="search-result-item__excerpt">从 LLM 到自主智能体，AI Agent 正在从概念走向现实...</div>
+          <div class="search-result-item__date">2026-02-20</div>
+        </a>
+        <a href="#" class="search-result-item">
+          <div class="search-result-item__title">深入解析 Gridea Pro 架构演进</div>
+          <div class="search-result-item__excerpt">Gridea Pro 从桌面应用到全栈平台的架构演进之路...</div>
+          <div class="search-result-item__date">2026-02-15</div>
+        </a>
+        <a href="#" class="search-result-item">
+          <div class="search-result-item__title">从 MVP 到生产级架构：Go 后端深度重构</div>
+          <div class="search-result-item__excerpt">记录一次 Go 后端服务的完整重构过程...</div>
+          <div class="search-result-item__date">2026-02-10</div>
+        </a>
+        <a href="#" class="search-result-item">
+          <div class="search-result-item__title">为什么 Chat 模式正在消亡：Agentic Workflow 的崛起</div>
+          <div class="search-result-item__excerpt">Agentic Workflow 正在替代传统对话模式，带来全新交互范式...</div>
+          <div class="search-result-item__date">2026-02-05</div>
+        </a>
+        <a href="#" class="search-result-item">
+          <div class="search-result-item__title">探索 Model Context Protocol：连接 AI 的开放标准</div>
+          <div class="search-result-item__excerpt">MCP 正在成为 AI 应用与外部世界交互的通用协议...</div>
+          <div class="search-result-item__date">2026-01-28</div>
+        </a>
+        <a href="#" class="search-result-item">
+          <div class="search-result-item__title">Wails 应用实战：启动逻辑与国际化最佳实践</div>
+          <div class="search-result-item__excerpt">使用 Wails 构建跨平台桌面应用的实战经验总结...</div>
+          <div class="search-result-item__date">2026-01-20</div>
+        </a>
+        <a href="#" class="search-result-item">
+          <div class="search-result-item__title">Rust vs Go：2026 年系统编程语言的选择</div>
+          <div class="search-result-item__excerpt">从性能、开发效率、生态系统和团队适配四个维度进行深度对比...</div>
+          <div class="search-result-item__date">2026-01-12</div>
+        </a>
+        <a href="#" class="search-result-item">
+          <div class="search-result-item__title">静态博客的复兴：为什么独立博客比社交媒体更重要</div>
+          <div class="search-result-item__excerpt">在算法推荐时代，独立博客正在经历一场意想不到的复兴...</div>
+          <div class="search-result-item__date">2026-01-05</div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════
+       INLINE JAVASCRIPT
+       ═══════════════════════════════════════════════════════════════════════ -->
+  <script>
+  (function() {
+    // ── Search Modal ──
+    var overlay = document.getElementById('searchOverlay');
+    var input   = document.getElementById('searchInput');
+    var btnSearch = document.getElementById('btnSearch');
+    var btnClose  = document.getElementById('searchClose');
+
+    function openSearch() {
+      overlay.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      setTimeout(function() { input.focus(); }, 100);
+    }
+
+    function closeSearch() {
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+      input.value = '';
+    }
+
+    if (btnSearch) btnSearch.addEventListener('click', openSearch);
+    if (btnClose)  btnClose.addEventListener('click', closeSearch);
+
+    overlay.addEventListener('click', function(e) {
+      if (e.target === overlay) closeSearch();
+    });
+
+    // ── Keyboard shortcuts ──
+    document.addEventListener('keydown', function(e) {
+      // Escape to close search
+      if (e.key === 'Escape' && overlay.style.display === 'flex') {
+        closeSearch();
+        return;
+      }
+      // Cmd+K or Ctrl+K to open search
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        if (overlay.style.display === 'flex') {
+          closeSearch();
+        } else {
+          openSearch();
+        }
+      }
+    });
+
+    // ── Mobile Nav Toggle ──
+    var btnNavToggle = document.getElementById('btnNavToggle');
+    var sectionBar   = document.getElementById('sectionBar');
+
+    if (btnNavToggle && sectionBar) {
+      btnNavToggle.addEventListener('click', function() {
+        sectionBar.classList.toggle('section-bar--open');
+      });
+
+      // Close nav when clicking a nav item on mobile
+      var navItems = sectionBar.querySelectorAll('.nav-item');
+      navItems.forEach(function(item) {
+        item.addEventListener('click', function() {
+          sectionBar.classList.remove('section-bar--open');
+        });
+      });
+    }
+
+    // ── Simple search filtering ──
+    var searchResults = document.getElementById('searchResults');
+    var allResults = searchResults ? searchResults.querySelectorAll('.search-result-item') : [];
+
+    if (input) {
+      input.addEventListener('input', function() {
+        var query = input.value.toLowerCase().trim();
+        var visibleCount = 0;
+        allResults.forEach(function(item) {
+          var title = item.querySelector('.search-result-item__title').textContent.toLowerCase();
+          var excerpt = item.querySelector('.search-result-item__excerpt').textContent.toLowerCase();
+          if (!query || title.indexOf(query) !== -1 || excerpt.indexOf(query) !== -1) {
+            item.style.display = 'block';
+            visibleCount++;
+          } else {
+            item.style.display = 'none';
+          }
+        });
+        // Show empty state if no results
+        var emptyEl = searchResults.querySelector('.search-empty');
+        if (visibleCount === 0 && query) {
+          if (!emptyEl) {
+            emptyEl = document.createElement('div');
+            emptyEl.className = 'search-empty';
+            emptyEl.textContent = '没有找到相关文章';
+            searchResults.appendChild(emptyEl);
+          }
+          emptyEl.style.display = 'block';
+        } else if (emptyEl) {
+          emptyEl.style.display = 'none';
+        }
+      });
+    }
+  })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,256 @@
+/* ============================================================================
+   § 27. RESPONSIVE — TABLET (max-width: 768px)
+   ============================================================================ */
+
+@media (max-width: 768px) {
+
+  /* ── Navigation ── */
+  .nav-toggle {
+    display: flex;
+  }
+
+  .mobile-only {
+    display: flex !important;
+  }
+
+  .top-bar__nav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: var(--top-bar-height);
+    left: 0;
+    right: 0;
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+    z-index: 999;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transition: max-height 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+      opacity 0.3s ease;
+  }
+
+  .top-bar__nav--open {
+    max-height: 400px;
+    opacity: 1;
+  }
+
+  .top-bar__nav .nav-item {
+    padding: 14px 24px;
+    height: auto;
+    border-bottom: 1px solid var(--color-border-light);
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .top-bar__nav--open .nav-item {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .top-bar__nav--open .nav-item:nth-child(1) { transition-delay: 0.05s; }
+  .top-bar__nav--open .nav-item:nth-child(2) { transition-delay: 0.1s; }
+  .top-bar__nav--open .nav-item:nth-child(3) { transition-delay: 0.15s; }
+  .top-bar__nav--open .nav-item:nth-child(4) { transition-delay: 0.2s; }
+  .top-bar__nav--open .nav-item:nth-child(5) { transition-delay: 0.25s; }
+  .top-bar__nav--open .nav-item:nth-child(6) { transition-delay: 0.3s; }
+  .top-bar__nav--open .nav-item:nth-child(7) { transition-delay: 0.35s; }
+
+  .top-bar__nav .nav-item:hover,
+  .top-bar__nav .nav-item--active {
+    background-color: var(--color-surface);
+  }
+
+  .top-bar__nav .nav-item:last-child {
+    border-bottom: none;
+  }
+
+  /* ── Content Grid ── */
+  .content-grid {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    display: none;
+  }
+
+  /* ── Search overlay: closer to top on mobile ── */
+  .search-overlay {
+    padding-top: 60px;
+  }
+
+  /* ── Search kbd shortcut ── */
+  .search-kbd {
+    display: none;
+  }
+
+  /* ── Compact Grid ── */
+  .compact-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* ── List Post Card Thumbnail ── */
+  .post-card__thumb {
+    width: 120px;
+    height: auto;
+    aspect-ratio: 3 / 2;
+  }
+
+  /* ── Article Title ── */
+  .article-title {
+    font-size: 1.8rem;
+  }
+
+  /* ── Post Nav ── */
+  .post-nav {
+    grid-template-columns: 1fr;
+  }
+
+  .post-nav-card {
+    height: 100px;
+  }
+
+  .post-nav-card--empty {
+    height: 60px;
+  }
+
+  .post-nav-card__img {
+    width: 90px;
+  }
+
+  /* ── Hero Section ── */
+  .hero-section {
+    height: 280px;
+  }
+
+  .hero-content {
+    bottom: 24px;
+    padding: 0 16px;
+  }
+
+  .hero-title {
+    font-size: 1.5rem;
+  }
+
+  /* ── Header Spacer (collapsed — no section bar visible) ── */
+  .main-content-wrapper {
+    margin-top: var(--top-bar-height);
+  }
+
+  /* ── Container padding ── */
+  .container {
+    padding: 0 16px;
+  }
+
+  .content-grid {
+    padding: 0 16px;
+  }
+
+  /* ── Page layout ── */
+  .page-container {
+    padding: 0 16px 60px;
+  }
+
+  .article-container {
+    padding: 40px 16px 60px;
+  }
+
+  .page-header {
+    padding-top: 40px;
+  }
+
+  /* ── Archive List ── */
+  .archive-year {
+    font-size: 0.9rem;
+    margin-top: 36px;
+  }
+
+  .archive-item {
+    gap: 12px;
+    padding: 12px 0;
+  }
+
+  .archive-item__date {
+    width: 90px;
+    font-size: 12px;
+  }
+
+  .archive-item__title {
+    font-size: 14.5px;
+  }
+
+  /* ── Footer ── */
+  .footer-inner {
+    padding: 0 16px;
+  }
+}
+
+
+/* ============================================================================
+   § 28. RESPONSIVE — SMALL MOBILE (max-width: 480px)
+   ============================================================================ */
+
+@media (max-width: 480px) {
+
+  /* ── Compact Grid: single column ── */
+  .compact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── List Post Card: stack vertically ── */
+  .post-card--list {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .post-card--list .post-card__thumb-link {
+    order: -1;
+    width: 100%;
+  }
+
+  .post-card--list .post-card__thumb {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    order: -1;
+  }
+
+  /* ── Hero ── */
+  .hero-content {
+    bottom: 20px;
+    padding: 0 16px;
+  }
+
+  .hero-title {
+    font-size: 1.3rem;
+  }
+
+  /* ── Article ── */
+  .article-title {
+    font-size: 1.6rem;
+  }
+
+  .article-content {
+    font-size: 16px;
+  }
+
+  /* ── Error Page ── */
+  .error-code {
+    font-size: 5rem;
+  }
+
+  /* ── Friends Grid ── */
+  .links-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Page title ── */
+  .page-title {
+    font-size: 1.6rem;
+  }
+}
+
+

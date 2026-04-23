@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}归档 | {{ config.siteName }}{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1 class="page-title">归档</h1>
+    {% if posts|length > 0 %}
+    <p class="page-subtitle meta-text">共 {{ posts|length }} 篇文章</p>
+    {% endif %}
+  </div>
+
+  {% if posts|length > 0 %}
+  <div class="archive-list">
+    {% for group in archives %}
+    <h2 class="archive-year">{{ group.Year }}</h2>
+    {% for post in group.Posts %}
+    <a href="{{ post.link }}" class="archive-item">
+      <time class="archive-item__date" datetime="{{ post.date }}">{{ post.dateFormat }}</time>
+      <span class="archive-item__title">{{ post.title }}</span>
+      {% if post.isTop %}<span class="archive-item__badge">置顶</span>{% endif %}
+    </a>
+    {% endfor %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <p class="empty-state__text">暂无文章</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

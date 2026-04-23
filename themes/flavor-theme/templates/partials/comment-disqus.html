@@ -1,0 +1,24 @@
+<section class="comment-section">
+  <h2 class="comment-section__title">评论</h2>
+  <div id="disqus_thread"></div>
+  <script>
+    var disqus_config = function () {
+      this.page.url = window.location.href;
+      this.page.identifier = window.location.pathname;
+    };
+    {% if commentSetting.api %}
+    var defined_api = '{{ commentSetting.api }}';
+    {% endif %}
+    (function () {
+      var d = document, s = d.createElement('script');
+      {% if commentSetting.api %}
+      s.src = defined_api + '/{{ commentSetting.shortname }}/embed.js';
+      {% else %}
+      s.src = 'https://{{ commentSetting.shortname }}.disqus.com/embed.js';
+      {% endif %}
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  </script>
+  <noscript>请启用 JavaScript 以查看 <a href="https://disqus.com/?ref_noscript">Disqus 评论</a>。</noscript>
+</section>

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>置顶徽章 · 第二轮候选</title>
+<style>
+  :root {
+    --bg: #000;
+    --surface: #111;
+    --text: #e0e0e0;
+    --muted: #999;
+  }
+  .panel-light {
+    --bg: #fff;
+    --surface: #f7f7f8;
+    --text: #222;
+    --muted: #8a8a8a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", sans-serif;
+    background: #1a1a1a;
+    color: #ddd;
+    padding: 40px;
+    font-size: 15px;
+  }
+  h1 { font-size: 20px; font-weight: 600; margin: 0 0 8px; letter-spacing: -0.01em; }
+  p.intro { color: #888; font-size: 13px; margin: 0 0 24px; }
+  h2 {
+    font-size: 13px;
+    font-weight: 600;
+    margin: 36px 0 12px;
+    color: #fff;
+    letter-spacing: 0.04em;
+  }
+  h2 small { color: #888; font-weight: 400; margin-left: 10px; letter-spacing: 0; }
+
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .panel {
+    background: var(--bg);
+    color: var(--text);
+    padding: 24px 28px;
+    border-radius: 10px;
+    border: 1px solid #333;
+  }
+  .panel-light { border-color: #ddd; }
+  .row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px dashed color-mix(in srgb, var(--text) 15%, transparent);
+  }
+  .row:last-child { border-bottom: none; }
+  .row .title { font-size: 15px; color: var(--text); flex: 1; }
+  .row .date { font-size: 11px; color: var(--muted); flex-shrink: 0; letter-spacing: 0.02em; }
+
+  /* ============ A. 黑底霓虹黄方块 (SOLID BLOCK) ============ */
+  .v-a {
+    display: inline-flex;
+    align-items: center;
+    background: #000;
+    color: #FFFF00;
+    padding: 3px 8px 2px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    font-size: 10px;
+    border-radius: 2px;
+    line-height: 1;
+    font-family: "SF Mono", SFMono-Regular, monospace;
+  }
+  .panel-light .v-a {
+    background: #111;
+    color: #FFEA00;
+  }
+
+  /* ============ B. 朱砂红印章 (CINNABAR SEAL) ============ */
+  .v-b {
+    display: inline-flex;
+    align-items: center;
+    color: #c8391f;
+    border: 1.5px solid #c8391f;
+    padding: 3px 7px 2px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    font-size: 11px;
+    border-radius: 2px;
+    line-height: 1;
+    font-family: "Spectral", Georgia, "Songti SC", serif;
+    transform: rotate(-2deg);
+  }
+
+  /* ============ C. 荧光笔高亮 (HIGHLIGHTER) ============ */
+  .v-c {
+    background: #FFFF00;
+    color: #000;
+    padding: 2px 6px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    font-size: 11px;
+    line-height: 1.3;
+  }
+
+  /* ============ D. 双短线夹文字 (EM-DASH) ============ */
+  .v-d {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+  }
+  .v-d::before, .v-d::after {
+    content: "";
+    width: 12px;
+    height: 1px;
+    background: currentColor;
+    display: inline-block;
+  }
+
+  /* ============ E. 序号风 (EDITORIAL № 01) ============ */
+  .v-e {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+    color: #ff3333;
+    font-family: "Spectral", Georgia, serif;
+    font-size: 13px;
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+  .v-e .num {
+    font-size: 11px;
+    font-style: normal;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .panel-light .v-e { color: #c8391f; }
+
+  /* ============ F. 左红条 + 白字 (RED BAR PREFIX) ============ */
+  .v-f {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    line-height: 1;
+  }
+  .v-f::before {
+    content: "";
+    width: 3px;
+    height: 14px;
+    background: #e63946;
+    flex-shrink: 0;
+  }
+</style>
+</head>
+<body>
+  <h1>置顶徽章 · 第二轮候选</h1>
+  <p class="intro">配色跳出金色系：黄/黑、朱砂红、荧光高亮、纯排印。左：深色 · 右：浅色。</p>
+
+  <h2>A. 黑底霓黄方块 <small>mono 字体 · 高对比色块 · 编辑风/街头感</small></h2>
+  <div class="grid">
+    <div class="panel">
+      <div class="row"><span class="title">念念不忘，必有回响 —— Gridea Pro，我们回来了</span><span class="v-a">TOP</span><span class="date">2026-04-06</span></div>
+      <div class="row"><span class="title">独立博客没有死，正在死的是平庸的博客</span><span class="v-a">置顶</span><span class="date">2026-04-07</span></div>
+    </div>
+    <div class="panel panel-light">
+      <div class="row"><span class="title">念念不忘，必有回响 —— Gridea Pro，我们回来了</span><span class="v-a">TOP</span><span class="date">2026-04-06</span></div>
+      <div class="row"><span class="title">独立博客没有死，正在死的是平庸的博客</span><span class="v-a">置顶</span><span class="date">2026-04-07</span></div>
+    </div>
+  </div>
+
+  <h2>B. 朱砂印章 <small>衬线体 · 红边框 · 轻微旋转，致敬中式书法印</small></h2>
+  <div class="grid">
+    <div class="panel">
+      <div class="row"><span class="title">念念不忘，必有回响 —— Gridea Pro，我们回来了</span><span class="v-b">置顶</span><span class="date">2026-04-06</span></div>
+    </div>
+    <div class="panel panel-light">
+      <div class="row"><span class="title">念念不忘，必有回响 —— Gridea Pro，我们回来了</span><span class="v-b">置顶</span><span class="date">2026-04-06</span></div>
+    </div>
+  </div>
+
+  <h2>C. 荧光笔高亮 <small>黄底黑字 · 像马克笔划过 · 醒目而不浮夸</small></h2>
+  <div class="grid">
+    <div class="panel">
+      <div class="row"><span class="title">念念不忘，必有回响 —— Gridea Pro，我们回来了</span><span class="v-c">置顶</span><span class="date">2026-04-06</span></div>
+    </div>
+    <div class="panel panel-light">
+      <div class="row"><span class="title">念念不忘，必有回响 —— Gridea Pro，我们回来了</span><span class="v-c">置顶</span><span class="date">2026-04-06</span></div>
+    </div>
+  </div>
+
+  <h2>D. 双短线夹文字 <small>— 置顶 — · 纯排印 · 不抢戏</small></h2>
+  <div class="grid">
+    <div class="panel">
+      <div class="row"><span class="title">念念不忘，必有回响 —— Gridea Pro，我们回来了</span><span class="v-d">置顶</span><span class="date">2026-04-06</span></div>
+    </div>
+    <div class="panel panel-light">
+      <div class="row"><span class="title">念念不忘，必有回响 —— Gridea Pro，我们回来了</span><span class="v-d">置顶</span><span class="date">2026-04-06</span></div>
+    </div>
+  </div>
+
+  <h2>E. 杂志序号体 <small>衬线斜体 · 红色 · № 编号 · 编辑感</small></h2>
+  <div class="grid">
+    <div class="panel">
+      <div class="row"><span class="title">念念不忘，必有回响 —— Gridea Pro，我们回来了</span><span class="v-e"><span class="num">№</span>置顶</span><span class="date">2026-04-06</span></div>
+    </div>
+    <div class="panel panel-light">
+      <div class="row"><span class="title">念念不忘，必有回响 —— Gridea Pro，我们回来了</span><span class="v-e"><span class="num">№</span>置顶</span><span class="date">2026-04-06</span></div>
+    </div>
+  </div>
+
+  <h2>F. 左红条 + 白字 <small>红色 3×14 竖条做视觉定位 · 文字保持正常颜色</small></h2>
+  <div class="grid">
+    <div class="panel">
+      <div class="row"><span class="title">念念不忘，必有回响 —— Gridea Pro，我们回来了</span><span class="v-f">置顶</span><span class="date">2026-04-06</span></div>
+    </div>
+    <div class="panel panel-light">
+      <div class="row"><span class="title">念念不忘，必有回响 —— Gridea Pro，我们回来了</span><span class="v-f">置顶</span><span class="date">2026-04-06</span></div>
+    </div>
+  </div>
+
+</body>
+</html>

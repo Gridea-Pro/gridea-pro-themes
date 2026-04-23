@@ -1,0 +1,19 @@
+<footer id="footer" class="footer">
+    <nav>
+        {% for menu in menus %}
+        {% if forloop.Counter0 > 0 %} · {% endif %}
+        <a class="menu-item" href="{{ menu.link }}">{{ menu.name }}</a>
+        {% endfor %}
+    </nav>
+
+    <div class="Copyright">Copyright &copy; <span class="current-year"></span> <a href="{{ config.domain }}">{{
+            config.siteName }}</a></div>
+    <script>document.querySelector('.current-year').textContent = new Date().getFullYear();</script>
+
+    <div class="index_footer">
+        {{ themeConfig.footerInfo | safe }} ·
+        <a class="rss" href="/feed.xml" target="_blank" rel="noopener noreferrer">
+            <i class="ri-rss-line"></i>RSS
+        </a>
+    </div>
+</footer>

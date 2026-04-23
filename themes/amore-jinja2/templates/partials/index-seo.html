@@ -1,0 +1,30 @@
+{% if posts and posts|length > 0 %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "name": "{{ config.siteName }}",
+      "description": "{{ themeConfig.siteDescription }}",
+      "keywords": "{{ theme_config.keywords }}",
+      "url": "{{ config.domain }}"
+    }
+    {% for post in posts | slice:"0:10" %}
+    ,{
+      "@type": "BlogPosting",
+      "title": "{{ post.title }}",
+      "description": "{{ post.abstract | striptags | truncatechars:180 }}...",
+      "keywords": "{% for tag in post.tags %}{{ tag.name }}{% if not loop.last %}, {% endif %}{% endfor %}",
+      "url": "{{ post.link }}"
+      {% if post.feature %}
+      ,"image": "{{ post.feature }}"
+      {% endif %}
+      ,"published": "{{ post.date }}",
+      "author": "{{ config.siteName }}"
+    }
+    {% endfor %}
+  ]
+}
+</script>
+{% endif %}

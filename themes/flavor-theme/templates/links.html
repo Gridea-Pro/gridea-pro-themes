@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}友链 | {{ config.siteName }}{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1 class="page-title">友链</h1>
+    <p class="page-subtitle">志同道合的朋友们</p>
+  </div>
+
+  <div class="links-page">
+    {% if links|length > 0 %}
+    <div class="links-grid">
+      {% for link in links %}
+      <a href="{{ link.siteLink }}" class="link-card" target="_blank" rel="noopener noreferrer">
+        <div class="link-card__top">
+          {% if link.avatar %}
+          <div class="link-card__avatar-wrap">
+            <img src="{{ link.avatar }}" alt="{{ link.siteName }}" />
+          </div>
+          {% else %}
+          <span class="link-card__avatar-text">{{ link.siteName|truncatechars:1 }}</span>
+          {% endif %}
+          <div class="link-card__info">
+            <span class="link-card__name">{{ link.siteName }}</span>
+          </div>
+          <span class="link-card__arrow">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="7" y1="17" x2="17" y2="7"></line>
+              <polyline points="7 7 17 7 17 17"></polyline>
+            </svg>
+          </span>
+        </div>
+        {% if link.description %}
+        <span class="link-card__desc">{{ link.description }}</span>
+        {% endif %}
+      </a>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <p class="empty-state__text">友链位置虚位以待</p>
+      <p class="empty-state__hint meta-text">可在管理后台添加友情链接</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,603 @@
+/* ============================================================================
+   § 14. ARTICLE PAGE
+   ============================================================================ */
+
+/* ── Article Container ── */
+.article-container {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 64px 24px 80px;
+}
+
+/* ── Article Header ── */
+.article-header {
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.article-title {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--color-text-primary);
+  line-height: 1.06;
+  margin-bottom: 24px;
+}
+
+.article-meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0;
+  font-size: 14px;
+  color: var(--color-text-secondary);
+}
+
+.article-meta__category {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.article-meta__category:hover {
+  color: var(--color-accent-hover);
+}
+
+.article-meta__sep {
+  margin: 0 8px;
+  color: var(--color-text-muted);
+}
+
+.article-meta__item {
+  color: var(--color-text-secondary);
+}
+
+/* ── Article Feature Image ── */
+.article-feature {
+  margin-bottom: 32px;
+}
+
+.article-feature img {
+  width: 100%;
+  border-radius: 8px;
+  display: block;
+}
+
+/* ── Article Content ── */
+.article-content {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.9;
+  letter-spacing: 0.01em;
+  color: var(--color-text-body);
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.article-content h2 {
+  font-family: var(--font-heading);
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+  margin: 2.5em 0 0.8em;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+
+.article-content h3 {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--color-text-primary);
+  margin: 2em 0 0.6em;
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.article-content h4 {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--color-text-primary);
+  margin: 1.8em 0 0.5em;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.article-content p {
+  margin-bottom: 1.4em;
+}
+
+.article-content a {
+  color: var(--color-accent-hover);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.article-content a:hover {
+  color: var(--color-text-primary);
+}
+
+.article-content strong {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.article-content em {
+  font-style: italic;
+}
+
+.article-content blockquote {
+  border-left: 3px solid #333333;
+  padding-left: 20px;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  margin: 2em 0;
+}
+
+.article-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.article-content pre {
+  background-color: var(--color-surface);
+  border-radius: 8px;
+  padding: 20px;
+  overflow-x: auto;
+  margin: 1.5em 0;
+  line-height: 1.6;
+  -webkit-overflow-scrolling: touch;
+}
+
+.article-content pre code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  padding: 0;
+  background: none;
+  color: inherit;
+  border-radius: 0;
+}
+
+.article-content code {
+  font-family: var(--font-mono);
+  background-color: #1a1a1a;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* Ensure inline code inside pre doesn't double-style */
+.article-content pre code {
+  background: none;
+  padding: 0;
+  border-radius: 0;
+  font-size: 0.875em;
+}
+
+.article-content img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 2em 0;
+  display: block;
+}
+
+.article-content figure {
+  margin: 2em 0;
+}
+
+.article-content figcaption {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-top: 8px;
+  text-align: center;
+}
+
+.article-content ul {
+  padding-left: 1.5em;
+  margin-bottom: 1.8em;
+  list-style: disc;
+}
+
+.article-content ol {
+  padding-left: 1.5em;
+  margin-bottom: 1.8em;
+  list-style: decimal;
+}
+
+.article-content li {
+  margin-bottom: 0.6em;
+  line-height: 1.9;
+}
+
+.article-content li>ul,
+.article-content li>ol {
+  margin-top: 0.5em;
+  margin-bottom: 0;
+}
+
+.article-content hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 2.5em 0;
+}
+
+.article-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2em 0;
+  font-size: 0.9em;
+}
+
+.article-content th,
+.article-content td {
+  border: 1px solid var(--color-border);
+  padding: 10px 16px;
+  text-align: left;
+}
+
+.article-content th {
+  background-color: var(--color-surface);
+  font-weight: 400;
+  color: var(--color-text-primary);
+}
+
+.article-content td {
+  color: var(--color-text-body);
+}
+
+/* ── Article Tags Bar (between double lines) ── */
+.article-tags-bar {
+  margin-top: 48px;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  padding: 20px 0;
+}
+
+.article-tags-bar__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* ── Article Header Tags ── */
+.article-header__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 16px 0;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ── Post Navigation (Prev/Next) ── */
+.post-nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-top: 48px;
+  padding-top: 40px;
+  border-top: 1px solid var(--color-border);
+}
+
+.post-nav-card {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  height: 120px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.post-nav-card:hover {
+  border-color: var(--color-border-hover);
+  background-color: #161616;
+  color: inherit;
+}
+
+.post-nav-card--empty {
+  border: 1px dashed var(--color-border);
+  background: none;
+}
+
+.post-nav-card--empty:hover {
+  border-color: var(--color-border);
+  background: none;
+}
+
+.post-nav-card__empty-text {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.post-nav-card__img {
+  width: 120px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.post-nav-card__img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.post-nav-card:hover .post-nav-card__img img {
+  transform: scale(1.05);
+}
+
+.post-nav-card__body {
+  flex: 1;
+  min-width: 0;
+  padding: 16px 36px 16px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+
+.post-nav-card--prev .post-nav-card__body {
+  padding: 16px 20px 16px 36px;
+}
+
+.post-nav-card__label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-muted);
+}
+
+.post-nav-card__title {
+  font-family: var(--font-heading);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.post-nav-card__arrow {
+  position: absolute;
+  top: 12px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  transition: color var(--transition-fast), transform var(--transition-fast);
+}
+
+.post-nav-card--prev .post-nav-card__arrow {
+  left: 12px;
+}
+
+.post-nav-card--next .post-nav-card__arrow {
+  right: 12px;
+}
+
+.post-nav-card--next {
+  text-align: right;
+}
+
+.post-nav-card--next .post-nav-card__body {
+  align-items: flex-end;
+}
+
+.post-nav-card:hover .post-nav-card__arrow {
+  color: var(--color-text-primary);
+}
+
+.post-nav-card--prev:hover .post-nav-card__arrow {
+  transform: translateX(-3px);
+}
+
+.post-nav-card--next:hover .post-nav-card__arrow {
+  transform: translateX(3px);
+}
+
+/* ── View More Button ── */
+.view-more {
+  text-align: center;
+  margin-top: 40px;
+}
+
+/* ── Pagination Info ── */
+.pagination__info {
+  font-size: 14px;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+}
+
+
+
+/* ============================================================================
+   § 33. GRIDEA PRO CONTENT OVERRIDES
+   ============================================================================ */
+
+/* Gridea outputs .post-content for article bodies — alias to article-content */
+.post-content {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.9;
+  letter-spacing: 0.01em;
+  color: var(--color-text-body);
+}
+
+.post-content h2 {
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+  margin: 2em 0 1em;
+  font-weight: 400;
+}
+
+.post-content h3 {
+  font-size: 1.25rem;
+  color: var(--color-text-primary);
+  margin: 1.5em 0 0.75em;
+  font-weight: 400;
+}
+
+.post-content p {
+  margin-bottom: 1.5em;
+}
+
+.post-content a {
+  color: var(--color-accent-hover);
+  text-decoration: none;
+}
+
+.post-content a:hover {
+  color: var(--color-text-primary);
+}
+
+.post-content blockquote {
+  border-left: 3px solid #333333;
+  padding-left: 20px;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  margin: 1.5em 0;
+}
+
+.post-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.post-content pre {
+  background-color: var(--color-surface);
+  border-radius: 8px;
+  padding: 20px;
+  overflow-x: auto;
+  margin: 1.5em 0;
+}
+
+.post-content pre code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  padding: 0;
+  background: none;
+  color: inherit;
+}
+
+.post-content code {
+  font-family: var(--font-mono);
+  background-color: #1a1a1a;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.post-content img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin: 1.5em 0;
+}
+
+.post-content ul,
+.post-content ol {
+  padding-left: 1.5em;
+  margin-bottom: 1.5em;
+}
+
+.post-content li {
+  margin-bottom: 0.5em;
+}
+
+.post-content hr {
+  border: none;
+  border-top: 1px solid var(--color-border);
+  margin: 2em 0;
+}
+
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+}
+
+.post-content th,
+.post-content td {
+  border: 1px solid var(--color-border);
+  padding: 10px 16px;
+  text-align: left;
+}
+
+.post-content th {
+  background-color: var(--color-surface);
+  font-weight: 400;
+}
+
+
+/* ============================================================================
+   § 34. CONTENT SECTION SPACING
+   ============================================================================ */
+
+.content-section {
+  margin-bottom: 48px;
+}
+
+.content-section:last-child {
+  margin-bottom: 0;
+}
+
+
+
+/* ============================================================================
+   § 36. TABLE OF CONTENTS (Optional — Article sidebar)
+   ============================================================================ */
+
+.toc {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.toc__title {
+  font-family: var(--font-body);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+.toc__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc__item {
+  margin-bottom: 6px;
+}
+
+.toc__item--h3 {
+  padding-left: 16px;
+}
+
+.toc__link {
+  font-size: 13px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  line-height: 1.5;
+  transition: color var(--transition-fast);
+}
+
+.toc__link:hover,
+.toc__link--active {
+  color: var(--color-text-primary);
+}
+
+

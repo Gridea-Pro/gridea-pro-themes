@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}404 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+{% include "partials/header.html" %}
+
+<div class="error-page">
+    <div class="error-page-container">
+        <h1>404</h1>
+        <p>你来到了没有知识的荒原</p>
+        <a href="/" class="back-home">返回首页</a>
+    </div>
+</div>
+
+{% include "partials/footer.html" %}
+{% endblock %}

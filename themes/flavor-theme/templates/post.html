@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} | {{ config.siteName }}{% endblock %}
+
+{% block head %}
+<meta property="og:title" content="{{ post.title }}" />
+<meta property="og:type" content="article" />
+{% if post.feature %}
+<meta property="og:image" content="{{ post.feature }}" />
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<article class="article-container">
+  <header class="article-header">
+    <h1 class="article-title">{{ post.title }}</h1>
+    <div class="article-meta">
+      {% if post.categories|length > 0 %}
+      {% for cat in post.categories %}
+      <a href="{{ cat.link }}" class="article-meta__category">{{ cat.name }}</a>
+      {% if not forloop.Last %}<span class="article-meta__sep">·</span>{% endif %}
+      {% endfor %}
+      <span class="article-meta__sep">·</span>
+      {% endif %}
+      <span class="article-meta__item">{{ post.dateFormat }}</span>
+      {% if post.stats.minutes > 0 %}
+      <span class="article-meta__sep">·</span>
+      <span class="article-meta__item">{{ post.stats.minutes }} 分钟阅读</span>
+      {% endif %}
+    </div>
+    {% if post.tags|length > 0 %}
+    <div class="article-header__tags">
+      {% for tag in post.tags %}
+      <a href="{{ tag.link }}" class="tag-pill tag-pill--sm">{{ tag.name }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </header>
+
+  {% if post.feature %}
+  <div class="article-feature">
+    <img src="{{ post.feature }}" alt="{{ post.title }}" />
+  </div>
+  {% endif %}
+
+  <div class="article-content">
+    {{ post.content|safe }}
+  </div>
+
+  {# ── Prev / Next navigation ── #}
+  <nav class="post-nav">
+    {% if post.prevPost %}
+    <a href="{{ post.prevPost.link }}" class="post-nav-card post-nav-card--prev">
+      {% if post.prevPost.feature %}
+      <div class="post-nav-card__img">
+        <img src="{{ post.prevPost.feature }}" alt="{{ post.prevPost.title }}" loading="lazy" />
+      </div>
+      {% endif %}
+      <div class="post-nav-card__body">
+        <span class="post-nav-card__label meta-text">上一篇</span>
+        <span class="post-nav-card__title">{{ post.prevPost.title }}</span>
+      </div>
+      <span class="post-nav-card__arrow">&larr;</span>
+    </a>
+    {% else %}
+    <div class="post-nav-card post-nav-card--empty">
+      <div class="post-nav-card__body">
+        <span class="post-nav-card__label meta-text">上一篇</span>
+        <span class="post-nav-card__empty-text">没有上一篇了~</span>
+      </div>
+    </div>
+    {% endif %}
+    {% if post.nextPost %}
+    <a href="{{ post.nextPost.link }}" class="post-nav-card post-nav-card--next">
+      <div class="post-nav-card__body">
+        <span class="post-nav-card__label meta-text">下一篇</span>
+        <span class="post-nav-card__title">{{ post.nextPost.title }}</span>
+      </div>
+      {% if post.nextPost.feature %}
+      <div class="post-nav-card__img">
+        <img src="{{ post.nextPost.feature }}" alt="{{ post.nextPost.title }}" loading="lazy" />
+      </div>
+      {% endif %}
+      <span class="post-nav-card__arrow">&rarr;</span>
+    </a>
+    {% else %}
+    <div class="post-nav-card post-nav-card--empty post-nav-card--next">
+      <div class="post-nav-card__body">
+        <span class="post-nav-card__label meta-text">下一篇</span>
+        <span class="post-nav-card__empty-text">没有下一篇了~</span>
+      </div>
+    </div>
+    {% endif %}
+  </nav>
+
+  {# ── 评论区 ── #}
+  {% include "partials/comments.html" %}
+</article>
+{% endblock %}

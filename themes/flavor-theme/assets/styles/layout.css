@@ -1,0 +1,336 @@
+/* ============================================================================
+   § 5. SITE HEADER
+   ============================================================================ */
+
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* ── Top Bar ── */
+.top-bar {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--top-bar-height);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.top-bar__left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.site-avatar-link {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.site-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.site-name-link {
+  font-family: var(--font-heading);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.site-name-link:hover {
+  color: var(--color-text-primary);
+}
+
+.top-bar__nav {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-left: auto;
+}
+
+.top-bar__right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.search-btn,
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  color: var(--color-text-secondary);
+  background: none;
+  border: none;
+  transition: color var(--transition-fast),
+    background-color var(--transition-fast);
+  cursor: pointer;
+}
+
+.search-btn:hover,
+.theme-toggle:hover {
+  color: var(--color-text-primary);
+  background-color: var(--color-surface);
+}
+
+.search-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Theme toggle icon swap (visible icon = 下一步将切换到的状态) ── */
+.theme-toggle-sun {
+  display: flex;
+}
+
+.theme-toggle-moon {
+  display: none;
+}
+
+:root.theme-light .theme-toggle-sun {
+  display: none;
+}
+
+:root.theme-light .theme-toggle-moon {
+  display: flex;
+}
+
+/* 深色模式下的太阳图标：默认点亮为金色，hover 时更亮（仅底色效果继承 .theme-toggle:hover） */
+.theme-toggle-sun {
+  color: #FFE300;
+}
+
+.theme-toggle-sun:hover {
+  color: #FFE300;
+}
+
+/* ── Right-side action order：主题切换永远在搜索之前 ── */
+.theme-toggle {
+  order: 0;
+}
+
+.search-btn {
+  order: 1;
+}
+
+.btn-nav-toggle {
+  order: 2;
+}
+
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: color var(--transition-fast);
+}
+
+.nav-toggle:hover {
+  color: var(--color-text-primary);
+}
+
+.nav-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+.nav-item {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 14px;
+  height: var(--top-bar-height);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--transition-fast);
+  position: relative;
+}
+
+.nav-item:hover {
+  color: var(--color-text-primary);
+}
+
+.nav-item--active {
+  color: var(--color-text-primary);
+}
+
+/* ── Apple-style Hamburger ── */
+.hamburger {
+  width: 16px;
+  height: 12px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.hamburger__line {
+  display: block;
+  width: 100%;
+  height: 1.5px;
+  background-color: var(--color-text-primary);
+  border-radius: 1px;
+  transition: transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1),
+    opacity 0.2s ease;
+  transform-origin: center;
+}
+
+.hamburger__line--top {
+  position: absolute;
+  top: 1px;
+}
+
+.hamburger__line--bottom {
+  position: absolute;
+  bottom: 1px;
+}
+
+.hamburger.is-active .hamburger__line--top {
+  transform: translateY(4.5px) rotate(45deg);
+}
+
+.hamburger.is-active .hamburger__line--bottom {
+  transform: translateY(-4.5px) rotate(-45deg);
+}
+
+/* ── Header Spacer ── */
+.header-spacer {
+  height: var(--header-total);
+}
+
+.main-content-wrapper {
+  margin-top: var(--header-total);
+}
+
+
+/* ============================================================================
+   § 6. CONTENT GRID (Main + Sidebar)
+   ============================================================================ */
+
+.content-grid {
+  display: flex;
+  gap: var(--grid-gap);
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+}
+
+
+
+/* ============================================================================
+   § 25. FOOTER
+   ============================================================================ */
+
+.site-footer {
+  border-top: 1px solid var(--color-border);
+  padding: 40px 0;
+  margin-top: 48px;
+}
+
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+  text-align: center;
+}
+
+.footer-nav {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-bottom: 20px;
+}
+
+.footer-nav__link {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.footer-nav__link:hover {
+  color: var(--color-text-primary);
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.footer-social__link {
+  color: var(--color-text-muted);
+  transition: color var(--transition-fast);
+}
+
+.footer-social__link:hover {
+  color: var(--color-text-primary);
+}
+
+.footer-social__link svg {
+  width: 20px;
+  height: 20px;
+}
+
+.footer-copyright {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+}
+
+.footer-powered {
+  font-size: 12px;
+  color: #444;
+}
+
+.footer-powered a {
+  color: var(--color-text-muted);
+  text-underline-offset: 2px;
+}
+
+.footer-powered a:hover {
+  color: var(--color-text-primary);
+}

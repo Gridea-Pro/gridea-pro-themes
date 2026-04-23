@@ -1,0 +1,20 @@
+{# ── 评论区分发器 ── #}
+{% if commentSetting and commentSetting.showComment %}
+
+  {% if commentSetting.commentPlatform == "Valine" %}
+    {% include "partials/comment-valine.html" %}
+  {% elif commentSetting.commentPlatform == "Waline" %}
+    {% include "partials/comment-waline.html" %}
+  {% elif commentSetting.commentPlatform == "Twikoo" %}
+    {% include "partials/comment-twikoo.html" %}
+  {% elif commentSetting.commentPlatform == "Gitalk" %}
+    {% include "partials/comment-gitalk.html" %}
+  {% elif commentSetting.commentPlatform == "Giscus" %}
+    {% include "partials/comment-giscus.html" %}
+  {% elif commentSetting.commentPlatform == "Disqus" %}
+    {% include "partials/comment-disqus.html" %}
+  {% elif commentSetting.commentPlatform == "Cusdis" %}
+    {% include "partials/comment-cusdis.html" %}
+  {% endif %}
+
+{% endif %}

@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, width=device-width" />
+    <meta name="renderer" content="webkit">
+    <meta name="format-detection" content="telephone=no, email=no, address=no">
+
+    <title><%= siteTitle %></title>
+
+    <%# SEO/社交/JSON-LD 统一由 Gridea Pro 的 HtmlPostProcessor 注入，此处不再重复输出 %>
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+    <% if (site.customConfig.favicon) { %>
+    <link rel="shortcut icon" href="<%= site.customConfig.favicon %>">
+    <% } else { %>
+    <link rel="shortcut icon" href="/media/images/favicon.ico">
+    <% } %>
+    <link rel="stylesheet" href="/styles/icons.css">
+    <link rel="stylesheet" href="/styles/main.css">
+
+    <% if (site.customConfig.accentColor) { %>
+    <%- '<style>:root{--accent-color:' + site.customConfig.accentColor + ';}<\/style>' %>
+    <% } %>
+
+    <%- include('./global-seo') %>
+    <%- include('./scripts') %>
+
+
+    <% if (site.customConfig.ga) { %>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=<%= site.customConfig.ga %>"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '<%= site.customConfig.ga %>');
+    </script>
+    <% } %>
+
+    <% if (site.customConfig.customCss) { %>
+    <%- '<style>' + site.customConfig.customCss + '<\/style>' %>
+    <% } %>
+</head>

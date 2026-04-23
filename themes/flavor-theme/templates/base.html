@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  {% include "partials/head.html" %}
+  <title>{% block title %}{{ config.siteName }}{% endblock %}</title>
+  {% block head %}{% endblock %}
+</head>
+<body class="flavor-theme">
+
+  {% include "partials/header.html" %}
+
+  <main class="site-main" role="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  {% include "partials/footer.html" %}
+
+  {% if theme_config.showSearch %}
+  {% include "partials/search.html" %}
+  {% endif %}
+
+  {% block scripts %}{% endblock %}
+
+  {% if theme_config.customCss %}
+  <style>{{ theme_config.customCss|safe }}</style>
+  {% endif %}
+
+  {% if theme_config.customJs %}
+  <script>{{ theme_config.customJs|safe }}</script>
+  {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+<article class="post-card post-card--compact">
+  <a href="{{ post.link }}" class="post-card__inner">
+    <div class="post-card__body">
+      <h3 class="post-card__title clamp-2">{{ post.title }}</h3>
+      <div class="post-card__meta meta-text">{{ post.dateFormat }}</div>
+    </div>
+    {% if post.feature %}
+    <img class="post-card__thumb-square" src="{{ post.feature }}" alt="{{ post.title }}" loading="lazy" />
+    {% endif %}
+  </a>
+</article>

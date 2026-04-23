@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+{% block title %}闪念 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+{% include "partials/header.html" %}
+
+<article class="mod-post mod-post__type-post">
+
+    <header>
+        <h1 class="mod-post__title">闪念</h1>
+    </header>
+
+    <div class="mod-post__entry wzulli">
+
+        {% if memos and memos|length > 0 %}
+
+        <!-- 热力图 -->
+        <div class="heatmap-wrap">
+            <div id="heatmap-root"></div>
+            <div class="heatmap-footer">
+                <span id="heatmap-total"></span>
+                <div class="heatmap-legend">
+                    <span>少</span>
+                    <span class="heatmap-legend-cell" style="background:#ebedf0;"></span>
+                    <span class="heatmap-legend-cell" style="background:#9be9a8;"></span>
+                    <span class="heatmap-legend-cell" style="background:#40c463;"></span>
+                    <span class="heatmap-legend-cell" style="background:#28df99;"></span>
+                    <span class="heatmap-legend-cell" style="background:#1a9f6b;"></span>
+                    <span>多</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 闪念列表 -->
+        <div class="memos-list">
+            {% for memo in memos %}
+            <div class="memo-item {% if loop.index0 >= 20 %}memo-hide{% endif %}" data-created="{{ memo.createdAtISO }}">
+                <div class="memo-body">
+                    <div class="memo-content">
+                        {{ memo.content | safe }}
+                    </div>
+                </div>
+                {% if memo.tags and memo.tags|length > 0 %}
+                <div class="memo-tags">
+                    {% for tag in memo.tags %}
+                    <span class="memo-tag"># {{ tag }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class="memo-meta">
+                    <time>{{ memo.dateFormat }}</time>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- 分页控件 -->
+        <div class="memo-pagination" id="memo-pagination">
+            <a href="javascript:void(0);" id="memo-prev-btn" class="disabled" onclick="memoPrevPage()">←
+                上一页</a>
+            <span class="memo-page-info" id="memo-page-info"></span>
+            <a href="javascript:void(0);" id="memo-next-btn" onclick="memoNextPage()">下一页 →</a>
+        </div>
+
+        <script>
+            (function () {
+                var MEMO_PER_PAGE = 20;
+                var currentPage = 1;
+                var items = document.querySelectorAll('.memo-item');
+                var totalItems = items.length;
+                var totalPages = Math.ceil(totalItems / MEMO_PER_PAGE);
+
+                // 初始化内容折叠
+                items.forEach(function (item) {
+                    var body = item.querySelector('.memo-body');
+                    var content = item.querySelector('.memo-content');
+                    if (content && content.scrollHeight > 160) {
+                        body.classList.add('collapsed');
+                        var btn = document.createElement('button');
+                        btn.className = 'memo-expand-btn';
+                        btn.style.display = 'inline';
+                        btn.textContent = '展开全文 ▼';
+                        btn.onclick = function () {
+                            if (body.classList.contains('collapsed')) {
+                                body.style.maxHeight = content.scrollHeight + 'px';
+                                body.classList.remove('collapsed');
+                                btn.textContent = '收起 ▲';
+                            } else {
+                                body.style.maxHeight = '160px';
+                                body.classList.add('collapsed');
+                                btn.textContent = '展开全文 ▼';
+                            }
+                        };
+                        body.parentNode.insertBefore(btn, body.nextSibling);
+                    }
+                });
+
+                // ======= GitHub 风格热力图 =======
+                var heatmapData = {};
+                items.forEach(function (item) {
+                    var d = item.getAttribute('data-created');
+                    if (d) {
+                        var dateStr = d.substring(0, 10);
+                        heatmapData[dateStr] = (heatmapData[dateStr] || 0) + 1;
+                    }
+                });
+
+                var COLORS = ['#ebedf0', '#9be9a8', '#40c463', '#28df99', '#1a9f6b'];
+                var MONTHS = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+                var DAYS = ['日', '一', '二', '三', '四', '五', '六'];
+
+                var today = new Date();
+                today.setHours(0, 0, 0, 0);
+                var endDay = today.getDay();
+                var totalDays = 52 * 7 + endDay + 1;
+                var startDate = new Date(today);
+                startDate.setDate(startDate.getDate() - totalDays + 1);
+                startDate.setDate(startDate.getDate() - startDate.getDay());
+
+                var totalWeeks = Math.ceil(totalDays / 7);
+
+                var weeks = [];
+                for (var w = 0; w < totalWeeks; w++) {
+                    var week = [];
+                    for (var d = 0; d < 7; d++) {
+                        var cellDate = new Date(startDate);
+                        cellDate.setDate(cellDate.getDate() + w * 7 + d);
+                        var key = cellDate.getFullYear() + '-' + String(cellDate.getMonth() + 1).padStart(2, '0') + '-' + String(cellDate.getDate()).padStart(2, '0');
+                        var count = heatmapData[key] || 0;
+                        var level = count === 0 ? 0 : count === 1 ? 1 : count <= 3 ? 2 : count <= 5 ? 3 : 4;
+                        var future = cellDate > today;
+                        week.push({ date: cellDate, key: key, count: count, level: level, future: future, month: cellDate.getMonth(), dayOfMonth: cellDate.getDate() });
+                    }
+                    weeks.push(week);
+                }
+
+                var monthLabels = [];
+                var lastMonth = -1;
+                for (var w = 0; w < weeks.length; w++) {
+                    var firstDay = weeks[w][0];
+                    if (!firstDay.future && firstDay.month !== lastMonth) {
+                        monthLabels.push({ weekIndex: w, label: MONTHS[firstDay.month] });
+                        lastMonth = firstDay.month;
+                    }
+                }
+
+                var html = '<table style="min-width: 600px;">';
+
+                html += '<tr><td class="heatmap-day-label"></td>';
+                var monthColIdx = 0;
+                for (var w = 0; w < totalWeeks; w++) {
+                    if (monthColIdx < monthLabels.length && monthLabels[monthColIdx].weekIndex === w) {
+                        var nextIdx = monthColIdx + 1 < monthLabels.length ? monthLabels[monthColIdx + 1].weekIndex : totalWeeks;
+                        var span = nextIdx - w;
+                        html += '<td colspan="' + span + '" class="heatmap-month-label">' + monthLabels[monthColIdx].label + '</td>';
+                        w += span - 1;
+                        monthColIdx++;
+                    } else {
+                        html += '<td class="heatmap-month-label"></td>';
+                    }
+                }
+                html += '</tr>';
+
+                for (var d = 0; d < 7; d++) {
+                    html += '<tr>';
+                    html += '<td class="heatmap-day-label">' + DAYS[d] + '</td>';
+                    for (var w = 0; w < weeks.length; w++) {
+                        var c = weeks[w][d];
+                        if (c.future) {
+                            html += '<td></td>';
+                        } else {
+                            html += '<td class="cell" data-level="' + c.level + '" style="background:' + COLORS[c.level] + ';" title="' + c.key + ': ' + c.count + ' 条闪念"></td>';
+                        }
+                    }
+                    html += '</tr>';
+                }
+
+                html += '</table>';
+                var root = document.getElementById('heatmap-root');
+                root.innerHTML = html;
+                document.getElementById('heatmap-total').textContent = '过去一年共 ' + totalItems + ' 条闪念';
+
+                setTimeout(function () {
+                    var wrap = document.querySelector('.heatmap-wrap');
+                    if (wrap) {
+                        wrap.scrollLeft = wrap.scrollWidth;
+                    }
+                }, 100);
+
+                // ======= 分页 =======
+                function updatePagination() {
+                    for (var i = 0; i < items.length; i++) {
+                        var start = (currentPage - 1) * MEMO_PER_PAGE;
+                        var end = currentPage * MEMO_PER_PAGE;
+                        if (i >= start && i < end) {
+                            items[i].classList.remove('memo-hide');
+                        } else {
+                            items[i].classList.add('memo-hide');
+                        }
+                    }
+                    var prevBtn = document.getElementById('memo-prev-btn');
+                    var nextBtn = document.getElementById('memo-next-btn');
+                    var pageInfo = document.getElementById('memo-page-info');
+
+                    prevBtn.className = currentPage <= 1 ? 'disabled' : '';
+                    nextBtn.className = currentPage >= totalPages ? 'disabled' : '';
+                    pageInfo.textContent = currentPage + ' / ' + totalPages;
+
+                    if (totalPages <= 1) {
+                        document.getElementById('memo-pagination').style.display = 'none';
+                    }
+                }
+
+                window.memoNextPage = function () {
+                    if (currentPage < totalPages) { currentPage++; updatePagination(); window.scrollTo(0, 0); }
+                };
+                window.memoPrevPage = function () {
+                    if (currentPage > 1) { currentPage--; updatePagination(); window.scrollTo(0, 0); }
+                };
+
+                updatePagination();
+            })();
+        </script>
+
+        {% else %}
+        <p class="memos-empty">暂无闪念</p>
+        {% endif %}
+
+    </div>
+
+    {% include "partials/comments.html" %}
+
+</article>
+
+{% include "partials/footer.html" %}
+
+{% endblock %}

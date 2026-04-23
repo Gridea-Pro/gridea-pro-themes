@@ -1,0 +1,312 @@
+/* ============================================================================
+   § 26. ANIMATIONS & KEYFRAMES
+   ============================================================================ */
+
+/* ── Fade In ── */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* ── Slide Down ── */
+@keyframes slideDown {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ── Global interactive transitions ── */
+a,
+button,
+input,
+.post-card__title,
+.tag-pill,
+.tag-card,
+.link-card,
+.btn,
+.nav-item,
+.search-btn,
+.search-close {
+  transition: color var(--transition-fast),
+    border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+
+
+/* ============================================================================
+   § 29. PRINT STYLES
+   ============================================================================ */
+
+@media print {
+
+  /* ── Hide non-content elements ── */
+  .site-header,
+  .site-footer,
+  .sidebar,
+  .search-overlay,
+  .search-modal,
+  .nav-toggle,
+  .search-btn,
+  .section-bar,
+  .pagination,
+  .article-tags,
+  .btn {
+    display: none !important;
+  }
+
+  /* ── Reset background and colors ── */
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 12pt;
+    line-height: 1.6;
+  }
+
+  /* ── Remove top margin from header spacer ── */
+  .main-content-wrapper {
+    margin-top: 0 !important;
+  }
+
+  .header-spacer {
+    display: none !important;
+  }
+
+  /* ── Article content ── */
+  .article-container {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .article-content {
+    color: #000000 !important;
+    font-size: 12pt;
+  }
+
+  .article-content h2,
+  .article-content h3,
+  .article-content h4 {
+    color: #000000 !important;
+  }
+
+  .article-title {
+    color: #000000 !important;
+    font-size: 24pt;
+  }
+
+  .article-byline__author,
+  .article-byline__date {
+    color: #333333 !important;
+  }
+
+  .article-content a {
+    color: #000000 !important;
+    text-decoration: underline;
+  }
+
+  .article-content a::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666666;
+  }
+
+  .article-content blockquote {
+    border-left-color: #cccccc !important;
+    color: #333333 !important;
+  }
+
+  .article-content pre {
+    background: #f5f5f5 !important;
+    border: 1px solid #cccccc;
+  }
+
+  .article-content code {
+    background: #f0f0f0 !important;
+    color: #333333 !important;
+  }
+
+  .article-content th {
+    background: #f0f0f0 !important;
+    color: #000000 !important;
+  }
+
+  .article-content td {
+    color: #000000 !important;
+  }
+
+  .article-content th,
+  .article-content td {
+    border-color: #cccccc !important;
+  }
+
+  .article-content img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* ── Page breaks ── */
+  h2,
+  h3,
+  h4 {
+    page-break-after: avoid;
+  }
+
+  p,
+  li,
+  blockquote {
+    orphans: 3;
+    widows: 3;
+  }
+
+  pre {
+    page-break-inside: avoid;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* ── Page container ── */
+  .page-container {
+    max-width: 100%;
+    padding: 0;
+    color: #000000 !important;
+  }
+
+  .page-title {
+    color: #000000 !important;
+  }
+
+  .page-description {
+    color: #333333 !important;
+  }
+
+  /* ── Archive ── */
+  .archive-year {
+    color: #000000 !important;
+  }
+
+  .archive-item__title {
+    color: #000000 !important;
+  }
+
+  .archive-item__date {
+    color: #333333 !important;
+  }
+}
+
+
+/* ============================================================================
+   § 30. SELECTION HIGHLIGHT
+   ============================================================================ */
+
+::selection {
+  background-color: #ffff00;
+  color: #000000;
+}
+
+::-moz-selection {
+  background-color: #ffff00;
+  color: #000000;
+}
+
+
+/* ============================================================================
+   § 31. FOCUS STYLES (Accessibility)
+   ============================================================================ */
+
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Remove focus ring for mouse users */
+*:focus:not(:focus-visible) {
+  outline: none;
+}
+
+
+/* ============================================================================
+   § 32. IMAGE LOADING & PLACEHOLDERS
+   ============================================================================ */
+
+img {
+  background-color: var(--color-surface);
+}
+
+img[loading="lazy"] {
+  opacity: 1;
+  transition: opacity var(--transition-normal), transform 0.4s ease;
+}
+
+
+
+/* ============================================================================
+   § 39. LOADING STATES
+   ============================================================================ */
+
+.skeleton {
+  background: linear-gradient(90deg,
+      var(--color-surface) 25%,
+      var(--color-border) 50%,
+      var(--color-surface) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton--text {
+  height: 14px;
+  margin-bottom: 8px;
+}
+
+.skeleton--title {
+  height: 20px;
+  width: 60%;
+  margin-bottom: 12px;
+}
+
+.skeleton--thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 4px;
+}
+
+
+/* ============================================================================
+   § 40. VISUALLY HIDDEN (Screen reader only)
+   ============================================================================ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+

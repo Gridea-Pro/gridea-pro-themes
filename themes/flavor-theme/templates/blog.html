@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}全部文章 | {{ config.siteName }}{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1 class="page-title">全部文章</h1>
+    {% if config.siteDescription %}
+    <p class="page-subtitle">{{ config.siteDescription }}</p>
+    {% endif %}
+  </div>
+
+  {% if posts|length > 0 %}
+  <div class="post-list">
+    {% for post in posts %}
+    {% include "partials/post-card.html" %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <p class="empty-state__text">暂无文章</p>
+  </div>
+  {% endif %}
+
+  {# Pagination #}
+  {% if pagination.hasPrev or pagination.hasNext %}
+  <nav class="pagination">
+    {% if pagination.hasPrev %}
+    <a href="{{ pagination.prevURL }}" class="btn btn--secondary">&larr; 上一页</a>
+    {% endif %}
+    <span class="pagination__info">{{ pagination.currentPage }} / {{ pagination.totalPages }}</span>
+    {% if pagination.hasNext %}
+    <a href="{{ pagination.nextURL }}" class="btn btn--secondary">下一页 &rarr;</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+</div>
+{% endblock %}

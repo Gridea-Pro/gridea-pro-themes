@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}标签 | {{ config.siteName }}{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <h1 class="page-title">标签</h1>
+    {% if tags|length > 0 %}
+    <p class="page-subtitle meta-text">共 {{ tags|length }} 个标签</p>
+    {% endif %}
+  </div>
+
+  {% if tags|length > 0 %}
+  <div class="tag-cloud">
+    {% for tag in tags %}
+    <a href="{{ tag.link }}" class="tag-pill tag-pill--lg">
+      <span class="tag-pill__name">{{ tag.name }}</span>
+      <span class="tag-pill__count">{{ tag.count }}</span>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <p class="empty-state__text">暂无标签</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

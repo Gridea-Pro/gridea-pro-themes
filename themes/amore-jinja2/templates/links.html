@@ -1,0 +1,45 @@
+{% set siteTitle = '友链 | ' + config.siteName %}
+{% include "partials/head.html" %}
+
+<body>
+
+    {% include "partials/header.html" %}
+
+    <article class="mod-post mod-post__type-post">
+
+        <header>
+            <h1 class="mod-post__title">
+                友链
+            </h1>
+        </header>
+
+        <div class="mod-post__entry wzulli">
+
+            <ul class="links-list">
+                {% if theme_config.links and theme_config.links|length > 0 %}
+                {% for friend in theme_config.links %}
+                <li>
+                    <a href="{{ friend.siteLink }}" target="_blank" title="{{ friend.description }}">
+                        {% if friend.avatar %}
+                        <img class="friend-avatar" src="{{ friend.avatar }}" alt="{{ friend.siteName }}">
+                        {% endif %}
+                        {{ friend.siteName }}
+                    </a>
+                </li>
+                {% endfor %}
+                {% else %}
+                <li>暂无友链</li>
+                {% endif %}
+            </ul>
+
+        </div>
+
+        {% include "partials/comments.html" %}
+
+    </article>
+
+    {% include "partials/footer.html" %}
+
+</body>
+
+</html>

@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}博客 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+{% include "partials/header.html" %}
+
+<article class="mod-archive">
+
+    <div class="mod-archive__item">
+        <div class="mod-archive__year"></div>
+
+        <ul class="mod-archive__list">
+            {% set displayPosts = posts %}
+            {% if not posts and site.posts %}
+            {% set displayPosts = site.posts %}
+            {% endif %}
+
+            {% set perPage = theme_config.postsPerPage | default:10 %}
+
+            {% for post in displayPosts %}
+            {% if post.title | lower != 'about' and post.title != '关于' %}
+            <li class="post-item"><time class="mod-archive__time" datetime="{{ post.dateFormat }}">{{ post.dateFormat
+                    }}</time> <span>&nbsp;&nbsp;&nbsp;</span>
+                <a href="{{ post.link }}">
+                    {% if post.isTop %}[置顶] {% endif %}
+                    {{ post.title }}
+                </a>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+
+        <div class="posts-nav">
+            {% if pagination %}
+            {% if pagination.next %}
+            <div style="float:right;">
+                <a href="{{ pagination.next }}" class="page-numbers current flip">下一页</a>
+            </div>
+            {% endif %}
+
+            {% if pagination.prev %}
+            <a href="{{ pagination.prev }}" class="page-numbers current flip">上一页</a>
+            {% endif %}
+            {% else %}
+            <style>
+                .hide {
+                    display: none;
+                }
+            </style>
+            <div id="pagination-config" data-per-page="{{ perPage }}" style="display: none;"></div>
+            <div style="float:right;" id="next-page-container">
+                <a href="javascript:void(0);" onclick="nextPage()" class="page-numbers current flip">下一页</a>
+            </div>
+            <a href="javascript:void(0);" onclick="prevPage()" class="page-numbers current flip" id="prev-page-btn"
+                style="display:none">上一页</a>
+
+            <script>
+                (function () {
+                    var config = document.getElementById('pagination-config');
+                    var currentPage = 1;
+                    var perPage = parseInt(config.getAttribute('data-per-page'));
+                    var totalPosts = parseInt(config.getAttribute('data-total-posts'));
+
+                    window.nextPage = function () {
+                        currentPage++;
+                        updateVisibility();
+                    }
+
+                    window.prevPage = function () {
+                        if (currentPage > 1) {
+                            currentPage--;
+                            updateVisibility();
+                        }
+                    }
+
+                    function updateVisibility() {
+                        var posts = document.querySelectorAll('.mod-archive__list li.post-item');
+                        var start = (currentPage - 1) * perPage;
+                        var end = currentPage * perPage;
+
+                        for (var i = 0; i < posts.length; i++) {
+                            var post = posts[i];
+                            if (i >= start && i < end) {
+                                post.classList.remove('hide');
+                            } else {
+                                post.classList.add('hide');
+                            }
+                        }
+
+                        var nextContainer = document.getElementById('next-page-container');
+                        var prevBtn = document.getElementById('prev-page-btn');
+
+                        if (nextContainer) {
+                            nextContainer.style.display = (end >= totalPosts) ? 'none' : 'block';
+                        }
+
+                        if (prevBtn) {
+                            prevBtn.style.display = (currentPage > 1) ? 'inline' : 'none';
+                        }
+                    }
+                })();
+            </script>
+            {% endif %}
+        </div>
+    </div>
+
+</article>
+{% include "partials/footer.html" %}
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% block title %}{{ config.siteName }}{% endblock %}
+{% block content %}
+
+{# Hero Section - only if showHero and heroImage are set #}
+{% if theme_config.showHero and theme_config.heroImage %}
+<section class="hero-section">
+  <img class="hero-image" src="{{ theme_config.heroImage }}" alt="" />
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    {% if theme_config.heroTitle %}
+    <h2 class="hero-title clamp-3">{{ theme_config.heroTitle }}</h2>
+    {% endif %}
+    {% if theme_config.heroSubtitle %}
+    <p class="hero-subtitle">{{ theme_config.heroSubtitle }}</p>
+    {% endif %}
+    {% if theme_config.heroLink %}
+    <a href="{{ theme_config.heroLink }}" class="hero-cta">
+      <span class="hero-cta__text meta-text">阅读全文</span>
+      <span class="hero-cta__icon">&rarr;</span>
+    </a>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+
+<div class="container">
+  {# Most Popular Section - show first 4 posts as compact cards #}
+  {% if posts|length > 0 %}
+  <section class="section-popular">
+    <div class="section-header">
+      <h2 class="section-title">热门文章</h2>
+      <a href="/post" class="section-more meta-text">查看全部 &rarr;</a>
+    </div>
+    <div class="compact-grid">
+      {% for post in posts %}
+      {% if forloop.Counter0 < theme_config.popularPostCount|default:4|to_int %} {%
+        include "partials/post-card-compact.html" %} {% endif %} {% endfor %} </div>
+  </section>
+  {% endif %}
+
+  <div class="content-grid">
+    <div class="main-content">
+      {# Main Post List #}
+      {% if posts|length > 0 %}
+      <section class="section-latest">
+        <div class="section-header">
+          <h2 class="section-title">最新文章</h2>
+        </div>
+        <div class="post-list">
+          {% for post in posts %}
+          {% include "partials/post-card.html" %}
+          {% endfor %}
+        </div>
+      </section>
+      {% endif %}
+
+      {# View more button #}
+      {% if pagination.hasNext %}
+      <div class="view-more">
+        <a href="/{{ theme_config.postPath|default:"post" }}/page/2/" class="btn btn--secondary">查看更多文章 &rarr;</a>
+      </div>
+      {% endif %}
+    </div>
+
+    {# Sidebar #}
+    {% if theme_config.showSidebar %}
+    <aside class="sidebar">
+      <div class="sidebar__section sidebar__about">
+        {% if config.avatar %}
+        <img class="sidebar__avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}" />
+        {% endif %}
+        <h3 class="sidebar__title">{{ config.siteName }}</h3>
+        {% if config.siteDescription %}
+        <p class="sidebar__desc">{{ config.siteDescription }}</p>
+        {% endif %}
+        {% if theme_config.sidebarDescription %}
+        <p class="sidebar__bio">{{ theme_config.sidebarDescription }}</p>
+        {% endif %}
+      </div>
+
+      {% if tags|length > 0 %}
+      <div class="sidebar__section">
+        <h4 class="sidebar__section-title meta-text">标签</h4>
+        <div class="sidebar__tags">
+          {% for tag in tags %}
+          <a href="{{ tag.link }}" class="tag-pill">{{ tag.name }}</a>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+    </aside>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

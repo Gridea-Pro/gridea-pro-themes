@@ -1,0 +1,14 @@
+<section class="comment-section">
+  <h2 class="comment-section__title">评论</h2>
+  <div id="waline"></div>
+  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
+  <script type="module">
+    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+    init({
+      el: '#waline',
+      serverURL: '{{ commentSetting.serverURLs }}',
+      dark: true,
+      locale: { placeholder: '说点什么吧…' }
+    });
+  </script>
+</section>

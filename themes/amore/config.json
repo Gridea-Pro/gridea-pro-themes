@@ -1,0 +1,149 @@
+{
+  "name": "Amore",
+  "version": "1.1.0",
+  "author": "Amore",
+  "description": "极简博客主题，聚焦阅读体验，支持明/暗双主题、阅读进度、闪念热力图等。",
+  "engine": "ejs",
+  "templateEngine": "ejs",
+  "repository": "",
+  "customConfig": [
+    {
+      "name": "siteLogo",
+      "label": "站点 Logo",
+      "group": "基础设置",
+      "type": "picture-upload",
+      "value": "",
+      "note": "首页头像/站点 Logo，推荐正方形"
+    },
+    {
+      "name": "favicon",
+      "label": "站点图标 Favicon",
+      "group": "基础设置",
+      "type": "picture-upload",
+      "value": "",
+      "note": "浏览器标签图标，推荐 .ico 或 .png"
+    },
+    {
+      "name": "footerInfo",
+      "label": "页脚信息",
+      "group": "基础设置",
+      "type": "textarea",
+      "value": "",
+      "note": "支持 HTML，显示在页脚"
+    },
+    {
+      "name": "location",
+      "label": "地理位置",
+      "group": "首页信息",
+      "type": "input",
+      "value": "中国 · 深圳",
+      "note": "显示在站点简介下方"
+    },
+    {
+      "name": "quoteText",
+      "label": "格言内容",
+      "group": "首页信息",
+      "type": "textarea",
+      "value": "最顶级的人才喜欢一起工作，而且他们是不能容忍平庸作品的。",
+      "note": ""
+    },
+    {
+      "name": "quoteAuthor",
+      "label": "格言作者",
+      "group": "首页信息",
+      "type": "input",
+      "value": "史蒂夫 · 乔布斯",
+      "note": ""
+    },
+    {
+      "name": "defaultTheme",
+      "label": "默认主题",
+      "group": "外观设置",
+      "type": "select",
+      "value": "dark",
+      "options": [
+        {
+          "label": "深色",
+          "value": "dark"
+        },
+        {
+          "label": "浅色",
+          "value": "light"
+        }
+      ],
+      "note": "访客首次访问时默认显示的主题；之后由访客自行切换并记住其选择"
+    },
+    {
+      "name": "accentColor",
+      "label": "主题强调色",
+      "group": "外观设置",
+      "type": "input",
+      "value": "#28df99",
+      "note": "默认薄荷绿；影响链接、按钮、强调条等"
+    },
+    {
+      "name": "github",
+      "label": "GitHub",
+      "group": "社交链接",
+      "type": "input",
+      "value": "",
+      "note": "完整链接地址"
+    },
+    {
+      "name": "twitter",
+      "label": "Twitter",
+      "group": "社交链接",
+      "type": "input",
+      "value": "",
+      "note": "完整链接地址"
+    },
+    {
+      "name": "weibo",
+      "label": "微博",
+      "group": "社交链接",
+      "type": "input",
+      "value": "",
+      "note": "完整链接地址"
+    },
+    {
+      "name": "zhihu",
+      "label": "知乎",
+      "group": "社交链接",
+      "type": "input",
+      "value": "",
+      "note": "完整链接地址"
+    },
+    {
+      "name": "facebook",
+      "label": "Facebook",
+      "group": "社交链接",
+      "type": "input",
+      "value": "",
+      "note": "完整链接地址"
+    },
+    {
+      "name": "ga",
+      "label": "Google Analytics 跟踪 ID",
+      "group": "统计分析",
+      "type": "input",
+      "value": "",
+      "note": "例如 UA-xxxxxxxxx-x 或 G-XXXXXXXX"
+    },
+    {
+      "name": "customCss",
+      "label": "自定义 CSS",
+      "group": "高级设置",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到 <head> 中，覆盖主题默认样式"
+    },
+    {
+      "name": "customJs",
+      "label": "自定义 JavaScript",
+      "group": "高级设置",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到页面底部"
+    }
+  ]
+}

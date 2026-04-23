@@ -1,0 +1,11 @@
+{% if commentSetting and commentSetting.showComment %}
+{% if commentSetting.commentPlatform == 'Waline' %}
+{% include "partials/waline.html" %}
+{% elif commentSetting.commentPlatform == 'Valine' %}
+{% include "partials/valine.html" %}
+{% elif commentSetting.commentPlatform == 'gitalk' %}
+{% include "partials/gitalk.html" %}
+{% elif commentSetting.commentPlatform == 'disqus' %}
+{% include "partials/disqus.html" %}
+{% endif %}
+{% endif %}

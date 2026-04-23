@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}#{{ tag.name }} | {{ config.siteName }}{% endblock %}
+{% block content %}
+<div class="container">
+  <div class="page-header">
+    <a href="/tags" class="page-back meta-text">&larr; 所有标签</a>
+    <h1 class="page-title"><span class="page-title__hash">#</span>{{ tag.name }}</h1>
+    {% if posts|length > 0 %}
+    <p class="page-subtitle meta-text">共 {{ posts|length }} 篇文章</p>
+    {% endif %}
+  </div>
+
+  {% if posts|length > 0 %}
+  <div class="post-list">
+    {% for post in posts %}
+    {% include "partials/post-card.html" %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <p class="empty-state__text">该标签下暂无文章</p>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

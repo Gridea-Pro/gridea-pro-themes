@@ -1,0 +1,197 @@
+/* ============================================================================
+   § 38. COMMENTS SECTION (Generic wrapper)
+   ============================================================================ */
+
+.comments-section {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--color-border);
+}
+
+.comments-section__title {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--color-text-primary);
+  margin-bottom: 24px;
+}
+
+
+
+/* ============================================================================
+   § COMMENT SECTION
+   ============================================================================ */
+
+.comment-section {
+  border-top: 1px solid var(--color-border);
+  margin-top: var(--spacing-2xl);
+  padding-top: var(--spacing-2xl);
+}
+
+.comment-section__title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-lg);
+}
+
+/* ── Waline dark overrides ── */
+.comment-section .wl-card {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+}
+
+/* ── Valine dark overrides ── */
+.comment-section .v {
+  color: var(--color-text-body);
+}
+.comment-section .v .vwrap {
+  border-color: var(--color-border) !important;
+}
+.comment-section .v .vwrap .vheader .vinput {
+  background: transparent !important;
+  border-color: var(--color-border) !important;
+  color: var(--color-text-primary) !important;
+}
+.comment-section .v .vwrap .vedit textarea {
+  background: transparent !important;
+  color: var(--color-text-primary) !important;
+}
+/* 提交 & 加载更多按钮 */
+.comment-section .v .vbtn {
+  background-color: var(--color-surface) !important;
+  color: var(--color-text-primary) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 6px !important;
+}
+.comment-section .v .vbtn:hover {
+  border-color: var(--color-border-hover) !important;
+  background-color: var(--color-border-light) !important;
+  color: var(--color-text-primary) !important;
+}
+/* 评论卡片分割线 */
+.comment-section .v .vcard .vh {
+  border-bottom: 1px dashed var(--color-border) !important;
+}
+.comment-section .v .vcard:last-child .vh {
+  border-bottom: none !important;
+}
+/* 子评论前的竖线 */
+.comment-section .v .vquote {
+  border-left: 1px dashed var(--color-border) !important;
+}
+/* 头像边框 & 占位 */
+.comment-section .v .vimg {
+  border: 1px solid var(--color-border) !important;
+  background-color: var(--color-surface) !important;
+}
+/* 回复按钮 — 气泡 icon */
+.comment-section .v .vmeta .vat {
+  font-size: 0 !important;
+  color: var(--color-text-muted) !important;
+  transition: color var(--transition-fast);
+}
+.comment-section .v .vmeta .vat::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-color: var(--color-text-muted);
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'/%3E%3C/svg%3E");
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  vertical-align: middle;
+  transition: background-color var(--transition-fast);
+}
+.comment-section .v .vmeta .vat:hover::before {
+  background-color: var(--color-text-primary);
+}
+
+/* ── Gitalk dark overrides ── */
+.comment-section .gt-container {
+  color: var(--color-text-body);
+}
+.comment-section .gt-container .gt-header-textarea {
+  background: var(--color-surface);
+  border-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+.comment-section .gt-container .gt-btn {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+}
+.comment-section .gt-container .gt-btn:hover {
+  border-color: var(--color-border-hover);
+  background-color: var(--color-border-light);
+  color: var(--color-text-primary);
+}
+.comment-section .gt-container .gt-btn-loadmore {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+}
+.comment-section .gt-container .gt-btn-loadmore:hover {
+  border-color: var(--color-border-hover);
+  background-color: var(--color-border-light);
+}
+.comment-section .gt-container .gt-comment {
+  border-color: var(--color-border);
+}
+.comment-section .gt-container .gt-comment-body {
+  color: var(--color-text-body);
+}
+.comment-section .gt-container .gt-comment-reply {
+  border-left-color: var(--color-border);
+}
+.comment-section .gt-container .gt-avatar img {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+.comment-section .gt-container a {
+  color: var(--color-accent);
+}
+.comment-section .gt-container a:hover {
+  color: var(--color-accent-hover);
+}
+
+/* ── Disqus dark overrides ── */
+.comment-section #disqus_thread {
+  color-scheme: dark;
+}
+
+/* ── Twikoo dark overrides ── */
+.comment-section .tk-comments {
+  color: var(--color-text-body);
+}
+
+/* ── Giscus responsive ── */
+.comment-section .giscus,
+.comment-section .giscus-frame {
+  width: 100%;
+}
+
+/* ── Cusdis responsive ── */
+.comment-section #cusdis_thread iframe {
+  width: 100% !important;
+  color-scheme: dark;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .comment-section {
+    margin-top: var(--spacing-xl);
+    padding-top: var(--spacing-xl);
+  }
+}
+
+
+/* ============================================================================
+   END OF FLAVOR THEME CSS
+   ============================================================================ */
