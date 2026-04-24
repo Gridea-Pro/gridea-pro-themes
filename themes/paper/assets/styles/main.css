@@ -1840,318 +1840,75 @@ article:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .highlight > div table tr:l
   }
 }
 
+/* ============================================================
+   手机端保险补丁（Gridea Pro Jinja2 移植版附加）
+   说明：Paper 主题本身用 Tailwind utility 已基本响应式；
+   以下补丁仅针对移植过程中发现的几处小屏问题做保险性修复，
+   不覆盖 Tailwind 设计约定。
+   ============================================================ */
 
-/* ================================================================
-   Paper · Editorial Enhancement Layer
-   (appended on top of Tailwind; refines typography, spacing,
-    motion and responsive behavior for an editorial feel)
-   ================================================================ */
-
-:root {
-  --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino',
-                  'Times New Roman', 'Songti SC', 'STSong', serif;
-  --font-body: ui-sans-serif, -apple-system, 'Segoe UI', Roboto,
-               'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
-               Ubuntu, Cantarell, 'Noto Sans', sans-serif;
-  --ease-out: cubic-bezier(.2, .7, .2, 1);
-  --ease-in-out: cubic-bezier(.4, 0, .2, 1);
-}
-
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--font-body);
-  font-feature-settings: "kern", "liga", "calt";
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Selection + focus */
-::selection { background: rgb(0 0 0 / 0.14); color: inherit; }
-.dark ::selection { background: rgb(255 255 255 / 0.18); color: inherit; }
-:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 3px;
-  border-radius: 3px;
-}
-
-/* Scrollbar (dark only) */
-.dark ::-webkit-scrollbar { width: 10px; height: 10px; }
-.dark ::-webkit-scrollbar-track { background: transparent; }
-.dark ::-webkit-scrollbar-thumb {
-  background: rgb(255 255 255 / 0.12);
-  border-radius: 6px;
-  border: 2px solid transparent;
-  background-clip: padding-box;
-}
-.dark ::-webkit-scrollbar-thumb:hover { background: rgb(255 255 255 / 0.22); background-clip: padding-box; border: 2px solid transparent; }
-
-/* ----------------------------------------------------------------
-   Typography · Display font for h1-h3 (Fraunces, variable)
-   ---------------------------------------------------------------- */
-article h1,
-article h2,
-article h3,
-main.prose > h1,
-main.posts > h1,
-main.memos > h1,
-main.friends > h1,
-.post-title {
-  font-family: var(--font-display);
-  font-optical-sizing: auto;
-  font-variation-settings: 'opsz' 72, 'SOFT' 50, 'wght' 600;
-  letter-spacing: -0.018em;
-  line-height: 1.15;
-}
-article h1,
-.post-title,
-main > h1 {
-  font-variation-settings: 'opsz' 128, 'SOFT' 100, 'wght' 600;
-  letter-spacing: -0.025em;
-}
-
-/* Body paragraphs: hanging punctuation + loose reading line-height */
-.prose,
-main article {
-  hanging-punctuation: first allow-end;
-}
-
-/* tabular numerals on dates + counts */
-time,
-.text-xs time,
-span.opacity-60,
-footer time {
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: "tnum";
-}
-
-/* Post lists: links inherit color, elegant hover */
-section.relative h2 {
-  transition: color 180ms var(--ease-out),
-              transform 180ms var(--ease-out);
-  transform-origin: left center;
-}
-section.relative:hover h2 {
-  color: rgb(0 0 0 / 0.88);
-  transform: translateX(2px);
-}
-.dark section.relative:hover h2 { color: rgb(255 255 255 / 0.95); }
-
-/* Featured label — more refined than raw orange-500 */
-span.text-orange-500 {
-  display: inline-block;
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-size: 0.7rem;
-  font-weight: 600;
-  padding: 0.1em 0.55em;
-  border-radius: 3px;
-  background: rgb(251 146 60 / 0.14);
-  color: rgb(194 65 12);
-}
-.dark span.text-orange-500 {
-  background: rgb(251 146 60 / 0.18);
-  color: rgb(251 146 60);
-}
-
-/* Post detail content (article) — breathing room, hanging links */
-article section.prose,
-main.prose article > section {
-  font-size: 1.0625rem;
-  line-height: 1.78;
-}
-main.prose p { margin-bottom: 1.2em; }
-main.prose blockquote {
-  font-family: var(--font-display);
-  font-style: italic;
-  font-size: 1.15em;
-  font-variation-settings: 'opsz' 48, 'wght' 400;
-  padding-inline-start: 1.25rem;
-  border-inline-start-width: 2px;
-}
-main.prose hr {
-  margin-block: 3rem;
-  border: 0;
-  height: 1px;
-  background: rgb(0 0 0 / 0.1);
-}
-.dark main.prose hr { background: rgb(255 255 255 / 0.15); }
-
-main.prose pre {
-  border-radius: 8px;
-  padding: 1rem 1.25rem !important;
-  font-size: 0.875em;
-}
-main.prose :not(pre) > code {
-  padding: 0.1em 0.4em;
-  border-radius: 4px;
-  background: rgb(0 0 0 / 0.05);
-  font-size: 0.9em;
-  font-weight: 500;
-}
-.dark main.prose :not(pre) > code { background: rgb(255 255 255 / 0.08); }
-main.prose img {
-  border-radius: 8px;
-  margin-inline: auto;
-}
-main.prose a {
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
-  transition: text-decoration-color 180ms var(--ease-out);
-}
-
-/* Post footer tags — subtle chip */
-article > footer a.mb-1\.5 {
-  transition: background 150ms var(--ease-out),
-              color 150ms var(--ease-out),
-              transform 150ms var(--ease-out);
-}
-article > footer a.mb-1\.5:hover { transform: translateY(-1px); }
-
-/* ----------------------------------------------------------------
-   Home · author card
-   ---------------------------------------------------------------- */
-.-mt-2.mb-12 > div:first-child img {
-  transition: transform 280ms var(--ease-out);
-}
-.-mt-2.mb-12 > div:first-child:hover img {
-  transform: rotate(3deg) scale(1.02);
-}
-
-/* ----------------------------------------------------------------
-   Links (友链) page — tighter cards with subtle lift
-   ---------------------------------------------------------------- */
-ul.grid-cols-1 li > a,
-ul.sm\:grid-cols-2 li > a {
-  transition: background 150ms var(--ease-out),
-              transform 150ms var(--ease-out),
-              box-shadow 150ms var(--ease-out);
-}
-ul.grid-cols-1 li > a:hover,
-ul.sm\:grid-cols-2 li > a:hover {
-  transform: translateY(-2px);
-}
-
-/* ----------------------------------------------------------------
-   Memos — editorial list
-   ---------------------------------------------------------------- */
-ul.list-none.space-y-8 > li {
-  position: relative;
-  padding-inline-start: 1rem;
-}
-ul.list-none.space-y-8 > li::before {
-  content: "";
-  position: absolute;
-  inset-inline-start: 0;
-  top: 2.25rem;
-  bottom: 0.25rem;
-  width: 1px;
-  background: rgb(0 0 0 / 0.08);
-}
-.dark ul.list-none.space-y-8 > li::before {
-  background: rgb(255 255 255 / 0.12);
-}
-
-/* ----------------------------------------------------------------
-   Header · theme toggle + menu trigger
-   ---------------------------------------------------------------- */
-.btn-dark {
-  transition: transform 280ms var(--ease-out),
-              opacity 150ms var(--ease-out);
-}
-.btn-dark:hover { transform: rotate(12deg); opacity: 0.85; }
-
-.btn-menu::before,
-.btn-menu::after {
-  transition: transform 220ms var(--ease-out),
-              width 180ms var(--ease-out);
-}
-
-/* Nav link underline grow */
-nav.lg\:flex a {
-  position: relative;
-  transition: color 150ms var(--ease-out);
-}
-nav.lg\:flex a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -3px;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: center;
-  transition: transform 200ms var(--ease-out);
-}
-nav.lg\:flex a:hover::after { transform: scaleX(0.7); }
-
-/* ----------------------------------------------------------------
-   Footer — spacing + hover
-   ---------------------------------------------------------------- */
-footer.mx-auto a {
-  transition: color 150ms var(--ease-out);
-}
-
-/* ----------------------------------------------------------------
-   Not-ready anti-flash (html.not-ready)
-   ---------------------------------------------------------------- */
-html.not-ready * { transition: none !important; animation: none !important; }
-
-/* ----------------------------------------------------------------
-   Responsive refinements
-   ---------------------------------------------------------------- */
 @media (max-width: 640px) {
-  header.mx-auto { padding-inline: 1rem; }
-  main.prose { padding-inline: 1rem; padding-top: 2rem; }
+  /* 顶栏 padding 收紧，左右 8px 可变 4px 给 logo 更多空间 */
+  header.mx-auto {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  /* 主内容 padding 保持对称但略小 */
+  main.prose {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 2rem;
+  }
+
+  /* 首页作者卡片：手机上头像略小、名字换行 */
+  main.prose .-mt-2.mb-12 > div:last-child {
+    min-width: 0;
+  }
+  main.prose .h-24.w-24 {
+    width: 4rem;
+    height: 4rem;
+    padding: 0.5rem;
+  }
+
+  /* 文章列表标题：长标题不压扁日期 */
+  section.relative h2 {
+    font-size: 1.25rem;
+    line-height: 1.35;
+    word-break: break-word;
+  }
+
+  /* 404 数字缩小 */
+  h1.text-9xl {
+    font-size: 5rem;
+  }
+
+  /* 页脚：允许换行，不然 "POWERED BY" 会挤出屏幕 */
   footer.mx-auto {
     flex-wrap: wrap;
     row-gap: 0.5rem;
-    padding-inline: 1rem;
-    padding-block: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     height: auto;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 
-  /* Author card: smaller avatar, tighter row */
-  .-mt-2.mb-12 .h-24.w-24 {
-    width: 4rem;
-    height: 4rem;
-    padding: 0.4rem;
-  }
-  .-mt-2.mb-12 > div:last-child .text-2xl {
-    font-size: 1.25rem;
-    line-height: 1.3;
+  /* 归档条目：长标题换行 */
+  .relative.my-3 h3 {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
-  /* Post titles: smaller but keep display font */
-  article h1 { font-size: 1.75rem; letter-spacing: -0.02em; }
-  article h2 { font-size: 1.375rem; }
-  section.relative h2 { font-size: 1.1rem; line-height: 1.35; overflow-wrap: break-word; }
-
-  /* 404 number */
-  h1.text-9xl { font-size: 5rem; letter-spacing: -0.04em; }
-
-  /* Archives */
-  .relative.my-3 { flex-direction: column; align-items: flex-start !important; gap: 0.15rem; }
-  .relative.my-3 time { margin-left: 0 !important; margin-right: 0 !important; }
-  .relative.my-3 h3 { overflow-wrap: anywhere; }
-
-  /* Links cards spacing */
-  ul.grid-cols-1 { gap: 0.75rem; }
-
-  /* Memo line indicator: tiny shift */
-  ul.list-none.space-y-8 > li { padding-inline-start: 0.75rem; }
+  /* 友链卡片之间间距稍紧一点 */
+  ul.grid-cols-1 {
+    gap: 0.75rem;
+  }
 }
 
+/* 移动端菜单展开时，让社交图标也可滚动，防止内容过高超出视口 */
 @media (max-width: 1023px) {
-  .nav-wrapper { overflow-y: auto; }
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  .nav-wrapper {
+    overflow-y: auto;
   }
 }
