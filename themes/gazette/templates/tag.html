@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}#{{ tag.name }} - {{ config.siteName }}{% endblock %}
+
+{% block main %}
+<section class="tag-single">
+    <header class="masthead">
+        <h1 class="masthead__title"><span class="tag-page__hash">#</span>{{ tag.name }}</h1>
+        <span class="masthead__subtitle">{{ posts|length }} POSTS</span>
+    </header>
+
+    {% if posts|length > 0 %}
+        <div class="tag-posts">
+            {% for post in posts %}
+                <div class="tag-posts__item">
+                    <a class="tag-posts__link" href="{{ post.link }}">
+                        <h2 class="tag-posts__title">{{ post.title }}</h2>
+                        <div class="tag-posts__meta">
+                            {% if theme_config.showFeatured and post.isTop %}
+                                <span class="tag-posts__featured">Featured</span>
+                            {% endif %}
+                            <time datetime="{{ post.date }}">{{ post.dateFormat|default:post.date|truncatechars:10 }}</time>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="empty-state">此标签下暂无文章</p>
+    {% endif %}
+</section>
+{% endblock %}

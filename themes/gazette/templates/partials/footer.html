@@ -1,0 +1,13 @@
+<footer class="shell site-footer">
+    <div class="site-footer__left">
+        {% if theme_config.copyrightText %}
+            {{ theme_config.copyrightText|safe }}
+        {% else %}
+            &copy; {{ now|date:"2006" }}
+            <a href="{{ config.domain }}">{{ config.siteName }}</a>
+        {% endif %}
+    </div>
+    {% if theme_config.footerPoweredBy %}
+    <a href="https://github.com/Gridea-Pro/gridea-pro" rel="noopener" target="_blank">Powered by Gridea Pro</a>
+    {% endif %}
+</footer>

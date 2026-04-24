@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}闪念 - {{ config.siteName }}{% endblock %}
+
+{% block main %}
+<section class="memos-page">
+    <header class="masthead">
+        <h1 class="masthead__title">闪念</h1>
+        <span class="masthead__subtitle">{{ memos|length }} NOTES</span>
+    </header>
+
+    {% if memos|length > 0 %}
+        <div class="memos">
+            {% for memo in memos %}
+                {% set dateParts = memo.createdAtISO|split:"-" %}
+                {% set monthNum = dateParts.1 %}
+                {% set monthText = "" %}
+                {% if monthNum == "01" %}{% set monthText = "JAN" %}{% endif %}
+                {% if monthNum == "02" %}{% set monthText = "FEB" %}{% endif %}
+                {% if monthNum == "03" %}{% set monthText = "MAR" %}{% endif %}
+                {% if monthNum == "04" %}{% set monthText = "APR" %}{% endif %}
+                {% if monthNum == "05" %}{% set monthText = "MAY" %}{% endif %}
+                {% if monthNum == "06" %}{% set monthText = "JUN" %}{% endif %}
+                {% if monthNum == "07" %}{% set monthText = "JUL" %}{% endif %}
+                {% if monthNum == "08" %}{% set monthText = "AUG" %}{% endif %}
+                {% if monthNum == "09" %}{% set monthText = "SEP" %}{% endif %}
+                {% if monthNum == "10" %}{% set monthText = "OCT" %}{% endif %}
+                {% if monthNum == "11" %}{% set monthText = "NOV" %}{% endif %}
+                {% if monthNum == "12" %}{% set monthText = "DEC" %}{% endif %}
+                <article class="memo">
+                    <time class="memo__date" datetime="{{ memo.createdAtISO }}">
+                        <span class="memo__day">{{ dateParts.2 }}</span>
+                        <span class="memo__month">{{ monthText }}</span>
+                        <span class="memo__year">{{ dateParts.0 }}</span>
+                    </time>
+                    <div class="memo__body">
+                        <div class="memo__content">{{ memo.content|safe }}</div>
+                    </div>
+                </article>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="empty-state">暂无闪念</p>
+    {% endif %}
+</section>
+{% endblock %}

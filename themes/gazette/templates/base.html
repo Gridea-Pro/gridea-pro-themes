@@ -1,0 +1,29 @@
+<!doctype html>
+<html class="not-ready"{% if theme_config.defaultDark == "dark" %} data-theme-init="dark"{% endif %}{% if theme_config.bgColor and theme_config.bgColor != "linen" %} data-paper-bg="{{ theme_config.bgColor }}"{% endif %} lang="zh-CN" dir="ltr">
+    {% include "partials/head.html" %}
+    <body>
+        {% include "partials/header.html" %}
+
+        <main class="shell site-main">
+            {% block main %}{% endblock %}
+        </main>
+
+        {% include "partials/footer.html" %}
+
+        {% if theme_config.enableMermaid %}
+        <script type="module">
+            import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+        <script>
+            Array.from(document.getElementsByClassName('language-mermaid')).forEach((el) => {
+                el.parentElement.outerHTML = `<div class="mermaid">${el.innerHTML}</div>`;
+            });
+        </script>
+        {% endif %}
+
+        {% if theme_config.customJs %}
+        <script>{{ theme_config.customJs|safe }}</script>
+        {% endif %}
+    </body>
+</html>

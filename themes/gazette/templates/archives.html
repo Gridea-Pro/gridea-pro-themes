@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}归档 - {{ config.siteName }}{% endblock %}
+
+{% block main %}
+<section class="archives">
+    <header class="masthead">
+        <h1 class="masthead__title">归档</h1>
+    </header>
+
+    {% if archives|length > 0 %}
+        {% for archive in archives %}
+            <section class="archives__year">
+                <div class="archives__year-head">
+                    <span class="archives__year-num">{{ archive.Year }}</span>
+                    <span class="archives__year-count">{{ archive.Posts|length }} POSTS</span>
+                </div>
+                <div class="archives__posts">
+                    {% for post in archive.Posts %}
+                        {% set isoPart = post.date|split:"T" %}
+                        {% set dateParts = isoPart.0|split:"-" %}
+                        <a class="archives__post" href="{{ post.link }}">
+                            <time datetime="{{ post.date }}">{{ dateParts.1 }}—{{ dateParts.2 }}</time>
+                            <span class="archives__post-title">{{ post.title }}</span>
+                        </a>
+                    {% endfor %}
+                </div>
+            </section>
+        {% endfor %}
+    {% else %}
+        <p class="empty-state">暂无文章</p>
+    {% endif %}
+</section>
+{% endblock %}

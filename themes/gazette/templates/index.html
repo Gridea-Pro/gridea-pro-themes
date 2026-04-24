@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}{{ config.siteName }}{% endblock %}
+
+{% block main %}
+    {% set heroAvatar = theme_config.avatarUrl|default:config.avatar %}
+    {% set heroName   = theme_config.authorName|default:config.author|default:config.siteName %}
+
+    {% if not pagination.prev %}
+        {% if heroAvatar or heroName %}
+        <section class="home-hero">
+            {% if heroAvatar %}
+            <div class="home-hero__avatar">
+                <img src="{{ heroAvatar }}" alt="{{ heroName }}" />
+            </div>
+            {% endif %}
+            {% if heroName %}
+            <div class="home-hero__text">
+                <div class="home-hero__name">{{ heroName }}</div>
+                <div class="home-hero__bio">
+                    {% if theme_config.authorBio %}
+                        {{ theme_config.authorBio|safe }}
+                    {% elif config.siteDescription %}
+                        {{ config.siteDescription }}
+                    {% else %}
+                        A personal blog
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </section>
+        {% endif %}
+    {% endif %}
+
+    <div class="post-list">
+    {% for post in posts %}
+        <article class="post-card">
+            {% if theme_config.showFeatured and post.isTop %}
+            <span class="post-card__featured">Featured</span>
+            {% endif %}
+            <h2 class="post-card__title">{{ post.title }}</h2>
+            <time class="post-card__meta" datetime="{{ post.date }}">{{ post.dateFormat|default:post.date|truncatechars:10 }}</time>
+            <a class="post-card__link" href="{{ post.link }}">{{ post.title }}</a>
+        </article>
+    {% endfor %}
+    </div>
+
+    {% if pagination.prev or pagination.next %}
+    <nav class="pagination">
+        {% if pagination.prev %}
+        <a href="{{ pagination.prev }}">← 上一页</a>
+        {% endif %}
+        {% if pagination.next %}
+        <a class="pagination__next" href="{{ pagination.next }}">下一页 →</a>
+        {% endif %}
+    </nav>
+    {% endif %}
+{% endblock %}

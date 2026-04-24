@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}友链 - {{ config.siteName }}{% endblock %}
+
+{% block main %}
+<section class="links-page">
+    <header class="masthead">
+        <h1 class="masthead__title">友链</h1>
+        <span class="masthead__subtitle">{{ links|length }} FRIENDS</span>
+    </header>
+
+    {% if links|length > 0 %}
+        <div class="links">
+            {% for link in links %}
+                <a class="link" href="{{ link.url }}" target="_blank" rel="noopener">
+                    <div class="link__avatar">
+                        {% if link.avatar %}
+                            <img src="{{ link.avatar }}" alt="{{ link.name }}" loading="lazy" />
+                        {% else %}
+                            {{ link.name|first|upper }}
+                        {% endif %}
+                    </div>
+                    <div class="link__info">
+                        <div class="link__name">{{ link.name }}</div>
+                        {% if link.description %}
+                            <div class="link__desc">{{ link.description }}</div>
+                        {% endif %}
+                    </div>
+                    <span class="link__arrow" aria-hidden="true">↗</span>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="empty-state">暂无友链</p>
+    {% endif %}
+</section>
+{% endblock %}

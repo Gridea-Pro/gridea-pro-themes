@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - {{ config.siteName }}{% endblock %}
+{% block meta_description %}{{ post.content|striptags|truncatechars:160 }}{% endblock %}
+{% block canonical %}{{ config.domain }}{{ post.link }}{% endblock %}
+
+{% block main %}
+<article class="article">
+    <header class="article__header">
+        <h1 class="article__title">{{ post.title }}</h1>
+        <div class="article__meta">
+            <time datetime="{{ post.date }}">{{ post.dateFormat|default:post.date|truncatechars:10 }}</time>
+            {% if theme_config.authorName %}
+            <span class="article__meta-dot" aria-hidden="true">·</span>
+            <span>{{ theme_config.authorName }}</span>
+            {% endif %}
+        </div>
+    </header>
+
+    <section class="article__body">{{ post.content|safe }}</section>
+
+    {% if post.tags|length > 0 %}
+    <footer class="article__tags">
+        {% for tag in post.tags %}
+            <a href="{{ tag.link }}">{{ tag.name }}</a>
+        {% endfor %}
+    </footer>
+    {% endif %}
+</article>
+{% endblock %}

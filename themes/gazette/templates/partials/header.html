@@ -1,0 +1,63 @@
+<header class="shell site-header">
+    <a class="site-header__brand" href="{{ config.domain }}">{{ config.siteName }}</a>
+
+    <nav class="site-nav">
+        {% for menu in menus %}
+            <a class="site-nav__link" href="{{ menu.link }}">{{ menu.name }}</a>
+        {% endfor %}
+    </nav>
+
+    {% if theme_config.socialTwitter or theme_config.socialGithub or theme_config.socialInstagram or theme_config.socialLinkedin or theme_config.socialMastodon or theme_config.socialThreads or theme_config.socialBluesky or theme_config.socialRssUrl %}
+    <nav class="site-social" aria-label="社交链接">
+        {% if theme_config.socialTwitter %}<a style="background-image: url(/icons/twitter.svg)" href="{{ theme_config.socialTwitter }}" target="_blank" rel="me">Twitter</a>{% endif %}
+        {% if theme_config.socialGithub %}<a style="background-image: url(/icons/github.svg)" href="{{ theme_config.socialGithub }}" target="_blank" rel="me">GitHub</a>{% endif %}
+        {% if theme_config.socialInstagram %}<a style="background-image: url(/icons/instagram.svg)" href="{{ theme_config.socialInstagram }}" target="_blank" rel="me">Instagram</a>{% endif %}
+        {% if theme_config.socialLinkedin %}<a style="background-image: url(/icons/linkedin.svg)" href="{{ theme_config.socialLinkedin }}" target="_blank" rel="me">LinkedIn</a>{% endif %}
+        {% if theme_config.socialMastodon %}<a style="background-image: url(/icons/mastodon.svg)" href="{{ theme_config.socialMastodon }}" target="_blank" rel="me">Mastodon</a>{% endif %}
+        {% if theme_config.socialThreads %}<a style="background-image: url(/icons/threads.svg)" href="{{ theme_config.socialThreads }}" target="_blank" rel="me">Threads</a>{% endif %}
+        {% if theme_config.socialBluesky %}<a style="background-image: url(/icons/bluesky.svg)" href="{{ theme_config.socialBluesky }}" target="_blank" rel="me">Bluesky</a>{% endif %}
+        {% if theme_config.socialRssUrl %}<a style="background-image: url(/icons/rss.svg)" href="{{ theme_config.socialRssUrl }}" target="_blank" rel="alternate">RSS</a>{% endif %}
+    </nav>
+    {% endif %}
+
+    <button type="button" class="theme-toggle" aria-label="切换深色模式"></button>
+    <button type="button" class="menu-toggle" aria-label="导航菜单"></button>
+
+    <script>
+        (function() {
+            var htmlClass = document.documentElement.classList;
+            setTimeout(function() { htmlClass.remove('not-ready'); }, 10);
+
+            var defaultMode = '{{ theme_config.defaultDark|default:"auto" }}';
+            var darkScheme  = window.matchMedia('(prefers-color-scheme: dark)');
+
+            function setDark(isDark) {
+                htmlClass[isDark ? 'add' : 'remove']('dark');
+                try { localStorage.setItem('paper-dark', isDark); } catch(e) {}
+            }
+
+            var stored = null;
+            try { stored = localStorage.getItem('paper-dark'); } catch(e) {}
+            if (stored === 'true' || stored === 'false') {
+                setDark(stored === 'true');
+            } else if (defaultMode === 'dark')  { setDark(true);  }
+            else if  (defaultMode === 'light') { setDark(false); }
+            else { setDark(darkScheme.matches); }
+
+            darkScheme.addEventListener('change', function(e) {
+                var s = null; try { s = localStorage.getItem('paper-dark'); } catch(err) {}
+                if (s === null) setDark(e.matches);
+            });
+
+            var btnDark = document.querySelector('.theme-toggle');
+            if (btnDark) btnDark.addEventListener('click', function() {
+                setDark(!htmlClass.contains('dark'));
+            });
+
+            var btnMenu = document.querySelector('.menu-toggle');
+            if (btnMenu) btnMenu.addEventListener('click', function() {
+                htmlClass.toggle('menu-open');
+            });
+        })();
+    </script>
+</header>

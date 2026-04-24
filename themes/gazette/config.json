@@ -1,0 +1,191 @@
+{
+  "name": "Gazette",
+  "version": "1.0.0",
+  "author": "Eliauk",
+  "description": "Editorial 编辑感博客主题。衬线体全局 + 暖奶油底 + 桑红重点 + 等宽数字 + 发丝分割线 + 开篇 drop cap。手写 CSS，无 Tailwind，无外部字体依赖，支持深浅模式。",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "customConfig": [
+    {
+      "name": "bgColor",
+      "label": "背景色",
+      "group": "外观",
+      "type": "select",
+      "value": "linen",
+      "options": [
+        { "label": "亚麻白 linen (#faf8f1)", "value": "linen" },
+        { "label": "浅麦黄 wheat (#f8f5d7)", "value": "wheat" },
+        { "label": "淡灰 gray (#fbfbfb)", "value": "gray" },
+        { "label": "纯白 light (#fff)", "value": "light" }
+      ],
+      "note": "页面背景色，对应原主题的四种预设"
+    },
+    {
+      "name": "defaultDark",
+      "label": "默认暗色模式",
+      "group": "外观",
+      "type": "select",
+      "value": "auto",
+      "options": [
+        { "label": "跟随系统", "value": "auto" },
+        { "label": "始终浅色", "value": "light" },
+        { "label": "始终暗色", "value": "dark" }
+      ]
+    },
+    {
+      "name": "authorName",
+      "label": "作者名",
+      "group": "首页个人信息",
+      "type": "input",
+      "value": "",
+      "note": "显示在首页第一个文章上方；留空不显示个人卡片"
+    },
+    {
+      "name": "authorBio",
+      "label": "作者 Bio",
+      "group": "首页个人信息",
+      "type": "textarea",
+      "value": "",
+      "note": "个人简介，支持 HTML"
+    },
+    {
+      "name": "avatarUrl",
+      "label": "头像 URL",
+      "group": "首页个人信息",
+      "type": "picture-upload",
+      "value": "",
+      "note": "上传图片或填写外链；留空则不显示"
+    },
+    {
+      "name": "socialTwitter",
+      "label": "Twitter / X URL",
+      "group": "社交链接（顶栏显示）",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "socialGithub",
+      "label": "GitHub URL",
+      "group": "社交链接（顶栏显示）",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "socialInstagram",
+      "label": "Instagram URL",
+      "group": "社交链接（顶栏显示）",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "socialLinkedin",
+      "label": "LinkedIn URL",
+      "group": "社交链接（顶栏显示）",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "socialMastodon",
+      "label": "Mastodon URL",
+      "group": "社交链接（顶栏显示）",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "socialThreads",
+      "label": "Threads URL",
+      "group": "社交链接（顶栏显示）",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "socialBluesky",
+      "label": "Bluesky URL",
+      "group": "社交链接（顶栏显示）",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "socialRssUrl",
+      "label": "RSS URL",
+      "group": "社交链接（顶栏显示）",
+      "type": "input",
+      "value": "",
+      "note": "一般为 /atom.xml"
+    },
+    {
+      "name": "faviconPath",
+      "label": "Favicon",
+      "group": "站点图标",
+      "type": "picture-upload",
+      "value": "",
+      "note": "浏览器标签页图标；推荐 32×32 PNG / ICO"
+    },
+    {
+      "name": "enableHLJS",
+      "label": "启用代码高亮 (highlight.js)",
+      "group": "功能",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "enableMath",
+      "label": "启用 KaTeX 数学公式",
+      "group": "功能",
+      "type": "toggle",
+      "value": false,
+      "note": "$...$ 行内公式，$$...$$ 块级公式"
+    },
+    {
+      "name": "enableMermaid",
+      "label": "启用 Mermaid 图表",
+      "group": "功能",
+      "type": "toggle",
+      "value": false
+    },
+    {
+      "name": "showFeatured",
+      "label": "首页显示 Featured 标记",
+      "group": "功能",
+      "type": "toggle",
+      "value": true,
+      "note": "置顶文章显示「Featured」标签"
+    },
+    {
+      "name": "copyrightText",
+      "label": "页脚版权文字",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "留空则自动显示 © 年份 站点名"
+    },
+    {
+      "name": "footerPoweredBy",
+      "label": "页脚显示「Powered by」",
+      "group": "页脚",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "customCss",
+      "label": "自定义 CSS",
+      "group": "高级",
+      "type": "textarea",
+      "value": ""
+    },
+    {
+      "name": "customJs",
+      "label": "自定义 JavaScript",
+      "group": "高级",
+      "type": "textarea",
+      "value": ""
+    },
+    {
+      "name": "analyticsCode",
+      "label": "分析代码（原样插入）",
+      "group": "高级",
+      "type": "textarea",
+      "value": ""
+    }
+  ]
+}
