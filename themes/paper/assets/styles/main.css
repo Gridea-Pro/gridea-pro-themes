@@ -2066,14 +2066,6 @@ ul.list-none.space-y-8 > li::before {
 .dark .btn-dark { background-position: right; }
 .btn-dark:hover { opacity: 0.85; }
 
-/* 单色 SVG 变体（theme_config.monoDarkIcon = true 时启用） */
-.btn-dark.is-mono {
-  background: url(/icons/theme.svg) left center / cover no-repeat;
-  transition: opacity 150ms var(--ease-out), transform 280ms var(--ease-out);
-}
-.dark .btn-dark.is-mono { filter: invert(1); }
-.btn-dark.is-mono:hover { transform: rotate(12deg); }
-
 .btn-menu::before,
 .btn-menu::after {
   transition: transform 220ms var(--ease-out),

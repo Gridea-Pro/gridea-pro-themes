@@ -14,11 +14,7 @@
 
     <link rel="stylesheet" href="/styles/main.css" />
 
-    {% if theme_config.monoDarkIcon %}
-    <link rel="preload" as="image" href="/icons/theme.svg" />
-    {% else %}
     <link rel="preload" as="image" href="/icons/theme.png" />
-    {% endif %}
 
     {% if theme_config.avatarUrl %}
     <link rel="preload" as="image" href="{{ theme_config.avatarUrl }}" />
