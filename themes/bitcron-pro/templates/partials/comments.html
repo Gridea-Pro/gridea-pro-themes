@@ -1,0 +1,34 @@
+{% if commentSetting %}
+  {% if commentSetting.commentPlatform == "gitalk" %}
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <div id="gitalk-container"></div>
+  <script>
+    var gitalk = new Gitalk({
+      clientID: '{{ commentSetting.gitalkSetting.clientId }}',
+      clientSecret: '{{ commentSetting.gitalkSetting.clientSecret }}',
+      repo: '{{ commentSetting.gitalkSetting.repository }}',
+      owner: '{{ commentSetting.gitalkSetting.owner }}',
+      admin: ['{{ commentSetting.gitalkSetting.owner }}'],
+      id: (location.pathname).substring(0, 49),
+      distractionFreeMode: false
+    })
+    gitalk.render('gitalk-container')
+  </script>
+  {% endif %}
+  {% if commentSetting.commentPlatform == "disqus" %}
+  <link rel="stylesheet" href="https://unpkg.com/disqusjs@1.1/dist/disqusjs.css">
+  <script src="https://unpkg.com/disqusjs@1.1/dist/disqus.js"></script>
+  <div id="disqus_thread"></div>
+  <script>
+    var options = {
+      shortname: '{{ commentSetting.disqusSetting.shortname }}',
+      apikey: '{{ commentSetting.disqusSetting.apikey }}',
+    }
+    if ('{{ commentSetting.disqusSetting.api }}') {
+      options.api = '{{ commentSetting.disqusSetting.api }}'
+    }
+    var dsqjs = new DisqusJS(options)
+  </script>
+  {% endif %}
+{% endif %}

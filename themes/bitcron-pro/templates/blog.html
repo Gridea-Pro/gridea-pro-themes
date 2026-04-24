@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}博客 - {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="list_with_title">
+  <div class="listing_title">博客</div>
+  <div class="listing">
+    <div class="listing-item">
+      {% for post in posts %}
+      <div class="listing_post"><a href="{{ post.link }}" title="{{ post.title }}">{{ post.title }}</a>
+        <div class="post_date"><span class="date">{{ post.dateFormat }}</span></div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<div class="paginator pager pagination">
+  <div class="paginator_container pagination_container">
+    {% if pagination.prev %}
+    <a href="{{ pagination.prev }}" class="btn pre newer-posts newer_posts"> Newer Posts </a>
+    {% endif %}
+    {% if pagination.next %}
+    <a href="{{ pagination.next }}" class="btn next older-posts older_posts"> Older Posts </a>
+    {% endif %}
+    <div style="clear:both;height:0;"></div>
+  </div>
+</div>
+{% endblock %}

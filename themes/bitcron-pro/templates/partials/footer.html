@@ -1,0 +1,81 @@
+<div class="footer">
+<link href="/styles/main.css" type="text/css" rel="stylesheet"/>
+<div class="site_footer_wrap"><div class="site_footer">
+  <div class="mysocials"><div class="my_socials">
+    {% if theme_config.telegram %}
+    <a href="{{ theme_config.telegram }}" title="telegram"><i class="fa fa-send-o"></i></a>
+    {% endif %}
+    {% if theme_config.twitter %}
+    <a href="{{ theme_config.twitter }}" title="twitter"><i class="fa fa-twitter"></i></a>
+    {% endif %}
+    {% if theme_config.weibo %}
+    <a href="{{ theme_config.weibo }}" title="weibo"><i class="fa fa-weibo"></i></a>
+    {% endif %}
+    {% if theme_config.github %}
+    <a href="{{ theme_config.github }}" title="github"><i class="fa fa-github"></i></a>
+    {% endif %}
+  </div>
+  <link href="/styles/main.css" type="text/css" rel="stylesheet"/>
+  </div>
+  <div class="copyright">{% if config.footerInfo %}{{ config.footerInfo|safe }}{% endif %}</div>
+</div></div>
+</div>
+
+<style type="text/css">a.back_to_top {
+    text-decoration: none;
+    position: fixed;
+    bottom: 40px;
+    right: 30px;
+    background: #f0f0f0;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    line-height: 36px;
+    font-size: 18px;
+    text-align: center;
+    transition-duration: .5s;
+    transition-propety: background-color;
+    display: none;
+}
+a.back_to_top span {
+    color: #888;
+}
+a.back_to_top:hover {
+    cursor: pointer;
+    background: #dfdfdf;
+}
+a.back_to_top:hover span {
+    color: #555;
+}
+@media print, screen and (max-width: 580px) {
+    .back_to_top {
+        display: none !important;
+    }
+}
+</style>
+<a id="back_to_top" href="#" class="back_to_top"><span>&#9651;</span></a>
+<script type="text/javascript" src="/media/scripts/jquery.js"></script>
+<script>$(document).ready((function(_this) {
+  return function() {
+    var bt;
+    bt = $('#back_to_top');
+    if ($(document).width() > 480) {
+      $(window).scroll(function() {
+        var st;
+        st = $(window).scrollTop();
+        if (st > 30) {
+          return bt.css('display', 'block');
+        } else {
+          return bt.css('display', 'none');
+        }
+      });
+      return bt.click(function() {
+        $('body,html').animate({
+          scrollTop: 0
+        }, 800);
+        return false;
+      });
+    }
+  };
+})(this));
+</script>
