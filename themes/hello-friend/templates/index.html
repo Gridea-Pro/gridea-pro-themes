@@ -6,42 +6,38 @@
 {% block body_style %}{% if theme_config.backgroundImage %}background-image: url('{{ theme_config.backgroundImage }}');{% endif %}{% endblock %}
 
 {% block main %}
-    <div class="content-center">
+    <section class="content-center">
         <main>
-            <div>
-                {% if theme_config.portraitPath %}
-                    <img src="{{ theme_config.portraitPath }}" class="circle" alt="{{ theme_config.portraitAlt|default:config.siteName }}" style="max-width:{{ theme_config.portraitMaxWidth|default:"200px" }}" />
-                {% endif %}
+            {% if theme_config.portraitPath %}
+                <img src="{{ theme_config.portraitPath }}" class="circle" alt="{{ theme_config.portraitAlt|default:config.siteName }}"{% if theme_config.portraitMaxWidth %} style="width: {{ theme_config.portraitMaxWidth }}; height: {{ theme_config.portraitMaxWidth }};"{% endif %} />
+            {% endif %}
 
-                <h1>{{ config.siteName }}</h1>
+            <h1>{{ config.siteName }}</h1>
 
-                {% include "partials/subtitle.html" %}
+            {% include "partials/subtitle.html" %}
 
-                {% include "partials/social-icons.html" %}
-            </div>
+            {% include "partials/social-icons.html" %}
         </main>
-    </div>
+    </section>
 
     {% if theme_config.showLatestOnHome and posts|length > 0 %}
-    <div class="content">
+    <section class="content">
         <main class="posts">
-            <h2 style="text-align:center;margin-top:2rem;">最新文章</h2>
+            <h2>最新文章</h2>
 
-            <div class="posts-group">
-                <ul class="posts-list">
-                    {% for post in posts %}
-                        <li class="post-item">
-                            <a href="{{ post.link }}" class="post-item-inner">
-                                <span class="post-title">{{ post.title }}</span>
-                                <span class="post-day">{{ post.date }}</span>
-                            </a>
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
+            <ul class="posts-list">
+                {% for post in posts %}
+                    <li class="post-item">
+                        <a href="{{ post.link }}" class="post-item-inner">
+                            <span class="post-title">{{ post.title }}</span>
+                            <span class="post-day">{{ post.date }}</span>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
 
             {% include "partials/pagination-list.html" %}
         </main>
-    </div>
+    </section>
     {% endif %}
 {% endblock %}
