@@ -1,0 +1,98 @@
+{% if theme_config.bgColor == "wheat" %}{% set bgColor = "#f8f5d7" %}
+{% elif theme_config.bgColor == "gray" %}{% set bgColor = "#fbfbfb" %}
+{% elif theme_config.bgColor == "light" %}{% set bgColor = "#ffffff" %}
+{% else %}{% set bgColor = "#faf8f1" %}
+{% endif %}
+<header class="mx-auto flex h-[4.5rem] max-w-(--w) px-8 whitespace-nowrap lg:justify-center">
+    <div class="relative z-50 flex items-center ltr:mr-auto rtl:ml-auto">
+        <a class="-translate-y-[1px] text-2xl font-medium" href="{{ config.domain }}">{{ config.siteName }}</a>
+        <div class="btn-dark text-[0px] ltr:ml-4 rtl:mr-4 h-6 w-6 shrink-0 cursor-pointer {% if theme_config.monoDarkIcon %}[background:url(/icons/theme.svg)_left_center/cover_no-repeat] dark:invert{% else %}[background:url(/icons/theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)]{% endif %} dark:[background-position:right]" role="button" aria-label="Dark"></div>
+    </div>
+
+    <div class="btn-menu relative z-50 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden ltr:-mr-8 rtl:-ml-8" role="button" aria-label="Menu"></div>
+
+    <script>
+        (function() {
+            var htmlClass = document.documentElement.classList;
+            setTimeout(function() { htmlClass.remove('not-ready'); }, 10);
+
+            var btnMenu = document.querySelector('.btn-menu');
+            if (btnMenu) {
+                btnMenu.addEventListener('click', function() { htmlClass.toggle('open'); });
+            }
+
+            var metaTheme = document.querySelector('meta[name="theme-color"]');
+            var lightBg = '{{ bgColor }}';
+            var defaultMode = '{{ theme_config.defaultDark|default:"auto" }}';
+
+            function setDark(isDark) {
+                if (metaTheme) { metaTheme.setAttribute('content', isDark ? 'rgb(0 0 0 / 85%)' : lightBg); }
+                htmlClass[isDark ? 'add' : 'remove']('dark');
+                try { localStorage.setItem('dark', isDark); } catch(e) {}
+            }
+
+            var darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+            var stored = null;
+            try { stored = localStorage.getItem('dark'); } catch(e) {}
+            if (stored === 'true' || stored === 'false') {
+                setDark(stored === 'true');
+            } else if (defaultMode === 'dark') {
+                setDark(true);
+            } else if (defaultMode === 'light') {
+                setDark(false);
+            } else {
+                setDark(darkScheme.matches);
+            }
+
+            darkScheme.addEventListener('change', function(event) { setDark(event.matches); });
+
+            var btnDark = document.querySelector('.btn-dark');
+            if (btnDark) {
+                btnDark.addEventListener('click', function() {
+                    var cur = null;
+                    try { cur = localStorage.getItem('dark'); } catch(e) {}
+                    setDark(cur !== 'true');
+                });
+            }
+        })();
+    </script>
+
+    <div class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full flex-col justify-center bg-(--bg) pb-16 duration-200 select-none lg:static lg:h-auto lg:flex-row lg:bg-transparent! lg:pb-0 lg:transition-none">
+        {% if menus|length > 0 %}
+        <nav class="lg:ml-12 lg:flex lg:flex-row lg:items-center lg:space-x-10 rtl:space-x-reverse">
+            {% for menu in menus %}
+                <a class="block text-center text-xl leading-[5rem] lg:text-base lg:font-normal" href="{{ menu.link }}">{{ menu.name }}</a>
+            {% endfor %}
+        </nav>
+        {% endif %}
+
+        {% if theme_config.socialTwitter or theme_config.socialGithub or theme_config.socialInstagram or theme_config.socialLinkedin or theme_config.socialMastodon or theme_config.socialThreads or theme_config.socialBluesky or theme_config.socialRssUrl %}
+        <nav class="mt-12 flex justify-center space-x-10 lg:mt-0 lg:items-center ltr:lg:ml-14 rtl:space-x-reverse rtl:lg:mr-14 dark:invert">
+            {% if theme_config.socialTwitter %}
+            <a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style="--url: url(/icons/twitter.svg)" href="{{ theme_config.socialTwitter }}" target="_blank" rel="me">twitter</a>
+            {% endif %}
+            {% if theme_config.socialGithub %}
+            <a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style="--url: url(/icons/github.svg)" href="{{ theme_config.socialGithub }}" target="_blank" rel="me">github</a>
+            {% endif %}
+            {% if theme_config.socialInstagram %}
+            <a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style="--url: url(/icons/instagram.svg)" href="{{ theme_config.socialInstagram }}" target="_blank" rel="me">instagram</a>
+            {% endif %}
+            {% if theme_config.socialLinkedin %}
+            <a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style="--url: url(/icons/linkedin.svg)" href="{{ theme_config.socialLinkedin }}" target="_blank" rel="me">linkedin</a>
+            {% endif %}
+            {% if theme_config.socialMastodon %}
+            <a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style="--url: url(/icons/mastodon.svg)" href="{{ theme_config.socialMastodon }}" target="_blank" rel="me">mastodon</a>
+            {% endif %}
+            {% if theme_config.socialThreads %}
+            <a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style="--url: url(/icons/threads.svg)" href="{{ theme_config.socialThreads }}" target="_blank" rel="me">threads</a>
+            {% endif %}
+            {% if theme_config.socialBluesky %}
+            <a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style="--url: url(/icons/bluesky.svg)" href="{{ theme_config.socialBluesky }}" target="_blank" rel="me">bluesky</a>
+            {% endif %}
+            {% if theme_config.socialRssUrl %}
+            <a class="h-7 w-7 text-[0px] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6" style="--url: url(/icons/rss.svg)" href="{{ theme_config.socialRssUrl }}" target="_blank" rel="alternate">rss</a>
+            {% endif %}
+        </nav>
+        {% endif %}
+    </div>
+</header>

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - {{ config.siteName }}{% endblock %}
+
+{% block meta_description %}{{ post.content|striptags|truncatechars:160 }}{% endblock %}
+
+{% block canonical %}{{ config.domain }}{{ post.link }}{% endblock %}
+
+{% block main %}
+<article>
+    <header class="mb-14">
+        <h1 class="my-0! pb-2.5">{{ post.title }}</h1>
+
+        <div class="text-xs antialiased opacity-60">
+            <time>{{ post.date }}</time>
+            {% if theme_config.authorName %}
+            <span class="mx-1">&middot;</span>
+            <span>{{ theme_config.authorName }}</span>
+            {% endif %}
+        </div>
+    </header>
+
+    <section>{{ post.content|safe }}</section>
+
+    {% if post.tags|length > 0 %}
+    <footer class="mt-12 flex flex-wrap">
+        {% for tag in post.tags %}
+            <a class="mb-1.5 rounded-lg bg-black/[3%] px-5 py-1 no-underline hover:bg-black/[6%] ltr:mr-1.5 rtl:ml-1.5 dark:bg-white/[8%] dark:hover:bg-white/[12%]" href="{{ tag.link }}">{{ tag.name }}</a>
+        {% endfor %}
+    </footer>
+    {% endif %}
+</article>
+{% endblock %}

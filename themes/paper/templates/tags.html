@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}标签 - {{ config.siteName }}{% endblock %}
+
+{% block main %}
+<h1 class="mb-14">标签</h1>
+
+{% if tags|length > 0 %}
+<div class="flex flex-wrap gap-2">
+    {% for tag in tags %}
+    <a class="rounded-lg bg-black/[3%] px-5 py-2 no-underline hover:bg-black/[6%] dark:bg-white/[8%] dark:hover:bg-white/[12%]" href="{{ tag.link }}">
+        {{ tag.name }} <span class="opacity-60">({{ tag.count }})</span>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<p class="opacity-60">暂无标签。</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}博客 - {{ config.siteName }}{% endblock %}
+
+{% block main %}
+    {% for post in posts %}
+        <section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
+            {% if theme_config.showFeatured and post.isTop %}
+            <span class="mb-1 inline-block text-xs tracking-wider text-orange-500">Featured</span>
+            {% endif %}
+            <h2 class="my-0!">{{ post.title }}</h2>
+            <time class="text-xs antialiased opacity-60">{{ post.date }}</time>
+            <a class="absolute inset-0 text-[0px]" href="{{ post.link }}">{{ post.title }}</a>
+        </section>
+    {% endfor %}
+
+    {% if pagination.prev or pagination.next %}
+    <nav class="mt-14 flex">
+        {% if pagination.prev %}
+        <a class="btn not-prose" href="{{ pagination.prev }}">← 上一页</a>
+        {% endif %}
+        {% if pagination.next %}
+        <a class="btn not-prose ml-auto" href="{{ pagination.next }}">下一页 →</a>
+        {% endif %}
+    </nav>
+    {% endif %}
+{% endblock %}

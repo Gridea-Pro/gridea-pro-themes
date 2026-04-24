@@ -1,0 +1,34 @@
+{% if theme_config.bgColor == "wheat" %}{% set bgColor = "#f8f5d7" %}
+{% elif theme_config.bgColor == "gray" %}{% set bgColor = "#fbfbfb" %}
+{% elif theme_config.bgColor == "light" %}{% set bgColor = "#ffffff" %}
+{% else %}{% set bgColor = "#faf8f1" %}
+{% endif %}
+<!doctype html>
+<html class="not-ready lg:text-base"{% if theme_config.defaultDark == "dark" %} data-theme-init="dark"{% endif %} style="--bg: {{ bgColor }}" lang="zh-CN" dir="ltr">
+    {% include "partials/head.html" %}
+    <body class="bg-(--bg) text-black antialiased duration-200 ease-out [-webkit-tap-highlight-color:transparent] dark:text-white">
+        {% include "partials/header.html" %}
+
+        <main class="prose prose-neutral dark:prose-invert relative mx-auto min-h-[calc(100vh-9rem)] max-w-(--w) px-8 pt-14 pb-16">
+            {% block main %}{% endblock %}
+        </main>
+
+        {% include "partials/footer.html" %}
+
+        {% if theme_config.enableMermaid %}
+        <script type="module">
+            import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.esm.min.mjs';
+            mermaid.initialize({ startOnLoad: true });
+        </script>
+        <script>
+            Array.from(document.getElementsByClassName('language-mermaid')).forEach((el) => {
+                el.parentElement.outerHTML = `<div class="mermaid [&_svg]:block [&_svg]:m-auto">${el.innerHTML}</div>`;
+            });
+        </script>
+        {% endif %}
+
+        {% if theme_config.customJs %}
+        <script>{{ theme_config.customJs|safe }}</script>
+        {% endif %}
+    </body>
+</html>
