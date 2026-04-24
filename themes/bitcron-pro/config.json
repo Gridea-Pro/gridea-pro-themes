@@ -72,6 +72,14 @@
       "note": "仅在宽屏时生效"
     },
     {
+      "name": "indexShowFullContent",
+      "label": "首页显示文章全文",
+      "group": "布局",
+      "value": false,
+      "type": "switch",
+      "note": "关闭则仅显示摘要（可在 Markdown 中用 <!-- more --> 标记摘要位置；未标记时自动截取前 200 字符）"
+    },
+    {
       "name": "contentBgColor",
       "label": "内容区背景色",
       "group": "颜色",

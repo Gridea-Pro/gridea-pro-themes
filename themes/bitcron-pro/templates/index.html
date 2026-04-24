@@ -7,7 +7,7 @@
     <div class="post_title weaklink">
       <h2><a href="{{ post.link }}">{{ post.title }}</a></h2>
     </div>
-    <div class="post_content markdown"><div class="p_part"><p>{{ post.content|safe }}</p></div></div>
+    <div class="post_content markdown"><div class="p_part"><p>{% if theme_config.indexShowFullContent %}{{ post.content|safe }}{% elif post.abstract %}{{ post.abstract|safe }}{% else %}{{ post.content|excerpt:200|safe }}{% endif %}</p></div></div>
     <div class="post_footer">
       <div class="info weaklink"><i class="fa fa-clock-o"></i>
         <span class="date_info">{{ post.dateFormat }}</span>
