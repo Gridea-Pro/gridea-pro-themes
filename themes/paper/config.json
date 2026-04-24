@@ -33,14 +33,6 @@
       ]
     },
     {
-      "name": "monoDarkIcon",
-      "label": "使用单色暗色切换图标",
-      "group": "外观",
-      "type": "toggle",
-      "value": false,
-      "note": "关闭 = 使用原主题彩色 .png 图标（带动画），开启 = 使用单色 .svg 图标"
-    },
-    {
       "name": "authorName",
       "label": "作者名",
       "group": "首页个人信息",

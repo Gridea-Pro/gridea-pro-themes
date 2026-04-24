@@ -1,32 +1,24 @@
-// Mobile menu
+// Mobile menu toggle (CSS handles responsive display; JS only toggles .is-open)
+(function () {
+  var trigger = document.querySelector('.menu-trigger');
+  var menu = document.querySelector('.menu');
+  if (!trigger || !menu) return;
 
-const menuTrigger = document.querySelector(".menu-trigger");
-const menu = document.querySelector(".menu");
-const mobileQuery = getComputedStyle(document.body).getPropertyValue(
-  "--phoneWidth"
-);
-const isMobile = () => window.matchMedia(mobileQuery).matches;
-const isMobileMenu = () => {
-  menuTrigger && menuTrigger.classList.toggle("hidden", !isMobile());
-  menu && menu.classList.toggle("hidden", isMobile());
-};
+  trigger.addEventListener('click', function (e) {
+    e.stopPropagation();
+    menu.classList.toggle('is-open');
+  });
 
-isMobileMenu();
+  // Close when clicking outside the menu
+  document.addEventListener('click', function (e) {
+    if (!trigger.contains(e.target) && !menu.contains(e.target)) {
+      menu.classList.remove('is-open');
+    }
+  });
 
-menuTrigger &&
-  menuTrigger.addEventListener(
-    "click",
-    () => menu && menu.classList.toggle("hidden")
-  );
-
-window.addEventListener("resize", isMobileMenu);
-
-const language = document.getElementsByTagName('html')[0].lang;
-const logo = document.querySelector(".logo__pathname");
-if(logo){
-  window.onload = () => {
-    let path = window.location.pathname.substring(1);
-    path = path.replace(language+'/','')
-    logo.textContent += path.substring(0,path.indexOf('/'));
-  };
-}
+  // Close on resize to desktop
+  var mq = window.matchMedia('(min-width: 641px)');
+  var onChange = function (ev) { if (ev.matches) menu.classList.remove('is-open'); };
+  if (mq.addEventListener) mq.addEventListener('change', onChange);
+  else if (mq.addListener) mq.addListener(onChange);
+})();

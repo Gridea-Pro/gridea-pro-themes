@@ -3,24 +3,34 @@
 {% block title %}归档 - {{ config.siteName }}{% endblock %}
 
 {% block main %}
-<h1 class="mb-14">归档</h1>
+<section class="archives-page">
+    <header class="page-header">
+        <h1>归档</h1>
+    </header>
 
-{% if posts|length > 0 %}
-    {% for group in posts|group_by:"year" %}
-    <section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
-        <h2 class="my-0! text-2xl">{{ group.key }}</h2>
-        <div class="mt-4">
-            {% for post in group.items %}
-            <div class="relative my-3 flex items-baseline justify-between">
-                <h3 class="my-0! text-lg font-normal">{{ post.title }}</h3>
-                <time class="text-xs antialiased opacity-60 ltr:ml-4 rtl:mr-4">{{ post.date }}</time>
-                <a class="absolute inset-0 text-[0px]" href="{{ post.link }}">{{ post.title }}</a>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-    {% endfor %}
-{% else %}
-    <p class="opacity-60">暂无文章。</p>
-{% endif %}
+    {% if archives|length > 0 %}
+        {% for archive in archives %}
+            <article class="archive-year">
+                <div class="archive-year__marker">
+                    <span class="archive-year__num">{{ archive.Year }}</span>
+                    <span class="archive-year__count">{{ archive.Posts|length }} POSTS</span>
+                </div>
+                <ul class="archive-year__list not-prose">
+                    {% for post in archive.Posts %}
+                        {% set isoPart = post.date|split:"T" %}
+                        {% set dateParts = isoPart.0|split:"-" %}
+                        <li class="archive-post">
+                            <a class="archive-post__link" href="{{ post.link }}">
+                                <time datetime="{{ post.date }}">{{ dateParts.1 }}-{{ dateParts.2 }}</time>
+                                <span class="archive-post__title">{{ post.title }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </article>
+        {% endfor %}
+    {% else %}
+        <p class="page-empty">暂无文章</p>
+    {% endif %}
+</section>
 {% endblock %}

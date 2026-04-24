@@ -3,22 +3,19 @@
 {% block title %}标签 — {{ config.siteName }}{% endblock %}
 
 {% block main %}
-    <div class="content">
+    <section class="content">
         <main class="posts">
             <h1>全部标签</h1>
 
             {% if tags|length > 0 %}
-                <div class="posts-group">
-                    <p>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-tag meta-icon"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7" y2="7"></line></svg>
-                        {% for tag in tags %}
-                            <span class="tag"><a href="{{ tag.link }}">{{ tag.name }} ({{ tag.count }})</a></span>
-                        {% endfor %}
-                    </p>
+                <div class="tags-cloud">
+                    {% for tag in tags %}
+                        <span class="tag"><a href="{{ tag.link }}">{{ tag.name }}<span class="tag-count">{{ tag.count }}</span></a></span>
+                    {% endfor %}
                 </div>
             {% else %}
                 <p>暂无标签。</p>
             {% endif %}
         </main>
-    </div>
+    </section>
 {% endblock %}

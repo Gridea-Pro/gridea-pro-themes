@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}友链 — {{ config.siteName }}{% endblock %}
+{% block title %}友链 · {{ config.siteName }}{% endblock %}
 
 {% block main %}
-    <div class="content">
+    <section class="content">
         <main class="friends">
             <h1>友链</h1>
 
@@ -31,5 +31,5 @@
                 <p>暂无友链。</p>
             {% endif %}
         </main>
-    </div>
+    </section>
 {% endblock %}

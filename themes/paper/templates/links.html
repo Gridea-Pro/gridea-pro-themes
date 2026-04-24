@@ -3,29 +3,35 @@
 {% block title %}友链 - {{ config.siteName }}{% endblock %}
 
 {% block main %}
-<h1 class="mb-14">友链</h1>
+<section class="links-page">
+    <header class="page-header">
+        <h1>友链</h1>
+        <p class="page-subtitle">{{ links|length }} FRIENDS</p>
+    </header>
 
-{% if links|length > 0 %}
-    <ul class="not-prose list-none p-0 grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {% for link in links %}
-        <li>
-            <a class="flex items-center gap-3 rounded-xl bg-black/[3%] hover:bg-black/[6%] dark:bg-white/[8%] dark:hover:bg-white/[12%] p-4 no-underline transition-colors duration-150" href="{{ link.url }}" target="_blank" rel="noopener">
-                {% if link.avatar %}
-                    <img class="h-12 w-12 rounded-full shrink-0 object-cover bg-black/5 dark:bg-white/10" src="{{ link.avatar }}" alt="{{ link.name }}" loading="lazy" />
-                {% else %}
-                    <span class="h-12 w-12 rounded-full shrink-0 flex items-center justify-center bg-black/10 dark:bg-white/10 text-lg font-semibold">{{ link.name|first|upper }}</span>
-                {% endif %}
-                <div class="min-w-0 flex-1">
-                    <div class="font-medium text-black dark:text-white truncate">{{ link.name }}</div>
-                    {% if link.description %}
-                        <div class="text-sm opacity-60 truncate">{{ link.description }}</div>
-                    {% endif %}
-                </div>
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
-{% else %}
-    <p class="opacity-60">暂无友链。</p>
-{% endif %}
+    {% if links|length > 0 %}
+        <ul class="links-list not-prose">
+            {% for link in links %}
+                <li class="link-item">
+                    <a class="link-row" href="{{ link.url }}" target="_blank" rel="noopener">
+                        {% if link.avatar %}
+                            <img class="link-avatar" src="{{ link.avatar }}" alt="{{ link.name }}" loading="lazy" />
+                        {% else %}
+                            <span class="link-avatar">{{ link.name|first|upper }}</span>
+                        {% endif %}
+                        <div class="link-info">
+                            <div class="link-name">{{ link.name }}</div>
+                            {% if link.description %}
+                                <div class="link-desc">{{ link.description }}</div>
+                            {% endif %}
+                        </div>
+                        <span class="link-arrow" aria-hidden="true">↗</span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="page-empty">暂无友链</p>
+    {% endif %}
+</section>
 {% endblock %}

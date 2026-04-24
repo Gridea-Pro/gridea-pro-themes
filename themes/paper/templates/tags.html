@@ -3,17 +3,23 @@
 {% block title %}标签 - {{ config.siteName }}{% endblock %}
 
 {% block main %}
-<h1 class="mb-14">标签</h1>
+<section class="tags-page">
+    <header class="page-header">
+        <h1>标签</h1>
+        <p class="page-subtitle">{{ tags|length }} TAGS</p>
+    </header>
 
-{% if tags|length > 0 %}
-<div class="flex flex-wrap gap-2">
-    {% for tag in tags %}
-    <a class="rounded-lg bg-black/[3%] px-5 py-2 no-underline hover:bg-black/[6%] dark:bg-white/[8%] dark:hover:bg-white/[12%]" href="{{ tag.link }}">
-        {{ tag.name }} <span class="opacity-60">({{ tag.count }})</span>
-    </a>
-    {% endfor %}
-</div>
-{% else %}
-<p class="opacity-60">暂无标签。</p>
-{% endif %}
+    {% if tags|length > 0 %}
+        <div class="tag-list">
+            {% for tag in tags %}
+                <a class="tag-pill" href="{{ tag.link }}">
+                    <span class="tag-pill__name">{{ tag.name }}</span>
+                    <span class="tag-pill__count">{{ tag.count }}</span>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="page-empty">暂无标签</p>
+    {% endif %}
+</section>
 {% endblock %}

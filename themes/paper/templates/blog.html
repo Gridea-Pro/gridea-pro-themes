@@ -9,7 +9,7 @@
             <span class="mb-1 inline-block text-xs tracking-wider text-orange-500">Featured</span>
             {% endif %}
             <h2 class="my-0!">{{ post.title }}</h2>
-            <time class="text-xs antialiased opacity-60">{{ post.date }}</time>
+            <time class="post-list-date" datetime="{{ post.date }}">{{ post.dateFormat|default:post.date|truncatechars:10 }}</time>
             <a class="absolute inset-0 text-[0px]" href="{{ post.link }}">{{ post.title }}</a>
         </section>
     {% endfor %}

@@ -1,6 +1,9 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <title>{% block title %}{{ config.siteName }}{% endblock %}</title>
@@ -9,13 +12,9 @@
     <meta name="description" content="{% block meta_description %}{{ config.siteDescription|default:"A personal blog" }}{% endblock %}" />
     <meta name="author" content="{{ theme_config.authorName|default:config.siteName }}" />
 
-    <link rel="preload stylesheet" as="style" href="/styles/main.css" />
+    <link rel="stylesheet" href="/styles/main.css" />
 
-    {% if theme_config.monoDarkIcon %}
-    <link rel="preload" as="image" href="/icons/theme.svg" />
-    {% else %}
     <link rel="preload" as="image" href="/icons/theme.png" />
-    {% endif %}
 
     {% if theme_config.avatarUrl %}
     <link rel="preload" as="image" href="{{ theme_config.avatarUrl }}" />
