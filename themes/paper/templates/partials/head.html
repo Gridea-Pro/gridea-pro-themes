@@ -9,9 +9,6 @@
     <meta name="description" content="{% block meta_description %}{{ config.siteDescription|default:"A personal blog" }}{% endblock %}" />
     <meta name="author" content="{{ theme_config.authorName|default:config.siteName }}" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="preload stylesheet" as="style" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&display=swap" />
     <link rel="preload stylesheet" as="style" href="/styles/main.css" />
 
     {% if theme_config.monoDarkIcon %}

@@ -1848,8 +1848,8 @@ article:not(#\#):not(#\#):not(#\#):not(#\#):not(#\#) .highlight > div table tr:l
    ================================================================ */
 
 :root {
-  --font-display: 'Fraunces', 'Iowan Old Style', 'Palatino',
-                  'Times New Roman', 'Songti SC', 'STSong', serif;
+  --font-display: 'Iowan Old Style', 'Palatino Linotype', Palatino,
+                  'Songti SC', 'STSong', Georgia, 'Times New Roman', serif;
   --font-body: ui-sans-serif, -apple-system, 'Segoe UI', Roboto,
                'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
                Ubuntu, Cantarell, 'Noto Sans', sans-serif;
@@ -1886,7 +1886,7 @@ body {
 .dark ::-webkit-scrollbar-thumb:hover { background: rgb(255 255 255 / 0.22); background-clip: padding-box; border: 2px solid transparent; }
 
 /* ----------------------------------------------------------------
-   Typography · Display font for h1-h3 (Fraunces, variable)
+   Typography · Display font (system serif stack)
    ---------------------------------------------------------------- */
 article h1,
 article h2,
@@ -1897,16 +1897,15 @@ main.memos > h1,
 main.friends > h1,
 .post-title {
   font-family: var(--font-display);
-  font-optical-sizing: auto;
-  font-variation-settings: 'opsz' 72, 'SOFT' 50, 'wght' 600;
   letter-spacing: -0.018em;
-  line-height: 1.15;
+  line-height: 1.2;
+  font-weight: 600;
 }
 article h1,
 .post-title,
 main > h1 {
-  font-variation-settings: 'opsz' 128, 'SOFT' 100, 'wght' 600;
   letter-spacing: -0.025em;
+  line-height: 1.1;
 }
 
 /* Body paragraphs: hanging punctuation + loose reading line-height */
@@ -1963,8 +1962,7 @@ main.prose p { margin-bottom: 1.2em; }
 main.prose blockquote {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 1.15em;
-  font-variation-settings: 'opsz' 48, 'wght' 400;
+  font-size: 1.1em;
   padding-inline-start: 1.25rem;
   border-inline-start-width: 2px;
 }
