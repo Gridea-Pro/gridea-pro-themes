@@ -1,0 +1,48 @@
+<%/*
+  partials/post-card.html — 文章卡片组件（EJS 语法）
+
+  【重要】此模板通过 include 在 forEach 循环内被引入。
+  调用时需要传入 post 变量：
+    <%- include('partials/post-card', { post: post, theme_config: theme_config }) %>
+
+  【EJS 语法要点】
+  - EJS 的 include 需要显式传递变量
+  - post.feature 封面图 URL
+  - post.tags 标签数组
+  - post.date 已格式化的日期字符串
+  - && 和 || 可以直接使用（EJS 就是 JavaScript）
+*/%>
+
+<article class="post-card">
+  <%/* --- 封面图 --- */%>
+  <% if (post.feature && theme_config.showFeatureImage) { %>
+  <div class="post-card__image">
+    <a href="<%= post.link %>">
+      <img src="<%= post.feature %>" alt="<%= post.title %>" loading="lazy">
+    </a>
+  </div>
+  <% } %>
+
+  <%/* --- 文章标题 --- */%>
+  <h2 class="post-card__title">
+    <a href="<%= post.link %>"><%= post.title %></a>
+  </h2>
+
+  <%/* --- 日期和标签 --- */%>
+  <div class="post-card__meta">
+    <%/* post.date 已是格式化字符串，直接输出 */%>
+    <time><%= post.date %></time>
+
+    <%/* 标签列表 */%>
+    <% if (post.tags && post.tags.length > 0) { %>
+      <% post.tags.forEach(function(tag) { %>
+      <a href="<%= tag.link %>" class="tag"><%= tag.name %></a>
+      <% }); %>
+    <% } %>
+  </div>
+
+  <%/* --- 文章摘要 --- */%>
+  <% if (post.abstract) { %>
+  <p class="post-card__excerpt"><%= post.abstract %></p>
+  <% } %>
+</article>

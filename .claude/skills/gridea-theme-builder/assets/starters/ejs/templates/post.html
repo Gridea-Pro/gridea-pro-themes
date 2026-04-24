@@ -1,0 +1,91 @@
+<%/*
+  post.html — 文章详情页模板（EJS 语法）
+
+  【说明】
+  单篇文章页面。变量 `post` 包含当前文章所有信息。
+
+  【EJS 语法要点】
+  - post.content 文章正文含 HTML，必须用 raw 不转义输出
+  - post.title 标题用 escaped 转义输出（防 XSS）
+  - post.tags.forEach() 遍历标签
+  - post.feature 封面图 URL
+*/%>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <%- include('partials/head', { config: config }) %>
+  <title><%= post.title %> - <%= config.siteName %></title>
+</head>
+<body>
+  <%- include('partials/header', { config: config, menus: menus, theme_config: theme_config }) %>
+
+  <main class="site-main">
+    <div class="container">
+      <article>
+        <%/* --- 文章头部信息 --- */%>
+        <header class="post-header">
+          <h1 class="post-header__title"><%= post.title %></h1>
+          <div class="post-header__meta">
+            <time><%= post.date %></time>
+            <% if (post.tags && post.tags.length > 0) { %>
+              <% post.tags.forEach(function(tag) { %>
+              <a href="<%= tag.link %>" class="tag"><%= tag.name %></a>
+              <% }); %>
+            <% } %>
+          </div>
+        </header>
+
+        <%/* --- 封面图 --- */%>
+        <% if (post.feature) { %>
+        <div class="post-feature-image">
+          <img src="<%= post.feature %>" alt="<%= post.title %>">
+        </div>
+        <% } %>
+
+        <%/* --- 文章正文 --- */%>
+        <%/*
+          使用 raw 不转义输出，因为文章内容本身就是 HTML。
+          这是 EJS 最关键的语法区别：
+          escaped 转义（安全，用于用户输入的纯文本）
+          raw 不转义（用于已知安全的 HTML 内容）
+        */%>
+        <div class="post-content">
+          <%- post.content %>
+        </div>
+
+        <%/* --- 文章底部标签 --- */%>
+        <% if (post.tags && post.tags.length > 0) { %>
+        <div class="post-tags">
+          <div class="tag-list">
+            <% post.tags.forEach(function(tag) { %>
+            <a href="<%= tag.link %>" class="tag"><%= tag.name %></a>
+            <% }); %>
+          </div>
+        </div>
+        <% } %>
+      </article>
+    </div>
+  </main>
+
+  <%- include('partials/footer', { config: config, theme_config: theme_config }) %>
+
+  <% if (theme_config.enableDarkMode) { %>
+  <script>
+    (function() {
+      var toggle = document.querySelector('.theme-toggle');
+      if (!toggle) return;
+      var html = document.documentElement;
+      var saved = localStorage.getItem('theme');
+      if (saved) { html.setAttribute('data-theme', saved); }
+      else if (window.matchMedia('(prefers-color-scheme: dark)').matches) { html.setAttribute('data-theme', 'dark'); }
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+  </script>
+  <% } %>
+</body>
+</html>

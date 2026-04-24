@@ -1,0 +1,41 @@
+{# ============================================================
+   about.html — 关于页面模板
+
+   【说明】
+   "关于"页面通常展示站长信息。
+   此处使用 post 变量（Gridea 中关于页面本质上也是一篇文章）。
+   如果 post 为空，则显示站点基本信息作为兜底。
+
+   【Pongo2 语法要点】
+   - 用 if post 检查 post 是否存在
+   - config.avatar 是头像 URL
+   - config.siteDescription 是站点描述
+   ============================================================ #}
+{% extends "base.html" %}
+
+{% block title %}关于 - {{ config.siteName }}{% endblock %}
+
+{% block content %}
+  <div class="page-header">
+    <h1>关于</h1>
+  </div>
+
+  {% if post %}
+    {# --- 如果有关于页面的内容，直接渲染 --- #}
+    <div class="post-content">
+      {{ post.content|safe }}
+    </div>
+  {% else %}
+    {# --- 兜底：用站点配置信息生成简单介绍 --- #}
+    <div class="post-content" style="text-align:center; padding: 2rem 0;">
+      {% if config.avatar %}
+      <img src="{{ config.avatar }}" alt="{{ config.siteName }}"
+           style="width:96px; height:96px; border-radius:50%; margin: 0 auto 1.5rem;">
+      {% endif %}
+      <h2>{{ config.siteName }}</h2>
+      {% if config.siteDescription %}
+      <p>{{ config.siteDescription }}</p>
+      {% endif %}
+    </div>
+  {% endif %}
+{% endblock %}

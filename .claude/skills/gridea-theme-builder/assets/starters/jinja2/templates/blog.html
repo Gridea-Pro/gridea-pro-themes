@@ -1,0 +1,53 @@
+{# ============================================================
+   blog.html — 博客列表页模板（/blog 路径）
+
+   【说明】
+   与 index.html 功能相同，但用于 /blog 路径。
+   有些主题首页是独立设计（landing page），
+   而 /blog 才是文章列表。此模板与 index.html 共享相同逻辑。
+
+   【Pongo2 语法要点】
+   - 复用 post-card.html 组件
+   - 同样支持分页
+   ============================================================ #}
+{% extends "base.html" %}
+
+{% block title %}博客 - {{ config.siteName }}{% endblock %}
+
+{% block content %}
+  <div class="page-header">
+    <h1>博客</h1>
+    {% if config.siteDescription %}
+    <p>{{ config.siteDescription }}</p>
+    {% endif %}
+  </div>
+
+  {# --- 文章列表 --- #}
+  {% if posts|length > 0 %}
+  <div class="post-list">
+    {% for post in posts %}
+      {% if not post.hideInList %}
+        {% include "partials/post-card.html" %}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {# --- 分页 --- #}
+  {% if pagination.prev or pagination.next %}
+  <nav class="pagination">
+    {% if pagination.prev %}
+    <a href="{{ pagination.prev }}">← 上一页</a>
+    {% endif %}
+    {% if pagination.next %}
+    <a href="{{ pagination.next }}">下一页 →</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-state__icon">📝</div>
+    <p class="empty-state__text">暂时还没有文章</p>
+  </div>
+  {% endif %}
+{% endblock %}

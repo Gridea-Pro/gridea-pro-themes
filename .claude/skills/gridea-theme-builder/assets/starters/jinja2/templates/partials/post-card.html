@@ -1,0 +1,49 @@
+{# ============================================================
+   partials/post-card.html — 文章卡片组件
+
+   【重要】此模板在 for 循环内被 include，变量 post 已在作用域中。
+   例如在 index.html 中：
+     for post in posts →
+       include "partials/post-card.html"
+     endfor
+
+   【Pongo2 语法要点】
+   - if post.feature 检查封面图是否存在
+   - post.date 是已格式化的字符串，直接输出即可
+   - 不要对 post.date 再用 |date 过滤器
+   - post.hideInList 为 true 时应隐藏（此处由父循环处理亦可）
+   ============================================================ #}
+
+<article class="post-card">
+  {# --- 封面图（仅在文章有封面且主题设置显示时渲染） --- #}
+  {% if post.feature and theme_config.showFeatureImage %}
+  <div class="post-card__image">
+    <a href="{{ post.link }}">
+      <img src="{{ post.feature }}" alt="{{ post.title }}" loading="lazy">
+    </a>
+  </div>
+  {% endif %}
+
+  {# --- 文章标题 --- #}
+  <h2 class="post-card__title">
+    <a href="{{ post.link }}">{{ post.title }}</a>
+  </h2>
+
+  {# --- 日期和标签 --- #}
+  <div class="post-card__meta">
+    {# post.date 已经是格式化过的字符串，直接输出 #}
+    <time>{{ post.date }}</time>
+
+    {# 标签列表 #}
+    {% if post.tags %}
+      {% for tag in post.tags %}
+      <a href="{{ tag.link }}" class="tag">{{ tag.name }}</a>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  {# --- 文章摘要 --- #}
+  {% if post.abstract %}
+  <p class="post-card__excerpt">{{ post.abstract }}</p>
+  {% endif %}
+</article>

@@ -1,0 +1,78 @@
+<%/*
+  blog.html — 博客列表页模板（EJS 语法）
+
+  【说明】
+  与 index.html 功能相同，用于 /blog 路径。
+  复用 post-card partial。
+*/%>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <%- include('partials/head', { config: config }) %>
+  <title>博客 - <%= config.siteName %></title>
+</head>
+<body>
+  <%- include('partials/header', { config: config, menus: menus, theme_config: theme_config }) %>
+
+  <main class="site-main">
+    <div class="container">
+      <div class="page-header">
+        <h1>博客</h1>
+        <% if (config.siteDescription) { %>
+        <p><%= config.siteDescription %></p>
+        <% } %>
+      </div>
+
+      <%/* --- 文章列表 --- */%>
+      <% if (posts && posts.length > 0) { %>
+      <div class="post-list">
+        <% posts.forEach(function(post) { %>
+          <% if (!post.hideInList) { %>
+            <%- include('partials/post-card', { post: post, theme_config: theme_config }) %>
+          <% } %>
+        <% }); %>
+      </div>
+
+      <%/* --- 分页 --- */%>
+      <% if ((pagination && pagination.prev) || (pagination && pagination.next)) { %>
+      <nav class="pagination">
+        <% if (pagination.prev) { %>
+        <a href="<%= pagination.prev %>">&#8592; 上一页</a>
+        <% } %>
+        <% if (pagination.next) { %>
+        <a href="<%= pagination.next %>">下一页 &#8594;</a>
+        <% } %>
+      </nav>
+      <% } %>
+
+      <% } else { %>
+      <div class="empty-state">
+        <div class="empty-state__icon">&#x1F4DD;</div>
+        <p class="empty-state__text">暂时还没有文章</p>
+      </div>
+      <% } %>
+    </div>
+  </main>
+
+  <%- include('partials/footer', { config: config, theme_config: theme_config }) %>
+
+  <% if (theme_config.enableDarkMode) { %>
+  <script>
+    (function() {
+      var toggle = document.querySelector('.theme-toggle');
+      if (!toggle) return;
+      var html = document.documentElement;
+      var saved = localStorage.getItem('theme');
+      if (saved) { html.setAttribute('data-theme', saved); }
+      else if (window.matchMedia('(prefers-color-scheme: dark)').matches) { html.setAttribute('data-theme', 'dark'); }
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+  </script>
+  <% } %>
+</body>
+</html>

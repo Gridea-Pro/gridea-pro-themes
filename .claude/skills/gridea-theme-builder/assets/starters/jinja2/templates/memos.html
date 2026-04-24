@@ -1,0 +1,40 @@
+{# ============================================================
+   memos.html — 动态 / 说说 / Memos 页面模板
+
+   【说明】
+   展示短内容列表（类似微博 / 说说）。
+   变量 `memos` 是动态数组，每条含 content、date、dateFormat。
+
+   【Pongo2 语法要点】
+   - for memo in memos 遍历动态列表
+   - memo.content|safe 内容可能含 HTML
+   - memo.date 是已格式化的日期字符串
+   ============================================================ #}
+{% extends "base.html" %}
+
+{% block title %}动态 - {{ config.siteName }}{% endblock %}
+
+{% block content %}
+  <div class="page-header">
+    <h1>动态</h1>
+    <p>记录生活中的碎片</p>
+  </div>
+
+  {% if memos|length > 0 %}
+  <div class="memo-list">
+    {% for memo in memos %}
+    <div class="memo-item">
+      <div class="memo-item__date">{{ memo.date }}</div>
+      <div class="memo-item__content">
+        {{ memo.content|safe }}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-state__icon">💭</div>
+    <p class="empty-state__text">暂无动态</p>
+  </div>
+  {% endif %}
+{% endblock %}

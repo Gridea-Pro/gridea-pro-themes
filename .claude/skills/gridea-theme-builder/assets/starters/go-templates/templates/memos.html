@@ -1,0 +1,69 @@
+{{/*
+  memos.html — 动态 / Memos 页面模板（Go 模板语法）
+
+  【说明】
+  展示短内容列表。
+  .Memos 是动态数组，每条含 .Content、.Date。
+
+  【Go 模板语法要点】
+  - {{ range .Memos }}...{{ end }} 遍历动态
+  - .Content 是 template.HTML 类型，自动安全输出
+*/}}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  {{ template "partials/head.html" . }}
+  <title>动态 - {{ .Config.SiteName }}</title>
+</head>
+<body>
+  {{ template "partials/header.html" . }}
+
+  <main class="site-main">
+    <div class="container">
+      <div class="page-header">
+        <h1>动态</h1>
+        <p>记录生活中的碎片</p>
+      </div>
+
+      {{ if .Memos }}
+      <div class="memo-list">
+        {{ range .Memos }}
+        <div class="memo-item">
+          <div class="memo-item__date">{{ .Date }}</div>
+          <div class="memo-item__content">
+            {{ .Content }}
+          </div>
+        </div>
+        {{ end }}
+      </div>
+      {{ else }}
+      <div class="empty-state">
+        <div class="empty-state__icon">💭</div>
+        <p class="empty-state__text">暂无动态</p>
+      </div>
+      {{ end }}
+    </div>
+  </main>
+
+  {{ template "partials/footer.html" . }}
+
+  {{ if .ThemeConfig.EnableDarkMode }}
+  <script>
+    (function() {
+      var toggle = document.querySelector('.theme-toggle');
+      if (!toggle) return;
+      var html = document.documentElement;
+      var saved = localStorage.getItem('theme');
+      if (saved) { html.setAttribute('data-theme', saved); }
+      else if (window.matchMedia('(prefers-color-scheme: dark)').matches) { html.setAttribute('data-theme', 'dark'); }
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+  </script>
+  {{ end }}
+</body>
+</html>

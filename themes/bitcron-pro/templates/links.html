@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}友链 - {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="links_page">
+  <div class="list_with_title">
+    <div class="listing_title">友链</div>
+  </div>
+
+  {% if links %}
+  <div class="links_grid">
+    {% for link in links %}
+    <a class="link_card" href="{{ link.siteLink }}" target="_blank" rel="noopener">
+      {% if link.avatar %}
+      <img class="link_avatar" src="{{ link.avatar }}" alt="{{ link.siteName }}" loading="lazy" />
+      {% else %}
+      <span class="link_avatar_placeholder">{{ link.siteName }}</span>
+      {% endif %}
+      <div class="link_info">
+        <div class="link_name">{{ link.siteName }}</div>
+        {% if link.description %}
+        <div class="link_desc">{{ link.description }}</div>
+        {% endif %}
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="links_empty">暂无友链。</p>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{{/*
+  partials/post-card.html — 文章卡片组件（Go 模板语法）
+
+  【重要】此模板在 range 循环内被引用。
+  在 Go 模板的 range 中，. 代表当前迭代的元素（即 post）。
+  要访问外层上下文需要用 $（根上下文）。
+
+  【Go 模板语法要点】
+  - 在 range .Posts 内部，. 就是当前 post
+  - .Feature 是封面图 URL
+  - .Title / .Link / .Date 是文章属性
+  - .Tags 是标签数组，每个含 .Name 和 .Link
+  - $.ThemeConfig 访问主题配置（$ 是模板根上下文）
+*/}}
+
+<article class="post-card">
+  {{/* --- 封面图 --- */}}
+  {{ if and .Feature $.ThemeConfig.ShowFeatureImage }}
+  <div class="post-card__image">
+    <a href="{{ .Link }}">
+      <img src="{{ .Feature }}" alt="{{ .Title }}" loading="lazy">
+    </a>
+  </div>
+  {{ end }}
+
+  {{/* --- 文章标题 --- */}}
+  <h2 class="post-card__title">
+    <a href="{{ .Link }}">{{ .Title }}</a>
+  </h2>
+
+  {{/* --- 日期和标签 --- */}}
+  <div class="post-card__meta">
+    <time>{{ .Date }}</time>
+    {{ if .Tags }}
+      {{ range .Tags }}
+      <a href="{{ .Link }}" class="tag">{{ .Name }}</a>
+      {{ end }}
+    {{ end }}
+  </div>
+
+  {{/* --- 文章摘要 --- */}}
+  {{ if .Abstract }}
+  <p class="post-card__excerpt">{{ .Abstract }}</p>
+  {{ end }}
+</article>

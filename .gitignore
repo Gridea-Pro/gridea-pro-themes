@@ -5,6 +5,8 @@ Thumbs.db
 .idea/
 .vscode/
 node_modules/
+.omc/
+.claude/settings.local.json
 
 # 非 Gridea Pro 格式的主题源（如 Hugo 主题）留本地参考，不纳入仓库
 # 未来适配成 Gridea Pro 格式后再提 PR 入库

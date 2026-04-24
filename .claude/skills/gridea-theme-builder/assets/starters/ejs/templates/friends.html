@@ -1,0 +1,57 @@
+<%/*
+  friends.html — 友情链接页面模板（EJS 语法）
+
+  【说明】
+  展示友链内容。使用 post 变量渲染后台编辑的内容。
+*/%>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <%- include('partials/head', { config: config }) %>
+  <title>友链 - <%= config.siteName %></title>
+</head>
+<body>
+  <%- include('partials/header', { config: config, menus: menus, theme_config: theme_config }) %>
+
+  <main class="site-main">
+    <div class="container">
+      <div class="page-header">
+        <h1>友情链接</h1>
+        <p>一些值得关注的朋友们</p>
+      </div>
+
+      <% if (typeof post !== 'undefined' && post) { %>
+        <div class="post-content">
+          <%- post.content %>
+        </div>
+      <% } else { %>
+        <div class="empty-state">
+          <div class="empty-state__icon">&#x1F91D;</div>
+          <p class="empty-state__text">友链页面暂无内容，请在后台编辑。</p>
+        </div>
+      <% } %>
+    </div>
+  </main>
+
+  <%- include('partials/footer', { config: config, theme_config: theme_config }) %>
+
+  <% if (theme_config.enableDarkMode) { %>
+  <script>
+    (function() {
+      var toggle = document.querySelector('.theme-toggle');
+      if (!toggle) return;
+      var html = document.documentElement;
+      var saved = localStorage.getItem('theme');
+      if (saved) { html.setAttribute('data-theme', saved); }
+      else if (window.matchMedia('(prefers-color-scheme: dark)').matches) { html.setAttribute('data-theme', 'dark'); }
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+  </script>
+  <% } %>
+</body>
+</html>

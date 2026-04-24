@@ -1,0 +1,71 @@
+<%/*
+  archives.html — 归档页模板（EJS 语法）
+
+  【说明】
+  按时间列出所有文章。侧重信息密度。
+
+  【EJS 语法要点】
+  - posts.length 获取文章数量
+  - posts.forEach() 遍历文章
+*/%>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <%- include('partials/head', { config: config }) %>
+  <title>归档 - <%= config.siteName %></title>
+</head>
+<body>
+  <%- include('partials/header', { config: config, menus: menus, theme_config: theme_config }) %>
+
+  <main class="site-main">
+    <div class="container">
+      <%/* --- 页面标题 --- */%>
+      <div class="page-header">
+        <h1>归档</h1>
+        <% if (posts && posts.length > 0) { %>
+        <p>共 <%= posts.length %> 篇文章</p>
+        <% } %>
+      </div>
+
+      <% if (posts && posts.length > 0) { %>
+      <div class="archive-list">
+        <% posts.forEach(function(post) { %>
+        <div class="archive-item">
+          <span class="archive-item__date"><%= post.date %></span>
+          <span class="archive-item__title">
+            <a href="<%= post.link %>"><%= post.title %></a>
+          </span>
+        </div>
+        <% }); %>
+      </div>
+      <% } else { %>
+      <div class="empty-state">
+        <div class="empty-state__icon">&#x1F4C4;</div>
+        <p class="empty-state__text">暂无文章</p>
+      </div>
+      <% } %>
+    </div>
+  </main>
+
+  <%- include('partials/footer', { config: config, theme_config: theme_config }) %>
+
+  <% if (theme_config.enableDarkMode) { %>
+  <script>
+    (function() {
+      var toggle = document.querySelector('.theme-toggle');
+      if (!toggle) return;
+      var html = document.documentElement;
+      var saved = localStorage.getItem('theme');
+      if (saved) { html.setAttribute('data-theme', saved); }
+      else if (window.matchMedia('(prefers-color-scheme: dark)').matches) { html.setAttribute('data-theme', 'dark'); }
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+  </script>
+  <% } %>
+</body>
+</html>

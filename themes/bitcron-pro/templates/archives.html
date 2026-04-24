@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="list_with_title">
+  <div class="listing_title">归档</div>
+  <div class="listing">
+    <div class="listing-item">
+      {% for post in posts %}
+      <div class="listing_post"><a href="{{ post.link }}" title="{{ post.title }}">{{ post.title }}</a>
+        <div class="post_date"><span class="date">{{ post.dateFormat }}</span></div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

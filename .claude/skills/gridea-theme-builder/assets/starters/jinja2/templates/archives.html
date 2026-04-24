@@ -1,0 +1,43 @@
+{# ============================================================
+   archives.html — 归档页模板
+
+   【说明】
+   按时间倒序展示所有文章列表。
+   Pongo2 中没有 groupby 过滤器，所以我们简单地列出所有文章，
+   由 post.date 来展示时间信息。
+
+   【设计决策】
+   归档页侧重信息密度，不显示封面图和摘要，
+   仅展示日期和标题，方便快速浏览。
+   ============================================================ #}
+{% extends "base.html" %}
+
+{% block title %}归档 - {{ config.siteName }}{% endblock %}
+
+{% block content %}
+  {# --- 页面标题 --- #}
+  <div class="page-header">
+    <h1>归档</h1>
+    {% if posts %}
+    <p>共 {{ posts|length }} 篇文章</p>
+    {% endif %}
+  </div>
+
+  {% if posts|length > 0 %}
+  <div class="archive-list">
+    {% for post in posts %}
+    <div class="archive-item">
+      <span class="archive-item__date">{{ post.date }}</span>
+      <span class="archive-item__title">
+        <a href="{{ post.link }}">{{ post.title }}</a>
+      </span>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-state__icon">📄</div>
+    <p class="empty-state__text">暂无文章</p>
+  </div>
+  {% endif %}
+{% endblock %}

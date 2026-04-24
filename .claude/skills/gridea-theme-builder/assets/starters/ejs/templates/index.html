@@ -1,0 +1,83 @@
+<%/*
+  index.html — 首页模板（EJS 语法）
+
+  【说明】
+  博客首页，展示文章列表和分页。
+  每个页面独立 include partials（EJS 无 extends 机制）。
+
+  【EJS 语法要点】
+  - <%- include('partials/head', data) %> 引入 partial 并传数据
+  - posts.length 获取数组长度（标准 JS）
+  - posts.forEach(function(post) { }) 遍历数组
+  - <%- include('partials/post-card', { post, theme_config }) %>
+    在 forEach 内 include 文章卡片并传入 post 变量
+*/%>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <%- include('partials/head', { config: config }) %>
+  <title><%= config.siteName %><%= config.siteDescription ? ' - ' + config.siteDescription : '' %></title>
+</head>
+<body>
+  <%- include('partials/header', { config: config, menus: menus, theme_config: theme_config }) %>
+
+  <main class="site-main">
+    <div class="container">
+      <%/* --- 文章列表 --- */%>
+      <% if (posts && posts.length > 0) { %>
+      <div class="post-list">
+        <% posts.forEach(function(post) { %>
+          <%/* 隐藏设置了 hideInList 的文章 */%>
+          <% if (!post.hideInList) { %>
+            <%- include('partials/post-card', { post: post, theme_config: theme_config }) %>
+          <% } %>
+        <% }); %>
+      </div>
+
+      <%/* --- 分页导航 --- */%>
+      <% if ((pagination && pagination.prev) || (pagination && pagination.next)) { %>
+      <nav class="pagination">
+        <% if (pagination.prev) { %>
+        <a href="<%= pagination.prev %>">&#8592; 上一页</a>
+        <% } %>
+        <% if (pagination.next) { %>
+        <a href="<%= pagination.next %>">下一页 &#8594;</a>
+        <% } %>
+      </nav>
+      <% } %>
+
+      <% } else { %>
+      <%/* --- 空状态 --- */%>
+      <div class="empty-state">
+        <div class="empty-state__icon">&#x1F4DD;</div>
+        <p class="empty-state__text">暂时还没有文章，快去写第一篇吧！</p>
+      </div>
+      <% } %>
+    </div>
+  </main>
+
+  <%- include('partials/footer', { config: config, theme_config: theme_config }) %>
+
+  <% if (theme_config.enableDarkMode) { %>
+  <script>
+    (function() {
+      var toggle = document.querySelector('.theme-toggle');
+      if (!toggle) return;
+      var html = document.documentElement;
+      var saved = localStorage.getItem('theme');
+      if (saved) {
+        html.setAttribute('data-theme', saved);
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        html.setAttribute('data-theme', 'dark');
+      }
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+  </script>
+  <% } %>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<%/*
+  tags.html — 标签云页模板（EJS 语法）
+
+  【说明】
+  展示所有标签。tags 数组每项含 name、link、count。
+
+  【EJS 语法要点】
+  - tags.length 获取标签数量
+  - tags.forEach(function(tag) { }) 遍历标签
+  - tag.count 该标签下的文章数
+*/%>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <%- include('partials/head', { config: config }) %>
+  <title>标签 - <%= config.siteName %></title>
+</head>
+<body>
+  <%- include('partials/header', { config: config, menus: menus, theme_config: theme_config }) %>
+
+  <main class="site-main">
+    <div class="container">
+      <div class="page-header">
+        <h1>标签</h1>
+        <% if (tags && tags.length > 0) { %>
+        <p>共 <%= tags.length %> 个标签</p>
+        <% } %>
+      </div>
+
+      <% if (tags && tags.length > 0) { %>
+      <div class="tag-cloud">
+        <div class="tag-list">
+          <% tags.forEach(function(tag) { %>
+          <a href="<%= tag.link %>" class="tag">
+            <%= tag.name %>
+            <% if (tag.count) { %>
+            <span>(<%= tag.count %>)</span>
+            <% } %>
+          </a>
+          <% }); %>
+        </div>
+      </div>
+      <% } else { %>
+      <div class="empty-state">
+        <div class="empty-state__icon">&#x1F3F7;&#xFE0F;</div>
+        <p class="empty-state__text">暂无标签</p>
+      </div>
+      <% } %>
+    </div>
+  </main>
+
+  <%- include('partials/footer', { config: config, theme_config: theme_config }) %>
+
+  <% if (theme_config.enableDarkMode) { %>
+  <script>
+    (function() {
+      var toggle = document.querySelector('.theme-toggle');
+      if (!toggle) return;
+      var html = document.documentElement;
+      var saved = localStorage.getItem('theme');
+      if (saved) { html.setAttribute('data-theme', saved); }
+      else if (window.matchMedia('(prefers-color-scheme: dark)').matches) { html.setAttribute('data-theme', 'dark'); }
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+  </script>
+  <% } %>
+</body>
+</html>

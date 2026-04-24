@@ -1,0 +1,38 @@
+{{/*
+  partials/header.html — 页头导航（Go 模板语法）
+
+  【Go 模板语法要点】
+  - {{ range .Menus }}...{{ end }} 遍历菜单
+  - 在 range 内，. 代表当前元素（menu item）
+  - 要访问外层的 .Config，必须用 $.Config
+  - {{ .Name }} / {{ .Link }} 访问菜单项属性（PascalCase）
+*/}}
+
+<header class="site-header">
+  <div class="container container--wide">
+    {{/* --- 站点 Logo / 名称 --- */}}
+    <a href="{{ .Config.Domain }}" class="site-logo">
+      {{ if .Config.Logo }}
+        <img src="{{ .Config.Logo }}" alt="{{ .Config.SiteName }}" style="height:32px;">
+      {{ else }}
+        {{ .Config.SiteName }}
+      {{ end }}
+    </a>
+
+    {{/* --- 导航菜单 --- */}}
+    <nav class="site-nav">
+      {{/* 遍历后台配置的菜单项 */}}
+      {{ range .Menus }}
+      <a href="{{ .Link }}">{{ .Name }}</a>
+      {{ end }}
+
+      {{/* 暗色模式切换按钮 */}}
+      {{ if .ThemeConfig.EnableDarkMode }}
+      <button class="theme-toggle" aria-label="切换暗色模式">
+        <span class="icon-moon">🌙</span>
+        <span class="icon-sun">☀️</span>
+      </button>
+      {{ end }}
+    </nav>
+  </div>
+</header>

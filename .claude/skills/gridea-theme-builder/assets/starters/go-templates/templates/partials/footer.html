@@ -1,0 +1,27 @@
+{{/*
+  partials/footer.html — 页脚（Go 模板语法）
+
+  【Go 模板语法要点】
+  - {{ .Now | date "2006" }} 获取当前年份
+    "2006" 是 Go 的参考时间格式（Mon Jan 2 15:04:05 MST 2006）
+  - .Config.FooterInfo 可能包含 HTML，Go 的 html/template 会自动转义
+    如果需要原样输出 HTML，需要后端将其标记为 template.HTML 类型
+  - Go 模板中管道符是空格分隔：{{ .Now | date "2006" }}
+*/}}
+
+<footer class="site-footer">
+  <div class="container">
+    {{/* --- 版权信息 --- */}}
+    <p>&copy; {{ .Now | date "2006" }} {{ .Config.SiteName }}. All rights reserved.</p>
+
+    {{/* --- 后台配置的页脚信息 --- */}}
+    {{ if .Config.FooterInfo }}
+    <p>{{ .Config.FooterInfo }}</p>
+    {{ end }}
+
+    {{/* --- 自定义页脚标语 --- */}}
+    {{ if .ThemeConfig.FooterSlogan }}
+    <p>{{ .ThemeConfig.FooterSlogan }}</p>
+    {{ end }}
+  </div>
+</footer>

@@ -1,0 +1,39 @@
+{
+  "name": "Starter Theme (Go)",
+  "version": "1.0.0",
+  "author": "Gridea",
+  "description": "Gridea Pro Go Templates Starter Theme — 最小可运行主题",
+  "engine": "go",
+  "customConfig": [
+    {
+      "name": "primaryColor",
+      "label": "主色调",
+      "group": "外观设置",
+      "value": "#2563eb",
+      "type": "input",
+      "note": "主题主色调，用于链接和强调色"
+    },
+    {
+      "name": "showFeatureImage",
+      "label": "显示封面图",
+      "group": "功能设置",
+      "value": true,
+      "type": "switch",
+      "note": "是否在文章列表显示封面图"
+    },
+    {
+      "name": "footerSlogan",
+      "label": "页脚标语",
+      "group": "基础设置",
+      "value": "Powered by Gridea Pro",
+      "type": "input"
+    },
+    {
+      "name": "enableDarkMode",
+      "label": "启用暗色模式",
+      "group": "外观设置",
+      "value": true,
+      "type": "switch"
+    }
+  ]
+}

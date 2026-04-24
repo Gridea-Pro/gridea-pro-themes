@@ -1,0 +1,26 @@
+{# ============================================================
+   partials/footer.html — 页脚
+
+   【Pongo2 语法要点】
+   - {{ now|date:"2006" }} 获取当前年份
+     "2006" 是 Go 的时间格式化参考时间，不是字面量
+   - {{ config.footerInfo|safe }} 用 |safe 输出 HTML 不转义
+   - theme_config.footerSlogan 来自 config.json 的 customConfig
+   ============================================================ #}
+
+<footer class="site-footer">
+  <div class="container">
+    {# --- 版权信息 --- #}
+    <p>&copy; {{ now|date:"2006" }} {{ config.siteName }}. All rights reserved.</p>
+
+    {# --- 后台配置的页脚信息（可能含 HTML，需 |safe） --- #}
+    {% if config.footerInfo %}
+    <p>{{ config.footerInfo|safe }}</p>
+    {% endif %}
+
+    {# --- 自定义页脚标语 --- #}
+    {% if theme_config.footerSlogan %}
+    <p>{{ theme_config.footerSlogan }}</p>
+    {% endif %}
+  </div>
+</footer>

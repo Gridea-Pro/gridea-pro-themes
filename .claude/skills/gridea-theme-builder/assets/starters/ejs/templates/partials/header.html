@@ -1,0 +1,39 @@
+<%/*
+  partials/header.html — 页头导航（EJS 语法）
+
+  【EJS 语法要点】
+  - menus.forEach(function(menu) { ... }) 遍历数组
+    也可以用 for...of：for (const menu of menus) { ... }
+  - menu.name 输出转义文本
+  - EJS 中变量直接用 JS 方式访问：menu.name（camelCase）
+  - 注意和 Go 模板的区别：EJS 用 camelCase，Go 用 PascalCase
+*/%>
+
+<header class="site-header">
+  <div class="container container--wide">
+    <%/* --- 站点 Logo / 名称 --- */%>
+    <a href="<%= config.domain %>" class="site-logo">
+      <% if (config.logo) { %>
+        <img src="<%= config.logo %>" alt="<%= config.siteName %>" style="height:32px;">
+      <% } else { %>
+        <%= config.siteName %>
+      <% } %>
+    </a>
+
+    <%/* --- 导航菜单 --- */%>
+    <nav class="site-nav">
+      <%/* 遍历后台配置的菜单项（使用 forEach 或 for...of 均可） */%>
+      <% menus.forEach(function(menu) { %>
+      <a href="<%= menu.link %>"><%= menu.name %></a>
+      <% }); %>
+
+      <%/* 暗色模式切换按钮 */%>
+      <% if (theme_config.enableDarkMode) { %>
+      <button class="theme-toggle" aria-label="切换暗色模式">
+        <span class="icon-moon">🌙</span>
+        <span class="icon-sun">☀️</span>
+      </button>
+      <% } %>
+    </nav>
+  </div>
+</header>

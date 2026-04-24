@@ -1,0 +1,64 @@
+<%/*
+  base.html — 基础布局模板（EJS 语法）
+
+  【说明】
+  EJS 没有像 Jinja2 的 extends/block 继承机制。
+  但我们可以通过 include 实现类似效果：
+  - 每个页面 include 公共的 head、header、footer
+  - 或者使用 layout 模式（将 body 内容作为变量传入）
+
+  本 starter 采用"每个页面独立 include"的简单方式。
+  此 base.html 文件仅作为参考文档，实际上每个页面模板
+  都会自己 include 所需的 partials。
+
+  【EJS include 语法】
+  示例: include('partials/head', { config: config })
+  注意：
+  - 路径不含 .html 后缀（EJS 自动追加）
+  - 第二个参数是传给子模板的数据对象
+  - 使用 raw 输出（不转义）而非 escaped 输出（转义）来 include
+*/%>
+<%/*
+  此文件作为布局参考。实际页面模板（如 index.html）
+  直接包含 partials，不经过此文件。
+*/%>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <%- include('partials/head', { config: config }) %>
+  <title><%= typeof pageTitle !== 'undefined' ? pageTitle : config.siteName %></title>
+</head>
+<body>
+  <%- include('partials/header', { config: config, menus: menus, theme_config: theme_config }) %>
+
+  <main class="site-main">
+    <div class="container">
+      <%- typeof body !== 'undefined' ? body : '' %>
+    </div>
+  </main>
+
+  <%- include('partials/footer', { config: config, theme_config: theme_config }) %>
+
+  <% if (theme_config.enableDarkMode) { %>
+  <script>
+    (function() {
+      var toggle = document.querySelector('.theme-toggle');
+      if (!toggle) return;
+      var html = document.documentElement;
+      var saved = localStorage.getItem('theme');
+      if (saved) {
+        html.setAttribute('data-theme', saved);
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        html.setAttribute('data-theme', 'dark');
+      }
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+  </script>
+  <% } %>
+</body>
+</html>

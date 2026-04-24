@@ -1,0 +1,85 @@
+{{/*
+  index.html — 首页模板（Go 模板语法）
+
+  【说明】
+  Go 模板不支持 Jinja2 风格的 extends/block 继承机制。
+  所以每个页面独立 include 头部和尾部 partial。
+  这是最简单直观的方式，适合入门。
+
+  【Go 模板语法要点】
+  - {{ template "partials/head.html" . }} 引入 partial，注意传递 . （当前上下文）
+  - {{ len .Posts }} 获取数组长度
+  - {{ range .Posts }}...{{ end }} 遍历
+  - {{ if .Pagination.Prev }}...{{ end }} 检查分页
+  - 在 range 内，. 变成当前元素，用 $ 访问根上下文
+*/}}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  {{ template "partials/head.html" . }}
+  <title>{{ .Config.SiteName }}{{ if .Config.SiteDescription }} - {{ .Config.SiteDescription }}{{ end }}</title>
+</head>
+<body>
+  {{ template "partials/header.html" . }}
+
+  <main class="site-main">
+    <div class="container">
+      {{/* --- 文章列表 --- */}}
+      {{ if .Posts }}
+      <div class="post-list">
+        {{ range .Posts }}
+          {{/* 隐藏设置了 HideInList 的文章 */}}
+          {{ if not .HideInList }}
+            {{ template "partials/post-card.html" . }}
+          {{ end }}
+        {{ end }}
+      </div>
+
+      {{/* --- 分页导航 --- */}}
+      {{ if or $.Pagination.Prev $.Pagination.Next }}
+      <nav class="pagination">
+        {{ if $.Pagination.Prev }}
+        <a href="{{ $.Pagination.Prev }}">← 上一页</a>
+        {{ end }}
+        {{ if $.Pagination.Next }}
+        <a href="{{ $.Pagination.Next }}">下一页 →</a>
+        {{ end }}
+      </nav>
+      {{ end }}
+
+      {{ else }}
+      {{/* --- 空状态 --- */}}
+      <div class="empty-state">
+        <div class="empty-state__icon">📝</div>
+        <p class="empty-state__text">暂时还没有文章，快去写第一篇吧！</p>
+      </div>
+      {{ end }}
+    </div>
+  </main>
+
+  {{ template "partials/footer.html" . }}
+
+  {{/* --- 暗色模式脚本 --- */}}
+  {{ if .ThemeConfig.EnableDarkMode }}
+  <script>
+    (function() {
+      var toggle = document.querySelector('.theme-toggle');
+      if (!toggle) return;
+      var html = document.documentElement;
+      var saved = localStorage.getItem('theme');
+      if (saved) {
+        html.setAttribute('data-theme', saved);
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        html.setAttribute('data-theme', 'dark');
+      }
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+  </script>
+  {{ end }}
+</body>
+</html>

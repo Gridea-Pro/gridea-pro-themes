@@ -1,0 +1,89 @@
+{{/*
+  post.html — 文章详情页模板（Go 模板语法）
+
+  【说明】
+  单篇文章页面。变量 .Post 包含当前文章的所有信息。
+
+  【Go 模板语法要点】
+  - .Post.Content 在 Go 的 html/template 中，如果后端传入的是
+    template.HTML 类型，则会原样输出 HTML，不会被转义。
+  - .Post.Tags 是标签数组
+  - .Post.Feature 是封面图 URL
+*/}}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  {{ template "partials/head.html" . }}
+  <title>{{ .Post.Title }} - {{ .Config.SiteName }}</title>
+</head>
+<body>
+  {{ template "partials/header.html" . }}
+
+  <main class="site-main">
+    <div class="container">
+      <article>
+        {{/* --- 文章头部信息 --- */}}
+        <header class="post-header">
+          <h1 class="post-header__title">{{ .Post.Title }}</h1>
+          <div class="post-header__meta">
+            <time>{{ .Post.Date }}</time>
+            {{ if .Post.Tags }}
+              {{ range .Post.Tags }}
+              <a href="{{ .Link }}" class="tag">{{ .Name }}</a>
+              {{ end }}
+            {{ end }}
+          </div>
+        </header>
+
+        {{/* --- 封面图 --- */}}
+        {{ if .Post.Feature }}
+        <div class="post-feature-image">
+          <img src="{{ .Post.Feature }}" alt="{{ .Post.Title }}">
+        </div>
+        {{ end }}
+
+        {{/* --- 文章正文 --- */}}
+        {{/*
+          Go html/template 对 template.HTML 类型不转义。
+          后端应将文章内容标记为 template.HTML。
+        */}}
+        <div class="post-content">
+          {{ .Post.Content }}
+        </div>
+
+        {{/* --- 文章底部标签 --- */}}
+        {{ if .Post.Tags }}
+        <div class="post-tags">
+          <div class="tag-list">
+            {{ range .Post.Tags }}
+            <a href="{{ .Link }}" class="tag">{{ .Name }}</a>
+            {{ end }}
+          </div>
+        </div>
+        {{ end }}
+      </article>
+    </div>
+  </main>
+
+  {{ template "partials/footer.html" . }}
+
+  {{ if .ThemeConfig.EnableDarkMode }}
+  <script>
+    (function() {
+      var toggle = document.querySelector('.theme-toggle');
+      if (!toggle) return;
+      var html = document.documentElement;
+      var saved = localStorage.getItem('theme');
+      if (saved) { html.setAttribute('data-theme', saved); }
+      else if (window.matchMedia('(prefers-color-scheme: dark)').matches) { html.setAttribute('data-theme', 'dark'); }
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+  </script>
+  {{ end }}
+</body>
+</html>

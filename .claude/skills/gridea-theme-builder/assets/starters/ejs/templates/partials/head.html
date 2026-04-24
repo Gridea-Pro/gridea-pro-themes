@@ -1,0 +1,27 @@
+<%/*
+  partials/head.html — <head> 区域内容（EJS 语法）
+
+  【EJS 语法要点】
+  - escaped 输出转义后的内容（防 XSS）
+  - raw 输出原始 HTML（不转义）
+  - scriptlet 执行 JS 代码但不输出
+  - include 语法：include(路径, 数据对象)
+    路径相对于当前文件，数据对象是传递给子模板的变量
+  - EJS 中可以直接使用 JavaScript 表达式和运算符
+*/%>
+
+<%/* --- 基础 meta --- */%>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<%/* --- SEO 描述：用 JS 三元运算符设置默认值 --- */%>
+<meta name="description" content="<%= config.siteDescription || '一个使用 Gridea 搭建的博客' %>">
+
+<%/* --- Favicon --- */%>
+<% if (config.favicon) { %>
+<link rel="icon" href="<%= config.favicon %>">
+<% } %>
+
+<%/* --- 主样式表 --- */%>
+<link rel="stylesheet" href="<%= config.domain %>/styles/main.css">

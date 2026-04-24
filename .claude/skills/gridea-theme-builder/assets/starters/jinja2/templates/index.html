@@ -1,0 +1,51 @@
+{# ============================================================
+   index.html — 首页模板
+
+   【说明】
+   博客首页，展示文章列表和分页。
+   通过 {% extends "base.html" %} 继承基础布局。
+
+   【Pongo2 语法要点】
+   - extends "base.html" 必须是文件第一个标签
+   - block content 覆盖 base.html 中的同名 block
+   - posts|length 获取文章数量
+   - for post in posts 遍历文章列表
+   - include "partials/post-card.html" 引入文章卡片
+     因为 post 变量在 for 循环中，post-card.html 可直接使用
+   ============================================================ #}
+{% extends "base.html" %}
+
+{% block title %}{{ config.siteName }} - {{ config.siteDescription|default:"" }}{% endblock %}
+
+{% block content %}
+  {# --- 文章列表 --- #}
+  {% if posts|length > 0 %}
+  <div class="post-list">
+    {% for post in posts %}
+      {# 隐藏设置了 hideInList 的文章 #}
+      {% if not post.hideInList %}
+        {% include "partials/post-card.html" %}
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  {# --- 分页导航 --- #}
+  {% if pagination.prev or pagination.next %}
+  <nav class="pagination">
+    {% if pagination.prev %}
+    <a href="{{ pagination.prev }}">← 上一页</a>
+    {% endif %}
+    {% if pagination.next %}
+    <a href="{{ pagination.next }}">下一页 →</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+
+  {% else %}
+  {# --- 空状态：没有文章时显示 --- #}
+  <div class="empty-state">
+    <div class="empty-state__icon">📝</div>
+    <p class="empty-state__text">暂时还没有文章，快去写第一篇吧！</p>
+  </div>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,69 @@
+{{/*
+  about.html — 关于页面模板（Go 模板语法）
+
+  【说明】
+  "关于"页面展示站长信息，使用 .Post 变量渲染内容。
+
+  【Go 模板语法要点】
+  - 用 if .Post 检查 post 是否存在
+  - .Post.Content 输出文章内容（template.HTML 类型不转义）
+  - .Config.Avatar 头像 URL
+*/}}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  {{ template "partials/head.html" . }}
+  <title>关于 - {{ .Config.SiteName }}</title>
+</head>
+<body>
+  {{ template "partials/header.html" . }}
+
+  <main class="site-main">
+    <div class="container">
+      <div class="page-header">
+        <h1>关于</h1>
+      </div>
+
+      {{ if .Post }}
+        {{/* --- 渲染关于页面内容 --- */}}
+        <div class="post-content">
+          {{ .Post.Content }}
+        </div>
+      {{ else }}
+        {{/* --- 兜底：使用站点配置信息 --- */}}
+        <div class="post-content" style="text-align:center; padding: 2rem 0;">
+          {{ if .Config.Avatar }}
+          <img src="{{ .Config.Avatar }}" alt="{{ .Config.SiteName }}"
+               style="width:96px; height:96px; border-radius:50%; margin: 0 auto 1.5rem;">
+          {{ end }}
+          <h2>{{ .Config.SiteName }}</h2>
+          {{ if .Config.SiteDescription }}
+          <p>{{ .Config.SiteDescription }}</p>
+          {{ end }}
+        </div>
+      {{ end }}
+    </div>
+  </main>
+
+  {{ template "partials/footer.html" . }}
+
+  {{ if .ThemeConfig.EnableDarkMode }}
+  <script>
+    (function() {
+      var toggle = document.querySelector('.theme-toggle');
+      if (!toggle) return;
+      var html = document.documentElement;
+      var saved = localStorage.getItem('theme');
+      if (saved) { html.setAttribute('data-theme', saved); }
+      else if (window.matchMedia('(prefers-color-scheme: dark)').matches) { html.setAttribute('data-theme', 'dark'); }
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+  </script>
+  {{ end }}
+</body>
+</html>

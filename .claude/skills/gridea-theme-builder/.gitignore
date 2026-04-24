@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+env/
+.pytest_cache/
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Skill 运行产物
+test-output/
+preview/
+themes/
+
+# 本地示例/草稿(如需提交 examples/,请从 .gitignore 中移除对应路径)
+scratch/
+tmp/

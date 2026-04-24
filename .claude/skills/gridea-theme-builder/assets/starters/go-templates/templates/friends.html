@@ -1,0 +1,57 @@
+{{/*
+  friends.html — 友情链接页面模板（Go 模板语法）
+
+  【说明】
+  展示友链内容，使用 .Post 变量渲染后台编辑的内容。
+*/}}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  {{ template "partials/head.html" . }}
+  <title>友链 - {{ .Config.SiteName }}</title>
+</head>
+<body>
+  {{ template "partials/header.html" . }}
+
+  <main class="site-main">
+    <div class="container">
+      <div class="page-header">
+        <h1>友情链接</h1>
+        <p>一些值得关注的朋友们</p>
+      </div>
+
+      {{ if .Post }}
+        <div class="post-content">
+          {{ .Post.Content }}
+        </div>
+      {{ else }}
+        <div class="empty-state">
+          <div class="empty-state__icon">🤝</div>
+          <p class="empty-state__text">友链页面暂无内容，请在后台编辑。</p>
+        </div>
+      {{ end }}
+    </div>
+  </main>
+
+  {{ template "partials/footer.html" . }}
+
+  {{ if .ThemeConfig.EnableDarkMode }}
+  <script>
+    (function() {
+      var toggle = document.querySelector('.theme-toggle');
+      if (!toggle) return;
+      var html = document.documentElement;
+      var saved = localStorage.getItem('theme');
+      if (saved) { html.setAttribute('data-theme', saved); }
+      else if (window.matchMedia('(prefers-color-scheme: dark)').matches) { html.setAttribute('data-theme', 'dark'); }
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+  </script>
+  {{ end }}
+</body>
+</html>

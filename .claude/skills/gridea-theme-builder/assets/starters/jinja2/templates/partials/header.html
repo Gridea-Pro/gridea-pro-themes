@@ -1,0 +1,38 @@
+{# ============================================================
+   partials/header.html — 页头导航
+
+   【Pongo2 语法要点】
+   - for menu in menus 遍历菜单数组
+   - menu.name / menu.link 访问菜单项属性
+   - menus 是全局变量，在所有模板中可用
+   - |length 获取数组长度（注意：不是 |count）
+   ============================================================ #}
+
+<header class="site-header">
+  <div class="container container--wide">
+    {# --- 站点 Logo / 名称 --- #}
+    <a href="{{ config.domain }}" class="site-logo">
+      {% if config.logo %}
+        <img src="{{ config.logo }}" alt="{{ config.siteName }}" style="height:32px;">
+      {% else %}
+        {{ config.siteName }}
+      {% endif %}
+    </a>
+
+    {# --- 导航菜单 --- #}
+    <nav class="site-nav">
+      {# 遍历后台配置的菜单项 #}
+      {% for menu in menus %}
+      <a href="{{ menu.link }}">{{ menu.name }}</a>
+      {% endfor %}
+
+      {# 暗色模式切换按钮：仅在启用时显示 #}
+      {% if theme_config.enableDarkMode %}
+      <button class="theme-toggle" aria-label="切换暗色模式">
+        <span class="icon-moon">🌙</span>
+        <span class="icon-sun">☀️</span>
+      </button>
+      {% endif %}
+    </nav>
+  </div>
+</header>

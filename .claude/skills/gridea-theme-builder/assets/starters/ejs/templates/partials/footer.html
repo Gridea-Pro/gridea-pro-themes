@@ -1,0 +1,28 @@
+<%/*
+  partials/footer.html — 页脚（EJS 语法）
+
+  【EJS 语法要点】
+  - new Date().getFullYear() 获取当前年份（EJS 可直接用 JS）
+  - config.footerInfo 用 raw 输出（不转义）
+    注意：escaped 会转义 HTML 实体，raw 不转义
+  - 这是 EJS 最重要的区别之一：
+    escaped "安全输出"（转义）
+    raw "原始输出"（不转义，用于信任的 HTML 内容）
+*/%>
+
+<footer class="site-footer">
+  <div class="container">
+    <%/* --- 版权信息 --- */%>
+    <p>&copy; <%= new Date().getFullYear() %> <%= config.siteName %>. All rights reserved.</p>
+
+    <%/* --- 后台配置的页脚信息（含 HTML，用 raw 输出不转义） --- */%>
+    <% if (config.footerInfo) { %>
+    <p><%- config.footerInfo %></p>
+    <% } %>
+
+    <%/* --- 自定义页脚标语 --- */%>
+    <% if (theme_config.footerSlogan) { %>
+    <p><%= theme_config.footerSlogan %></p>
+    <% } %>
+  </div>
+</footer>

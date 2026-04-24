@@ -1,0 +1,58 @@
+{# ============================================================
+   base.html — 基础布局模板（Pongo2 / Jinja2 语法）
+
+   【核心说明】
+   这是所有页面的基础骨架，其他页面通过 extends "base.html"
+   继承此模板，并通过 block 覆盖特定区域的内容。
+
+   【Pongo2 语法注意】
+   - 过滤器参数用冒号：value|default:"fallback"
+   - 不支持三元运算符，必须用 if / else / endif
+   - 不支持 ~ 拼接、macro、is defined
+   ============================================================ #}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  {# --- 引入 <head> 部分（meta、样式等） --- #}
+  {% include "partials/head.html" %}
+  <title>{% block title %}{{ config.siteName }}{% endblock %}</title>
+</head>
+{# --- data-theme 属性用于暗色模式 CSS 切换 --- #}
+<body>
+  {# --- 页头（logo + 导航） --- #}
+  {% include "partials/header.html" %}
+
+  {# --- 主内容区，子模板通过 block content 填充 --- #}
+  <main class="site-main">
+    <div class="container">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  {# --- 页脚 --- #}
+  {% include "partials/footer.html" %}
+
+  {# --- 暗色模式切换脚本 --- #}
+  {% if theme_config.enableDarkMode %}
+  <script>
+    (function() {
+      var toggle = document.querySelector('.theme-toggle');
+      if (!toggle) return;
+      var html = document.documentElement;
+      var saved = localStorage.getItem('theme');
+      if (saved) {
+        html.setAttribute('data-theme', saved);
+      } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        html.setAttribute('data-theme', 'dark');
+      }
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+  </script>
+  {% endif %}
+</body>
+</html>

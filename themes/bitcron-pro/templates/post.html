@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="post_page">
+  <div class="post">
+    <div class="post_title sm_margin">
+      <h2><a>{{ post.title }}</a></h2>
+    </div>
+    <div class="post_details">
+      <div class="info"><i class="fa fa-clock-o"></i>
+        <span class="date_info">{{ post.dateFormat }}</span>
+        <i class="fa fa-eye"></i>
+        <span class="date_info"><span id="busuanzi_value_page_pv"></span> Views</span>
+        <i class="fa fa-bookmark-o"></i>
+        <span class="tags_info weaklink">
+          {% for tag in post.tags %}
+          <a href="{{ tag.link }}" class="tag">{{ tag.name }}</a>
+          {% endfor %}
+        </span>
+      </div>
+    </div>
+    <div class="post_content markdown"><p class="md_block">
+      <span class="md_line md_line_start md_line_end">{{ post.content|safe }}</span>
+      <p class="md_block">
+        <div class="reward"><div class="reward-button">赏 <span class="reward-code"> <span class="alipay-code"> <img class="alipay-img" src="/media/images/alipay.png"><b>支付宝扫码打赏</b> </span> <span class="wechat-code"> <img class="wechat-img" src="/media/images/wechat.png"><b>微信打赏</b> </span> </span></div></div>
+      </p>
+    </div>
+  </div>
+  <div class="doc_comments">
+    {% include "partials/comments.html" %}
+  </div>
+</div>
+{% endblock %}

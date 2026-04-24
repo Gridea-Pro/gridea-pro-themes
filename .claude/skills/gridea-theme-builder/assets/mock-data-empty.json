@@ -1,0 +1,42 @@
+{
+  "config": {
+    "domain": "https://test.gridea.pro",
+    "siteName": "空白博客",
+    "siteDescription": "用于测试空状态的模拟博客",
+    "avatar": "",
+    "logo": "",
+    "favicon": "",
+    "footerInfo": ""
+  },
+  "theme_config": {
+    "primaryColor": "#2563eb",
+    "showFeatureImage": true,
+    "postsPerPage": 10,
+    "enableDarkMode": false,
+    "socialGithub": "",
+    "socialTwitter": "",
+    "customCSS": "",
+    "customJS": "",
+    "footerSlogan": ""
+  },
+  "menus": [],
+  "posts": [],
+  "tags": [],
+  "memos": [],
+  "pagination": {
+    "prev": "",
+    "next": ""
+  },
+  "tag": {
+    "name": "",
+    "link": "",
+    "count": 0
+  },
+  "current_tag": {
+    "name": "",
+    "link": "",
+    "count": 0
+  },
+  "post": null,
+  "now": "2026-02-28T15:30:00+08:00"
+}

@@ -1,0 +1,34 @@
+{# ============================================================
+   friends.html — 友情链接页面模板
+
+   【说明】
+   展示友链列表。此页面也可能使用 post 内容来填充。
+   如果 Gridea Pro 提供了 friends 变量可在此使用，
+   否则 fallback 到 post.content 渲染后台编辑的内容。
+
+   【Pongo2 语法要点】
+   - post.content|safe 用于输出友链内容（可能含 HTML 列表）
+   ============================================================ #}
+{% extends "base.html" %}
+
+{% block title %}友链 - {{ config.siteName }}{% endblock %}
+
+{% block content %}
+  <div class="page-header">
+    <h1>友情链接</h1>
+    <p>一些值得关注的朋友们</p>
+  </div>
+
+  {% if post %}
+    {# --- 渲染后台编辑的友链内容 --- #}
+    <div class="post-content">
+      {{ post.content|safe }}
+    </div>
+  {% else %}
+    {# --- 空状态 --- #}
+    <div class="empty-state">
+      <div class="empty-state__icon">🤝</div>
+      <p class="empty-state__text">友链页面暂无内容，请在后台编辑。</p>
+    </div>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,78 @@
+{{/*
+  blog.html — 博客列表页模板（Go 模板语法）
+
+  【说明】
+  与 index.html 功能相同，用于 /blog 路径。
+  复用 post-card partial。
+*/}}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  {{ template "partials/head.html" . }}
+  <title>博客 - {{ .Config.SiteName }}</title>
+</head>
+<body>
+  {{ template "partials/header.html" . }}
+
+  <main class="site-main">
+    <div class="container">
+      <div class="page-header">
+        <h1>博客</h1>
+        {{ if .Config.SiteDescription }}
+        <p>{{ .Config.SiteDescription }}</p>
+        {{ end }}
+      </div>
+
+      {{/* --- 文章列表 --- */}}
+      {{ if .Posts }}
+      <div class="post-list">
+        {{ range .Posts }}
+          {{ if not .HideInList }}
+            {{ template "partials/post-card.html" . }}
+          {{ end }}
+        {{ end }}
+      </div>
+
+      {{/* --- 分页 --- */}}
+      {{ if or $.Pagination.Prev $.Pagination.Next }}
+      <nav class="pagination">
+        {{ if $.Pagination.Prev }}
+        <a href="{{ $.Pagination.Prev }}">← 上一页</a>
+        {{ end }}
+        {{ if $.Pagination.Next }}
+        <a href="{{ $.Pagination.Next }}">下一页 →</a>
+        {{ end }}
+      </nav>
+      {{ end }}
+
+      {{ else }}
+      <div class="empty-state">
+        <div class="empty-state__icon">📝</div>
+        <p class="empty-state__text">暂时还没有文章</p>
+      </div>
+      {{ end }}
+    </div>
+  </main>
+
+  {{ template "partials/footer.html" . }}
+
+  {{ if .ThemeConfig.EnableDarkMode }}
+  <script>
+    (function() {
+      var toggle = document.querySelector('.theme-toggle');
+      if (!toggle) return;
+      var html = document.documentElement;
+      var saved = localStorage.getItem('theme');
+      if (saved) { html.setAttribute('data-theme', saved); }
+      else if (window.matchMedia('(prefers-color-scheme: dark)').matches) { html.setAttribute('data-theme', 'dark'); }
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+  </script>
+  {{ end }}
+</body>
+</html>

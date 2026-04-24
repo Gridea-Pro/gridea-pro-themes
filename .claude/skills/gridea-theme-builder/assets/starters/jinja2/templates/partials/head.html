@@ -1,0 +1,28 @@
+{# ============================================================
+   partials/head.html — <head> 区域内容
+
+   【说明】
+   此文件被 base.html 通过 {% include "partials/head.html" %} 引入。
+   注意 include 路径是相对于 templates/ 根目录的。
+
+   【Pongo2 语法要点】
+   - {{ config.domain }} 输出站点域名（如 https://example.com）
+   - {{ config.siteName }} 输出站点名称
+   - |default:"值" 用冒号传参，不是括号
+   ============================================================ #}
+
+{# --- 基础 meta --- #}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+{# --- SEO 描述：使用 config.siteDescription，无值时给默认值 --- #}
+<meta name="description" content="{{ config.siteDescription|default:"一个使用 Gridea 搭建的博客" }}">
+
+{# --- Favicon：如果配置了 favicon 就使用，否则忽略 --- #}
+{% if config.favicon %}
+<link rel="icon" href="{{ config.favicon }}">
+{% endif %}
+
+{# --- 主样式表：路径基于 config.domain --- #}
+<link rel="stylesheet" href="{{ config.domain }}/styles/main.css">

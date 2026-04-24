@@ -1,0 +1,69 @@
+<%/*
+  tag.html — 单个标签页模板（EJS 语法）
+
+  【说明】
+  展示某个标签下的所有文章。
+  变量 `tag` 或 `current_tag` 代表当前标签。
+
+  【EJS 语法要点】
+  - tag.name 当前标签名
+  - posts 是该标签下的文章列表
+  - 复用 post-card partial
+*/%>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <%- include('partials/head', { config: config }) %>
+  <title><%= tag.name %> - <%= config.siteName %></title>
+</head>
+<body>
+  <%- include('partials/header', { config: config, menus: menus, theme_config: theme_config }) %>
+
+  <main class="site-main">
+    <div class="container">
+      <%/* --- 页面标题 --- */%>
+      <div class="page-header">
+        <h1>标签：<%= tag.name %></h1>
+        <% if (posts && posts.length > 0) { %>
+        <p>共 <%= posts.length %> 篇文章</p>
+        <% } %>
+      </div>
+
+      <%/* --- 文章列表 --- */%>
+      <% if (posts && posts.length > 0) { %>
+      <div class="post-list">
+        <% posts.forEach(function(post) { %>
+          <%- include('partials/post-card', { post: post, theme_config: theme_config }) %>
+        <% }); %>
+      </div>
+      <% } else { %>
+      <div class="empty-state">
+        <div class="empty-state__icon">&#x1F3F7;&#xFE0F;</div>
+        <p class="empty-state__text">该标签下暂无文章</p>
+      </div>
+      <% } %>
+    </div>
+  </main>
+
+  <%- include('partials/footer', { config: config, theme_config: theme_config }) %>
+
+  <% if (theme_config.enableDarkMode) { %>
+  <script>
+    (function() {
+      var toggle = document.querySelector('.theme-toggle');
+      if (!toggle) return;
+      var html = document.documentElement;
+      var saved = localStorage.getItem('theme');
+      if (saved) { html.setAttribute('data-theme', saved); }
+      else if (window.matchMedia('(prefers-color-scheme: dark)').matches) { html.setAttribute('data-theme', 'dark'); }
+      toggle.addEventListener('click', function() {
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+      });
+    })();
+  </script>
+  <% } %>
+</body>
+</html>

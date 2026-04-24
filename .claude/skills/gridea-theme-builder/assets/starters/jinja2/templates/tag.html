@@ -1,0 +1,39 @@
+{# ============================================================
+   tag.html — 单个标签页模板
+
+   【说明】
+   展示某个标签下的所有文章。
+   变量 `tag` 或 `current_tag` 代表当前标签对象（含 name、link）。
+   变量 `posts` 是该标签下的文章列表。
+
+   【Pongo2 语法要点】
+   - tag 和 current_tag 都可能可用，用 if tag 检查
+   - 文章列表复用 post-card 组件
+   ============================================================ #}
+{% extends "base.html" %}
+
+{% block title %}{{ tag.name }} - {{ config.siteName }}{% endblock %}
+
+{% block content %}
+  {# --- 页面标题：显示当前标签名 --- #}
+  <div class="page-header">
+    <h1>标签：{{ tag.name }}</h1>
+    {% if posts %}
+    <p>共 {{ posts|length }} 篇文章</p>
+    {% endif %}
+  </div>
+
+  {# --- 该标签下的文章列表 --- #}
+  {% if posts|length > 0 %}
+  <div class="post-list">
+    {% for post in posts %}
+      {% include "partials/post-card.html" %}
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <div class="empty-state__icon">🏷️</div>
+    <p class="empty-state__text">该标签下暂无文章</p>
+  </div>
+  {% endif %}
+{% endblock %}

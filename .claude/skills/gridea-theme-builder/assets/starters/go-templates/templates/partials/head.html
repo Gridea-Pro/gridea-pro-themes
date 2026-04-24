@@ -1,0 +1,30 @@
+{{/*
+  partials/head.html — <head> 区域内容（Go 模板语法）
+
+  【Go 模板语法要点】
+  - 变量使用 PascalCase + 点前缀：{{ .Config.SiteName }}
+  - 在 range 循环内访问外层变量用 $：{{ $.Config.Domain }}
+  - 条件判断：{{ if .Config.Favicon }}...{{ end }}
+  - 没有 "default" 过滤器，用 if/else 代替
+  - 注释用 /* ... */ 包裹在双花括号内
+*/}}
+
+{{/* --- 基础 meta --- */}}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+{{/* --- SEO 描述 --- */}}
+{{ if .Config.SiteDescription }}
+<meta name="description" content="{{ .Config.SiteDescription }}">
+{{ else }}
+<meta name="description" content="一个使用 Gridea 搭建的博客">
+{{ end }}
+
+{{/* --- Favicon --- */}}
+{{ if .Config.Favicon }}
+<link rel="icon" href="{{ .Config.Favicon }}">
+{{ end }}
+
+{{/* --- 主样式表 --- */}}
+<link rel="stylesheet" href="{{ .Config.Domain }}/styles/main.css">

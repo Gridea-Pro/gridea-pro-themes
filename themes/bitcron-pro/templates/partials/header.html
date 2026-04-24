@@ -1,0 +1,40 @@
+<div class="header">
+  <div class="logo_title">
+    <div class="title animated fadeInDown"><img src="{{ config.avatar }}"/>
+      <h1 title="{{ config.siteName }}" class="weaklink"><a href="/">{{ config.siteName }}</a></h1>
+      <div class="navbar weaklink">
+        <div class="normal_nav">
+          <div class="bitcron_nav_container">
+            <div class="bitcron_nav">
+              <div class="mixed_site_nav_wrap site_nav_wrap">
+                <ul class="mixed_site_nav site_nav sm sm-base">
+                  {% for menu in menus %}
+                  <li><a href="{{ menu.link }}" class="selected active current nav__item">{{ menu.name }}</a></li>
+                  {% endfor %}
+                </ul>
+                <div class="clear clear_nav_inline_end"></div>
+              </div>
+            </div>
+            <div class="clear clear_nav_end"></div>
+          </div>
+        </div>
+        <div class="hamberger"><i class="fa fa-bars"></i><i class="fa fa-times"></i></div>
+      </div>
+    </div>
+  </div>
+  <div class="hidden_nav animated fadeInDown">
+    <div class="bitcron_nav_container">
+      <div class="bitcron_nav">
+        <div class="mixed_site_nav_wrap site_nav_wrap">
+          <ul class="mixed_site_nav site_nav sm sm-base">
+            {% for menu in menus %}
+            <li><a href="{{ menu.link }}" class="selected active current nav__item">{{ menu.name }}</a></li>
+            {% endfor %}
+          </ul>
+          <div class="clear clear_nav_inline_end"></div>
+        </div>
+      </div>
+      <div class="clear clear_nav_end"></div>
+    </div>
+  </div>
+</div>
