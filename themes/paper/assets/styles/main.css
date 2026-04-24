@@ -2284,22 +2284,23 @@ main.prose ul.links-list > li {
   margin: 0;
 }
 .archive-year__list > .archive-post + .archive-post {
-  margin-top: 0.5rem;
+  margin-top: 1rem;
 }
 .archive-post__link {
   display: grid;
   grid-template-columns: 4.5rem 1fr;
   gap: 1.75rem;
   align-items: baseline;
-  padding: 2rem 0;
+  padding-top: 1.75rem;
+  padding-bottom: 1.75rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
   color: inherit;
   text-decoration: none;
   border-top: 1px solid var(--rule-soft);
   transition: color 180ms var(--ease-out),
               background 180ms var(--ease-out);
   margin: 0 -0.75rem;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
   border-radius: 3px;
 }
 .archive-post:first-child .archive-post__link { border-top: 0; }
