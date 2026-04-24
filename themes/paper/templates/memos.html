@@ -35,13 +35,6 @@
                     </time>
                     <div class="memo-body">
                         <div class="memo-content">{{ memo.content|safe }}</div>
-                        {% if memo.tags|length > 0 %}
-                            <div class="memo-tags">
-                                {% for t in memo.tags %}
-                                    <span class="memo-tag">#{{ t }}</span>
-                                {% endfor %}
-                            </div>
-                        {% endif %}
                     </div>
                 </li>
             {% endfor %}

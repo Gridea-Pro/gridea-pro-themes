@@ -11,10 +11,10 @@
     <header class="mb-14">
         <h1 class="my-0! pb-2.5">{{ post.title }}</h1>
 
-        <div class="text-xs antialiased opacity-60">
-            <time>{{ post.date }}</time>
+        <div class="post-meta">
+            <time datetime="{{ post.date }}">{{ post.dateFormat|default:post.date|truncatechars:10 }}</time>
             {% if theme_config.authorName %}
-            <span class="mx-1">&middot;</span>
+            <span class="post-meta__dot" aria-hidden="true">·</span>
             <span>{{ theme_config.authorName }}</span>
             {% endif %}
         </div>

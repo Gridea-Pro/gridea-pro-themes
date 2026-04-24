@@ -2163,21 +2163,19 @@ html.not-ready * { transition: none !important; animation: none !important; }
 }
 
 /* ================================================================
-   Paper · 专用页面 v2
-   Editorial magazine aesthetic — sticky year markers, tag cloud,
-   diary layout, floating bookshelf rows
+   Paper · 专用页面 v3 — 根据用户实测反馈重做
    ================================================================ */
 
 :root {
   --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo,
                Consolas, 'Liberation Mono', monospace;
-  --rule:      color-mix(in srgb, currentColor 18%, transparent);
-  --rule-soft: color-mix(in srgb, currentColor 11%, transparent);
-  --meta:      color-mix(in srgb, currentColor 58%, transparent);
+  --rule:      color-mix(in srgb, currentColor 20%, transparent);
+  --rule-soft: color-mix(in srgb, currentColor 12%, transparent);
+  --meta:      color-mix(in srgb, currentColor 60%, transparent);
   --meta-dim:  color-mix(in srgb, currentColor 42%, transparent);
 }
 
-/* Prose-reset — prose 默认给嵌套 ul/li 加 margin/padding，在专用页面列表里清零 */
+/* Prose reset —— prose 会给嵌套 ul/li 加 margin，在专用页面里清零 */
 main.prose ul.archive-year__list,
 main.prose ul.archive-year__list > li,
 main.prose ul.tag-post-list,
@@ -2192,11 +2190,9 @@ main.prose ul.links-list > li {
   list-style: none !important;
 }
 
-/* ---------- Shared page header ---------- */
+/* ---------- 共用 page-header ---------- */
 .page-header {
-  margin-bottom: 3.5rem;
-  padding-bottom: 1.25rem;
-  border-bottom: 1px solid var(--rule);
+  margin-bottom: 3rem;
 }
 .page-header h1 {
   margin: 0 0 0.35rem;
@@ -2221,44 +2217,48 @@ main.prose ul.links-list > li {
   font-size: 0.95rem;
   padding: 3rem 0;
   text-align: center;
-  border-top: 1px solid var(--rule-soft);
-  border-bottom: 1px solid var(--rule-soft);
 }
 
 /* ================================================================
-   Archives — sticky oversized year marker + timeline entries
+   Post detail meta (title 下方那行) — 替换掉 opacity-60 的 inline utility
+   ================================================================ */
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--meta);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.03em;
+}
+.post-meta time { white-space: nowrap; }
+.post-meta__dot { opacity: 0.5; }
+
+/* ================================================================
+   Archives — 年份作为全宽分组标题 + 紧凑条目列表
    ================================================================ */
 .archives-page .archive-year {
-  display: grid;
-  grid-template-columns: 10rem 1fr;
-  gap: 2.5rem;
-  margin-bottom: 3.5rem;
-  padding-bottom: 3.5rem;
-  border-bottom: 1px solid var(--rule-soft);
+  margin-bottom: 3rem;
 }
-.archives-page .archive-year:last-child {
-  border-bottom: 0;
-  margin-bottom: 0;
-  padding-bottom: 0;
-}
+.archives-page .archive-year:last-child { margin-bottom: 0; }
 
 .archive-year__marker {
-  position: sticky;
-  top: 5.5rem;
-  align-self: start;
-  line-height: 1;
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 0.7rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
 }
 .archive-year__num {
-  display: block;
   font-family: var(--font-display);
-  font-size: clamp(2.75rem, 2rem + 2.5vw, 4rem);
+  font-size: clamp(1.75rem, 1.4rem + 1.2vw, 2.25rem);
   font-weight: 600;
-  letter-spacing: -0.045em;
-  color: color-mix(in srgb, currentColor 85%, transparent);
+  letter-spacing: -0.025em;
+  line-height: 1;
 }
 .archive-year__count {
-  display: block;
-  margin-top: 0.5rem;
   font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.18em;
@@ -2272,118 +2272,113 @@ main.prose ul.links-list > li {
   padding: 0;
   margin: 0;
 }
-.archive-post { margin: 0; }
 .archive-post__link {
   display: grid;
   grid-template-columns: 6rem 1fr;
   gap: 1.5rem;
   align-items: baseline;
-  padding: 1rem 0;
+  padding: 0.7rem 0;
   color: inherit;
   text-decoration: none;
-  border-bottom: 1px solid var(--rule-soft);
   transition: color 180ms var(--ease-out);
 }
-.archive-post:last-child .archive-post__link { border-bottom: 0; }
 .archive-post__link time {
   font-family: var(--font-mono);
   font-size: 0.75rem;
   color: var(--meta);
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
   white-space: nowrap;
-  padding-top: 0.15rem;
 }
 .archive-post__title {
-  font-size: 1.0625rem;
+  font-size: 1rem;
   line-height: 1.45;
   overflow-wrap: anywhere;
   display: inline-block;
   transition: transform 180ms var(--ease-out);
 }
+.archive-post__link:hover {
+  color: color-mix(in srgb, currentColor 55%, transparent);
+}
 .archive-post__link:hover .archive-post__title {
   transform: translateX(4px);
 }
-.archive-post__link:hover {
-  color: color-mix(in srgb, currentColor 60%, transparent);
-}
 
 /* ================================================================
-   Tags — font-size cloud, pure editorial text
+   Tags — 干净 pill 列表（不玩字号云）
    ================================================================ */
-.tags-page .tag-cloud {
+.tag-list {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.4rem 1.25rem;
-  padding: 1.5rem 0;
+  gap: 0.55rem;
 }
-.tag-cloud__item {
-  position: relative;
+.tag-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: 0.45rem 0;
+  border-radius: 9999px;
   color: inherit;
   text-decoration: none;
-  font-family: var(--font-display);
-  line-height: 1.15;
-  letter-spacing: -0.015em;
-  transition: color 150ms var(--ease-out), opacity 150ms var(--ease-out);
-  opacity: 0.85;
+  transition: color 150ms var(--ease-out),
+              background 150ms var(--ease-out),
+              border-color 150ms var(--ease-out);
+  border: 1px solid var(--rule);
+  overflow: hidden;
+  line-height: 1;
 }
-.tag-cloud__item:hover { opacity: 1; }
-.tag-cloud__item::after {
+.tag-pill__name {
+  padding: 0 0.25rem 0 0.9rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+.tag-pill__count {
+  padding: 0 0.7rem 0 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--meta);
+  font-variant-numeric: tabular-nums;
+  position: relative;
+}
+.tag-pill__count::before {
   content: "";
   position: absolute;
   left: 0;
-  right: 0;
-  bottom: -2px;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 220ms var(--ease-out);
+  top: 50%;
+  height: 0.85em;
+  width: 1px;
+  background: var(--rule);
+  transform: translateY(-50%);
 }
-.tag-cloud__item:hover::after { transform: scaleX(1); }
-.tag-cloud__item--xs { font-size: 1rem;   font-weight: 500; }
-.tag-cloud__item--s  { font-size: 1.35rem; font-weight: 500; }
-.tag-cloud__item--m  { font-size: 1.8rem;  font-weight: 600; }
-.tag-cloud__item--l  { font-size: 2.4rem;  font-weight: 600; }
-.tag-cloud__item--xl { font-size: 3.2rem;  font-weight: 700; }
-.tag-cloud__count {
-  font-family: var(--font-mono);
-  font-size: 0.45em;
-  color: var(--meta-dim);
-  vertical-align: super;
-  margin-left: 0.25em;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0;
-  font-weight: 400;
+.tag-pill:hover {
+  background: color-mix(in srgb, currentColor 5%, transparent);
+  border-color: currentColor;
 }
+.tag-pill:hover .tag-pill__count { color: inherit; }
 
 /* ================================================================
-   Single tag — hashtag watermark + refined post list
+   Single tag — 标题 + 文章列表
    ================================================================ */
 .tag-page .page-header {
   display: flex;
   align-items: baseline;
-  gap: 0.5rem;
-  margin-bottom: 3rem;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2.5rem;
 }
 .tag-page .page-header h1 {
+  margin: 0;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(2rem, 1.6rem + 2vw, 2.75rem);
-  letter-spacing: -0.025em;
+  font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
+  letter-spacing: -0.02em;
   line-height: 1;
-  margin: 0;
-  padding-bottom: 0.35rem;
-  border-bottom: none;
 }
-.tag-page .page-header .hash {
+.tag-page .hash {
   font-style: italic;
   color: color-mix(in srgb, currentColor 55%, transparent);
   font-weight: 500;
 }
-.tag-page .page-header .count {
-  margin-left: auto;
+.tag-page .count {
   font-family: var(--font-mono);
   font-size: 0.72rem;
   letter-spacing: 0.18em;
@@ -2404,20 +2399,20 @@ main.prose ul.links-list > li {
 }
 .tag-page .tag-post-link {
   display: block;
-  padding: 1.25rem 0;
+  padding: 1.1rem 0;
   color: inherit;
   text-decoration: none;
   transition: color 180ms var(--ease-out);
 }
 .tag-page .tag-post-link:hover {
-  color: color-mix(in srgb, currentColor 60%, transparent);
+  color: color-mix(in srgb, currentColor 55%, transparent);
 }
 .tag-page .tag-post-title {
   font-family: var(--font-display);
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   font-weight: 600;
   letter-spacing: -0.015em;
-  line-height: 1.25;
+  line-height: 1.3;
   margin: 0 0 0.35rem;
   overflow-wrap: anywhere;
   transition: transform 180ms var(--ease-out);
@@ -2428,24 +2423,22 @@ main.prose ul.links-list > li {
 .tag-page .tag-post-meta {
   display: flex;
   align-items: center;
-  gap: 0.7rem;
+  gap: 0.6rem;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   color: var(--meta);
   font-variant-numeric: tabular-nums;
-  letter-spacing: 0.02em;
 }
 .tag-page .featured-badge {
   font-family: var(--font-mono);
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   font-weight: 600;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   padding: 0.18em 0.55em;
   border-radius: 3px;
   background: rgb(251 146 60 / 0.14);
   color: rgb(194 65 12);
-  opacity: 1;
 }
 .dark .tag-page .featured-badge {
   background: rgb(251 146 60 / 0.18);
@@ -2453,44 +2446,44 @@ main.prose ul.links-list > li {
 }
 
 /* ================================================================
-   Memos — diary-style 2-column (date | content)
+   Memos — 日记两列布局，明显分界线，不重复渲染 tags
    ================================================================ */
 .memos-page .memo-list {
   list-style: none;
   padding: 0;
   margin: 0;
+  border-top: 1px solid var(--rule);
 }
 .memos-page .memo-item {
   display: grid;
-  grid-template-columns: 7rem 1fr;
-  gap: 2rem;
+  grid-template-columns: 6rem 1fr;
+  gap: 2.5rem;
   padding: 2rem 0;
-  border-bottom: 1px solid var(--rule-soft);
+  border-bottom: 1px solid var(--rule) !important;
 }
-.memos-page .memo-item:last-child { border-bottom: 0; }
 
 .memos-page .memo-date {
   font-family: var(--font-mono);
   line-height: 1.1;
-  color: var(--meta);
-  padding-top: 0.15rem;
+  padding-top: 0.3rem;
 }
 .memos-page .memo-date__day {
   display: block;
   font-family: var(--font-display);
-  font-size: 2rem;
+  font-size: 2.25rem;
   font-weight: 600;
-  color: color-mix(in srgb, currentColor 90%, transparent);
+  color: color-mix(in srgb, currentColor 88%, transparent);
   font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
   line-height: 1;
 }
 .memos-page .memo-date__month {
   display: block;
-  margin-top: 0.4rem;
+  margin-top: 0.45rem;
   font-size: 0.68rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
+  color: var(--meta);
 }
 .memos-page .memo-date__year {
   display: block;
@@ -2501,17 +2494,15 @@ main.prose ul.links-list > li {
   letter-spacing: 0.1em;
 }
 
-.memos-page .memo-body {
-  min-width: 0;
-}
+.memos-page .memo-body { min-width: 0; }
 .memos-page .memo-content {
   font-family: var(--font-display);
   font-size: 1.075rem;
-  line-height: 1.75;
+  line-height: 1.8;
   color: inherit;
   overflow-wrap: break-word;
 }
-.memos-page .memo-content p { margin: 0 0 0.6em; }
+.memos-page .memo-content p { margin: 0 0 0.65em; }
 .memos-page .memo-content p:last-child { margin-bottom: 0; }
 .memos-page .memo-content img,
 .memos-page .memo-content video {
@@ -2532,21 +2523,9 @@ main.prose ul.links-list > li {
 .memos-page .memo-content a:hover {
   text-decoration-color: currentColor;
 }
-.memos-page .memo-tags {
-  margin-top: 0.9rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.8rem;
-}
-.memos-page .memo-tag {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.05em;
-  color: var(--meta);
-}
 
 /* ================================================================
-   Links — bookshelf rows (flat, full-width hover)
+   Links — 居中更紧凑，头像稍大，名字 display font
    ================================================================ */
 .links-page .links-list {
   list-style: none;
@@ -2560,10 +2539,10 @@ main.prose ul.links-list > li {
 }
 .links-page .link-row {
   display: grid;
-  grid-template-columns: 2.75rem 1fr auto;
+  grid-template-columns: 3rem 1fr auto;
   align-items: center;
   gap: 1.25rem;
-  padding: 1.25rem 1rem;
+  padding: 1.1rem 1rem;
   margin: 0 -1rem;
   color: inherit;
   text-decoration: none;
@@ -2576,8 +2555,8 @@ main.prose ul.links-list > li {
   padding-left: 1.5rem;
 }
 .links-page .link-avatar {
-  width: 2.5rem;
-  height: 2.5rem;
+  width: 3rem;
+  height: 3rem;
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
@@ -2587,24 +2566,24 @@ main.prose ul.links-list > li {
   justify-content: center;
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: var(--meta);
   text-transform: uppercase;
 }
 .links-page .link-info { min-width: 0; }
 .links-page .link-name {
   font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-size: 1.125rem;
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.2;
+  margin-bottom: 0.2rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin-bottom: 0.15rem;
 }
 .links-page .link-desc {
-  font-size: 0.83rem;
+  font-size: 0.825rem;
   color: var(--meta);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2612,7 +2591,7 @@ main.prose ul.links-list > li {
 }
 .links-page .link-arrow {
   font-family: var(--font-mono);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: var(--meta-dim);
   transition: transform 220ms var(--ease-out), color 180ms var(--ease-out);
 }
@@ -2625,59 +2604,46 @@ main.prose ul.links-list > li {
    Responsive
    ================================================================ */
 @media (max-width: 720px) {
-  .page-header { margin-bottom: 2.5rem; }
+  .page-header { margin-bottom: 2.25rem; }
   .page-header h1 { font-size: clamp(1.75rem, 5vw, 2.25rem); }
 
-  .archives-page .archive-year {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
-    padding-bottom: 2.5rem;
-  }
-  .archive-year__marker { position: static; }
-  .archive-year__num { font-size: 2.25rem; }
+  .archive-year__marker { gap: 0.75rem; }
+  .archive-year__num { font-size: 1.6rem; }
   .archive-post__link {
-    grid-template-columns: 1fr;
-    gap: 0.25rem;
-    padding: 0.85rem 0;
+    grid-template-columns: 5rem 1fr;
+    gap: 1rem;
+    padding: 0.6rem 0;
   }
-  .archive-post__link time { padding-top: 0; }
 
-  .tag-cloud__item--xs { font-size: 0.9rem; }
-  .tag-cloud__item--s  { font-size: 1.05rem; }
-  .tag-cloud__item--m  { font-size: 1.3rem; }
-  .tag-cloud__item--l  { font-size: 1.55rem; }
-  .tag-cloud__item--xl { font-size: 1.85rem; }
+  .tag-pill__name { font-size: 0.85rem; padding-left: 0.75rem; }
+  .tag-pill__count { font-size: 0.68rem; padding-right: 0.6rem; }
 
-  .tag-page .page-header { flex-wrap: wrap; }
-  .tag-page .page-header .count {
-    width: 100%;
-    margin-left: 0;
-    margin-top: 0.3rem;
-  }
-  .tag-page .tag-post-title { font-size: 1.15rem; }
+  .tag-page .page-header { margin-bottom: 1.75rem; }
+  .tag-page .tag-post-title { font-size: 1.1rem; }
 
   .memos-page .memo-item {
     grid-template-columns: 1fr;
-    gap: 0.75rem;
+    gap: 0.6rem;
     padding: 1.5rem 0;
   }
   .memos-page .memo-date {
     display: flex;
     align-items: baseline;
-    gap: 0.6rem;
+    gap: 0.55rem;
     padding-top: 0;
   }
-  .memos-page .memo-date__day { font-size: 1.25rem; }
+  .memos-page .memo-date__day { font-size: 1.2rem; }
   .memos-page .memo-date__month { margin-top: 0; font-size: 0.66rem; }
   .memos-page .memo-date__year { margin-top: 0; font-size: 0.66rem; }
-  .memos-page .memo-content { font-size: 1rem; }
+  .memos-page .memo-content { font-size: 1rem; line-height: 1.7; }
 
   .links-page .link-row {
-    padding: 0.9rem 0.5rem;
+    padding: 0.85rem 0.5rem;
     margin: 0 -0.5rem;
-    grid-template-columns: 2.25rem 1fr auto;
-    gap: 0.9rem;
+    grid-template-columns: 2.5rem 1fr auto;
+    gap: 0.85rem;
   }
   .links-page .link-row:hover { padding-left: 0.75rem; }
+  .links-page .link-avatar { width: 2.5rem; height: 2.5rem; }
+  .links-page .link-name { font-size: 1rem; }
 }

@@ -10,14 +10,12 @@
     </header>
 
     {% if tags|length > 0 %}
-        <div class="tag-cloud">
+        <div class="tag-list">
             {% for tag in tags %}
-                {% set tagSize = "xs" %}
-                {% if tag.count > 1 %}{% set tagSize = "s" %}{% endif %}
-                {% if tag.count > 4 %}{% set tagSize = "m" %}{% endif %}
-                {% if tag.count > 9 %}{% set tagSize = "l" %}{% endif %}
-                {% if tag.count > 19 %}{% set tagSize = "xl" %}{% endif %}
-                <a class="tag-cloud__item tag-cloud__item--{{ tagSize }}" href="{{ tag.link }}">{{ tag.name }}<span class="tag-cloud__count">{{ tag.count }}</span></a>
+                <a class="tag-pill" href="{{ tag.link }}">
+                    <span class="tag-pill__name">{{ tag.name }}</span>
+                    <span class="tag-pill__count">{{ tag.count }}</span>
+                </a>
             {% endfor %}
         </div>
     {% else %}
