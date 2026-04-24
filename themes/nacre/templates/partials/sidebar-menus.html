@@ -1,0 +1,51 @@
+<div id="sidebar-menus">
+  <div class="row px-3">
+    <div class="col-12">
+      <div class="menu-list sidebar">
+        <div class="sidebar-title">{{ theme_config.sidebarThemeLabel|default:"主题" }}</div>
+        <div class="sidebar-content">
+          <div class="theme-toggle sidebar-toggle justify-content-center">
+            <i class="toggle-icon iconfont iconnight-mode"></i>
+            <span class="px-2">{{ theme_config.sidebarThemeText|default:"显示模式" }}</span>
+          </div>
+        </div>
+      </div>
+
+      {% for menu in menus %}
+        {% if menu.children %}
+          <div class="menu-list sidebar">
+            <div class="sidebar-title">{{ menu.name }}</div>
+            <div class="sidebar-content">
+              <div class="menu-list row row-y">
+                {% for child in menu.children %}
+                  <div class="menu-item col-6 py-2"><a href="{{ child.link }}"{% if child.openType == "_blank" %} target="_blank" rel="noopener"{% endif %}>{{ child.name }}</a></div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <div class="menu-list sidebar">
+            <div class="sidebar-content">
+              <div class="menu-list row row-y">
+                <div class="menu-item col-12 py-2"><a href="{{ menu.link }}"{% if menu.openType == "_blank" %} target="_blank" rel="noopener"{% endif %}>{{ menu.name }}</a></div>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+
+      <div class="tagCloud-tags sidebar">
+        <div class="sidebar-title">{{ theme_config.sidebarTagsTitle|default:"标签" }}</div>
+        <div class="sidebar-content">
+          <div class="sidebar-tags d-flex">
+            {% for tag in tags %}
+              <a href="{{ tag.link }}" class="{{ tag.count }}">{{ tag.name }}</a>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="mask" class="mask"></div>
+<div class="backtop d-none"><i class="iconfont iconup" aria-hidden="true"></i></div>

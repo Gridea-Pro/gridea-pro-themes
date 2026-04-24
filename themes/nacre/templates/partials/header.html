@@ -1,0 +1,43 @@
+<header id="header" class="header">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="header-inner animate__animated">
+          {% set navAvatar = theme_config.logoAvatar %}{% if not navAvatar %}{% set navAvatar = config.avatar %}{% endif %}{% if not navAvatar %}{% set navAvatar = "/images/avatar.png" %}{% endif %}
+          <a href="{{ config.domain }}" class="logo{% if not config.logo %} logo--with-avatar{% endif %}" style="text-decoration:none">
+            {% if config.logo %}
+              <img src="{{ config.logo }}" alt="{{ config.siteName }}">
+            {% else %}
+              <img class="logo-avatar" src="{{ navAvatar }}" alt="{{ config.siteName }}">
+              <span class="logo-text">{{ config.siteName }}</span>
+            {% endif %}
+          </a>
+          <div class="header-center">
+            <nav class="menu d-none d-md-flex">
+              <ul class="menu-inner menu-inner-desktop">
+                {% for menu in menus %}
+                  {% if menu.children %}
+                    <li class="menu-item">
+                      <a{% if menu.link %} href="{{ menu.link }}"{% endif %}{% if menu.openType == "_blank" %} target="_blank" rel="noopener"{% endif %}>{{ menu.name }}</a>
+                      <ul class="menu-inner-sub">
+                        {% for child in menu.children %}
+                          <li class="menu-item"><a href="{{ child.link }}"{% if child.openType == "_blank" %} target="_blank" rel="noopener"{% endif %}>{{ child.name }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    </li>
+                  {% else %}
+                    <li class="menu-item"><a href="{{ menu.link }}"{% if menu.openType == "_blank" %} target="_blank" rel="noopener"{% endif %}>{{ menu.name }}</a></li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            </nav>
+          </div>
+          <div class="header-right">
+            <span class="menu-trigger button outline p-1 d-flex d-md-none"><i class="iconfont iconmenu"></i></span>
+            <span class="theme-toggle header-toggle button outline p-1 d-none d-md-flex"><i class="iconfont iconnight-mode"></i></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

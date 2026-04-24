@@ -1,0 +1,78 @@
+{
+  "name": "Nacre",
+  "version": "1.0.0",
+  "engine": "jinja2",
+  "author": "Eliauk",
+  "description": "Nacre — 温柔、舒适、静谧的 Gridea Pro 主题。默认深色底配柔和暖光，如珍珠母质在暗处静静生辉。支持 Swiper 头图、闪念 / 动态 / 相册 / 好物 / 最近 多种内容面板。",
+  "repository": "",
+  "customConfig": [
+    { "name": "defaultDarkMode", "label": "默认暗色模式", "group": "外观", "type": "toggle", "value": true, "note": "页面初始渲染时就应用 .dark-theme 类" },
+    { "name": "logoAvatar", "label": "导航栏头像 URL", "group": "外观", "type": "input", "value": "", "note": "导航栏站点名前的小圆头像。留空时回退到 Gridea 默认 /images/avatar.png" },
+
+    { "name": "featured1Name", "label": "首页特色块 1 名称", "group": "首页", "type": "input", "value": "分享", "note": "" },
+    { "name": "featured1Link", "label": "首页特色块 1 链接", "group": "首页", "type": "input", "value": "", "note": "" },
+    { "name": "featured1Image", "label": "首页特色块 1 图片", "group": "首页", "type": "input", "value": "/media/images/1.webp", "note": "图片 URL。主题自带 4 张占位图 /media/images/1-4.webp，换成你自己的图片或在线 URL 即可" },
+    { "name": "featured2Name", "label": "首页特色块 2 名称", "group": "首页", "type": "input", "value": "好物", "note": "" },
+    { "name": "featured2Link", "label": "首页特色块 2 链接", "group": "首页", "type": "input", "value": "", "note": "" },
+    { "name": "featured2Image", "label": "首页特色块 2 图片", "group": "首页", "type": "input", "value": "/media/images/2.webp", "note": "" },
+    { "name": "featured3Name", "label": "首页特色块 3 名称", "group": "首页", "type": "input", "value": "折腾", "note": "" },
+    { "name": "featured3Link", "label": "首页特色块 3 链接", "group": "首页", "type": "input", "value": "", "note": "" },
+    { "name": "featured3Image", "label": "首页特色块 3 图片", "group": "首页", "type": "input", "value": "/media/images/3.webp", "note": "" },
+    { "name": "featured4Name", "label": "首页特色块 4 名称", "group": "首页", "type": "input", "value": "记录", "note": "" },
+    { "name": "featured4Link", "label": "首页特色块 4 链接", "group": "首页", "type": "input", "value": "", "note": "" },
+    { "name": "featured4Image", "label": "首页特色块 4 图片", "group": "首页", "type": "input", "value": "/media/images/4.webp", "note": "" },
+
+    { "name": "swiperAutoplaySec", "label": "首页 Swiper 自动切换间隔 (秒)", "group": "首页", "type": "input", "value": "12", "note": "多少秒自动切一张。设为 0 可关闭自动播放" },
+    { "name": "swiperLoop", "label": "首页 Swiper 循环播放", "group": "首页", "type": "toggle", "value": true, "note": "播放到最后一张时是否回到第一张" },
+
+    { "name": "tabLatest", "label": "首页 Tab · 最新", "group": "首页", "type": "input", "value": "最新", "note": "" },
+    { "name": "tabMemo", "label": "首页 Tab · 动态", "group": "首页", "type": "input", "value": "动态", "note": "朋友圈动态 Tab（外部 Memos 聚合）。需配置 Memos API 才显示" },
+    { "name": "tabAlbum", "label": "首页 Tab · 摄影", "group": "首页", "type": "input", "value": "摄影", "note": "朋友圈摄影 Tab（外部 Memos 按标签聚合）。需配置 Memos API 才显示" },
+
+    { "name": "paginationPrev", "label": "上一页文案", "group": "基础", "type": "input", "value": "上一页", "note": "" },
+    { "name": "paginationNext", "label": "下一页文案", "group": "基础", "type": "input", "value": "下一页", "note": "" },
+    { "name": "loadMoreText", "label": "加载更多按钮文案", "group": "基础", "type": "input", "value": "加载更多", "note": "" },
+
+    { "name": "startYear", "label": "建站起始年份", "group": "页脚", "type": "input", "value": "2016", "note": "显示在 © 符号后" },
+    { "name": "poweredBy", "label": "页脚构建信息", "group": "页脚", "type": "textarea", "value": "Powered by <a href=\"https://github.com/Gridea-Pro\" target=\"_blank\" rel=\"noopener\">Gridea Pro</a>", "note": "HTML 片段" },
+    { "name": "beianNumber", "label": "ICP 备案号", "group": "页脚", "type": "input", "value": "", "note": "" },
+
+    { "name": "socialGithub", "label": "GitHub 链接", "group": "社交", "type": "input", "value": "", "note": "完整 URL" },
+    { "name": "socialTwitter", "label": "Twitter 链接", "group": "社交", "type": "input", "value": "", "note": "完整 URL" },
+    { "name": "socialEmail", "label": "邮箱", "group": "社交", "type": "input", "value": "", "note": "" },
+
+    { "name": "memoAvatar", "label": "闪念页头像", "group": "闪念", "type": "input", "value": "", "note": "闪念卡片左上角的头像。留空则用站点头像 config.avatar" },
+    { "name": "memoCreator", "label": "闪念页作者名", "group": "闪念", "type": "input", "value": "", "note": "闪念卡片显示的作者名。留空则用 config.siteName" },
+    { "name": "memoDefaultTag", "label": "闪念默认标签", "group": "闪念", "type": "input", "value": "闪念", "note": "闪念卡片右下角徽章。原生 memo.tags 有值时优先用那个" },
+
+    { "name": "memosApiUrl", "label": "外部 Memos API 根地址", "group": "动态", "type": "input", "value": "", "note": "例：https://memos.example.com。填写后启用：首页【动态】Tab + 首页【摄影】Tab + /album/ + /goods/ 页" },
+    { "name": "memosCreatorId", "label": "外部 Memos creatorId", "group": "动态", "type": "input", "value": "1", "note": "要拉取的外部 Memos 用户 ID" },
+    { "name": "albumMemoTag", "label": "相册 Memo 标签", "group": "动态", "type": "input", "value": "摄影", "note": "/album/ 页拉取哪个标签下的 memos" },
+    { "name": "goodsMemoTag", "label": "好物 Memo 标签", "group": "动态", "type": "input", "value": "好物", "note": "/goods/ 页拉取哪个标签下的 memos" },
+    { "name": "friendCircleApi", "label": "友链朋友圈 JSON URL", "group": "动态", "type": "input", "value": "", "note": "/links/ 页的朋友圈文章流数据源。例：https://oss.example.com/all.json" },
+    { "name": "neodbUrl", "label": "NeoDB 站点地址", "group": "动态", "type": "input", "value": "https://neodb.social", "note": "" },
+    { "name": "neodbFetchUrl", "label": "NeoDB 数据抓取 URL", "group": "动态", "type": "input", "value": "", "note": "/recent/ 页的观影读书数据源。留空则不启用" },
+
+    { "name": "archivesTitle", "label": "归档页标题", "group": "页面文案", "type": "input", "value": "归档", "note": "" },
+    { "name": "tagsPageTitle", "label": "标签页标题", "group": "页面文案", "type": "input", "value": "标签", "note": "" },
+    { "name": "aboutPageTitle", "label": "关于页标题", "group": "页面文案", "type": "input", "value": "关于", "note": "Gridea 关于页写了内容后，以该内容的 title 为准" },
+    { "name": "aboutAvatar", "label": "关于页头像", "group": "页面文案", "type": "input", "value": "", "note": "关于页顶部圆形头像。留空则用站点头像 config.avatar" },
+    { "name": "linksPageTitle", "label": "友链页标题", "group": "页面文案", "type": "input", "value": "友链", "note": "" },
+    { "name": "memosPageTitle", "label": "闪念页标题", "group": "页面文案", "type": "input", "value": "闪念", "note": "" },
+    { "name": "albumPageTitle", "label": "相册页标题", "group": "页面文案", "type": "input", "value": "相册", "note": "" },
+    { "name": "goodsPageTitle", "label": "好物页标题", "group": "页面文案", "type": "input", "value": "好物", "note": "" },
+    { "name": "recentPageTitle", "label": "最近页标题", "group": "页面文案", "type": "input", "value": "最近", "note": "" },
+    { "name": "blogPageTitle", "label": "博客页标题", "group": "页面文案", "type": "input", "value": "文章", "note": "" },
+    { "name": "tagCloudTitle", "label": "侧栏标签云标题", "group": "页面文案", "type": "input", "value": "标签云集", "note": "" },
+    { "name": "postTagsTitle", "label": "文章标签小节标题", "group": "页面文案", "type": "input", "value": "文章标签", "note": "" },
+    { "name": "linksEmptyText", "label": "连接页空状态文案", "group": "页面文案", "type": "input", "value": "尚未配置友链或朋友圈数据源", "note": "" },
+    { "name": "linksFriendsTitle", "label": "友链区块小标题", "group": "页面文案", "type": "input", "value": "", "note": "留空则不显示" },
+    { "name": "linksFcircleTitle", "label": "朋友圈区块小标题", "group": "页面文案", "type": "input", "value": "", "note": "留空则不显示" },
+    { "name": "notFoundText", "label": "404 文案", "group": "页面文案", "type": "input", "value": "页面未找到", "note": "" },
+    { "name": "notFoundBack", "label": "404 返回按钮", "group": "页面文案", "type": "input", "value": "返回首页", "note": "" },
+
+    { "name": "umamiScript", "label": "Umami 统计脚本", "group": "高级", "type": "textarea", "value": "", "note": "完整 <script> 标签。不用留空" },
+    { "name": "customCSS", "label": "自定义 CSS", "group": "高级", "type": "textarea", "value": "", "note": "追加到 <head>" },
+    { "name": "customJS", "label": "自定义 JS", "group": "高级", "type": "textarea", "value": "", "note": "追加到 </body> 前" }
+  ]
+}

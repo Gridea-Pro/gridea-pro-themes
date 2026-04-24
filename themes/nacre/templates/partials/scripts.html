@@ -1,0 +1,7 @@
+<script type="text/javascript" src="/scripts/all.js"></script>
+<script type="text/javascript" src="/scripts/lozad.min.js"></script>
+<script type="text/javascript" src="/scripts/lately.min.js"></script>
+<script type="text/javascript" src="/scripts/message.min.js"></script>
+<script type="text/javascript" src="/scripts/view-image.min.js"></script>
+{% if theme_config.umamiScript %}{{ theme_config.umamiScript|safe }}{% endif %}
+{% if theme_config.customJS %}<script>{{ theme_config.customJS|safe }}</script>{% endif %}

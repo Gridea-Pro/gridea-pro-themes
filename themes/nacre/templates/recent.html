@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ theme_config.recentPageTitle|default:"最近" }} - {{ config.siteName }}{% endblock %}
+{% block canonical %}{{ config.domain }}/recent/{% endblock %}
+
+{% block content %}
+<section class="content">
+  <div class="content-header d-flex align-items-center">
+    <div class="container">
+      <div class="d-flex align-items-center animate__animated animate__fadeIn">
+        <div class="header-title flex-fill"><h1 class="title-line">{{ theme_config.recentPageTitle|default:"最近" }}</h1></div>
+      </div>
+    </div>
+  </div>
+  <div class="archive">
+    <div class="container">
+      <div class="mt-5 mb-3">
+        <div class="row">
+          <div class="recent col-12"><div class="recent-list"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if theme_config.neodbFetchUrl %}
+<script>
+  var recentData = { dom: ".recent", listdom: ".recent-list", limit: "8", url: "{{ theme_config.neodbUrl|default:"https://neodb.social" }}", fetchUrl: "{{ theme_config.neodbFetchUrl }}", loadUrl: "/media/images/loading.svg" };
+</script>
+<script type="text/javascript" src="/scripts/recent.js"></script>
+{% endif %}
+{% endblock %}

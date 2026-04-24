@@ -1,0 +1,30 @@
+<footer class="footer animate__animated">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-12">
+        <div class="footer-content">
+          <div class="row">
+            <div class="col-12 col-md-9">
+              <div class="copyright justify-content-center justify-content-md-start">
+                <span class="align-items-center">
+                  &copy; {{ theme_config.startYear|default:"2016" }} {{ config.siteName }}
+                  <span class="d-none d-sm-inline">
+                    {% if theme_config.poweredBy %}<span class="px-2">&sdot;</span> {{ theme_config.poweredBy|safe }}{% endif %}
+                    {% if theme_config.beianNumber %}<span class="px-2">&sdot;</span><a href="https://beian.miit.gov.cn" target="_blank" rel="noopener">{{ theme_config.beianNumber }}</a>{% endif %}
+                  </span>
+                </span>
+              </div>
+            </div>
+            <div class="d-none d-md-block col-md-3 col-right">
+              <div class="socials">
+                {% if theme_config.socialGithub %}<a href="{{ theme_config.socialGithub }}" title="github" target="_blank"><i class="iconfont icongithub-fill"></i></a>{% endif %}
+                {% if theme_config.socialTwitter %}<a href="{{ theme_config.socialTwitter }}" title="twitter" target="_blank"><i class="iconfont icontwitter"></i></a>{% endif %}
+                {% if theme_config.socialEmail %}<a href="mailto:{{ theme_config.socialEmail }}" title="email"><i class="iconfont iconemail"></i></a>{% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

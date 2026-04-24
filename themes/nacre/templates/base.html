@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  {% include "partials/head.html" %}
+  {% block extra_head %}{% endblock %}
+</head>
+<body class="{% if theme_config.defaultDarkMode %}dark-theme{% endif %}">
+  <div class="layout">
+    {% include "partials/header.html" %}
+
+    {% block content %}{% endblock %}
+
+    {% include "partials/footer.html" %}
+
+    {% include "partials/sidebar-menus.html" %}
+  </div>
+  {% include "partials/scripts.html" %}
+  {% block extra_scripts %}{% endblock %}
+</body>
+</html>

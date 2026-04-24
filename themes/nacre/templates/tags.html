@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ theme_config.tagsPageTitle|default:"标签" }} - {{ config.siteName }}{% endblock %}
+{% block canonical %}{{ config.domain }}/tags/{% endblock %}
+
+{% block content %}
+<section class="content">
+  <div class="content-header d-flex align-items-center">
+    <div class="container">
+      <div class="d-flex align-items-center animate__animated animate__fadeIn">
+        <div class="header-title flex-fill"><h1 class="title-line">{{ theme_config.tagsPageTitle|default:"标签" }}</h1></div>
+      </div>
+    </div>
+  </div>
+  <div class="archive">
+    <div class="content-inner container">
+      <div class="row">
+        <div class="col-12 mt-5 animate__animated">
+          <div class="tagCloud-tags">
+            <div class="sidebar-content">
+              <div class="sidebar-tags d-flex">
+                {% for tag in tags %}<a href="{{ tag.link }}" class="{{ tag.count }}">{{ tag.name }}</a>{% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

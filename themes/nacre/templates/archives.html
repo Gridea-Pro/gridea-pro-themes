@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}{{ theme_config.archivesTitle|default:"归档" }} - {{ config.siteName }}{% endblock %}
+{% block canonical %}{{ config.domain }}/archives/{% endblock %}
+
+{% block content %}
+<section class="content">
+  <div class="content-header d-flex align-items-center">
+    <div class="container">
+      <div class="d-flex align-items-center animate__animated animate__fadeIn">
+        <div class="header-title flex-fill"><h1 class="title-line">{{ theme_config.archivesTitle|default:"归档" }}</h1></div>
+      </div>
+    </div>
+  </div>
+  <div class="archive">
+    <div class="container">
+      {% if theme_config.featured1Image or theme_config.featured2Image or theme_config.featured3Image or theme_config.featured4Image %}
+      <div class="article-tab mt-5 animate__animated">
+        <div class="row mb-3">
+          {% if theme_config.featured1Image %}
+          <div class="col-6 col-md-3 mb-3">
+            <a class="feature shadow" href="{{ theme_config.featured1Link|default:"#" }}">
+              <div class="feature-title"><span class="title text-sm weight-600">{{ theme_config.featured1Name|default:"分享" }}</span></div>
+              <div class="feature-link" style="position:relative;overflow:hidden"><img src="{{ theme_config.featured1Image }}" alt="{{ theme_config.featured1Name|default:"分享" }}" referrerpolicy="no-referrer" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div class="feature-hover"></div></div>
+            </a>
+          </div>
+          {% endif %}
+          {% if theme_config.featured2Image %}
+          <div class="col-6 col-md-3 mb-3">
+            <a class="feature shadow" href="{{ theme_config.featured2Link|default:"#" }}">
+              <div class="feature-title"><span class="title text-sm weight-600">{{ theme_config.featured2Name|default:"好物" }}</span></div>
+              <div class="feature-link" style="position:relative;overflow:hidden"><img src="{{ theme_config.featured2Image }}" alt="{{ theme_config.featured2Name|default:"好物" }}" referrerpolicy="no-referrer" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div class="feature-hover"></div></div>
+            </a>
+          </div>
+          {% endif %}
+          {% if theme_config.featured3Image %}
+          <div class="col-6 col-md-3 mb-3">
+            <a class="feature shadow" href="{{ theme_config.featured3Link|default:"#" }}">
+              <div class="feature-title"><span class="title text-sm weight-600">{{ theme_config.featured3Name|default:"折腾" }}</span></div>
+              <div class="feature-link" style="position:relative;overflow:hidden"><img src="{{ theme_config.featured3Image }}" alt="{{ theme_config.featured3Name|default:"折腾" }}" referrerpolicy="no-referrer" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div class="feature-hover"></div></div>
+            </a>
+          </div>
+          {% endif %}
+          {% if theme_config.featured4Image %}
+          <div class="col-6 col-md-3 mb-3">
+            <a class="feature shadow" href="{{ theme_config.featured4Link|default:"#" }}">
+              <div class="feature-title"><span class="title text-sm weight-600">{{ theme_config.featured4Name|default:"记录" }}</span></div>
+              <div class="feature-link" style="position:relative;overflow:hidden"><img src="{{ theme_config.featured4Image }}" alt="{{ theme_config.featured4Name|default:"记录" }}" referrerpolicy="no-referrer" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div class="feature-hover"></div></div>
+            </a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="row mt-5">
+        {% set lastYear = "" %}
+        {% for post in posts %}
+        {% set currentYear = post.date|split:"-"|first %}
+        {% if currentYear != lastYear %}
+        <div class="col-12 pos-r animate__animated mt-4">
+          <div class="d-flex mb-5"><div class="title-line text-md">{{ currentYear }}</div></div>
+        </div>
+        {% set lastYear = currentYear %}
+        {% endif %}
+        <div class="col-12 col-sm-12 col-md-6 col-lg-6 mb-5">
+          <div class="list-item">
+            <div class="item-inner mr-3 py-1">
+              <h2 class="title flex-fill"><a href="{{ post.link }}">{{ post.title }}</a></h2>
+              <div class="item-foot d-flex text-xs">
+                {% if post.tags|length > 0 %}
+                <div class="item"><span class="article-tags">{% for tag in post.tags %}{{ tag.name }}{% if not loop.last %} · {% endif %}{% endfor %}</span></div>
+                <i class="separator px-2"></i>
+                {% endif %}
+                <div class="item"><div class="date pl-2">{% if post.dateFormat %}{{ post.dateFormat }}{% else %}{{ post.date }}{% endif %}</div></div>
+              </div>
+            </div>
+            {% if post.feature %}
+            <div class="item-thumb col-2" style="background-image:url({{ post.feature }})"></div>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

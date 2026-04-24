@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}{{ theme_config.memosPageTitle|default:"闪念" }} - {{ config.siteName }}{% endblock %}
+{% block canonical %}{{ config.domain }}/memos/{% endblock %}
+
+{% block content %}
+<section class="content">
+  <div class="content-header d-flex align-items-center">
+    <div class="container">
+      <div class="d-flex align-items-center animate__animated animate__fadeIn">
+        <div class="header-title flex-fill"><h1 class="title-line">{{ theme_config.memosPageTitle|default:"闪念" }}</h1></div>
+      </div>
+    </div>
+  </div>
+  <div class="archive">
+    <div class="container">
+      <div class="mt-5 mb-3">
+        <div class="memo row">
+          <div class="memo-list col-12">
+            {% if memos|length > 0 %}
+              {% for memo in memos %}
+              <div class="memo-item d-flex animate__animated mb-3">
+                <div class="card-item flex-fill p-3">
+                  <div class="item-header d-flex mb-3">
+                    <div class="d-flex flex-fill">
+                      <div class="item-avatar mr-3" style="background-image:url({% if theme_config.memoAvatar %}{{ theme_config.memoAvatar }}{% elif config.avatar %}{{ config.avatar }}{% endif %})"></div>
+                      <div class="item-sub d-flex flex-column p-1">
+                        <div class="item-creator"><a href="{{ config.domain }}" target="_blank">{% if theme_config.memoCreator %}{{ theme_config.memoCreator }}{% else %}{{ config.siteName }}{% endif %}</a></div>
+                        <div class="item-mate mt-2 text-xs">{% if memo.dateFormat %}{{ memo.dateFormat }}{% else %}{{ memo.createdAt }}{% endif %}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="item-content">
+                    <div class="item-inner">{{ memo.content|safe }}</div>
+                    <div class="item-footer d-flex mt-2">
+                      <div class="d-flex">
+                        {% if memo.tags|length > 0 %}
+                          {% for t in memo.tags %}<div class="item-tag d-flex align-items-center text-xs line-lg mr-2 px-2">{{ t }}</div>{% endfor %}
+                        {% else %}
+                          <div class="item-tag d-flex align-items-center text-xs line-lg mr-2 px-2">{{ theme_config.memoDefaultTag|default:"闪念" }}</div>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
