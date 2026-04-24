@@ -3,20 +3,27 @@
 {% block title %}#{{ tag.name }} - {{ config.siteName }}{% endblock %}
 
 {% block main %}
-<h1 class="mb-14">#{{ tag.name }}</h1>
+<section class="tag-page">
+    <h1>#{{ tag.name }}</h1>
 
-{% if posts|length > 0 %}
-    {% for post in posts %}
-    <section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
-        {% if theme_config.showFeatured and post.isTop %}
-        <span class="mb-1 inline-block text-xs tracking-wider text-orange-500">Featured</span>
-        {% endif %}
-        <h2 class="my-0!">{{ post.title }}</h2>
-        <time class="text-xs antialiased opacity-60">{{ post.date }}</time>
-        <a class="absolute inset-0 text-[0px]" href="{{ post.link }}">{{ post.title }}</a>
-    </section>
-    {% endfor %}
-{% else %}
-    <p class="opacity-60">此标签下暂无文章。</p>
-{% endif %}
+    {% if posts|length > 0 %}
+        <ul class="tag-post-list">
+            {% for post in posts %}
+                <li class="tag-post-item">
+                    <a class="tag-post-link" href="{{ post.link }}">
+                        <h2 class="tag-post-title">{{ post.title }}</h2>
+                        <div class="tag-post-meta">
+                            {% if theme_config.showFeatured and post.isTop %}
+                                <span class="featured-badge">Featured</span>
+                            {% endif %}
+                            <time datetime="{{ post.date }}">{{ post.date }}</time>
+                        </div>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="page-empty">此标签下暂无文章。</p>
+    {% endif %}
+</section>
 {% endblock %}

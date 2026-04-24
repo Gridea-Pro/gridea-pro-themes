@@ -12,21 +12,7 @@
 
 <title>{% block title %}{{ config.siteName }}{% endblock %}</title>
 
-<link rel="stylesheet" href="/styles/main.css">
-
-{% if theme_config.faviconPath %}
-<link rel="icon" href="{{ theme_config.faviconPath }}">
-{% endif %}
-
-{% if theme_config.customCss %}
-<style>{{ theme_config.customCss|safe }}</style>
-{% endif %}
-
-{% if theme_config.analyticsCode %}
-{{ theme_config.analyticsCode|safe }}
-{% endif %}
-
-{# 提前执行的主题探测脚本，避免首次渲染出现明暗闪烁 #}
+{# 主题探测脚本：在 stylesheet 前执行，避免被阻塞，避免 FOUC #}
 <script>
 (function() {
   var stored = null;
@@ -45,3 +31,17 @@
   document.documentElement.setAttribute("data-theme", theme);
 })();
 </script>
+
+<link rel="stylesheet" href="/styles/main.css">
+
+{% if theme_config.faviconPath %}
+<link rel="icon" href="{{ theme_config.faviconPath }}">
+{% endif %}
+
+{% if theme_config.customCss %}
+<style>{{ theme_config.customCss|safe }}</style>
+{% endif %}
+
+{% if theme_config.analyticsCode %}
+{{ theme_config.analyticsCode|safe }}
+{% endif %}

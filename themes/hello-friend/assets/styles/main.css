@@ -276,8 +276,15 @@ th {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: calc(100vh - 12rem);
   text-align: center;
+  padding-top: var(--sp-8);
+  padding-bottom: var(--sp-8);
+}
+/* 只有 404 这类没有正文内容的页面才撑满剩余视口 */
+.content-center.is-standalone {
+  min-height: calc(100vh - 12rem);
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 /* ----------------------------------------------------------------
@@ -322,16 +329,18 @@ th {
 .logo__text { color: var(--text); }
 .logo__cursor {
   display: inline-block;
-  width: 0.55em;
+  width: 10px;
   height: 1em;
-  background: var(--accent);
-  margin-left: 0.1em;
+  background: #fe5186;
+  margin-left: 5px;
   vertical-align: -0.1em;
-  animation: cursor-blink 1s step-end infinite;
+  border-radius: 1px;
+  animation: cursor-blink 1s infinite;
 }
 @keyframes cursor-blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+  0%   { opacity: 0; }
+  50%  { opacity: 1; }
+  100% { opacity: 0; }
 }
 .logo img { height: 1.8em; width: auto; display: inline-block; }
 

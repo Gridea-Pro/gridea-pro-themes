@@ -2052,11 +2052,27 @@ ul.list-none.space-y-8 > li::before {
 /* ----------------------------------------------------------------
    Header · theme toggle + menu trigger
    ---------------------------------------------------------------- */
+/* Theme toggle — 彩色 PNG 精灵图（左太阳右月亮）+ 切换时 5-step 定格动画 */
 .btn-dark {
-  transition: transform 280ms var(--ease-out),
-              opacity 150ms var(--ease-out);
+  width: 1.5rem;
+  height: 1.5rem;
+  display: inline-block;
+  background: url(/icons/theme.png) left center / auto 1.5rem no-repeat;
+  transition: background-position 0.4s steps(5),
+              opacity 150ms var(--ease-out),
+              transform 280ms var(--ease-out);
+  cursor: pointer;
 }
-.btn-dark:hover { transform: rotate(12deg); opacity: 0.85; }
+.dark .btn-dark { background-position: right; }
+.btn-dark:hover { opacity: 0.85; }
+
+/* 单色 SVG 变体（theme_config.monoDarkIcon = true 时启用） */
+.btn-dark.is-mono {
+  background: url(/icons/theme.svg) left center / cover no-repeat;
+  transition: opacity 150ms var(--ease-out), transform 280ms var(--ease-out);
+}
+.dark .btn-dark.is-mono { filter: invert(1); }
+.btn-dark.is-mono:hover { transform: rotate(12deg); }
 
 .btn-menu::before,
 .btn-menu::after {
@@ -2152,4 +2168,292 @@ html.not-ready * { transition: none !important; animation: none !important; }
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ================================================================
+   Paper · 专用页面样式（archives / tag / tags / memos / links）
+   ================================================================ */
+
+/* 统一大标题 */
+.archives-page > h1,
+.tag-page > h1,
+.tags-page > h1,
+.memos-page > h1,
+.links-page > h1 { margin-bottom: 3.5rem; }
+
+/* Archives — 按年份分组的时间线 */
+.archives-year { margin-bottom: 3rem; }
+.archives-year:last-child { margin-bottom: 0; }
+.archives-year-title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 600;
+  opacity: 0.35;
+  margin: 0 0 0.5rem;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.archives-list { list-style: none; padding: 0; margin: 0; }
+.archives-item { margin: 0; border-bottom: 1px solid rgb(0 0 0 / 0.06); }
+.dark .archives-item { border-bottom-color: rgb(255 255 255 / 0.08); }
+.archives-item:last-child { border-bottom: 0; }
+.archives-link {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 0;
+  color: inherit;
+  text-decoration: none;
+  transition: color 180ms var(--ease-out), padding-left 180ms var(--ease-out);
+}
+.archives-link:hover { padding-left: 0.5rem; color: rgb(0 0 0 / 0.55); }
+.dark .archives-link:hover { color: rgb(255 255 255 / 0.95); }
+.archives-title {
+  flex: 1;
+  min-width: 0;
+  font-size: 1.0625rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.archives-date {
+  font-size: 0.75rem;
+  opacity: 0.5;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Tag (单标签) — 文章列表风格 */
+.tag-page .tag-post-list { list-style: none; padding: 0; margin: 0; }
+.tag-page .tag-post-item {
+  margin: 0;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid rgb(0 0 0 / 0.06);
+}
+.tag-page .tag-post-item:last-child { border-bottom: 0; }
+.dark .tag-page .tag-post-item { border-bottom-color: rgb(255 255 255 / 0.08); }
+.tag-page .tag-post-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  transition: color 180ms var(--ease-out), transform 180ms var(--ease-out);
+}
+.tag-page .tag-post-link:hover { color: rgb(0 0 0 / 0.6); transform: translateX(2px); }
+.dark .tag-page .tag-post-link:hover { color: rgb(255 255 255 / 0.95); }
+.tag-page .tag-post-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  margin: 0 0 0.35rem;
+  word-break: break-word;
+}
+.tag-page .tag-post-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+}
+.tag-page .featured-badge {
+  display: inline-block;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.12em 0.55em;
+  border-radius: 3px;
+  background: rgb(251 146 60 / 0.14);
+  color: rgb(194 65 12);
+  opacity: 1;
+}
+.dark .tag-page .featured-badge {
+  background: rgb(251 146 60 / 0.18);
+  color: rgb(251 146 60);
+}
+
+/* Tags (标签墙) — pill 样式 */
+.tags-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.tags-cloud .tag-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  background: rgb(0 0 0 / 0.04);
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: background 150ms var(--ease-out), transform 150ms var(--ease-out);
+}
+.dark .tags-cloud .tag-chip { background: rgb(255 255 255 / 0.08); }
+.tags-cloud .tag-chip:hover {
+  background: rgb(0 0 0 / 0.08);
+  transform: translateY(-1px);
+}
+.dark .tags-cloud .tag-chip:hover { background: rgb(255 255 255 / 0.14); }
+.tags-cloud .tag-count {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.75rem;
+  opacity: 0.55;
+}
+
+/* Memos — 带左侧细线的条目流 */
+.memos-page .memo-list { list-style: none; padding: 0; margin: 0; }
+.memos-page .memo-item {
+  position: relative;
+  margin: 0;
+  padding: 1.5rem 0 1.5rem 1.75rem;
+  border-bottom: 1px solid rgb(0 0 0 / 0.06);
+}
+.dark .memos-page .memo-item { border-bottom-color: rgb(255 255 255 / 0.08); }
+.memos-page .memo-item:last-child { border-bottom: 0; }
+.memos-page .memo-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.85rem;
+  bottom: 1.85rem;
+  width: 2px;
+  background: rgb(0 0 0 / 0.08);
+  border-radius: 1px;
+}
+.dark .memos-page .memo-item::before { background: rgb(255 255 255 / 0.15); }
+.memos-page .memo-date {
+  display: block;
+  font-size: 0.75rem;
+  opacity: 0.55;
+  margin-bottom: 0.6rem;
+  font-variant-numeric: tabular-nums;
+}
+.memos-page .memo-content {
+  line-height: 1.75;
+  overflow-wrap: break-word;
+}
+.memos-page .memo-content p { margin: 0 0 0.5em; }
+.memos-page .memo-content p:last-child { margin-bottom: 0; }
+.memos-page .memo-content img,
+.memos-page .memo-content video {
+  border-radius: 8px;
+  margin: 0.4rem 0;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+.memos-page .memo-content a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgb(0 0 0 / 0.25);
+  transition: text-decoration-color 150ms var(--ease-out);
+}
+.dark .memos-page .memo-content a { text-decoration-color: rgb(255 255 255 / 0.35); }
+.memos-page .memo-content a:hover { text-decoration-color: currentColor; }
+.memos-page .memo-tags {
+  margin-top: 0.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.memos-page .memo-tag {
+  font-size: 0.72rem;
+  opacity: 0.55;
+  color: inherit;
+}
+
+/* Links — 卡片网格 */
+.links-page .links-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 0.75rem;
+}
+.links-page .link-item { margin: 0; }
+.links-page .link-card {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 1rem 1.125rem;
+  border: 1px solid rgb(0 0 0 / 0.08);
+  border-radius: 12px;
+  color: inherit;
+  text-decoration: none;
+  background: transparent;
+  transition: border-color 180ms var(--ease-out),
+              transform 180ms var(--ease-out),
+              background 180ms var(--ease-out);
+}
+.dark .links-page .link-card { border-color: rgb(255 255 255 / 0.1); }
+.links-page .link-card:hover {
+  transform: translateY(-2px);
+  background: rgb(0 0 0 / 0.02);
+  border-color: rgb(0 0 0 / 0.18);
+}
+.dark .links-page .link-card:hover {
+  background: rgb(255 255 255 / 0.04);
+  border-color: rgb(255 255 255 / 0.22);
+}
+.links-page .link-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  object-fit: cover;
+  background: rgb(0 0 0 / 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: rgb(0 0 0 / 0.5);
+  text-transform: uppercase;
+}
+.dark .links-page .link-avatar {
+  background: rgb(255 255 255 / 0.08);
+  color: rgb(255 255 255 / 0.7);
+}
+.links-page .link-info { min-width: 0; flex: 1; }
+.links-page .link-name {
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.links-page .link-desc {
+  font-size: 0.85rem;
+  opacity: 0.6;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.page-empty { opacity: 0.55; font-size: 0.95rem; }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .archives-page > h1, .tag-page > h1, .tags-page > h1,
+  .memos-page > h1, .links-page > h1 { margin-bottom: 2.25rem; }
+  .archives-year-title { font-size: 1.35rem; }
+  .archives-link {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    padding: 0.8rem 0;
+  }
+  .archives-date { font-size: 0.7rem; }
+  .tag-page .tag-post-title { font-size: 1.25rem; }
+  .tags-cloud .tag-chip { padding: 0.4rem 0.85rem; font-size: 0.85rem; }
+  .memos-page .memo-item { padding-left: 1.25rem; }
+  .memos-page .memo-item::before { width: 1px; }
+  .links-page .links-grid { grid-template-columns: 1fr; }
+  .links-page .link-card { padding: 0.85rem 1rem; }
 }

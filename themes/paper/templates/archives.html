@@ -3,24 +3,27 @@
 {% block title %}归档 - {{ config.siteName }}{% endblock %}
 
 {% block main %}
-<h1 class="mb-14">归档</h1>
+<section class="archives-page">
+    <h1>归档</h1>
 
-{% if posts|length > 0 %}
-    {% for group in posts|group_by:"year" %}
-    <section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
-        <h2 class="my-0! text-2xl">{{ group.key }}</h2>
-        <div class="mt-4">
-            {% for post in group.items %}
-            <div class="relative my-3 flex items-baseline justify-between">
-                <h3 class="my-0! text-lg font-normal">{{ post.title }}</h3>
-                <time class="text-xs antialiased opacity-60 ltr:ml-4 rtl:mr-4">{{ post.date }}</time>
-                <a class="absolute inset-0 text-[0px]" href="{{ post.link }}">{{ post.title }}</a>
-            </div>
-            {% endfor %}
-        </div>
-    </section>
-    {% endfor %}
-{% else %}
-    <p class="opacity-60">暂无文章。</p>
-{% endif %}
+    {% if posts|length > 0 %}
+        {% for group in posts|group_by:"year" %}
+            <section class="archives-year">
+                <h2 class="archives-year-title">{{ group.key }}</h2>
+                <ul class="archives-list">
+                    {% for post in group.items %}
+                        <li class="archives-item">
+                            <a class="archives-link" href="{{ post.link }}">
+                                <span class="archives-title">{{ post.title }}</span>
+                                <time class="archives-date" datetime="{{ post.date }}">{{ post.date }}</time>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </section>
+        {% endfor %}
+    {% else %}
+        <p class="page-empty">暂无文章。</p>
+    {% endif %}
+</section>
 {% endblock %}
