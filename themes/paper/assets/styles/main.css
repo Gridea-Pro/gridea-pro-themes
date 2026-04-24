@@ -2171,10 +2171,25 @@ html.not-ready * { transition: none !important; animation: none !important; }
 :root {
   --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo,
                Consolas, 'Liberation Mono', monospace;
-  --rule:      color-mix(in srgb, currentColor 10%, transparent);
-  --rule-soft: color-mix(in srgb, currentColor 6%, transparent);
-  --meta:      color-mix(in srgb, currentColor 55%, transparent);
-  --meta-dim:  color-mix(in srgb, currentColor 38%, transparent);
+  --rule:      color-mix(in srgb, currentColor 18%, transparent);
+  --rule-soft: color-mix(in srgb, currentColor 11%, transparent);
+  --meta:      color-mix(in srgb, currentColor 58%, transparent);
+  --meta-dim:  color-mix(in srgb, currentColor 42%, transparent);
+}
+
+/* Prose-reset — prose 默认给嵌套 ul/li 加 margin/padding，在专用页面列表里清零 */
+main.prose ul.archive-year__list,
+main.prose ul.archive-year__list > li,
+main.prose ul.tag-post-list,
+main.prose ul.tag-post-list > li,
+main.prose ul.memo-list,
+main.prose ul.memo-list > li,
+main.prose ul.links-list,
+main.prose ul.links-list > li {
+  margin: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  list-style: none !important;
 }
 
 /* ---------- Shared page header ---------- */
@@ -2260,8 +2275,8 @@ html.not-ready * { transition: none !important; animation: none !important; }
 .archive-post { margin: 0; }
 .archive-post__link {
   display: grid;
-  grid-template-columns: 4.25rem 1fr;
-  gap: 1.25rem;
+  grid-template-columns: 6rem 1fr;
+  gap: 1.5rem;
   align-items: baseline;
   padding: 1rem 0;
   color: inherit;
@@ -2327,19 +2342,20 @@ html.not-ready * { transition: none !important; animation: none !important; }
   transition: transform 220ms var(--ease-out);
 }
 .tag-cloud__item:hover::after { transform: scaleX(1); }
-.tag-cloud__item--xs { font-size: 0.95rem; font-weight: 500; }
-.tag-cloud__item--s  { font-size: 1.15rem; font-weight: 500; }
-.tag-cloud__item--m  { font-size: 1.45rem; font-weight: 600; }
-.tag-cloud__item--l  { font-size: 1.85rem; font-weight: 600; }
-.tag-cloud__item--xl { font-size: 2.3rem;  font-weight: 600; }
+.tag-cloud__item--xs { font-size: 1rem;   font-weight: 500; }
+.tag-cloud__item--s  { font-size: 1.35rem; font-weight: 500; }
+.tag-cloud__item--m  { font-size: 1.8rem;  font-weight: 600; }
+.tag-cloud__item--l  { font-size: 2.4rem;  font-weight: 600; }
+.tag-cloud__item--xl { font-size: 3.2rem;  font-weight: 700; }
 .tag-cloud__count {
   font-family: var(--font-mono);
-  font-size: 0.65em;
-  color: var(--meta);
+  font-size: 0.45em;
+  color: var(--meta-dim);
   vertical-align: super;
-  margin-left: 0.18em;
+  margin-left: 0.25em;
   font-variant-numeric: tabular-nums;
   letter-spacing: 0;
+  font-weight: 400;
 }
 
 /* ================================================================

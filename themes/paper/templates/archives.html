@@ -6,7 +6,6 @@
 <section class="archives-page">
     <header class="page-header">
         <h1>归档</h1>
-        <p class="page-subtitle">{{ posts|length }} ARTICLES</p>
     </header>
 
     {% if posts|length > 0 %}
@@ -16,11 +15,11 @@
                     <span class="archive-year__num">{{ group.key }}</span>
                     <span class="archive-year__count">{{ group.items|length }} POSTS</span>
                 </div>
-                <ul class="archive-year__list">
+                <ul class="archive-year__list not-prose">
                     {% for post in group.items %}
                         <li class="archive-post">
                             <a class="archive-post__link" href="{{ post.link }}">
-                                <time datetime="{{ post.date }}">{{ post.date }}</time>
+                                <time datetime="{{ post.date }}">{{ post.dateFormat|default:post.date|truncatechars:10 }}</time>
                                 <span class="archive-post__title">{{ post.title }}</span>
                             </a>
                         </li>

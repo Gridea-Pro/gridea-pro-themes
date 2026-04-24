@@ -10,7 +10,7 @@
     </header>
 
     {% if posts|length > 0 %}
-        <ul class="tag-post-list">
+        <ul class="tag-post-list not-prose">
             {% for post in posts %}
                 <li class="tag-post-item">
                     <a class="tag-post-link" href="{{ post.link }}">
@@ -19,7 +19,7 @@
                             {% if theme_config.showFeatured and post.isTop %}
                                 <span class="featured-badge">Featured</span>
                             {% endif %}
-                            <time datetime="{{ post.date }}">{{ post.date }}</time>
+                            <time datetime="{{ post.date }}">{{ post.dateFormat|default:post.date|truncatechars:10 }}</time>
                         </div>
                     </a>
                 </li>

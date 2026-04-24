@@ -10,7 +10,7 @@
     </header>
 
     {% if memos|length > 0 %}
-        <ul class="memo-list">
+        <ul class="memo-list not-prose">
             {% for memo in memos %}
                 {% set dateParts = memo.createdAtISO|split:"-" %}
                 {% set monthNum = dateParts.1 %}
