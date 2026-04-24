@@ -2163,99 +2163,269 @@ html.not-ready * { transition: none !important; animation: none !important; }
 }
 
 /* ================================================================
-   Paper · 专用页面样式（archives / tag / tags / memos / links）
+   Paper · 专用页面 v2
+   Editorial magazine aesthetic — sticky year markers, tag cloud,
+   diary layout, floating bookshelf rows
    ================================================================ */
 
-/* 统一大标题 */
-.archives-page > h1,
-.tag-page > h1,
-.tags-page > h1,
-.memos-page > h1,
-.links-page > h1 { margin-bottom: 3.5rem; }
+:root {
+  --font-mono: 'JetBrains Mono', 'SF Mono', ui-monospace, Menlo,
+               Consolas, 'Liberation Mono', monospace;
+  --rule:      color-mix(in srgb, currentColor 10%, transparent);
+  --rule-soft: color-mix(in srgb, currentColor 6%, transparent);
+  --meta:      color-mix(in srgb, currentColor 55%, transparent);
+  --meta-dim:  color-mix(in srgb, currentColor 38%, transparent);
+}
 
-/* Archives — 按年份分组的时间线 */
-.archives-year { margin-bottom: 3rem; }
-.archives-year:last-child { margin-bottom: 0; }
-.archives-year-title {
+/* ---------- Shared page header ---------- */
+.page-header {
+  margin-bottom: 3.5rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--rule);
+}
+.page-header h1 {
+  margin: 0 0 0.35rem;
   font-family: var(--font-display);
-  font-size: 1.75rem;
   font-weight: 600;
-  opacity: 0.35;
-  margin: 0 0 0.5rem;
-  letter-spacing: -0.02em;
-  line-height: 1;
+  font-size: clamp(2.25rem, 2rem + 1.5vw, 3rem);
+  letter-spacing: -0.025em;
+  line-height: 1.05;
 }
-.archives-list { list-style: none; padding: 0; margin: 0; }
-.archives-item { margin: 0; border-bottom: 1px solid rgb(0 0 0 / 0.06); }
-.dark .archives-item { border-bottom-color: rgb(255 255 255 / 0.08); }
-.archives-item:last-child { border-bottom: 0; }
-.archives-link {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  padding: 0.85rem 0;
-  color: inherit;
-  text-decoration: none;
-  transition: color 180ms var(--ease-out), padding-left 180ms var(--ease-out);
-}
-.archives-link:hover { padding-left: 0.5rem; color: rgb(0 0 0 / 0.55); }
-.dark .archives-link:hover { color: rgb(255 255 255 / 0.95); }
-.archives-title {
-  flex: 1;
-  min-width: 0;
-  font-size: 1.0625rem;
-  line-height: 1.45;
-  overflow-wrap: anywhere;
-}
-.archives-date {
-  font-size: 0.75rem;
-  opacity: 0.5;
-  white-space: nowrap;
+.page-header .page-subtitle {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--meta-dim);
   font-variant-numeric: tabular-nums;
 }
 
-/* Tag (单标签) — 文章列表风格 */
-.tag-page .tag-post-list { list-style: none; padding: 0; margin: 0; }
-.tag-page .tag-post-item {
-  margin: 0;
-  padding: 1.5rem 0;
-  border-bottom: 1px solid rgb(0 0 0 / 0.06);
+.page-empty {
+  color: var(--meta);
+  font-size: 0.95rem;
+  padding: 3rem 0;
+  text-align: center;
+  border-top: 1px solid var(--rule-soft);
+  border-bottom: 1px solid var(--rule-soft);
 }
-.tag-page .tag-post-item:last-child { border-bottom: 0; }
-.dark .tag-page .tag-post-item { border-bottom-color: rgb(255 255 255 / 0.08); }
-.tag-page .tag-post-link {
+
+/* ================================================================
+   Archives — sticky oversized year marker + timeline entries
+   ================================================================ */
+.archives-page .archive-year {
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+  gap: 2.5rem;
+  margin-bottom: 3.5rem;
+  padding-bottom: 3.5rem;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.archives-page .archive-year:last-child {
+  border-bottom: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.archive-year__marker {
+  position: sticky;
+  top: 5.5rem;
+  align-self: start;
+  line-height: 1;
+}
+.archive-year__num {
   display: block;
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 2rem + 2.5vw, 4rem);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  color: color-mix(in srgb, currentColor 85%, transparent);
+}
+.archive-year__count {
+  display: block;
+  margin-top: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--meta-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.archive-year__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.archive-post { margin: 0; }
+.archive-post__link {
+  display: grid;
+  grid-template-columns: 4.25rem 1fr;
+  gap: 1.25rem;
+  align-items: baseline;
+  padding: 1rem 0;
   color: inherit;
   text-decoration: none;
-  transition: color 180ms var(--ease-out), transform 180ms var(--ease-out);
+  border-bottom: 1px solid var(--rule-soft);
+  transition: color 180ms var(--ease-out);
 }
-.tag-page .tag-post-link:hover { color: rgb(0 0 0 / 0.6); transform: translateX(2px); }
-.dark .tag-page .tag-post-link:hover { color: rgb(255 255 255 / 0.95); }
+.archive-post:last-child .archive-post__link { border-bottom: 0; }
+.archive-post__link time {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--meta);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  padding-top: 0.15rem;
+}
+.archive-post__title {
+  font-size: 1.0625rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+  display: inline-block;
+  transition: transform 180ms var(--ease-out);
+}
+.archive-post__link:hover .archive-post__title {
+  transform: translateX(4px);
+}
+.archive-post__link:hover {
+  color: color-mix(in srgb, currentColor 60%, transparent);
+}
+
+/* ================================================================
+   Tags — font-size cloud, pure editorial text
+   ================================================================ */
+.tags-page .tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 1.25rem;
+  padding: 1.5rem 0;
+}
+.tag-cloud__item {
+  position: relative;
+  color: inherit;
+  text-decoration: none;
+  font-family: var(--font-display);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  transition: color 150ms var(--ease-out), opacity 150ms var(--ease-out);
+  opacity: 0.85;
+}
+.tag-cloud__item:hover { opacity: 1; }
+.tag-cloud__item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 220ms var(--ease-out);
+}
+.tag-cloud__item:hover::after { transform: scaleX(1); }
+.tag-cloud__item--xs { font-size: 0.95rem; font-weight: 500; }
+.tag-cloud__item--s  { font-size: 1.15rem; font-weight: 500; }
+.tag-cloud__item--m  { font-size: 1.45rem; font-weight: 600; }
+.tag-cloud__item--l  { font-size: 1.85rem; font-weight: 600; }
+.tag-cloud__item--xl { font-size: 2.3rem;  font-weight: 600; }
+.tag-cloud__count {
+  font-family: var(--font-mono);
+  font-size: 0.65em;
+  color: var(--meta);
+  vertical-align: super;
+  margin-left: 0.18em;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+/* ================================================================
+   Single tag — hashtag watermark + refined post list
+   ================================================================ */
+.tag-page .page-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 3rem;
+}
+.tag-page .page-header h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2rem, 1.6rem + 2vw, 2.75rem);
+  letter-spacing: -0.025em;
+  line-height: 1;
+  margin: 0;
+  padding-bottom: 0.35rem;
+  border-bottom: none;
+}
+.tag-page .page-header .hash {
+  font-style: italic;
+  color: color-mix(in srgb, currentColor 55%, transparent);
+  font-weight: 500;
+}
+.tag-page .page-header .count {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--meta-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.tag-page .tag-post-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid var(--rule-soft);
+}
+.tag-page .tag-post-item {
+  margin: 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.tag-page .tag-post-link {
+  display: block;
+  padding: 1.25rem 0;
+  color: inherit;
+  text-decoration: none;
+  transition: color 180ms var(--ease-out);
+}
+.tag-page .tag-post-link:hover {
+  color: color-mix(in srgb, currentColor 60%, transparent);
+}
 .tag-page .tag-post-title {
   font-family: var(--font-display);
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 600;
   letter-spacing: -0.015em;
   line-height: 1.25;
   margin: 0 0 0.35rem;
-  word-break: break-word;
+  overflow-wrap: anywhere;
+  transition: transform 180ms var(--ease-out);
+}
+.tag-page .tag-post-link:hover .tag-post-title {
+  transform: translateX(4px);
 }
 .tag-page .tag-post-meta {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
-  font-size: 0.75rem;
-  opacity: 0.55;
+  gap: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--meta);
   font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
 }
 .tag-page .featured-badge {
-  display: inline-block;
+  font-family: var(--font-mono);
   font-size: 0.62rem;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  padding: 0.12em 0.55em;
+  padding: 0.18em 0.55em;
   border-radius: 3px;
   background: rgb(251 146 60 / 0.14);
   color: rgb(194 65 12);
@@ -2266,186 +2436,232 @@ html.not-ready * { transition: none !important; animation: none !important; }
   color: rgb(251 146 60);
 }
 
-/* Tags (标签墙) — pill 样式 */
-.tags-cloud {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
+/* ================================================================
+   Memos — diary-style 2-column (date | content)
+   ================================================================ */
+.memos-page .memo-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
-.tags-cloud .tag-chip {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.35rem;
-  padding: 0.5rem 1rem;
-  border-radius: 9999px;
-  background: rgb(0 0 0 / 0.04);
-  color: inherit;
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: background 150ms var(--ease-out), transform 150ms var(--ease-out);
+.memos-page .memo-item {
+  display: grid;
+  grid-template-columns: 7rem 1fr;
+  gap: 2rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--rule-soft);
 }
-.dark .tags-cloud .tag-chip { background: rgb(255 255 255 / 0.08); }
-.tags-cloud .tag-chip:hover {
-  background: rgb(0 0 0 / 0.08);
-  transform: translateY(-1px);
+.memos-page .memo-item:last-child { border-bottom: 0; }
+
+.memos-page .memo-date {
+  font-family: var(--font-mono);
+  line-height: 1.1;
+  color: var(--meta);
+  padding-top: 0.15rem;
 }
-.dark .tags-cloud .tag-chip:hover { background: rgb(255 255 255 / 0.14); }
-.tags-cloud .tag-count {
+.memos-page .memo-date__day {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 600;
+  color: color-mix(in srgb, currentColor 90%, transparent);
   font-variant-numeric: tabular-nums;
-  font-size: 0.75rem;
-  opacity: 0.55;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.memos-page .memo-date__month {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+.memos-page .memo-date__year {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.65rem;
+  color: var(--meta-dim);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.1em;
 }
 
-/* Memos — 带左侧细线的条目流 */
-.memos-page .memo-list { list-style: none; padding: 0; margin: 0; }
-.memos-page .memo-item {
-  position: relative;
-  margin: 0;
-  padding: 1.5rem 0 1.5rem 1.75rem;
-  border-bottom: 1px solid rgb(0 0 0 / 0.06);
-}
-.dark .memos-page .memo-item { border-bottom-color: rgb(255 255 255 / 0.08); }
-.memos-page .memo-item:last-child { border-bottom: 0; }
-.memos-page .memo-item::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 1.85rem;
-  bottom: 1.85rem;
-  width: 2px;
-  background: rgb(0 0 0 / 0.08);
-  border-radius: 1px;
-}
-.dark .memos-page .memo-item::before { background: rgb(255 255 255 / 0.15); }
-.memos-page .memo-date {
-  display: block;
-  font-size: 0.75rem;
-  opacity: 0.55;
-  margin-bottom: 0.6rem;
-  font-variant-numeric: tabular-nums;
+.memos-page .memo-body {
+  min-width: 0;
 }
 .memos-page .memo-content {
+  font-family: var(--font-display);
+  font-size: 1.075rem;
   line-height: 1.75;
+  color: inherit;
   overflow-wrap: break-word;
 }
-.memos-page .memo-content p { margin: 0 0 0.5em; }
+.memos-page .memo-content p { margin: 0 0 0.6em; }
 .memos-page .memo-content p:last-child { margin-bottom: 0; }
 .memos-page .memo-content img,
 .memos-page .memo-content video {
-  border-radius: 8px;
-  margin: 0.4rem 0;
+  display: block;
   max-width: 100%;
   height: auto;
-  display: block;
+  border-radius: 4px;
+  margin: 0.8rem 0;
 }
 .memos-page .memo-content a {
   color: inherit;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 3px;
-  text-decoration-color: rgb(0 0 0 / 0.25);
+  text-decoration-color: var(--rule);
   transition: text-decoration-color 150ms var(--ease-out);
 }
-.dark .memos-page .memo-content a { text-decoration-color: rgb(255 255 255 / 0.35); }
-.memos-page .memo-content a:hover { text-decoration-color: currentColor; }
+.memos-page .memo-content a:hover {
+  text-decoration-color: currentColor;
+}
 .memos-page .memo-tags {
-  margin-top: 0.6rem;
+  margin-top: 0.9rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.8rem;
 }
 .memos-page .memo-tag {
-  font-size: 0.72rem;
-  opacity: 0.55;
-  color: inherit;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--meta);
 }
 
-/* Links — 卡片网格 */
-.links-page .links-grid {
+/* ================================================================
+   Links — bookshelf rows (flat, full-width hover)
+   ================================================================ */
+.links-page .links-list {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-  gap: 0.75rem;
+  border-top: 1px solid var(--rule-soft);
 }
-.links-page .link-item { margin: 0; }
-.links-page .link-card {
-  display: flex;
+.links-page .link-item {
+  margin: 0;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.links-page .link-row {
+  display: grid;
+  grid-template-columns: 2.75rem 1fr auto;
   align-items: center;
-  gap: 0.875rem;
-  padding: 1rem 1.125rem;
-  border: 1px solid rgb(0 0 0 / 0.08);
-  border-radius: 12px;
+  gap: 1.25rem;
+  padding: 1.25rem 1rem;
+  margin: 0 -1rem;
   color: inherit;
   text-decoration: none;
-  background: transparent;
-  transition: border-color 180ms var(--ease-out),
-              transform 180ms var(--ease-out),
-              background 180ms var(--ease-out);
+  border-radius: 4px;
+  transition: background 180ms var(--ease-out),
+              padding 180ms var(--ease-out);
 }
-.dark .links-page .link-card { border-color: rgb(255 255 255 / 0.1); }
-.links-page .link-card:hover {
-  transform: translateY(-2px);
-  background: rgb(0 0 0 / 0.02);
-  border-color: rgb(0 0 0 / 0.18);
-}
-.dark .links-page .link-card:hover {
-  background: rgb(255 255 255 / 0.04);
-  border-color: rgb(255 255 255 / 0.22);
+.links-page .link-row:hover {
+  background: color-mix(in srgb, currentColor 4%, transparent);
+  padding-left: 1.5rem;
 }
 .links-page .link-avatar {
-  width: 48px;
-  height: 48px;
+  width: 2.5rem;
+  height: 2.5rem;
   border-radius: 50%;
-  flex-shrink: 0;
   object-fit: cover;
-  background: rgb(0 0 0 / 0.04);
+  flex-shrink: 0;
+  background: color-mix(in srgb, currentColor 8%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  color: rgb(0 0 0 / 0.5);
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--meta);
   text-transform: uppercase;
 }
-.dark .links-page .link-avatar {
-  background: rgb(255 255 255 / 0.08);
-  color: rgb(255 255 255 / 0.7);
-}
-.links-page .link-info { min-width: 0; flex: 1; }
+.links-page .link-info { min-width: 0; }
 .links-page .link-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
   font-weight: 600;
-  margin-bottom: 0.15rem;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin-bottom: 0.15rem;
 }
 .links-page .link-desc {
-  font-size: 0.85rem;
-  opacity: 0.6;
+  font-size: 0.83rem;
+  color: var(--meta);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.links-page .link-arrow {
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  color: var(--meta-dim);
+  transition: transform 220ms var(--ease-out), color 180ms var(--ease-out);
+}
+.links-page .link-row:hover .link-arrow {
+  color: inherit;
+  transform: translate(3px, -3px);
+}
 
-.page-empty { opacity: 0.55; font-size: 0.95rem; }
+/* ================================================================
+   Responsive
+   ================================================================ */
+@media (max-width: 720px) {
+  .page-header { margin-bottom: 2.5rem; }
+  .page-header h1 { font-size: clamp(1.75rem, 5vw, 2.25rem); }
 
-/* Responsive */
-@media (max-width: 640px) {
-  .archives-page > h1, .tag-page > h1, .tags-page > h1,
-  .memos-page > h1, .links-page > h1 { margin-bottom: 2.25rem; }
-  .archives-year-title { font-size: 1.35rem; }
-  .archives-link {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.25rem;
-    padding: 0.8rem 0;
+  .archives-page .archive-year {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
   }
-  .archives-date { font-size: 0.7rem; }
-  .tag-page .tag-post-title { font-size: 1.25rem; }
-  .tags-cloud .tag-chip { padding: 0.4rem 0.85rem; font-size: 0.85rem; }
-  .memos-page .memo-item { padding-left: 1.25rem; }
-  .memos-page .memo-item::before { width: 1px; }
-  .links-page .links-grid { grid-template-columns: 1fr; }
-  .links-page .link-card { padding: 0.85rem 1rem; }
+  .archive-year__marker { position: static; }
+  .archive-year__num { font-size: 2.25rem; }
+  .archive-post__link {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+    padding: 0.85rem 0;
+  }
+  .archive-post__link time { padding-top: 0; }
+
+  .tag-cloud__item--xs { font-size: 0.9rem; }
+  .tag-cloud__item--s  { font-size: 1.05rem; }
+  .tag-cloud__item--m  { font-size: 1.3rem; }
+  .tag-cloud__item--l  { font-size: 1.55rem; }
+  .tag-cloud__item--xl { font-size: 1.85rem; }
+
+  .tag-page .page-header { flex-wrap: wrap; }
+  .tag-page .page-header .count {
+    width: 100%;
+    margin-left: 0;
+    margin-top: 0.3rem;
+  }
+  .tag-page .tag-post-title { font-size: 1.15rem; }
+
+  .memos-page .memo-item {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+    padding: 1.5rem 0;
+  }
+  .memos-page .memo-date {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    padding-top: 0;
+  }
+  .memos-page .memo-date__day { font-size: 1.25rem; }
+  .memos-page .memo-date__month { margin-top: 0; font-size: 0.66rem; }
+  .memos-page .memo-date__year { margin-top: 0; font-size: 0.66rem; }
+  .memos-page .memo-content { font-size: 1rem; }
+
+  .links-page .link-row {
+    padding: 0.9rem 0.5rem;
+    margin: 0 -0.5rem;
+    grid-template-columns: 2.25rem 1fr auto;
+    gap: 0.9rem;
+  }
+  .links-page .link-row:hover { padding-left: 0.75rem; }
 }

@@ -4,26 +4,50 @@
 
 {% block main %}
 <section class="memos-page">
-    <h1>闪念</h1>
+    <header class="page-header">
+        <h1>闪念</h1>
+        <p class="page-subtitle">{{ memos|length }} NOTES</p>
+    </header>
 
     {% if memos|length > 0 %}
         <ul class="memo-list">
             {% for memo in memos %}
+                {% set dateParts = memo.createdAtISO|split:"-" %}
+                {% set monthNum = dateParts.1 %}
+                {% set monthText = "" %}
+                {% if monthNum == "01" %}{% set monthText = "JAN" %}{% endif %}
+                {% if monthNum == "02" %}{% set monthText = "FEB" %}{% endif %}
+                {% if monthNum == "03" %}{% set monthText = "MAR" %}{% endif %}
+                {% if monthNum == "04" %}{% set monthText = "APR" %}{% endif %}
+                {% if monthNum == "05" %}{% set monthText = "MAY" %}{% endif %}
+                {% if monthNum == "06" %}{% set monthText = "JUN" %}{% endif %}
+                {% if monthNum == "07" %}{% set monthText = "JUL" %}{% endif %}
+                {% if monthNum == "08" %}{% set monthText = "AUG" %}{% endif %}
+                {% if monthNum == "09" %}{% set monthText = "SEP" %}{% endif %}
+                {% if monthNum == "10" %}{% set monthText = "OCT" %}{% endif %}
+                {% if monthNum == "11" %}{% set monthText = "NOV" %}{% endif %}
+                {% if monthNum == "12" %}{% set monthText = "DEC" %}{% endif %}
                 <li class="memo-item">
-                    <time class="memo-date" datetime="{{ memo.createdAtISO }}">{{ memo.createdAt }}</time>
-                    <div class="memo-content">{{ memo.content|safe }}</div>
-                    {% if memo.tags|length > 0 %}
-                        <div class="memo-tags">
-                            {% for t in memo.tags %}
-                                <span class="memo-tag">#{{ t }}</span>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+                    <time class="memo-date" datetime="{{ memo.createdAtISO }}">
+                        <span class="memo-date__day">{{ dateParts.2 }}</span>
+                        <span class="memo-date__month">{{ monthText }}</span>
+                        <span class="memo-date__year">{{ dateParts.0 }}</span>
+                    </time>
+                    <div class="memo-body">
+                        <div class="memo-content">{{ memo.content|safe }}</div>
+                        {% if memo.tags|length > 0 %}
+                            <div class="memo-tags">
+                                {% for t in memo.tags %}
+                                    <span class="memo-tag">#{{ t }}</span>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
                 </li>
             {% endfor %}
         </ul>
     {% else %}
-        <p class="page-empty">暂无闪念。</p>
+        <p class="page-empty">暂无闪念</p>
     {% endif %}
 </section>
 {% endblock %}

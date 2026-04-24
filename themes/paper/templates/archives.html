@@ -4,26 +4,32 @@
 
 {% block main %}
 <section class="archives-page">
-    <h1>归档</h1>
+    <header class="page-header">
+        <h1>归档</h1>
+        <p class="page-subtitle">{{ posts|length }} ARTICLES</p>
+    </header>
 
     {% if posts|length > 0 %}
         {% for group in posts|group_by:"year" %}
-            <section class="archives-year">
-                <h2 class="archives-year-title">{{ group.key }}</h2>
-                <ul class="archives-list">
+            <article class="archive-year">
+                <div class="archive-year__marker">
+                    <span class="archive-year__num">{{ group.key }}</span>
+                    <span class="archive-year__count">{{ group.items|length }} POSTS</span>
+                </div>
+                <ul class="archive-year__list">
                     {% for post in group.items %}
-                        <li class="archives-item">
-                            <a class="archives-link" href="{{ post.link }}">
-                                <span class="archives-title">{{ post.title }}</span>
-                                <time class="archives-date" datetime="{{ post.date }}">{{ post.date }}</time>
+                        <li class="archive-post">
+                            <a class="archive-post__link" href="{{ post.link }}">
+                                <time datetime="{{ post.date }}">{{ post.date }}</time>
+                                <span class="archive-post__title">{{ post.title }}</span>
                             </a>
                         </li>
                     {% endfor %}
                 </ul>
-            </section>
+            </article>
         {% endfor %}
     {% else %}
-        <p class="page-empty">暂无文章。</p>
+        <p class="page-empty">暂无文章</p>
     {% endif %}
 </section>
 {% endblock %}

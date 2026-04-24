@@ -4,19 +4,24 @@
 
 {% block main %}
 <section class="tags-page">
-    <h1>标签</h1>
+    <header class="page-header">
+        <h1>标签</h1>
+        <p class="page-subtitle">{{ tags|length }} TAGS</p>
+    </header>
 
     {% if tags|length > 0 %}
-        <div class="tags-cloud">
+        <div class="tag-cloud">
             {% for tag in tags %}
-                <a class="tag-chip" href="{{ tag.link }}">
-                    <span>{{ tag.name }}</span>
-                    <span class="tag-count">{{ tag.count }}</span>
-                </a>
+                {% set tagSize = "xs" %}
+                {% if tag.count > 1 %}{% set tagSize = "s" %}{% endif %}
+                {% if tag.count > 4 %}{% set tagSize = "m" %}{% endif %}
+                {% if tag.count > 9 %}{% set tagSize = "l" %}{% endif %}
+                {% if tag.count > 19 %}{% set tagSize = "xl" %}{% endif %}
+                <a class="tag-cloud__item tag-cloud__item--{{ tagSize }}" href="{{ tag.link }}">{{ tag.name }}<span class="tag-cloud__count">{{ tag.count }}</span></a>
             {% endfor %}
         </div>
     {% else %}
-        <p class="page-empty">暂无标签。</p>
+        <p class="page-empty">暂无标签</p>
     {% endif %}
 </section>
 {% endblock %}

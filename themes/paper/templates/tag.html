@@ -4,7 +4,10 @@
 
 {% block main %}
 <section class="tag-page">
-    <h1>#{{ tag.name }}</h1>
+    <header class="page-header">
+        <h1><span class="hash">#</span>{{ tag.name }}</h1>
+        <span class="count">{{ posts|length }} POSTS</span>
+    </header>
 
     {% if posts|length > 0 %}
         <ul class="tag-post-list">
@@ -23,7 +26,7 @@
             {% endfor %}
         </ul>
     {% else %}
-        <p class="page-empty">此标签下暂无文章。</p>
+        <p class="page-empty">此标签下暂无文章</p>
     {% endif %}
 </section>
 {% endblock %}
