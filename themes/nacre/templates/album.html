@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}{{ theme_config.albumPageTitle|default:"相册" }} - {{ config.siteName }}{% endblock %}
+{% block canonical %}{{ config.domain }}/album/{% endblock %}
+
+{% block content %}
+<section class="content">
+  <div class="content-header d-flex align-items-center">
+    <div class="container">
+      <div class="d-flex align-items-center animate__animated animate__fadeIn">
+        <div class="header-title flex-fill"><h1 class="title-line">{{ theme_config.albumPageTitle|default:"相册" }}</h1></div>
+      </div>
+    </div>
+  </div>
+  <div class="archive">
+    <div class="container">
+      <div class="mt-5 mb-3">
+        <div class="album mb-3"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if theme_config.memosApiUrl %}
+<script>
+  var albumDom = document.querySelector(".album");
+  var skeleton = '<div class="el-loading"><div class="el-skeleton mb-3"></div><div class="el-skeleton mb-3"></div><div class="el-skeleton width-50 mb-3"></div></div>';
+  albumDom.innerHTML = skeleton;
+  document.addEventListener("DOMContentLoaded", function () { if (window.memoAlbum) memoAlbum(); });
+  function memoAlbum() {
+    var fetchUrl = "{{ theme_config.memosApiUrl }}/api/v1/memo?creatorId={{ theme_config.memosCreatorId|default:"1" }}&tag={{ theme_config.albumMemoTag|default:"摄影" }}";
+    fetch(fetchUrl).then(function (r) { return r.json(); }).then(function (list) {
+      albumDom.innerHTML = "";
+      var html = '<div class="resource-wrapper mb-3"><div class="images-wrapper images-scale">';
+      var re = /!\[.*?\]\((.*?)\)/g;
+      for (var i = 0; i < list.length; i++) {
+        var m, content = list[i].content;
+        while ((m = re.exec(content)) !== null) {
+          html += '<div class="album-item memo-resource width-100 animate__animated"><img class="lozad" src="/media/images/loading.svg" data-src="' + m[1] + '"></div>';
+        }
+      }
+      html += '</div></div>';
+      albumDom.insertAdjacentHTML("beforeend", html);
+      if (window.lozad) lozad(".lozad").observe();
+    });
+  }
+</script>
+{% endif %}
+{% endblock %}

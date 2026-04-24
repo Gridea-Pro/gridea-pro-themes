@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}{{ theme_config.linksPageTitle|default:"友链" }} - {{ config.siteName }}{% endblock %}
+{% block canonical %}{{ config.domain }}/links/{% endblock %}
+
+{% block content %}
+<section class="content">
+  <div class="content-header d-flex align-items-center">
+    <div class="container">
+      <div class="d-flex align-items-center animate__animated animate__fadeIn">
+        <div class="header-title flex-fill"><h1 class="title-line">{{ theme_config.linksPageTitle|default:"友链" }}</h1></div>
+      </div>
+    </div>
+  </div>
+  <div class="archive">
+    <div class="container">
+      {% if links|length > 0 %}
+      <div class="friends-static mt-5 animate__animated">
+        {% if theme_config.linksFriendsTitle %}<h2 class="title-line text-md mb-4">{{ theme_config.linksFriendsTitle }}</h2>{% endif %}
+        <div class="row">
+          {% for link in links %}
+          <div class="col-6 col-lg-4 mb-3">
+            <div class="cf-friends d-flex">
+              {% if link.avatar %}<img class="cf-avatar col-2 flex-fill mr-2" src="{{ link.avatar }}" alt="{{ link.siteName }}">{% endif %}
+              <div class="cf-inner d-flex flex-column">
+                <a class="cf-friends-link flex-fill" href="{{ link.siteLink }}" target="_blank" rel="noopener">{{ link.siteName }}</a>
+                {% if link.description %}<span class="cf-sub mt-1 text-xs">{{ link.description }}</span>{% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      {% if theme_config.friendCircleApi %}
+      <div class="mt-5 mb-3">
+        {% if theme_config.linksFcircleTitle %}<h2 class="title-line text-md mb-4">{{ theme_config.linksFcircleTitle }}</h2>{% endif %}
+        <div class="links row"></div>
+      </div>
+      <script>
+        (function () {
+          var linksDom = document.querySelector(".links");
+          if (!linksDom) return;
+          var skeleton = '<div class="el-loading col-12"><div class="el-skeleton mb-3"></div><div class="el-skeleton mb-3"></div><div class="el-skeleton width-50 mb-3"></div></div>';
+          linksDom.innerHTML = skeleton;
+          var api = "{{ theme_config.friendCircleApi }}";
+          var pageSize = 8;
+          var page = 1;
+          var cached = null;
+          var loadMore = document.createElement("div");
+          loadMore.className = "load d-flex justify-content-center";
+          loadMore.innerHTML = '<button class="load-btn button-load flex-fill d-none mb-3 p-3">{{ theme_config.loadMoreText|default:"加载更多" }}</button>';
+          linksDom.insertAdjacentElement("afterend", loadMore);
+          var loadBtn = loadMore.querySelector("button.button-load");
+          function renderPage(data) {
+            var start = (page - 1) * pageSize;
+            var slice = data.slice(start, start + pageSize);
+            var html = "";
+            for (var i = 0; i < slice.length; i++) {
+              var it = slice[i];
+              var avatar = it.avatar || "";
+              var author = it.author || "";
+              var title = it.title || "";
+              var link = it.link || "#";
+              var created = it.created || "";
+              html += '<div class="col-12 animate__animated mb-3"><div class="card-item flex-fill p-3"><div class="item-header d-flex mb-3"><div class="item-avatar mr-3" style="background-image:url(' + avatar + ')"></div><div class="item-sub"><div class="item-creator">' + author + '</div></div></div><div class="item-content d-flex flex-fill flex-column"><div class="item-inner flex-fill my-2"><a href="' + link + '" target="_blank">' + title + '</a></div><div class="item-footer d-flex mt-2"><div class="item-time item-tag d-flex align-items-center px-2 text-xs">' + created + '</div></div></div></div></div>';
+            }
+            linksDom.insertAdjacentHTML("beforeend", html);
+            var total = Math.ceil(data.length / pageSize);
+            if (page >= total) loadBtn.classList.add("d-none");
+            else loadBtn.classList.remove("d-none");
+            if (window.Lately) window.Lately.init({ target: ".item-time" });
+          }
+          loadBtn.addEventListener("click", function () {
+            if (!cached) return;
+            page++;
+            renderPage(cached);
+          });
+          fetch(api).then(function (r) { return r.json(); }).then(function (data) {
+            linksDom.innerHTML = "";
+            var list = (data && data.article_data) || data || [];
+            cached = list;
+            renderPage(list);
+          }).catch(function () {
+            linksDom.innerHTML = '<p class="col-12 text-xs">{{ theme_config.linksEmptyText|default:"暂时无法获取朋友圈数据" }}</p>';
+          });
+        })();
+      </script>
+      {% endif %}
+
+      {% if links|length == 0 and not theme_config.friendCircleApi %}
+      <div class="mt-5 mb-3 text-xs">
+        <p style="padding:2rem 1rem">{{ theme_config.linksEmptyText|default:"尚未配置友链或朋友圈数据源" }}</p>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}

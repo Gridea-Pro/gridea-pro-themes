@@ -1,0 +1,49 @@
+/* nacre theme overrides — 覆盖原版 style.css 的少量布局补丁 */
+
+/* ============ Sticky footer（所有页面） ============
+   原理：body 和 .layout 都是 flex column，高度撑满视窗；
+   footer 用 margin-top:auto 自动占掉剩余空间，把自己推到底部。
+   其他元素不用改，更稳。 */
+html, body { min-height: 100vh; }
+body { margin: 0; display: flex; flex-direction: column; }
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  flex: 1 1 auto;
+}
+.layout > .footer { margin-top: auto; }
+
+/* 内容与 footer 之间留呼吸空间 */
+.footer .footer-content { padding: 2rem 0; }
+@media (max-width: 768px) {
+  .footer .footer-content { padding: 1.25rem 0; }
+}
+
+/* ============ 导航 Logo：头像 + 站点名 ============
+   config 里没配 logo 图但配了 avatar 时，渲染"圆头像 + 站点名"
+   组合。原版 .logo 的 max-width:100px 会把组合挤变形，这里放宽。 */
+.logo--with-avatar {
+  max-width: none !important;
+  gap: 0.5rem;
+}
+.logo-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+/* ============ Banner 高度固定 ============
+   原版 .daily-inner 用 ::after padding-bottom:100% 撑 1:1 正方形，
+   在 col-md-6 下得到半宽的正方形（高度 ≈ container/2）。
+   当没配 featured 块时 Swiper 撑全宽（col-12），此时同样的 1:1 会
+   让高度翻倍（= container）。这里锁定成 2:1，使全宽时高度仍等于
+   "半宽正方形"的高度。 */
+.banner-row > .col-12:only-child .daily-inner {
+  aspect-ratio: 2 / 1;
+}
+.banner-row > .col-12:only-child .daily-inner::after {
+  display: none;
+}

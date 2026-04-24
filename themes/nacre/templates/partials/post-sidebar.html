@@ -1,0 +1,21 @@
+<div class="post-sidebar">
+  {% if post %}{% if post.tags|length > 0 %}
+  <div class="post-recent sidebar">
+    <div class="sidebar-title">{{ theme_config.postTagsTitle|default:"文章标签" }}</div>
+    <div class="sidebar-content">
+      <div class="sidebar-tags d-md-flex">
+        {% for tag in post.tags %}<a href="{{ tag.link }}" class="10">{{ tag.name }}</a>{% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endif %}{% endif %}
+
+  <div class="tagCloud-tags sidebar">
+    <div class="sidebar-title">{{ theme_config.tagCloudTitle|default:"标签云集" }}</div>
+    <div class="sidebar-content">
+      <div class="sidebar-tags d-md-flex">
+        {% for tag in tags %}<a href="{{ tag.link }}" class="{{ tag.count }}">{{ tag.name }}</a>{% endfor %}
+      </div>
+    </div>
+  </div>
+</div>

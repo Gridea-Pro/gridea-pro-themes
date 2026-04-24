@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}{{ theme_config.blogPageTitle|default:"文章" }} - {{ config.siteName }}{% endblock %}
+{% block canonical %}{{ config.domain }}/blog/{% endblock %}
+
+{% block content %}
+<section class="content index animate__animated animate__fadeIn">
+  <div class="content-header d-flex align-items-center">
+    <div class="container">
+      <div class="d-flex align-items-center animate__animated animate__fadeIn">
+        <div class="header-title flex-fill"><h1 class="title-line">{{ theme_config.blogPageTitle|default:"文章" }}</h1></div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="article-list col-12 mt-5">
+        {% for post in posts %}{% if not post.hideInList %}{% include "partials/post-card.html" %}{% endif %}{% endfor %}
+      </div>
+      <div class="pagination col-12">
+        <div class="pagination-buttons mb-5">
+          <div class="pagination-menu d-flex">
+            {% if pagination.prev %}<span class="page-item d-flex"><a href="{{ pagination.prev }}" rel="prev" class="page-link page-prev">{{ theme_config.paginationPrev|default:"上一页" }}</a></span>{% endif %}
+            {% if pagination.next %}<span class="page-item d-flex"><a href="{{ pagination.next }}" rel="next" class="page-link page-next">{{ theme_config.paginationNext|default:"下一页" }}</a></span>{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,24 @@
+<meta name="generator" content="Gridea Pro">
+<title>{% block title %}{{ config.siteName }}{% if config.siteDescription %} - {{ config.siteDescription }}{% endif %}{% endblock %}</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta name="description" content="{% block description %}{{ config.siteDescription }}{% endblock %}">
+<meta name="keywords" content="{% block keywords %}{% endblock %}">
+<meta name="referrer" content="no-referrer">
+<link rel="canonical" href="{% block canonical %}{{ config.domain }}/{% endblock %}">
+<link rel="stylesheet" href="/styles/grid.css">
+<link rel="stylesheet" href="/styles/style.css">
+<link rel="stylesheet" href="/styles/iconfont.css">
+<link rel="stylesheet" href="/styles/animate.min.css">
+<link rel="stylesheet" href="/styles/overrides.css">
+{% if config.favicon %}<link rel="shortcut icon" type="image/x-icon" href="{{ config.favicon }}">{% endif %}
+{% block og_meta %}
+<meta property="og:title" content="{{ config.siteName }}">
+<meta property="og:description" content="{{ config.siteDescription }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ config.domain }}/">
+{% endblock %}
+<link rel="alternate" type="application/rss+xml" href="/atom.xml" title="{{ config.siteName }}">
+<link rel="alternate" type="application/json" href="/index.json" title="{{ config.siteName }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+{% if theme_config.customCSS %}<style>{{ theme_config.customCSS|safe }}</style>{% endif %}

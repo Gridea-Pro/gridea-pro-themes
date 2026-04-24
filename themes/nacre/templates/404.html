@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}404 - {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<section class="content">
+  <div class="container">
+    <div class="error-404" style="text-align:center;padding:5rem 0">
+      <h1 style="font-size:6rem;line-height:1">404</h1>
+      <p class="text-md mt-3">{{ theme_config.notFoundText|default:"页面未找到" }}</p>
+      <a href="/" class="button outline mt-3 px-3 py-2">{{ theme_config.notFoundBack|default:"返回首页" }}</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

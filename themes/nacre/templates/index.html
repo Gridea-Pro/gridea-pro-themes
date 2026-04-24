@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% set hasFeatured = theme_config.featured1Image or theme_config.featured2Image or theme_config.featured3Image or theme_config.featured4Image %}
+<div class="banner d-sm-block">
+  <script type="text/javascript" src="/scripts/swiper.min.js"></script>
+  <div class="container">
+    <div class="banner-row row mt-5">
+      <div class="col-12{% if hasFeatured %} col-md-6{% endif %} animate__animated">
+        <div class="swiper-container mb-3">
+          <div class="swiper-wrapper">
+            {% for post in posts %}{% if loop.index <= 4 and post.feature %}
+            <div class="swiper-slide">
+              <div class="daily-inner">
+                <a href="{{ post.link }}" class="daily-album" style="background-image:url({{ post.feature }})">
+                  <div class="daily-hover"></div>
+                  <div class="daily-content px-4">
+                    <div class="title mb-3">{{ post.title }}</div>
+                    <div class="data">{% if post.dateFormat %}{{ post.dateFormat }}{% else %}{{ post.date }}{% endif %}</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+            {% endif %}{% endfor %}
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+      {% if hasFeatured %}
+      <div class="col-12 col-md-6 animate__animated">
+        <div class="banner-wrapper mb-3">
+          <div class="images-wrapper">
+            {% if theme_config.featured1Image %}<a href="{{ theme_config.featured1Link|default:"#" }}" class="banner-resource"><img class="banner-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" src="{{ theme_config.featured1Image }}" alt="{{ theme_config.featured1Name|default:"分享" }}" referrerpolicy="no-referrer" loading="lazy"><div class="banner-hover"></div><div class="banner-title px-3"><span class="title text-sm weight-600">{{ theme_config.featured1Name|default:"分享" }}</span></div></a>{% endif %}
+            {% if theme_config.featured2Image %}<a href="{{ theme_config.featured2Link|default:"#" }}" class="banner-resource"><img class="banner-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" src="{{ theme_config.featured2Image }}" alt="{{ theme_config.featured2Name|default:"好物" }}" referrerpolicy="no-referrer" loading="lazy"><div class="banner-hover"></div><div class="banner-title px-3"><span class="title text-sm weight-600">{{ theme_config.featured2Name|default:"好物" }}</span></div></a>{% endif %}
+            {% if theme_config.featured3Image %}<a href="{{ theme_config.featured3Link|default:"#" }}" class="banner-resource"><img class="banner-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" src="{{ theme_config.featured3Image }}" alt="{{ theme_config.featured3Name|default:"折腾" }}" referrerpolicy="no-referrer" loading="lazy"><div class="banner-hover"></div><div class="banner-title px-3"><span class="title text-sm weight-600">{{ theme_config.featured3Name|default:"折腾" }}</span></div></a>{% endif %}
+            {% if theme_config.featured4Image %}<a href="{{ theme_config.featured4Link|default:"#" }}" class="banner-resource"><img class="banner-img" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover" src="{{ theme_config.featured4Image }}" alt="{{ theme_config.featured4Name|default:"记录" }}" referrerpolicy="no-referrer" loading="lazy"><div class="banner-hover"></div><div class="banner-title px-3"><span class="title text-sm weight-600">{{ theme_config.featured4Name|default:"记录" }}</span></div></a>{% endif %}
+          </div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window.Lately) { try { window.Lately.init({ target: ".data" }); } catch (e) {} }
+      if (window.Swiper) {
+        new Swiper(".swiper-container", {
+          pagination: ".swiper-pagination",
+          slidesPerView: 1,
+          paginationClickable: true,
+          spaceBetween: 30,
+          loop: {% if theme_config.swiperLoop == false %}false{% else %}true{% endif %},
+          centeredSlides: true,
+          autoplay: {{ theme_config.swiperAutoplaySec|default:"12" }} * 1000,
+          autoplayDisableOnInteraction: false
+        });
+      }
+    });
+  </script>
+</div>
+
+<section class="index animate__animated animate__fadeIn">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="d-flex align-items-center mt-3">
+          <div class="tab-title tab-articles title-line text-md mr-3" data-target="articles">{{ theme_config.tabLatest|default:"最新" }}</div>
+          {% if theme_config.memosApiUrl %}<div class="tab-title tab-memo text-md mr-3" data-target="memo">{{ theme_config.tabMemo|default:"动态" }}</div>{% endif %}
+          {% if theme_config.memosApiUrl %}<div class="tab-title tab-album text-md" data-target="album">{{ theme_config.tabAlbum|default:"摄影" }}</div>{% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="tab-main" id="articles">
+          <div class="row">
+            <div class="article-list col-12 mt-5">
+              {% for post in posts %}{% if not post.hideInList %}{% include "partials/post-card.html" %}{% endif %}{% endfor %}
+            </div>
+            <div class="pagination col-12">
+              <div class="pagination-buttons mb-5">
+                <div class="pagination-menu d-flex">
+                  {% if pagination.prev %}<span class="page-item d-flex"><a href="{{ pagination.prev }}" rel="prev" class="page-link page-prev">{{ theme_config.paginationPrev|default:"上一页" }}</a></span>{% endif %}
+                  {% if pagination.next %}<span class="page-item d-flex"><a href="{{ pagination.next }}" rel="next" class="page-link page-next">{{ theme_config.paginationNext|default:"下一页" }}</a></span>{% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% if theme_config.memosApiUrl %}
+        <div class="tab-main d-none" id="memo">
+          <div class="row" id="memos">
+            <div class="col-12 mt-5 mb-3">
+              <div class="memos"></div>
+            </div>
+          </div>
+          <script type="text/javascript">var memosData={memos:"{{ theme_config.memosApiUrl }}",limit:"8",creatorId:"{{ theme_config.memosCreatorId|default:"1" }}",dom:".memos",loadUrl:"/media/images/loading.svg"};</script>
+          <script type="text/javascript" src="/scripts/marked.min.js"></script>
+          <script type="text/javascript" src="/scripts/memos-index.js"></script>
+        </div>
+
+        <div class="tab-main d-none" id="album">
+          <div class="row">
+            <div class="col-12 mt-5 mb-3">
+              <div class="album"></div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var tabs = document.querySelectorAll(".tab-title");
+    var panels = document.querySelectorAll(".tab-main");
+    tabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        tabs.forEach(function (t) { t.classList.remove("title-line"); });
+        panels.forEach(function (p) { p.classList.add("d-none"); });
+        tab.classList.add("title-line");
+        var target = tab.getAttribute("data-target");
+        var panel = document.getElementById(target);
+        if (panel) panel.classList.remove("d-none");
+      });
+    });
+  });
+</script>
+{% endblock %}

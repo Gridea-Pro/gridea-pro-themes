@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}{{ theme_config.goodsPageTitle|default:"好物" }} - {{ config.siteName }}{% endblock %}
+{% block canonical %}{{ config.domain }}/goods/{% endblock %}
+
+{% block content %}
+<section class="content">
+  <div class="content-header d-flex align-items-center">
+    <div class="container">
+      <div class="d-flex align-items-center animate__animated animate__fadeIn">
+        <div class="header-title flex-fill"><h1 class="title-line">{{ theme_config.goodsPageTitle|default:"好物" }}</h1></div>
+      </div>
+    </div>
+  </div>
+  <div class="archive">
+    <div class="container">
+      <div id="goods" class="d-flex flex-column animate__animated">
+        <div class="goods row flex-fill mt-5"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if theme_config.memosApiUrl %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () { memoGoods(); });
+  function memoGoods() {
+    var url = "{{ theme_config.memosApiUrl }}/api/v1/memo?creatorId={{ theme_config.memosCreatorId|default:"1" }}&tag={{ theme_config.goodsMemoTag|default:"好物" }}";
+    fetch(url).then(function (r) { return r.json(); }).then(function (list) {
+      var html = "";
+      for (var i = 0; i < list.length; i++) {
+        var lines = list[i].content.replace("#{{ theme_config.goodsMemoTag|default:"好物" }} \n", "").split(/\n/);
+        var imgMeta = (lines[0] || "").replace(/!\[(.*?)\]\(.*?\)/g, "$1");
+        var imgUrl = (lines[0] || "").replace(/!\[.*?\]\((.*?)\)/g, "$1");
+        var brand = (imgMeta.split(",")[0] || "");
+        var title = (imgMeta.split(",")[1] || "");
+        var link = (lines[1] || "").replace(/\[.*?\]\((.*?)\)/g, "$1");
+        var linkText = (lines[1] || "").replace(/\[(.*?)\]\(.*?\)/g, "$1");
+        html += '<div class="col-12 col-md-6 col-lg-4 mb-3 animate__animated"><div class="card-item"><div class="item-album d-flex mb-2"><img class="lozad width-50" data-src="' + imgUrl + '"></div><div class="item-content p-3"><div class="item-title"><h3><a href="' + link + '">' + title + '</a></h3></div><div class="item-brand text-xs c-sub mb-1">' + brand + '</div><div class="item-note mt-2">' + linkText + '</div></div></div></div>';
+      }
+      document.querySelector(".goods").innerHTML = html;
+      if (window.lozad) lozad(".lozad").observe();
+    });
+  }
+</script>
+{% endif %}
+{% endblock %}

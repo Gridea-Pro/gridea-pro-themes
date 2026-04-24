@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ current_tag.name }} - {{ config.siteName }}{% endblock %}
+{% block canonical %}{{ config.domain }}{{ current_tag.link }}{% endblock %}
+
+{% block content %}
+<section class="content">
+  <div class="content-header d-flex align-items-center">
+    <div class="container">
+      <div class="d-flex align-items-center animate__animated animate__fadeIn">
+        <div class="header-title flex-fill"><h1 class="title-line">{{ current_tag.name }}</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="archive">
+    <div class="content-inner container">
+      <div class="row">
+        <div class="col-12 mt-5 animate__animated">
+          {% for post in posts %}{% if not post.hideInList %}{% include "partials/article-item.html" %}{% endif %}{% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

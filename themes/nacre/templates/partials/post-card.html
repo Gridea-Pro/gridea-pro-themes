@@ -1,0 +1,24 @@
+<article class="article-item row animate__animated">
+  <div class="article-content my-2 col-9">
+    <div class="article-body">
+      <div class="article-title"><h2><a href="{{ post.link }}">{{ post.title }}</a></h2></div>
+      <div class="article-inner d-none d-sm-none d-md-block">{{ post.content|excerpt:140|striptags }}</div>
+    </div>
+    <div class="article-footer d-flex">
+      <div class="article-metadata d-flex text-xs">
+        {% if post.tags|length > 0 %}
+        <span class="article-tags">
+          {% for tag in post.tags %}<a href="{{ tag.link }}">{{ tag.name }}</a>{% if not loop.last %}<span class="px-1">·</span>{% endif %}{% endfor %}
+        </span>
+        <i class="separator px-2"></i>
+        {% endif %}
+        <span class="date pl-2">{% if post.dateFormat %}{{ post.dateFormat }}{% else %}{{ post.date }}{% endif %}</span>
+      </div>
+    </div>
+  </div>
+  {% if post.feature %}
+  <div class="article-image col-3">
+    <div class="feature"><a href="{{ post.link }}" class="feature-link" style="background-image:url({{ post.feature }})"></a></div>
+  </div>
+  {% endif %}
+</article>

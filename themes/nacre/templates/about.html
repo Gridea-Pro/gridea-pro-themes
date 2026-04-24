@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{% if post %}{{ post.title }}{% else %}{{ theme_config.aboutPageTitle|default:"关于" }}{% endif %} - {{ config.siteName }}{% endblock %}
+{% block canonical %}{{ config.domain }}/about/{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="post row animate__animated animate__fadeIn">
+    <div class="col-12 col-sm-12 col-md-9">
+      <div class="post-main">
+        <div class="post-header">
+          <h1 class="post-title">{% if post %}{{ post.title }}{% else %}{{ theme_config.aboutPageTitle|default:"关于" }}{% endif %}</h1>
+          {% if post %}
+          <div class="post-meta mt-3">
+            <span class="date item">{% if post.dateFormat %}{{ post.dateFormat }}{% else %}{{ post.date }}{% endif %}</span>
+            <span class="article-readtime item"><span>{% if post.stats %}{{ post.stats.words }}{% else %}{{ post.content|word_count }}{% endif %} 字</span></span>
+          </div>
+          {% endif %}
+        </div>
+        <div class="post-content">
+          {% if theme_config.aboutAvatar or config.avatar %}
+          <div class="about-avatar-wrap" style="text-align:center;margin:1.5rem 0 2rem">
+            <img class="about-avatar" src="{% if theme_config.aboutAvatar %}{{ theme_config.aboutAvatar }}{% else %}{{ config.avatar }}{% endif %}" alt="{{ config.siteName }}" style="width:96px;height:96px;border-radius:50%;object-fit:cover;box-shadow:0 2px 12px rgba(0,0,0,0.15)">
+          </div>
+          {% endif %}
+          <div class="post-inner">
+            {% if post %}{{ post.content|safe }}{% elif theme_config.aboutContent %}{{ theme_config.aboutContent|safe }}{% else %}<p>{{ config.siteDescription }}</p>{% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-none d-md-flex col-md-3">
+      {% include "partials/post-sidebar.html" %}
+    </div>
+  </div>
+</div>
+{% endblock %}
