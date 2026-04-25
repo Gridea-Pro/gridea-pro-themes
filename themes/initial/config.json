@@ -1,0 +1,291 @@
+{
+  "name": "initial",
+  "version": "1.0.0",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "author": "Eric (port) / JIElive (original)",
+  "description": "Initial - 简约而不简单。从 Typecho 主题 jielive/initial 移植到 Gridea Pro 的极简博客主题，专注于文字。",
+  "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
+  "preview": "/media/preview.png",
+  "customConfig": [
+    {
+      "name": "siteSubTitle",
+      "label": "站点副标题",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "首页 <title> 末尾追加的副标题"
+    },
+    {
+      "name": "titleForm",
+      "label": "标题展示形式",
+      "group": "基础",
+      "type": "select",
+      "value": "text",
+      "options": [
+        {"value": "text", "label": "仅文字"},
+        {"value": "logo", "label": "仅 Logo"},
+        {"value": "all", "label": "Logo + 文字"}
+      ],
+      "note": "顶栏标题的展示方式（Logo 取站点 logo / 头像）"
+    },
+    {
+      "name": "headFixed",
+      "label": "头部固定",
+      "group": "基础",
+      "type": "toggle",
+      "value": false,
+      "note": "顶部导航栏是否随滚动固定显示"
+    },
+    {
+      "name": "oneColumn",
+      "label": "单栏模式",
+      "group": "基础",
+      "type": "toggle",
+      "value": false,
+      "note": "关闭侧边栏，正文居中（750px 宽）"
+    },
+    {
+      "name": "favicon",
+      "label": "站点 Favicon",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "网站标签页小图标地址（可留空使用默认）"
+    },
+    {
+      "name": "themeMode",
+      "label": "深浅模式",
+      "group": "外观",
+      "type": "select",
+      "value": "auto",
+      "options": [
+        {"value": "auto", "label": "跟随系统"},
+        {"value": "light", "label": "始终亮色"},
+        {"value": "dark", "label": "始终暗色"},
+        {"value": "user", "label": "由读者切换（默认亮色）"}
+      ],
+      "note": "选择「由读者切换」会在右下角显示太阳/月亮按钮"
+    },
+    {
+      "name": "showThemeToggle",
+      "label": "显示明暗切换按钮",
+      "group": "外观",
+      "type": "toggle",
+      "value": true,
+      "note": "在右下角小工具中加入太阳/月亮切换按钮"
+    },
+    {
+      "name": "primaryLinkColor",
+      "label": "正文链接色",
+      "group": "外观",
+      "type": "color",
+      "value": "#3354aa",
+      "note": "文章正文 / 评论正文里的 a 标签颜色"
+    },
+    {
+      "name": "containerWidth",
+      "label": "容器最大宽度",
+      "group": "外观",
+      "type": "input",
+      "value": "1060",
+      "note": "页面外层容器最大宽度（像素，不带单位）"
+    },
+    {
+      "name": "showBreadcrumbs",
+      "label": "显示面包屑",
+      "group": "外观",
+      "type": "toggle",
+      "value": true,
+      "note": "归档/分类/标签页等是否显示面包屑导航"
+    },
+    {
+      "name": "indexShowFeature",
+      "label": "首页显示缩略图",
+      "group": "首页",
+      "type": "toggle",
+      "value": true,
+      "note": "首页文章卡片显示 post.feature（无则使用默认封面）"
+    },
+    {
+      "name": "indexExcerptLength",
+      "label": "首页摘要字数",
+      "group": "首页",
+      "type": "input",
+      "value": "200",
+      "note": "首页 / 博客列表页文章摘要的字数上限"
+    },
+    {
+      "name": "showReadMore",
+      "label": "显示「阅读全文」",
+      "group": "首页",
+      "type": "toggle",
+      "value": true,
+      "note": "文章卡片底部显示居中的「- 阅读全文 -」"
+    },
+    {
+      "name": "sidebarWidgets",
+      "label": "侧栏 widgets",
+      "group": "侧栏",
+      "type": "checkbox",
+      "value": ["recent", "categories", "tags", "archives", "links", "rss"],
+      "options": [
+        {"value": "recent", "label": "最新文章"},
+        {"value": "categories", "label": "分类"},
+        {"value": "tags", "label": "标签"},
+        {"value": "archives", "label": "归档"},
+        {"value": "links", "label": "友链"},
+        {"value": "rss", "label": "RSS / 其它"}
+      ],
+      "note": "侧边栏要显示哪些组件，按勾选顺序未生效——固定按上方顺序"
+    },
+    {
+      "name": "sidebarRecentCount",
+      "label": "最新文章条数",
+      "group": "侧栏",
+      "type": "input",
+      "value": "8",
+      "note": "侧栏「最新文章」widget 条数"
+    },
+    {
+      "name": "sidebarTagsLimit",
+      "label": "标签云上限",
+      "group": "侧栏",
+      "type": "input",
+      "value": "30",
+      "note": "侧栏标签云最多显示的标签数"
+    },
+    {
+      "name": "sidebarFixed",
+      "label": "侧栏固定",
+      "group": "侧栏",
+      "type": "toggle",
+      "value": false,
+      "note": "侧栏滚动到顶部后是否粘在屏幕上"
+    },
+    {
+      "name": "showCornerTop",
+      "label": "返回顶部按钮",
+      "group": "增强",
+      "type": "toggle",
+      "value": true,
+      "note": "右下角浮动按钮：返回顶部"
+    },
+    {
+      "name": "showCornerToc",
+      "label": "目录浮动按钮",
+      "group": "增强",
+      "type": "toggle",
+      "value": true,
+      "note": "文章页右下角浮动按钮：切换目录显示"
+    },
+    {
+      "name": "viewsScript",
+      "label": "浏览数脚本",
+      "group": "增强",
+      "type": "select",
+      "value": "none",
+      "options": [
+        {"value": "none", "label": "不显示"},
+        {"value": "busuanzi", "label": "不蒜子"}
+      ],
+      "note": "页面浏览数统计（不蒜子需站点已开启）"
+    },
+    {
+      "name": "showLicense",
+      "label": "文章末尾许可信息",
+      "group": "增强",
+      "type": "toggle",
+      "value": true,
+      "note": "文章页底部显示「本作品采用 CC BY-SA 4.0 许可」"
+    },
+    {
+      "name": "licenseText",
+      "label": "自定义许可文案",
+      "group": "增强",
+      "type": "textarea",
+      "value": "",
+      "note": "留空使用默认 CC BY-SA 4.0 文案；支持 HTML"
+    },
+    {
+      "name": "memosTitle",
+      "label": "闪念页标题",
+      "group": "闪念",
+      "type": "input",
+      "value": "轻语",
+      "note": "memos 页面的大标题"
+    },
+    {
+      "name": "memosShowHeatmap",
+      "label": "显示热力图",
+      "group": "闪念",
+      "type": "toggle",
+      "value": true,
+      "note": "闪念列表上方展示 53×7 发布热力图"
+    },
+    {
+      "name": "footerSlogan",
+      "label": "页脚标语",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "显示在「© 站点名」之前的一句话（留空不显示）"
+    },
+    {
+      "name": "footerICP",
+      "label": "ICP 备案号",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "中国大陆备案号（留空不显示）"
+    },
+    {
+      "name": "footerPolice",
+      "label": "公安备案号",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "公网安备号（留空不显示）"
+    },
+    {
+      "name": "footerShowPower",
+      "label": "显示 Powered by",
+      "group": "页脚",
+      "type": "toggle",
+      "value": true,
+      "note": "页脚显示「Powered by Gridea Pro & Initial」"
+    },
+    {
+      "name": "footerExtra",
+      "label": "页脚附加 HTML",
+      "group": "页脚",
+      "type": "textarea",
+      "value": "",
+      "note": "可注入统计代码 / 其它 HTML"
+    },
+    {
+      "name": "customCSS",
+      "label": "自定义 CSS",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到所有页面 <head> 末尾，优先级最高"
+    },
+    {
+      "name": "customHeadHtml",
+      "label": "自定义 head HTML",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "注入到 <head> 末尾（统计代码 / meta / link 等）"
+    },
+    {
+      "name": "customBodyEndHtml",
+      "label": "自定义 body 末尾 HTML",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "注入到 </body> 之前"
+    }
+  ]
+}

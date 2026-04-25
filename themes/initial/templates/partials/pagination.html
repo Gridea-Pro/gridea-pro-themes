@@ -1,0 +1,18 @@
+{# 兼容两种 pagination shape：
+   - 新版（Gridea Pro runtime）：pagination.prevURL / nextURL / hasPrev / hasNext / currentPage / totalPages
+   - 旧版别名（runtime 也提供 + mock 测试用）：pagination.prev / next（直接是 URL 字符串）
+#}
+{% if pagination and (pagination.prev or pagination.next) %}
+<ol class="page-navigator">
+{% if pagination.prev %}
+<li><a href="{{ pagination.prev }}" rel="prev">上一页</a></li>
+{% else %}
+<li class="disabled"><span>上一页</span></li>
+{% endif %}
+{% if pagination.next %}
+<li><a href="{{ pagination.next }}" rel="next">下一页</a></li>
+{% else %}
+<li class="disabled"><span>下一页</span></li>
+{% endif %}
+</ol>
+{% endif %}

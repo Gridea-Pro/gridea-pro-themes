@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}博客 - {{ config.siteName }}{% endblock %}
+{% block og_title %}博客 - {{ config.siteName }}{% endblock %}
+
+{% block content %}
+{% set breadcrumb_items = [{"label": "博客"}] %}
+{% include "partials/breadcrumbs.html" %}
+
+{% if posts and posts|length > 0 %}
+{% for post in posts %}
+{% if not post.hideInList %}
+{% include "partials/post-card.html" %}
+{% endif %}
+{% endfor %}
+{% else %}
+<article class="post"><h2 class="post-title">没有找到内容</h2></article>
+{% endif %}
+
+{% include "partials/pagination.html" %}
+{% endblock %}

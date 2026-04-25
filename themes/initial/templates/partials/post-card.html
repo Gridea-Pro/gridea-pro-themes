@@ -1,0 +1,27 @@
+<article class="post">
+<h2 class="post-title"><a href="{{ post.link }}">{% if post.isTop %}[置顶] {% endif %}{{ post.title }}</a></h2>
+<ul class="post-meta">
+<li>{{ post.dateFormat }}</li>
+{% if post.categories and post.categories|length > 0 %}
+<li>{% for cat in post.categories %}<a href="{{ cat.link }}">{{ cat.name }}</a>{% if not loop.last %},{% endif %}{% endfor %}</li>
+{% endif %}
+{% if theme_config.viewsScript == "busuanzi" %}
+<li><span id="busuanzi_container_page_pv_{{ post.id }}">阅读 <span class="busuanzi_value_page_pv"></span> 次</span></li>
+{% endif %}
+</ul>
+<div class="post-content">
+{% if theme_config.indexShowFeature %}
+{% if post.feature %}
+<p class="thumb"><a href="{{ post.link }}"><img src="{{ post.feature }}" alt="{{ post.title }}" loading="lazy"></a></p>
+{% endif %}
+{% endif %}
+{% if post.abstract %}
+<p>{{ post.abstract|striptags|truncatechars:200 }}</p>
+{% else %}
+<p>{{ post.content|striptags|truncatechars:200 }}</p>
+{% endif %}
+{% if theme_config.showReadMore %}
+<p class="more"><a href="{{ post.link }}" title="{{ post.title }}">- 阅读全文 -</a></p>
+{% endif %}
+</div>
+</article>

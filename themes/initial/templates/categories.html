@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}分类 - {{ config.siteName }}{% endblock %}
+{% block og_title %}分类 - {{ config.siteName }}{% endblock %}
+
+{% block content %}
+{% set breadcrumb_items = [{"label": "分类"}] %}
+{% include "partials/breadcrumbs.html" %}
+
+<article class="post">
+<h1 class="post-title">所有分类</h1>
+<p class="taxonomy-summary">点击下方分类卡片可进入对应分类的文章列表</p>
+
+{# 客户端从 /api/search.json 聚合分类 —— 引擎不暴露全站分类索引 #}
+<div class="taxonomy-cloud" id="categories-cloud">
+<a href="#" style="opacity:.5;pointer-events:none">加载中…</a>
+</div>
+
+<script>
+(function () {
+  fetch('/api/search.json', { credentials: 'same-origin' })
+    .then(function (r) { return r.ok ? r.json() : []; })
+    .then(function (entries) {
+      var counts = {};
+      var nameToSlug = {};
+      entries.forEach(function (e) {
+        if (Array.isArray(e.categories)) {
+          e.categories.forEach(function (c) {
+            var name = (typeof c === 'string') ? c : (c.name || '');
+            if (!name) return;
+            counts[name] = (counts[name] || 0) + 1;
+            if (typeof c === 'object' && c.slug) nameToSlug[name] = c.slug;
+          });
+        }
+      });
+      var keys = Object.keys(counts);
+      if (!keys.length) { renderEmpty(); return; }
+      keys.sort(function (a, b) { return counts[b] - counts[a]; });
+      var html = '';
+      keys.forEach(function (name) {
+        var slug = nameToSlug[name] || encodeURIComponent(name);
+        html += '<a href="/category/' + slug + '/">' + escapeHtml(name) + '<span class="count">' + counts[name] + '</span></a>';
+      });
+      document.getElementById('categories-cloud').innerHTML = html;
+    })
+    .catch(renderEmpty);
+
+  function renderEmpty() {
+    var box = document.getElementById('categories-cloud');
+    if (box) box.outerHTML = '<div class="taxonomy-empty">暂无分类。文章可在编辑器中通过 frontmatter 的 categories 字段设置。</div>';
+  }
+  function escapeHtml(s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+})();
+</script>
+</article>
+{% endblock %}

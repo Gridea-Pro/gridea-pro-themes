@@ -1,0 +1,77 @@
+{% if not theme_config.oneColumn %}
+<div id="secondary"{% if theme_config.sidebarFixed %} sidebar-fixed{% endif %}>
+
+{# 最新文章 — 用 search-index 当作数据源 #}
+{% set widgets = theme_config.sidebarWidgets %}
+{% if not widgets %}{% set widgets = ["recent","categories","tags","archives","links","rss"] %}{% endif %}
+
+{% if "recent" in widgets %}
+<section class="widget" data-widget="recent">
+<h3 class="widget-title">最新文章</h3>
+<ul class="widget-list" id="widget-recent-posts">
+<li class="loading-placeholder">加载中…</li>
+</ul>
+</section>
+{% endif %}
+
+{% if "categories" in widgets and tags|length > 0 %}
+<section class="widget" data-widget="categories">
+<h3 class="widget-title">分类</h3>
+<ul class="widget-list" id="widget-categories">
+<li class="loading-placeholder">加载中…</li>
+</ul>
+</section>
+{% endif %}
+
+{% if "tags" in widgets %}
+<section class="widget" data-widget="tags">
+<h3 class="widget-title">标签</h3>
+{% if tags and tags|length > 0 %}
+<ul class="widget-tile">
+{% for tag in tags %}
+{% if loop.index <= 30 %}
+<li><a href="{{ tag.link }}">{{ tag.name }}</a></li>
+{% endif %}
+{% endfor %}
+</ul>
+{% else %}
+<p style="color:var(--in-fg-mute);font-size:.9em;">暂无标签</p>
+{% endif %}
+</section>
+{% endif %}
+
+{% if "archives" in widgets %}
+<section class="widget" data-widget="archives">
+<h3 class="widget-title">归档</h3>
+<ul class="widget-list">
+<li><a href="{{ config.domain }}/archives/">查看全部归档 &raquo;</a></li>
+</ul>
+</section>
+{% endif %}
+
+{% if "links" in widgets and links and links|length > 0 %}
+<section class="widget" data-widget="links">
+<h3 class="widget-title">链接</h3>
+<ul class="widget-tile">
+{% for link in links %}
+{% if loop.index <= 12 %}
+<li><a href="{{ link.siteLink }}" target="_blank" rel="noopener">{{ link.siteName }}</a></li>
+{% endif %}
+{% endfor %}
+<li class="more"><a href="{{ config.domain }}/links/">查看更多...</a></li>
+</ul>
+</section>
+{% endif %}
+
+{% if "rss" in widgets %}
+<section class="widget" data-widget="rss">
+<h3 class="widget-title">其它</h3>
+<ul class="widget-list">
+<li><a href="{{ config.domain }}/atom.xml" target="_blank">订阅 RSS / Atom</a></li>
+<li><a href="#" data-search-open>站内搜索</a></li>
+</ul>
+</section>
+{% endif %}
+
+</div>{# /#secondary #}
+{% endif %}

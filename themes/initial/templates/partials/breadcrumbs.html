@@ -1,0 +1,11 @@
+{% if theme_config.showBreadcrumbs %}
+<div class="breadcrumbs">
+<a href="{{ config.domain }}/">首页</a>
+{% if breadcrumb_items %}
+{% for item in breadcrumb_items %}
+&raquo;
+{% if item.link %}<a href="{{ item.link }}">{{ item.label }}</a>{% else %}{{ item.label }}{% endif %}
+{% endfor %}
+{% endif %}
+</div>
+{% endif %}
