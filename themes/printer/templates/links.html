@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}友情链接 · {{ config.siteName }}{% endblock %}
+{% block body_class %}links{% endblock %}
+
+{% block content %}
+<h2 class="paper-title">友情链接</h2>
+<p class="paper-subtitle">这是一些值得一逛的角落</p>
+
+{% if links|length > 0 %}
+<div class="links-grid">
+    {% for link in links %}
+    <a class="link-card" href="{{ link.url }}" target="_blank" rel="noopener noreferrer">
+        <div class="link-card-avatar">
+            {% if link.avatar %}
+                <img src="{{ link.avatar }}" alt="{{ link.name }}" loading="lazy">
+            {% else %}
+                <span>{{ link.name|first|upper }}</span>
+            {% endif %}
+        </div>
+        <div class="link-card-body">
+            <div class="link-card-name">{{ link.name }}</div>
+            {% if link.description %}
+            <div class="link-card-desc">{{ link.description }}</div>
+            {% endif %}
+        </div>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="no-results">暂无友情链接。可在 Gridea Pro 后台 → 链接 中添加。</div>
+{% endif %}
+
+{% if post and post.content %}
+<div class="post-content" style="margin-top: var(--space-6);">
+    {{ post.content|safe }}
+</div>
+{% endif %}
+{% endblock %}

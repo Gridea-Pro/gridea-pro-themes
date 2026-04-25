@@ -1,0 +1,62 @@
+{# 复古打印机面板顶栏。
+   原 Typecho 模板的顶栏 HTML 结构完整保留，CSS class 都已在 main.css 中定义。 #}
+<header class="printer-top">
+    <div class="top-row">
+        <a class="brand" href="/">
+            {% if config.logo %}
+            <span class="brand-logo">
+                <img src="{{ config.logo }}" alt="{{ config.siteName }}">
+            </span>
+            {% else %}
+            <span class="brand-mark"></span>
+            {% endif %}
+            <span class="brand-text">
+                <h1>{% if theme_config.logoText %}{{ theme_config.logoText }}{% else %}{{ config.siteName }}{% endif %}</h1>
+                <p>{% if theme_config.subTitle %}{{ theme_config.subTitle }}{% else %}{{ config.siteDescription }}{% endif %}</p>
+            </span>
+        </a>
+
+        <div class="power">
+            <div class="power-dot"></div>
+            <span class="power-text power-text-on">ON</span>
+            <span class="power-text power-text-off">OFF</span>
+        </div>
+    </div>
+
+    <div class="menu-row">
+        <nav class="menu" aria-label="主导航">
+            {% for menu in menus %}
+                <a href="{{ menu.link }}" class="">{{ menu.name }}</a>
+            {% endfor %}
+        </nav>
+
+        <div class="ctrls">
+            {% if theme_config.enableSearch %}
+            <form class="header-search" role="search" onsubmit="return false;">
+                <label class="header-search-label" for="header-search-input">搜索</label>
+                <input id="header-search-input" type="search" name="s" placeholder="搜索文章" autocomplete="off" />
+                <button type="button" class="header-search-btn" aria-label="搜索（Cmd/Ctrl+K）" id="header-search-btn">
+                    <svg viewBox="0 0 16 16" focusable="false" aria-hidden="true">
+                        <path d="M6.5 2a4.5 4.5 0 1 1 0 9A4.5 4.5 0 0 1 6.5 2zm0 1.5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"></path>
+                        <path d="M10.4 10.4a.75.75 0 0 1 1.06 0l2.3 2.3a.75.75 0 1 1-1.06 1.06l-2.3-2.3a.75.75 0 0 1 0-1.06z"></path>
+                    </svg>
+                </button>
+            </form>
+            {% endif %}
+
+            <div class="lang">
+                <span>EN</span>
+                <span class="current">中</span>
+            </div>
+
+            <button type="button" class="theme-toggle" id="theme-toggle"
+                    aria-label="切换日夜模式"
+                    data-title-light="切换到日间模式"
+                    data-title-dark="切换到夜间模式"></button>
+        </div>
+    </div>
+</header>
+
+{% if theme_config.enableSearch %}
+{% include "partials/search-modal.html" %}
+{% endif %}

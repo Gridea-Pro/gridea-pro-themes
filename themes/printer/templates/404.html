@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}404 · {{ config.siteName }}{% endblock %}
+{% block body_class %}error-page{% endblock %}
+
+{% block content %}
+<article class="not-found">
+    <h1 class="paper-title">404 - 页面找不到了</h1>
+    <p class="paper-subtitle">抱歉，你访问的页面可能被删除了，或者链接地址有误。</p>
+
+    <div class="not-found-hint">
+        试试下面的方法：返回上一页、浏览分类，或者搜索你想找的内容。
+    </div>
+
+    {% if theme_config.enableSearch %}
+    <form class="not-found-search" onsubmit="return false;">
+        <label class="not-found-search-label" for="not-found-search-input">站内搜索</label>
+        <div class="not-found-search-bar">
+            <input id="not-found-search-input" type="search" placeholder="输入关键词搜索文章..." />
+            <button type="button" class="not-found-search-submit" id="not-found-search-submit" aria-label="开始搜索">
+                <svg viewBox="0 0 16 16" focusable="false" aria-hidden="true">
+                    <path d="M6.5 2a4.5 4.5 0 1 1 0 9A4.5 4.5 0 0 1 6.5 2zm0 1.5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"></path>
+                    <path d="M10.4 10.4a.75.75 0 0 1 1.06 0l2.3 2.3a.75.75 0 1 1-1.06 1.06l-2.3-2.3a.75.75 0 0 1 0-1.06z"></path>
+                </svg>
+            </button>
+        </div>
+    </form>
+    {% endif %}
+
+    {% if tags|length > 0 %}
+    <section class="paper-meta">
+        <div class="meta-group">
+            <p class="meta-label">分类</p>
+            <div class="meta-tags">
+                {% for tag in tags %}
+                    {% if loop.index <= 12 %}
+                        <a href="{{ tag.link }}">{{ tag.name }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+</article>
+{% endblock %}

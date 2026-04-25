@@ -1,0 +1,25 @@
+{# 全屏搜索弹窗（Cmd/Ctrl+K）。
+   索引数据由 partials/search-index.html 注入到 window.__PRINTER_SEARCH_INDEX__，
+   匹配逻辑在 main.js 中。零依赖、不发请求。 #}
+<div class="search-modal" id="search-modal" role="dialog" aria-modal="true" aria-label="站内搜索">
+    <div class="search-modal-content">
+        <div class="search-input-wrapper">
+            <svg viewBox="0 0 16 16" focusable="false" aria-hidden="true">
+                <path d="M6.5 2a4.5 4.5 0 1 1 0 9A4.5 4.5 0 0 1 6.5 2zm0 1.5a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"></path>
+                <path d="M10.4 10.4a.75.75 0 0 1 1.06 0l2.3 2.3a.75.75 0 1 1-1.06 1.06l-2.3-2.3a.75.75 0 0 1 0-1.06z"></path>
+            </svg>
+            <input type="search" id="search-input" class="search-input" placeholder="搜索文章 / 标签 / 闪念..." autocomplete="off" spellcheck="false" aria-label="搜索关键词">
+            <button type="button" class="search-close" id="search-close" aria-label="关闭搜索">&times;</button>
+        </div>
+
+        <div class="search-results" id="search-results" role="listbox" aria-label="搜索结果">
+            <p class="search-empty">输入关键词开始搜索</p>
+        </div>
+
+        <div class="search-shortcuts">
+            <span><kbd>↵</kbd>打开</span>
+            <span><kbd>↑</kbd><kbd>↓</kbd>切换</span>
+            <span><kbd>esc</kbd>关闭</span>
+        </div>
+    </div>
+</div>

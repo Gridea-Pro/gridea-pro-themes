@@ -1,0 +1,106 @@
+{# Printer 主体骨架。所有页面 extends 此文件。
+   block 都直接定义在本文件，不放在 include 里 —— Pongo2 不能可靠覆盖 include 内的 block #}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="format-detection" content="telephone=no">
+
+    <title>{% block title %}{{ config.siteName }}{% endblock %}</title>
+
+    {% block meta_description %}
+    <meta name="description" content="{% if post %}{{ post.content|excerpt:160|striptags }}{% else %}{{ config.siteDescription }}{% if theme_config.subTitle %} · {{ theme_config.subTitle }}{% endif %}{% endif %}">
+    {% endblock %}
+
+    {# Open Graph #}
+    <meta property="og:site_name" content="{{ config.siteName }}">
+    <meta property="og:type" content="{% if post %}article{% else %}website{% endif %}">
+    <meta property="og:title" content="{% if post %}{{ post.title }}{% else %}{{ config.siteName }}{% endif %}">
+    <meta property="og:description" content="{% if post %}{{ post.content|excerpt:160|striptags }}{% else %}{{ config.siteDescription }}{% endif %}">
+    {% if post and post.feature %}
+    <meta property="og:image" content="{{ post.feature }}">
+    {% elif config.avatar %}
+    <meta property="og:image" content="{{ config.avatar }}">
+    {% endif %}
+
+    <meta name="twitter:card" content="summary_large_image">
+
+    {% if config.favicon %}
+    <link rel="icon" href="{{ config.favicon }}">
+    {% elif config.logo %}
+    <link rel="icon" href="{{ config.logo }}">
+    {% endif %}
+
+    {% if theme_config.rssUrl %}
+    <link rel="alternate" type="application/atom+xml" title="{{ config.siteName }}" href="{{ theme_config.rssUrl }}">
+    {% endif %}
+
+    <link rel="stylesheet" href="/styles/main.css">
+
+    {# 主题色 / 强调色 / RGB 三元组注入到 :root，覆盖 main.css 默认值 #}
+    <style>
+    :root {
+      --accent: {{ theme_config.primaryColor|default:"#95c394" }};
+      --printer-external-link-color: {{ theme_config.externalLinkColor|default:"#ff6b35" }};
+      --printer-post-category-color: {{ theme_config.externalLinkColor|default:"#ff6b35" }};
+    }
+    </style>
+
+    {# 防 FOUC：页面渲染前确定 light/dark #}
+    <script>
+    (function(){
+      try {
+        var saved = localStorage.getItem('printer-theme-mode');
+        var preset = "{{ theme_config.defaultTheme|default:'auto' }}";
+        var theme;
+        if (saved === 'dark' || saved === 'light') {
+          theme = saved;
+        } else if (preset === 'dark' || preset === 'light') {
+          theme = preset;
+        } else {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        }
+        // 字体偏好
+        var fontPref = "{{ theme_config.fontFamily|default:'serif' }}";
+        if (fontPref === 'sans') {
+          document.documentElement.classList.add('printer-font-sans');
+        }
+      } catch(e) {}
+    })();
+    </script>
+
+    {% if theme_config.customCss %}
+    <style id="printer-user-css">{{ theme_config.customCss|safe }}</style>
+    {% endif %}
+    {% if theme_config.headerInjectCode %}
+    {{ theme_config.headerInjectCode|safe }}
+    {% endif %}
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}page{% endblock %}">
+    <div class="site-wrap">
+        {% include "partials/header.html" %}
+
+        <main class="paper">
+            {% block content %}{% endblock %}
+        </main>
+
+        {% include "partials/footer.html" %}
+    </div>
+
+    {% include "partials/search-index.html" %}
+
+    <script src="/scripts/main.js" defer></script>
+
+    {% if theme_config.footerInjectCode %}
+    {{ theme_config.footerInjectCode|safe }}
+    {% endif %}
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

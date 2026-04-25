@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}归档 · {{ config.siteName }}{% endblock %}
+{% block body_class %}archives{% endblock %}
+
+{% block content %}
+<h2 class="paper-title">归档</h2>
+<p class="paper-subtitle">站内全部文章，按时间倒序</p>
+
+<div class="archive-stats">
+    <div>
+        <div class="archive-stat-number">{{ posts|length }}</div>
+        <div class="archive-stat-label">篇文章</div>
+    </div>
+    <div>
+        <div class="archive-stat-number">{{ tags|length }}</div>
+        <div class="archive-stat-label">个标签</div>
+    </div>
+</div>
+
+{% if posts|length > 0 %}
+    {% for group in posts|group_by:"year" %}
+    <section class="archive-year">
+        <h3 class="archive-year-title">{{ group.key }}</h3>
+        <ul class="archive-list">
+            {% for post in group.items %}
+                {% if not post.hideInList %}
+                <li class="archive-item">
+                    <span class="archive-date">{{ post.date }}</span>
+                    <span class="archive-item-title"><a href="{{ post.link }}">{{ post.title }}</a></span>
+                </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </section>
+    {% endfor %}
+{% else %}
+    <div class="no-results">暂无任何归档。</div>
+{% endif %}
+{% endblock %}
