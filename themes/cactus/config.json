@@ -1,0 +1,260 @@
+{
+  "name": "Cactus",
+  "version": "1.0.0",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "author": "Seevil (Typecho 原作者), probberechts (Hexo 原作者), Gridea Pro 社区（Jinja2 移植）",
+  "description": "🌵 优雅简洁的暗色 Hacker 风主题。等宽字体、仙人掌绿点缀、# 前缀标题，复刻自 Seevil/cactus（Typecho），追溯至 probberechts/hexo-theme-cactus。新增亮色模式与 Gridea Pro 全特性支持。",
+  "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
+  "customConfig": [
+    {
+      "name": "siteLogo",
+      "label": "站点 Logo",
+      "group": "基础设置",
+      "value": "/media/images/logo.svg",
+      "type": "picture-upload",
+      "note": "页头方形 Logo，建议正方形 PNG/SVG。留空使用默认仙人掌图标"
+    },
+    {
+      "name": "themeMode",
+      "label": "默认主题",
+      "group": "外观",
+      "value": "dark",
+      "type": "select",
+      "options": [
+        { "label": "暗色（原版 Cactus）", "value": "dark" },
+        { "label": "亮色", "value": "light" },
+        { "label": "跟随系统", "value": "auto" }
+      ],
+      "note": "用户首次访问时使用此默认值，之后由浏览器记忆"
+    },
+    {
+      "name": "accentColor",
+      "label": "强调色",
+      "group": "外观",
+      "value": "#2bbc8a",
+      "type": "input",
+      "note": "Cactus 招牌仙人掌绿。可填任意 hex 颜色"
+    },
+    {
+      "name": "heroEnable",
+      "label": "首页 Hero 区开启",
+      "group": "首页",
+      "value": "true",
+      "type": "select",
+      "options": [
+        { "label": "开启", "value": "true" },
+        { "label": "关闭", "value": "false" }
+      ]
+    },
+    {
+      "name": "heroIntro",
+      "label": "Hero 自我介绍（首行固定文案）",
+      "group": "首页",
+      "value": "Hi, I'm a developer.",
+      "type": "input",
+      "note": "出现在打字机动画顶部，作为静态前缀"
+    },
+    {
+      "name": "heroPhrases",
+      "label": "Hero 打字机轮播句子",
+      "group": "首页",
+      "value": "Welcome to my blog.\nHave a good day.\nI write about code, life and ideas.",
+      "type": "textarea",
+      "note": "每行一句，会循环打字播放"
+    },
+    {
+      "name": "heroTagline",
+      "label": "Hero 底部一句话",
+      "group": "首页",
+      "value": "p.s. 站点已支持 PWA，可添加到桌面",
+      "type": "input"
+    },
+    {
+      "name": "writingTitle",
+      "label": "首页文章区标题",
+      "group": "首页",
+      "value": "Writing",
+      "type": "input"
+    },
+    {
+      "name": "writingLink",
+      "label": "首页文章区 More 链接",
+      "group": "首页",
+      "value": "/archives",
+      "type": "input",
+      "note": "点击 Writing 标题跳转的归档地址"
+    },
+    {
+      "name": "writingCount",
+      "label": "首页文章数",
+      "group": "首页",
+      "value": "10",
+      "type": "input",
+      "note": "首页 Writing 列表显示的文章条数"
+    },
+    {
+      "name": "projectsEnable",
+      "label": "首页 Projects 区开启",
+      "group": "首页",
+      "value": "true",
+      "type": "select",
+      "options": [
+        { "label": "开启", "value": "true" },
+        { "label": "关闭", "value": "false" }
+      ]
+    },
+    {
+      "name": "projectsTitle",
+      "label": "Projects 区标题",
+      "group": "首页",
+      "value": "Projects",
+      "type": "input"
+    },
+    {
+      "name": "projects",
+      "label": "Projects 列表",
+      "group": "首页",
+      "value": "Cactus|https://github.com/probberechts/hexo-theme-cactus|Hexo 原版主题\nCactus Typecho|https://github.com/Seevil/cactus|Typecho 移植版",
+      "type": "textarea",
+      "note": "格式：名称|链接|描述，每行一项。描述可省略"
+    },
+    {
+      "name": "social",
+      "label": "社交链接",
+      "group": "社交",
+      "value": "github|https://github.com/\nemail|mailto:hello@example.com",
+      "type": "textarea",
+      "note": "格式：图标名|链接，每行一项。支持图标：github / twitter / weibo / email / rss / linkedin / mastodon / bilibili / zhihu"
+    },
+    {
+      "name": "showSearch",
+      "label": "显示搜索按钮",
+      "group": "功能",
+      "value": "true",
+      "type": "select",
+      "options": [
+        { "label": "显示", "value": "true" },
+        { "label": "隐藏", "value": "false" }
+      ]
+    },
+    {
+      "name": "searchProvider",
+      "label": "搜索提供方",
+      "group": "功能",
+      "value": "local",
+      "type": "select",
+      "options": [
+        { "label": "本地 JSON（需 Gridea 生成 search.json）", "value": "local" },
+        { "label": "Google 站内搜索", "value": "google" },
+        { "label": "Bing 站内搜索", "value": "bing" }
+      ]
+    },
+    {
+      "name": "showToc",
+      "label": "文章页显示目录（TOC）",
+      "group": "文章",
+      "value": "true",
+      "type": "select",
+      "options": [
+        { "label": "显示", "value": "true" },
+        { "label": "隐藏", "value": "false" }
+      ]
+    },
+    {
+      "name": "showShare",
+      "label": "文章页显示分享按钮",
+      "group": "文章",
+      "value": "true",
+      "type": "select",
+      "options": [
+        { "label": "显示", "value": "true" },
+        { "label": "隐藏", "value": "false" }
+      ]
+    },
+    {
+      "name": "showPrevNext",
+      "label": "文章底部显示上一篇/下一篇",
+      "group": "文章",
+      "value": "true",
+      "type": "select",
+      "options": [
+        { "label": "显示", "value": "true" },
+        { "label": "隐藏", "value": "false" }
+      ]
+    },
+    {
+      "name": "showReadingTime",
+      "label": "显示阅读时间和字数",
+      "group": "文章",
+      "value": "true",
+      "type": "select",
+      "options": [
+        { "label": "显示", "value": "true" },
+        { "label": "隐藏", "value": "false" }
+      ]
+    },
+    {
+      "name": "memosTitle",
+      "label": "闪念页标题",
+      "group": "闪念",
+      "value": "Memos",
+      "type": "input"
+    },
+    {
+      "name": "memosHeatmap",
+      "label": "闪念热力图",
+      "group": "闪念",
+      "value": "true",
+      "type": "select",
+      "options": [
+        { "label": "显示", "value": "true" },
+        { "label": "隐藏", "value": "false" }
+      ]
+    },
+    {
+      "name": "linksTitle",
+      "label": "友链页标题",
+      "group": "友链",
+      "value": "Friends",
+      "type": "input"
+    },
+    {
+      "name": "linksDescription",
+      "label": "友链页描述",
+      "group": "友链",
+      "value": "几位志同道合的朋友。",
+      "type": "input"
+    },
+    {
+      "name": "footerCopyright",
+      "label": "底部版权文字",
+      "group": "页脚",
+      "value": "© 2024 — All rights reserved",
+      "type": "input"
+    },
+    {
+      "name": "footerICP",
+      "label": "备案号（中国大陆站点可填）",
+      "group": "页脚",
+      "value": "",
+      "type": "input"
+    },
+    {
+      "name": "customCSS",
+      "label": "自定义 CSS",
+      "group": "高级",
+      "value": "",
+      "type": "textarea",
+      "note": "粘贴 CSS 片段，在所有页面 <head> 末尾追加"
+    },
+    {
+      "name": "analyticsCode",
+      "label": "统计代码",
+      "group": "高级",
+      "value": "",
+      "type": "textarea",
+      "note": "Google Analytics / 百度统计 / Umami 等的 <script> 片段，原样输出到 <head>"
+    }
+  ]
+}

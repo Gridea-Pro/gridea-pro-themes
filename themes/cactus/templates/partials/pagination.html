@@ -1,0 +1,16 @@
+{# 分页 — 仅 Prev / Next，遵循 Cactus 简洁风格 #}
+{% if pagination %}
+<nav class="pagination" aria-label="分页">
+  {% if pagination.prev %}
+    <a href="{{ pagination.prev }}" class="pg-prev" rel="prev"><i class="ic ic-chevron-left"></i> Prev</a>
+  {% else %}
+    <span class="pg-prev disabled" aria-hidden="true"><i class="ic ic-chevron-left"></i> Prev</span>
+  {% endif %}
+  <span class="pg-info">·</span>
+  {% if pagination.next %}
+    <a href="{{ pagination.next }}" class="pg-next" rel="next">Next <i class="ic ic-chevron-right"></i></a>
+  {% else %}
+    <span class="pg-next disabled" aria-hidden="true">Next <i class="ic ic-chevron-right"></i></span>
+  {% endif %}
+</nav>
+{% endif %}

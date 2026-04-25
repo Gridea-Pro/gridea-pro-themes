@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-404{% endblock %}
+{% block title %}404 · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<section id="error-404" class="error-page">
+  <pre class="ascii-cactus" aria-hidden="true">
+       _ _ _ _ _
+      |       _|
+   _ _| |_   _|
+  |  _   _|_|
+  | |_| |
+  |_____|
+   404 ¬_¬
+  </pre>
+  <h1 class="error-title"><span class="hash-prefix"></span>404 — Page not found</h1>
+  <p class="error-desc">这片仙人掌丛里没有你要找的东西，但首页应该还在。</p>
+  <p><a class="error-link" href="/">&laquo; 回到首页</a></p>
+</section>
+{% endblock %}

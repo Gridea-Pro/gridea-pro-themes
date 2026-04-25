@@ -1,0 +1,67 @@
+{# <head> 内容 — 元信息 / 样式 / 主题色变量 / 防闪暗色脚本 #}
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="{{ theme_config.accentColor|default:"#2bbc8a" }}">
+<meta name="generator" content="Gridea Pro · Cactus Theme">
+
+{# 基本 SEO #}
+{% block seo %}
+<title>{% block title %}{{ config.siteName }}{% endblock %}</title>
+<meta name="description" content="{% block description %}{{ config.siteDescription }}{% endblock %}">
+<meta property="og:type" content="{% block og_type %}website{% endblock %}">
+<meta property="og:site_name" content="{{ config.siteName }}">
+<meta property="og:title" content="{% block og_title %}{{ config.siteName }}{% endblock %}">
+<meta property="og:description" content="{% block og_description %}{{ config.siteDescription }}{% endblock %}">
+{% if config.avatar %}<meta property="og:image" content="{{ config.avatar }}">{% endif %}
+<meta name="twitter:card" content="summary">
+{% endblock %}
+
+{# Favicon #}
+{% if config.favicon %}
+<link rel="icon" href="{{ config.favicon }}">
+{% else %}
+<link rel="icon" type="image/svg+xml" href="/media/images/logo.svg">
+{% endif %}
+
+{# CSS #}
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="stylesheet" href="/styles/highlight.css">
+<link rel="stylesheet" href="/styles/icons.css">
+
+{# 强调色变量注入 #}
+<style>
+:root { --accent: {{ theme_config.accentColor|default:"#2bbc8a" }}; }
+</style>
+
+{# 防闪暗色：根据用户偏好/配置在样式加载前确定主题 #}
+<script>
+(function () {
+  try {
+    var pref = localStorage.getItem('cactus-theme');
+    var def = "{{ theme_config.themeMode|default:"dark" }}";
+    var mode;
+    if (pref === 'dark' || pref === 'light') {
+      mode = pref;
+    } else if (def === 'auto') {
+      mode = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    } else {
+      mode = def;
+    }
+    document.documentElement.setAttribute('data-theme', mode);
+  } catch (e) { /* localStorage 不可用时静默 */ }
+})();
+</script>
+
+{# 自定义 CSS #}
+{% if theme_config.customCSS %}
+<style>{{ theme_config.customCSS|safe }}</style>
+{% endif %}
+
+{# 统计代码 #}
+{% if theme_config.analyticsCode %}
+{{ theme_config.analyticsCode|safe }}
+{% endif %}
+
+{# 页面级附加 head 内容 #}
+{% block head_extra %}{% endblock %}

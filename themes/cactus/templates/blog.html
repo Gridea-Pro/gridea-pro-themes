@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-blog{% endblock %}
+{% block title %}Blog · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<section id="writing" class="home-section">
+  <span class="h1">All posts</span>
+  <ul class="post-list" id="post-list">
+    {% if posts|length > 0 %}
+      {% for post in posts %}
+        {% if not post.hideInList %}
+          {% include "partials/post-card.html" %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <li class="post-item empty"><span>暂时还没有文章</span></li>
+    {% endif %}
+  </ul>
+</section>
+
+{% include "partials/pagination.html" %}
+{% endblock %}

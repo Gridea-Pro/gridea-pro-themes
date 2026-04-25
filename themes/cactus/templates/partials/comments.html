@@ -1,0 +1,7 @@
+{# 评论 — Cactus 视觉外壳 + Gridea Pro 标准 #gridea-comments 挂载点 #}
+<section class="post-comments-wrap blog-post-comments v" id="comments">
+  <h2 class="comments-title"><span class="hash">#</span> Comments</h2>
+  <div id="gridea-comments" data-post-link="{% if post %}{{ post.link }}{% endif %}" data-post-title="{% if post %}{{ post.title }}{% endif %}">
+    <p class="comments-loading">评论组件加载中…&nbsp;若长时间未显示，请确认已在 Gridea Pro 配置评论服务（Disqus / Twikoo / Waline / Gitalk 等）。</p>
+  </div>
+</section>

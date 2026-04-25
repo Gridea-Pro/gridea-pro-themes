@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-archives{% endblock %}
+{% block title %}Archives · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<section id="archive">
+  <span class="h1">Archives</span>
+  {% if posts|length > 0 %}
+    {% for group in posts|group_by:"year" %}
+      <div class="archive-year">
+        <h2 class="archive-year-title"><span class="hash-prefix"></span>{{ group.key }}</h2>
+        <ul class="post-list" id="archive-list">
+          {% for post in group.items %}
+            {% if not post.hideInList %}
+              {% include "partials/post-card.html" %}
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="empty">还没有归档内容。</p>
+  {% endif %}
+</section>
+{% endblock %}

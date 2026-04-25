@@ -1,0 +1,19 @@
+{# 闪念活跃热力图 — 53 周 × 7 天网格，由 main.js 渲染 #}
+{% if theme_config.memosHeatmap and theme_config.memosHeatmap != "false" %}
+<section class="heatmap-section" id="memos-heatmap" data-source="memos">
+  <h2 class="heatmap-title"><span class="hash">#</span> Activity</h2>
+  <div class="heatmap-wrap">
+    <div class="heatmap-months" id="heatmap-months"></div>
+    <div class="heatmap-grid" id="heatmap-grid" role="grid" aria-label="闪念活跃热力图"></div>
+    <div class="heatmap-legend">
+      <span class="legend-label">少</span>
+      <span class="heatmap-cell level-0"></span>
+      <span class="heatmap-cell level-1"></span>
+      <span class="heatmap-cell level-2"></span>
+      <span class="heatmap-cell level-3"></span>
+      <span class="heatmap-cell level-4"></span>
+      <span class="legend-label">多</span>
+    </div>
+  </div>
+</section>
+{% endif %}

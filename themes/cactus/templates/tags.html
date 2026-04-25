@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-tags{% endblock %}
+{% block title %}Tags & Categories · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<section id="tags">
+  <span class="h1"><span class="hash-prefix"></span>Tags &amp; Categories</span>
+  <p class="muted small">
+    Gridea Pro 不区分独立的「分类」，本页同时承担分类入口的角色 —— 标签即分类。
+  </p>
+  {% if tags|length > 0 %}
+    {% include "partials/tag-cloud.html" %}
+    <ul class="tag-index">
+      {% for tag in tags %}
+        <li class="tag-index-item">
+          <a href="{{ tag.link }}"><span class="hash">#</span>{{ tag.name }}</a>
+          <span class="muted">·{{ tag.count }} 篇</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="empty">还没有标签。</p>
+  {% endif %}
+</section>
+{% endblock %}

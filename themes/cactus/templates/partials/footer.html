@@ -1,0 +1,19 @@
+{# 站点页脚 — 与 Cactus 原版一致：copyright 左 + 导航右 #}
+<div class="footer-wrap mx-auto px3 my5">
+  <footer id="footer">
+    <div class="footer-left">
+      {% if theme_config.footerCopyright %}{{ theme_config.footerCopyright|safe }}{% else %}&copy; {{ now|date:"2006" }} {{ config.siteName }}{% endif %}
+      &nbsp;·&nbsp; Powered by <a href="https://github.com/Gridea-Pro/gridea-pro" target="_blank" rel="noopener">Gridea Pro</a>
+      &nbsp;·&nbsp; <a href="https://github.com/Gridea-Pro/gridea-pro-themes" target="_blank" rel="noopener">Cactus</a>
+      {% if theme_config.footerICP %} &nbsp;·&nbsp; <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">{{ theme_config.footerICP }}</a>{% endif %}
+    </div>
+    <div class="footer-right">
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          {% for menu in menus %}<li><a href="{{ menu.link }}">{{ menu.name }}</a></li>{% endfor %}
+        </ul>
+      </nav>
+    </div>
+  </footer>
+</div>

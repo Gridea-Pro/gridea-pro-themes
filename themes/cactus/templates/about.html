@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-about{% endblock %}
+{% block title %}About · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<section id="about-page" class="article-content content">
+  <span class="h1"><span class="hash-prefix"></span>About</span>
+
+  <div class="about-card">
+    {% if config.avatar %}
+      <img class="about-avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">
+    {% endif %}
+    <div class="about-text">
+      <h2 class="about-name">{{ config.siteName }}</h2>
+      {% if config.siteDescription %}
+        <p class="about-desc">{{ config.siteDescription }}</p>
+      {% endif %}
+      {% if theme_config.social %}
+        <ul id="sociallinks" class="hero-social-inline" data-source="{{ theme_config.social|safe }}"></ul>
+      {% endif %}
+    </div>
+  </div>
+
+  {# 「关于」页 Markdown 内容由用户在 Gridea Pro 填写后注入 post.content；此处兜底 description #}
+  {% if post and post.content %}
+    <div class="article-content">{{ post.content|safe }}</div>
+  {% endif %}
+</section>
+{% endblock %}
