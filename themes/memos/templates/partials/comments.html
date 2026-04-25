@@ -1,0 +1,15 @@
+{% if theme_config.enableComments %}
+<section class="post-comments-section" id="comments">
+  <div class="comments-title">
+    <h3><i class="bi bi-chat-square-text"></i> 评论</h3>
+    <p class="comments-hint">想说点什么？欢迎留言。</p>
+  </div>
+
+  {# Gridea Pro 标准评论容器，由桌面端配置的评论服务（Disqus / Waline / Twikoo / Giscus 等）接管 #}
+  <div id="gridea-comments" class="gridea-comments-container"></div>
+
+  <noscript>
+    <p class="comments-noscript">请启用 JavaScript 以加载评论组件。</p>
+  </noscript>
+</section>
+{% endif %}

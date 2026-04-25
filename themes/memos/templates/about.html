@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}关于 · {{ config.siteName }}{% endblock %}
+{% block body_class %}page-about{% endblock %}
+{% block og_url %}/about/{% endblock %}
+
+{% block main %}
+<div class="container">
+  <section class="index-area">
+    <div class="row g-3">
+      <div class="{% if theme_config.showSidebar %}col-lg-9{% else %}col-12{% endif %}">
+        <article class="post_container about-page">
+
+          <header class="about-hero">
+            {% if config.avatar %}
+              <img class="about-hero-avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">
+            {% endif %}
+            <div class="about-hero-meta">
+              <h1 class="about-hero-name">{{ config.siteName }}</h1>
+              {% if theme_config.subtitle %}<p class="about-hero-sub">{{ theme_config.subtitle }}</p>{% endif %}
+              <div class="about-hero-social">
+                {% if theme_config.githubUrl %}<a href="{{ theme_config.githubUrl }}" target="_blank" rel="noopener"><i class="bi bi-github"></i> GitHub</a>{% endif %}
+                {% if theme_config.twitterUrl %}<a href="{{ theme_config.twitterUrl }}" target="_blank" rel="noopener"><i class="bi bi-twitter-x"></i> Twitter</a>{% endif %}
+                {% if theme_config.weiboUrl %}<a href="{{ theme_config.weiboUrl }}" target="_blank" rel="noopener"><i class="bi bi-sina-weibo"></i> 微博</a>{% endif %}
+                {% if theme_config.emailAddress %}<a href="mailto:{{ theme_config.emailAddress }}"><i class="bi bi-envelope"></i> Email</a>{% endif %}
+                {% if theme_config.rssUrl %}<a href="{{ theme_config.rssUrl }}"><i class="bi bi-rss"></i> RSS</a>{% endif %}
+              </div>
+            </div>
+          </header>
+
+          <div class="about-content wznrys">
+            {% if config.siteDescription %}
+              <p class="about-lead">{{ config.siteDescription }}</p>
+            {% endif %}
+
+            <p>这是 <strong>{{ config.siteName }}</strong> 的关于页。你可以在 Gridea Pro 桌面客户端的「自定义页面」里编辑本页内容，把它换成你想说的话。</p>
+
+            <h3>站点统计</h3>
+            <ul>
+              <li>已发布文章：<strong>{{ posts|length|default:0 }}</strong> 篇</li>
+              <li>标签数量：<strong>{{ tags|length|default:0 }}</strong> 个</li>
+              <li>构建时间：<strong>{{ now|date:"2006-01-02 15:04" }}</strong></li>
+            </ul>
+
+            <h3>关于这个主题</h3>
+            <p>本站使用 <a href="https://github.com/Gridea-Pro/gridea-pro" target="_blank" rel="noopener">Gridea Pro</a> 构建，主题为 <code>memos</code>，移植自 <a href="https://github.com/jkjoy/Typecho-Theme-Once" target="_blank" rel="noopener">jkjoy/Typecho-Theme-Once</a>。</p>
+          </div>
+
+        </article>
+      </div>
+
+      {% if theme_config.showSidebar %}
+        {% include "partials/sidebar.html" %}
+      {% endif %}
+    </div>
+  </section>
+</div>
+{% endblock %}

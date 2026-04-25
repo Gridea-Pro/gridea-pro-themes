@@ -1,0 +1,27 @@
+{% if pagination and (pagination.prev or pagination.next) %}
+<nav class="post-pagination" aria-label="文章分页">
+  <div class="post-pagination-inner">
+    {% if pagination.prev %}
+      <a href="{{ pagination.prev }}" class="post-pagination-btn post-pagination-prev" rel="prev">
+        <i class="bi bi-arrow-left"></i> <span>上一页</span>
+      </a>
+    {% else %}
+      <span class="post-pagination-btn post-pagination-disabled">
+        <i class="bi bi-arrow-left"></i> <span>上一页</span>
+      </span>
+    {% endif %}
+
+    <span class="post-pagination-divider"></span>
+
+    {% if pagination.next %}
+      <a href="{{ pagination.next }}" class="post-pagination-btn post-pagination-next" rel="next">
+        <span>下一页</span> <i class="bi bi-arrow-right"></i>
+      </a>
+    {% else %}
+      <span class="post-pagination-btn post-pagination-disabled">
+        <span>下一页</span> <i class="bi bi-arrow-right"></i>
+      </span>
+    {% endif %}
+  </div>
+</nav>
+{% endif %}

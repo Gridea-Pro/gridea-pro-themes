@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-home{% endblock %}
+
+{% block og_url %}/{% endblock %}
+
+{% block main %}
+<div class="container">
+
+  {# ===================== 首页轮播 + 推荐分组 ===================== #}
+  {% if theme_config.enableSlide %}
+  <section class="index-slide">
+    <div class="row g-3">
+
+      {# 左：主轮播（slideTag 命中的最近 5 篇）#}
+      <div class="col-lg-7">
+        <div id="indexCarousel" class="carousel slide once-carousel" data-bs-ride="carousel" data-bs-interval="5000">
+          <div class="carousel-inner">
+            {% for post in posts %}
+              {% set inSlide = false %}
+              {% for tag in post.tags %}{% if tag.name == theme_config.slideTag %}{% set inSlide = true %}{% endif %}{% endfor %}
+              {% if inSlide %}
+              <div class="carousel-item" data-slide-tag="{{ theme_config.slideTag }}">
+                <a href="{{ post.link }}" class="once-carousel-link">
+                  <img src="{{ post.feature|default:"/media/images/default-cover.svg" }}" alt="{{ post.title }}" class="d-block w-100">
+                  <div class="carousel-caption">
+                    <h3 class="once-carousel-title">{{ post.title }}</h3>
+                    <p class="once-carousel-meta"><i class="bi bi-calendar3"></i> {{ post.date }}</p>
+                  </div>
+                </a>
+              </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#indexCarousel" data-bs-slide="prev" aria-label="上一张">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#indexCarousel" data-bs-slide="next" aria-label="下一张">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      {# 中：slideMidTag 推荐 #}
+      {% if theme_config.slideMidTag %}
+      <div class="col-lg-2 none_992 d-none d-lg-block">
+        <div class="slide-side slide-side--mid">
+          <div class="slide-side-title"><i class="bi bi-bookmark-heart"></i> {{ theme_config.slideMidTag }}</div>
+          <ul class="slide-side-list">
+            {% set midCount = 0 %}
+            {% for post in posts %}
+              {% set show = false %}
+              {% for tag in post.tags %}{% if tag.name == theme_config.slideMidTag %}{% set show = true %}{% endif %}{% endfor %}
+              {% if show %}
+              <li>
+                <a href="{{ post.link }}" title="{{ post.title }}">{{ post.title|truncatechars:24 }}</a>
+                <time>{{ post.date }}</time>
+              </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+      {# 右：slideRightTag 推荐 #}
+      {% if theme_config.slideRightTag %}
+      <div class="col-lg-3 none_992 d-none d-lg-block">
+        <div class="slide-side slide-side--right">
+          <div class="slide-side-title"><i class="bi bi-star"></i> {{ theme_config.slideRightTag }}</div>
+          <ul class="slide-side-list slide-side-list--rich">
+            {% for post in posts %}
+              {% set show = false %}
+              {% for tag in post.tags %}{% if tag.name == theme_config.slideRightTag %}{% set show = true %}{% endif %}{% endfor %}
+              {% if show %}
+              <li>
+                <a href="{{ post.link }}" class="slide-side-rich" title="{{ post.title }}">
+                  <img src="{{ post.feature|default:"/media/images/default-cover.svg" }}" alt="">
+                  <div class="slide-side-rich-body">
+                    <h4>{{ post.title|truncatechars:32 }}</h4>
+                    <time>{{ post.date }}</time>
+                  </div>
+                </a>
+              </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+  </section>
+  {% endif %}
+
+  {# ===================== 主区 + 侧栏 ===================== #}
+  <section class="index-area">
+    <div class="row g-3">
+      <div class="{% if theme_config.showSidebar %}col-lg-9{% else %}col-12{% endif %}">
+
+        <div class="post-list">
+          {% for post in posts %}
+            {% if not post.hideInList %}
+              {% include "partials/post-card.html" %}
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% include "partials/pagination.html" %}
+      </div>
+
+      {% if theme_config.showSidebar %}
+        {% include "partials/sidebar.html" %}
+      {% endif %}
+    </div>
+  </section>
+
+</div>
+{% endblock %}

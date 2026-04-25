@@ -1,0 +1,32 @@
+{# 列表卡片 · 1:3 缩略图 + 内容（移植自 Once 的 partials/post-loop.php）#}
+<article class="post-card post_def">
+  <a href="{{ post.link }}" class="post-card-thumb">
+    {% if post.feature %}
+      <img src="{{ post.feature }}" alt="{{ post.title }}" loading="lazy">
+    {% else %}
+      <img src="/media/images/default-cover.svg" alt="{{ post.title }}" class="post-card-thumb-default" loading="lazy">
+    {% endif %}
+    {% if post.isTop %}<span class="post-pin"><i class="bi bi-pin-angle-fill"></i> 置顶</span>{% endif %}
+  </a>
+
+  <div class="post-card-body post_def_title">
+    <h2 class="post-card-title">
+      <a href="{{ post.link }}">{{ post.title }}</a>
+    </h2>
+
+    <p class="post-card-excerpt">{{ post.content|strip_html|truncatechars:120 }}</p>
+
+    <div class="post-card-meta">
+      <span class="post-meta-item"><i class="bi bi-calendar3"></i> {{ post.date }}</span>
+      <span class="post-meta-item"><i class="bi bi-clock"></i> 约 {{ post.content|reading_time }} 分钟</span>
+      {% if post.tags|length > 0 %}
+        <span class="post-meta-tags d-none d-md-inline">
+          <i class="bi bi-tags"></i>
+          {% for tag in post.tags %}{% if loop.index <= 3 %}
+            <a href="{{ tag.link }}" class="post-meta-tag">{{ tag.name }}</a>{% if not loop.last %}<span class="post-meta-tag-sep">·</span>{% endif %}
+          {% endif %}{% endfor %}
+        </span>
+      {% endif %}
+    </div>
+  </div>
+</article>

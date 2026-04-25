@@ -1,0 +1,126 @@
+<header class="header sticky-top">
+  <div class="container">
+    <nav class="navbar navbar-expand-lg align-items-center">
+
+      {# 移动端汉堡 #}
+      <button class="navbar-toggler d-lg-none" type="button"
+              data-bs-toggle="offcanvas" data-bs-target="#mobileNav"
+              aria-controls="mobileNav" aria-label="打开菜单">
+        <i class="bi bi-list"></i>
+      </button>
+
+      {# Logo + 站名 #}
+      <a class="navbar-brand brand d-flex align-items-center" href="/">
+        {% if config.logo %}
+          <img src="{{ config.logo }}" alt="{{ config.siteName }}" class="brand-logo">
+        {% elif config.avatar %}
+          <img src="{{ config.avatar }}" alt="{{ config.siteName }}" class="brand-logo">
+        {% endif %}
+        <span class="brand-text">
+          <b>{{ config.siteName }}</b>
+          {% if theme_config.subtitle %}<small class="brand-sub d-none d-md-inline">{{ theme_config.subtitle }}</small>{% endif %}
+        </span>
+      </a>
+
+      {# PC 主导航 #}
+      <ul class="navbar-nav header-menu-ul d-none d-lg-flex ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link" href="/"><i class="bi bi-house-door"></i> 首页</a>
+        </li>
+        {% for menu in menus %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ menu.link }}">{{ menu.name }}</a>
+          </li>
+        {% endfor %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-tags"></i> 标签
+          </a>
+          <ul class="dropdown-menu sub-menu">
+            <li><a class="dropdown-item" href="/tags/">所有标签</a></li>
+            {% for tag in tags %}{% if loop.index <= 12 %}
+              <li><a class="dropdown-item" href="{{ tag.link }}">{{ tag.name }} <span class="text-muted">({{ tag.count }})</span></a></li>
+            {% endif %}{% endfor %}
+          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-collection"></i> 更多
+          </a>
+          <ul class="dropdown-menu sub-menu">
+            <li><a class="dropdown-item" href="/archives/">归档</a></li>
+            <li><a class="dropdown-item" href="/categories/">分类</a></li>
+            <li><a class="dropdown-item" href="/memos/">闪念</a></li>
+            <li><a class="dropdown-item" href="/links/">友链</a></li>
+            <li><a class="dropdown-item" href="/about/">关于</a></li>
+          </ul>
+        </li>
+
+        {# 主题切换 #}
+        <li class="nav-item">
+          <button class="nav-icon-btn theme-switch" type="button" aria-label="切换主题" title="切换主题">
+            <i class="bi bi-circle-half"></i>
+          </button>
+        </li>
+
+        {# 搜索 #}
+        {% if theme_config.enableSearch %}
+        <li class="nav-item">
+          <button class="nav-icon-btn" type="button"
+                  data-bs-toggle="offcanvas" data-bs-target="#searchPanel"
+                  aria-controls="searchPanel" aria-label="搜索" title="搜索 (Ctrl+K)">
+            <i class="bi bi-search"></i>
+          </button>
+        </li>
+        {% endif %}
+      </ul>
+
+      {# 移动端右侧快捷按钮 #}
+      <div class="d-flex align-items-center d-lg-none ms-auto mobile-actions">
+        <button class="nav-icon-btn theme-switch" type="button" aria-label="切换主题">
+          <i class="bi bi-circle-half"></i>
+        </button>
+        {% if theme_config.enableSearch %}
+        <button class="nav-icon-btn" type="button"
+                data-bs-toggle="offcanvas" data-bs-target="#searchPanel"
+                aria-controls="searchPanel" aria-label="搜索">
+          <i class="bi bi-search"></i>
+        </button>
+        {% endif %}
+      </div>
+
+    </nav>
+  </div>
+</header>
+
+{# 移动端 Offcanvas 菜单 #}
+<div class="offcanvas offcanvas-start mobile-nav-panel" tabindex="-1" id="mobileNav" aria-labelledby="mobileNavLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="mobileNavLabel">{{ config.siteName }}</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="关闭"></button>
+  </div>
+  <div class="offcanvas-body">
+    <ul class="mobile-menu-list">
+      <li><a href="/"><i class="bi bi-house-door"></i> 首页</a></li>
+      {% for menu in menus %}
+        <li><a href="{{ menu.link }}"><i class="bi bi-link-45deg"></i> {{ menu.name }}</a></li>
+      {% endfor %}
+      <li><a href="/archives/"><i class="bi bi-archive"></i> 归档</a></li>
+      <li><a href="/categories/"><i class="bi bi-collection"></i> 分类</a></li>
+      <li><a href="/tags/"><i class="bi bi-tags"></i> 标签</a></li>
+      <li><a href="/memos/"><i class="bi bi-lightning"></i> 闪念</a></li>
+      <li><a href="/links/"><i class="bi bi-bookmark-star"></i> 友链</a></li>
+      <li><a href="/about/"><i class="bi bi-person-circle"></i> 关于</a></li>
+    </ul>
+    {% if tags|length > 0 %}
+      <div class="mobile-tags">
+        <h6 class="mobile-tags-title">热门标签</h6>
+        <div class="mobile-tags-list">
+          {% for tag in tags %}{% if loop.index <= 15 %}
+            <a href="{{ tag.link }}" class="mobile-tag">{{ tag.name }}</a>
+          {% endif %}{% endfor %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>

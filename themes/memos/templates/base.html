@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="{{ theme_config.primaryColor|default:"#4270f5" }}">
+
+<title>{% block title %}{{ config.siteName }}{% endblock %}</title>
+<meta name="description" content="{% block meta_description %}{{ config.siteDescription }}{% endblock %}">
+
+<meta property="og:type" content="{% block og_type %}website{% endblock %}">
+<meta property="og:title" content="{% block og_title %}{{ config.siteName }}{% endblock %}">
+<meta property="og:description" content="{% block og_description %}{{ config.siteDescription }}{% endblock %}">
+<meta property="og:site_name" content="{{ config.siteName }}">
+<meta property="og:url" content="{{ config.domain }}{% block og_url %}/{% endblock %}">
+{% block og_image %}{% if config.avatar %}<meta property="og:image" content="{{ config.avatar }}">{% endif %}{% endblock %}
+
+<link rel="alternate" type="application/atom+xml" title="{{ config.siteName }} · RSS" href="{{ theme_config.rssUrl|default:"/atom.xml" }}">
+{% if config.avatar %}<link rel="icon" type="image/png" href="{{ config.avatar }}">{% endif %}
+
+<link rel="stylesheet" href="/styles/bootstrap.min.css">
+<link rel="stylesheet" href="/styles/bootstrap-icons.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+<style>
+:root {
+  --primary: {{ theme_config.primaryColor|default:"#4270f5" }};
+  --accent: {{ theme_config.accentColor|default:"#ffc008" }};
+}
+</style>
+
+{% if theme_config.enableLxgw %}
+<style>
+@font-face {
+  font-family: 'LXGW WenKai Screen';
+  src: url('/styles/fonts/lxgw.woff2') format('woff2');
+  font-display: swap;
+}
+body, .wznrys, .post_def_title h2, .post_container h1 {
+  font-family: 'LXGW WenKai Screen', PingFang SC, "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+</style>
+{% endif %}
+
+{% if theme_config.customCss %}<style>{{ theme_config.customCss|safe }}</style>{% endif %}
+
+{# FOUC 防护：在 CSS 之前先把 .dark class 写到 <html>，避免亮 → 暗的闪烁 #}
+<script>
+(function(){
+  var saved = localStorage.getItem('isDarkMode');
+  var def = "{{ theme_config.defaultTheme|default:"auto" }}";
+  var dark = false;
+  if (saved === '1') { dark = true; }
+  else if (saved === '0') { dark = false; }
+  else if (def === 'dark') { dark = true; }
+  else if (def === 'light') { dark = false; }
+  else { var h = new Date().getHours(); dark = (h < 6 || h >= 18); }
+  if (dark) document.documentElement.classList.add('dark');
+})();
+</script>
+
+{% block extra_head %}{% endblock %}
+{{ theme_config.headerScript|safe }}
+</head>
+
+<body class="{% block body_class %}page-default{% endblock %}">
+
+{% block header %}{% include "partials/header.html" %}{% endblock %}
+
+{% if theme_config.enableSearch %}{% include "partials/search-modal.html" %}{% endif %}
+
+<main class="main">
+  {% block main %}{% endblock %}
+</main>
+
+{% block footer %}{% include "partials/footer.html" %}{% endblock %}
+
+{% if theme_config.enableSearch %}{% include "partials/search-index.html" %}{% endif %}
+
+<a href="#" class="scrollToTopBtn" aria-label="回到顶部" title="回到顶部">
+  <i class="bi bi-arrow-up"></i>
+</a>
+
+<script src="/scripts/jquery.min.js"></script>
+<script src="/scripts/bootstrap.bundle.min.js"></script>
+<script src="/scripts/main.js"></script>
+
+{% block extra_scripts %}{% endblock %}
+{{ theme_config.footerScript|safe }}
+
+</body>
+</html>

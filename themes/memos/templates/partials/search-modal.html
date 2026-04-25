@@ -1,0 +1,27 @@
+{# 全屏搜索面板：顶栏按钮 / Cmd+K 触发，从顶部滑下 #}
+<div class="offcanvas offcanvas-top search-panel" tabindex="-1" id="searchPanel" aria-labelledby="searchPanelLabel">
+  <div class="offcanvas-header search-panel-header">
+    <div class="container">
+      <div class="search-input-wrap">
+        <i class="bi bi-search search-input-icon"></i>
+        <input type="search" id="searchInput" class="search-input"
+               placeholder="搜索文章 / 标签 / 闪念…" autocomplete="off"
+               aria-label="搜索关键词">
+        <kbd class="search-input-kbd">ESC</kbd>
+        <button type="button" class="btn-close search-input-close"
+                data-bs-dismiss="offcanvas" aria-label="关闭"></button>
+      </div>
+    </div>
+  </div>
+  <div class="offcanvas-body search-panel-body">
+    <div class="container">
+      <div id="searchResults" class="search-results" aria-live="polite">
+        <div class="search-empty">
+          <i class="bi bi-search search-empty-icon"></i>
+          <p>输入关键词开始搜索</p>
+          <p class="search-empty-hint">支持文章标题、摘要、标签、闪念内容</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

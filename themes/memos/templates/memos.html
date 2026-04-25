@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}{{ theme_config.memosTitle|default:"闪念" }} · {{ config.siteName }}{% endblock %}
+{% block meta_description %}{{ theme_config.memosDescription|default:"短文 / 灵感 / 片段。" }}{% endblock %}
+{% block body_class %}page-memos{% endblock %}
+{% block og_url %}/memos/{% endblock %}
+
+{% block main %}
+<div class="container">
+  <header class="cat_info_top memos-header">
+    <h1 class="cat_info_top_title"><i class="bi bi-lightning"></i> {{ theme_config.memosTitle|default:"闪念" }}</h1>
+    {% if theme_config.memosDescription %}
+      <p class="cat_info_top_desc">{{ theme_config.memosDescription }}</p>
+    {% endif %}
+  </header>
+
+  {% if theme_config.enableMemosHeatmap %}
+    {% include "partials/heatmap.html" %}
+  {% endif %}
+
+  <section class="index-area">
+    <div class="row g-3">
+      <div class="{% if theme_config.showSidebar %}col-lg-9{% else %}col-12{% endif %}">
+
+        <ol class="memos-timeline" id="memosTimeline">
+          {% set memoCount = 0 %}
+          {% for post in posts %}
+            {% set isMemo = false %}
+            {% for tag in post.tags %}{% if tag.name == theme_config.memosTag %}{% set isMemo = true %}{% endif %}{% endfor %}
+            {% if isMemo %}
+              <li class="memo-item" data-memo-date="{{ post.date }}">
+                <div class="memo-marker"><span class="memo-marker-dot"></span></div>
+                <article class="memo-card post_def">
+                  <header class="memo-card-head">
+                    <time class="memo-card-time"><i class="bi bi-clock"></i> {{ post.date }}</time>
+                    {% if post.tags|length > 1 %}
+                      <span class="memo-card-tags">
+                        {% for tag in post.tags %}
+                          {% if tag.name != theme_config.memosTag %}
+                            <a href="{{ tag.link }}" class="memo-tag">#{{ tag.name }}</a>
+                          {% endif %}
+                        {% endfor %}
+                      </span>
+                    {% endif %}
+                  </header>
+                  <div class="memo-card-body wznrys">{{ post.content|safe }}</div>
+                  <footer class="memo-card-foot">
+                    <a href="{{ post.link }}" class="memo-card-permalink">
+                      <i class="bi bi-link-45deg"></i> 永久链接
+                    </a>
+                  </footer>
+                </article>
+              </li>
+            {% endif %}
+          {% endfor %}
+        </ol>
+
+        {# 闪念为空时的占位 #}
+        <div id="memosEmpty" class="memos-empty" hidden>
+          <i class="bi bi-cloud"></i>
+          <p>还没有标签为 <code>{{ theme_config.memosTag }}</code> 的内容。</p>
+          <p class="memos-empty-hint">在写文章时打上这个标签，它就会出现在这里。</p>
+        </div>
+      </div>
+
+      {% if theme_config.showSidebar %}
+        {% include "partials/sidebar.html" %}
+      {% endif %}
+    </div>
+  </section>
+</div>
+
+{# 把闪念日期数组传给 main.js，用于热力图密度计算 #}
+<script id="memo-dates-data" type="application/json">
+[{% for post in posts %}{% set isMemo = false %}{% for tag in post.tags %}{% if tag.name == theme_config.memosTag %}{% set isMemo = true %}{% endif %}{% endfor %}{% if isMemo %}{{ post.date|to_json|safe }},{% endif %}{% endfor %}null]
+</script>
+<script>
+(function(){
+  try {
+    var el = document.getElementById('memo-dates-data');
+    var arr = el ? JSON.parse(el.textContent) : [];
+    window.__memoDates = arr.filter(function(x){ return !!x; });
+    if (window.__memoDates.length === 0) {
+      var empty = document.getElementById('memosEmpty');
+      var line = document.getElementById('memosTimeline');
+      if (empty) empty.hidden = false;
+      if (line) line.style.display = 'none';
+    }
+  } catch (e) {
+    console.warn('memo-dates parse failed:', e);
+    window.__memoDates = [];
+  }
+})();
+</script>
+{% endblock %}

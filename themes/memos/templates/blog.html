@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}博客 · {{ config.siteName }}{% endblock %}
+{% block body_class %}page-blog{% endblock %}
+{% block og_url %}/blog/{% endblock %}
+
+{% block main %}
+<div class="container">
+  <header class="cat_info_top">
+    <h1 class="cat_info_top_title"><i class="bi bi-journal-text"></i> 博客</h1>
+    <p class="cat_info_top_desc">所有文章，按发布时间倒序排列。</p>
+  </header>
+
+  <section class="index-area">
+    <div class="row g-3">
+      <div class="{% if theme_config.showSidebar %}col-lg-9{% else %}col-12{% endif %}">
+        <div class="post-list">
+          {% for post in posts %}
+            {% if not post.hideInList %}
+              {% include "partials/post-card.html" %}
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        {% include "partials/pagination.html" %}
+      </div>
+
+      {% if theme_config.showSidebar %}
+        {% include "partials/sidebar.html" %}
+      {% endif %}
+    </div>
+  </section>
+</div>
+{% endblock %}

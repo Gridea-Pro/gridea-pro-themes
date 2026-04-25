@@ -1,0 +1,71 @@
+{% if theme_config.showLinksBar and links and links|length > 0 %}
+<section class="links mobile_none">
+  <div class="container">
+    <div class="links-inner">
+      <span class="links-label"><i class="bi bi-bookmark-star"></i> 友情链接</span>
+      <div class="links-list">
+        {% for link in links %}
+          <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" title="{% if link.desc %}{{ link.desc }}{% else %}{{ link.name }}{% endif %}">{{ link.name }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<footer class="footer">
+  <div class="footbox">
+    <div class="container">
+      <div class="footer-row">
+        <div class="footer-col footer-info">
+          {% if config.logo %}
+            <img src="{{ config.logo }}" alt="{{ config.siteName }}" class="footer-logo">
+          {% elif config.avatar %}
+            <img src="{{ config.avatar }}" alt="{{ config.siteName }}" class="footer-logo">
+          {% endif %}
+          <div class="footer-meta">
+            <h5>{{ config.siteName }}</h5>
+            {% if config.siteDescription %}<p>{{ config.siteDescription }}</p>{% endif %}
+          </div>
+        </div>
+
+        <div class="footer-col footer-nav">
+          <h6>导航</h6>
+          <ul>
+            <li><a href="/">首页</a></li>
+            <li><a href="/archives/">归档</a></li>
+            <li><a href="/categories/">分类</a></li>
+            <li><a href="/tags/">标签</a></li>
+            <li><a href="/memos/">闪念</a></li>
+            <li><a href="/links/">友链</a></li>
+            <li><a href="/about/">关于</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-social">
+          <h6>关注</h6>
+          <div class="social-icons">
+            {% if theme_config.githubUrl %}<a href="{{ theme_config.githubUrl }}" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><i class="bi bi-github"></i></a>{% endif %}
+            {% if theme_config.twitterUrl %}<a href="{{ theme_config.twitterUrl }}" target="_blank" rel="noopener" aria-label="Twitter" title="Twitter"><i class="bi bi-twitter-x"></i></a>{% endif %}
+            {% if theme_config.weiboUrl %}<a href="{{ theme_config.weiboUrl }}" target="_blank" rel="noopener" aria-label="Weibo" title="微博"><i class="bi bi-sina-weibo"></i></a>{% endif %}
+            {% if theme_config.emailAddress %}<a href="mailto:{{ theme_config.emailAddress }}" aria-label="Email" title="Email"><i class="bi bi-envelope"></i></a>{% endif %}
+            {% if theme_config.rssUrl %}<a href="{{ theme_config.rssUrl }}" target="_blank" rel="noopener" aria-label="RSS" title="RSS"><i class="bi bi-rss"></i></a>{% endif %}
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        {% if theme_config.footerCopyright %}<span class="footer-copyright">{{ theme_config.footerCopyright }}</span>{% endif %}
+        {% if theme_config.icpBeian %}
+          <span class="footer-icp">
+            <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">{{ theme_config.icpBeian }}</a>
+          </span>
+        {% endif %}
+        <span class="footer-credit">
+          Theme <a href="https://github.com/Gridea-Pro/gridea-pro-themes" target="_blank" rel="noopener">memos</a>
+          on <a href="https://github.com/Gridea-Pro/gridea-pro" target="_blank" rel="noopener">Gridea Pro</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</footer>
