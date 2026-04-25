@@ -1,0 +1,11 @@
+{# 文章详情上下篇（客户端 JS 从 search-index 推断填充） #}
+<div class="bg-auto px-3 py-3 rounded text-dark-emphasis" id="post-nav" data-current="{{ post.link }}">
+  <div class="row gap-3 gap-lg-0">
+    <div class="col-lg-6 col-md-12">
+      上一篇：<a href="#" data-role="prev" class="post-nav-link" hidden>--</a><span data-role="prev-empty" class="text-body-tertiary">没有了</span>
+    </div>
+    <div class="col-lg-6 col-md-12 text-start text-lg-end">
+      下一篇：<a href="#" data-role="next" class="post-nav-link" hidden>--</a><span data-role="next-empty" class="text-body-tertiary">没有了</span>
+    </div>
+  </div>
+</div>

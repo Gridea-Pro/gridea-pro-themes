@@ -1,0 +1,23 @@
+{# 最近文章（替代原"热门文章"） #}
+<div class="container-fluid p-4 mt-3 border-bottom border-light-subtle">
+  <div class="row gap-2">
+    <div class="col-12">
+      <div class="col-12 d-flex gap-1 align-content-center"><i class="ti ti-chart-bar lh-base"></i><h6 class="lh-base mb-0">最近文章</h6></div>
+    </div>
+    <div class="col-12">
+      <div class="text-body-secondary" style="line-height: 32px">
+        <ul class="list-group list-group-flush">
+          {% if posts %}
+            {% for rp in posts %}
+              {% if loop.index <= 7 %}
+              <li class="list-group-item p-0 border-0 text-truncate"><a href="{{ rp.link }}" title="{{ rp.title }}">{{ rp.title }}</a></li>
+              {% endif %}
+            {% endfor %}
+          {% else %}
+            <li class="list-group-item p-0 border-0 text-body-tertiary">暂无文章</li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

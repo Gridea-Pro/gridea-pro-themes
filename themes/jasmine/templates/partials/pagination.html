@@ -1,0 +1,17 @@
+{# 分页 #}
+{% if pagination and (pagination.prev or pagination.next) %}
+<nav aria-label="分页">
+  <ul class="pagination justify-content-center column-gap-3 mt-4" id="pagination">
+    {% if pagination.prev %}
+      <li class="page-item"><a class="page-link border-0" href="{{ pagination.prev }}" rel="prev"><i class="ti ti-chevron-left me-1"></i>上一页</a></li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link border-0"><i class="ti ti-chevron-left me-1"></i>上一页</span></li>
+    {% endif %}
+    {% if pagination.next %}
+      <li class="page-item"><a class="page-link border-0" href="{{ pagination.next }}" rel="next">下一页<i class="ti ti-chevron-right ms-1"></i></a></li>
+    {% else %}
+      <li class="page-item disabled"><span class="page-link border-0">下一页<i class="ti ti-chevron-right ms-1"></i></span></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}

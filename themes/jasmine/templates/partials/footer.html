@@ -1,0 +1,14 @@
+{# 页脚（在主容器外） #}
+<div class="container text-body-tertiary">
+  <div class="row">
+    <div class="col-12 d-flex column-gap-2 flex-wrap">
+      <span><i class="ti ti-copyright"></i> {{ config.siteName }}. All Rights Reserved.</span>
+      {% if theme_config.footerExtra %}<span>{{ theme_config.footerExtra|safe }}</span>{% endif %}
+    </div>
+    {% if theme_config.footerIcp %}
+    <div class="col-12 mt-1">
+      {{ theme_config.footerIcp|safe }}
+    </div>
+    {% endif %}
+  </div>
+</div>

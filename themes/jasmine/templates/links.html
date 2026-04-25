@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}友情链接 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+{# 友链来源双兼容：优先 theme_config.links（真实运行时），回退 links（mock） #}
+{% set _links = theme_config.links %}
+{% if not _links %}{% set _links = links %}{% endif %}
+
+<div class="card border-0 py-3 col-12">
+  <div class="card-body p-0">
+    <h3 class="d-flex align-items-center gap-2 pb-3 border-bottom border-light-subtle"><i class="ti ti-friends text-primary"></i>友情链接<small class="text-body-tertiary fs-6">· {% if _links %}{{ _links|length }}{% else %}0{% endif %} 个</small></h3>
+    <div class="row g-3 pt-3">
+      {% if _links and _links|length > 0 %}
+        {% for fl in _links %}
+          {% set _name = fl.siteName %}{% if not _name %}{% set _name = fl.name %}{% endif %}
+          {% set _href = fl.siteLink %}{% if not _href %}{% set _href = fl.url %}{% endif %}
+          {% set _desc = fl.description %}{% if not _desc %}{% set _desc = fl.desc %}{% endif %}
+          {% set _avatar = fl.avatar %}{% if not _avatar %}{% set _avatar = "/media/images/default-avatar.svg" %}{% endif %}
+        <div class="col-md-6 col-lg-4">
+          <a class="d-flex align-items-center column-gap-3 p-3 rounded text-decoration-none flink-item border border-light-subtle h-100" href="{{ _href }}" target="_blank" rel="noopener">
+            <img class="rounded flex-shrink-0" src="{{ _avatar }}" alt="{{ _name }}" width="48" height="48" loading="lazy" onerror="this.onerror=null;this.src='/media/images/default-avatar.svg';">
+            <div class="overflow-hidden">
+              <h5 class="fs-6 mb-1 text-truncate">{{ _name }}</h5>
+              {% if _desc %}<p class="text-body-tertiary small mb-0 text-truncate">{{ _desc }}</p>{% endif %}
+            </div>
+          </a>
+        </div>
+        {% endfor %}
+      {% else %}
+        <div class="col-12 text-center text-body-tertiary py-4"><p>还没有友链。打开 Gridea Pro 的「友情链接」面板添加吧。</p></div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{# 首页 / 列表的标准文章卡片，依赖父级 set 的 card_post #}
+{% set p = card_post %}
+<article class="card border-0 py-3 col-12 block border-bottom border-light-subtle" itemscope="itemscope" itemtype="http://schema.org/Article">
+  <div class="d-flex column-gap-2 overflow-hidden">
+    <div class="card-body p-0 d-flex flex-column justify-content-between row-gap-1">
+      <h3 class="card-title fs-5 fw-normal" itemprop="headline">
+        <a href="{{ p.link }}" title="{{ p.title }}">{% if p.isTop %}<i class="ti ti-pinned text-primary me-1" title="置顶"></i>{% endif %}{{ p.title }}</a>
+      </h3>
+      <p class="card-text more text-body-secondary" itemprop="about">{{ p.content|excerpt:"140"|striptags }}</p>
+      <p class="card-text">
+        <small class="text-body-tertiary">
+          {% if p.tags|length > 0 %}{% for t in p.tags %}<a href="{{ t.link }}" class="text-body-tertiary">{{ t.name }}</a>{% if not loop.last %},{% endif %}{% endfor %} · {% endif %}
+          <time>{{ p.date }}</time>
+        </small>
+      </p>
+    </div>
+    {% if p.feature and theme_config.indexCoverEnable and theme_config.indexCoverEnable != "false" %}
+    <a href="{{ p.link }}" class="rounded ms-auto border border-light-subtle thumbnail d-none d-lg-block" title="{{ p.title }}" style="background-image: url('{{ p.feature }}')"></a>
+    {% endif %}
+  </div>
+  <meta itemprop="author" content="{{ config.siteName }}">
+  <meta itemprop="publisher" content="{{ config.siteName }}">
+  <meta itemprop="datePublished" content="{{ p.date }}">
+</article>

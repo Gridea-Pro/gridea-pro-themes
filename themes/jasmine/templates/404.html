@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}页面未找到 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="card border-0 py-5 col-12 text-center">
+  <div class="card-body p-0">
+    <h1 class="display-1 fw-bold text-primary mb-3" style="opacity:.85;letter-spacing:-4px;">404</h1>
+    <p class="fs-4 mb-2">页面未找到</p>
+    <p class="text-body-tertiary mb-4">这个页面可能被风吹走了</p>
+    <div class="d-flex column-gap-2 justify-content-center flex-wrap row-gap-2">
+      <a class="btn btn-primary d-inline-flex align-items-center column-gap-2" href="/"><i class="ti ti-home"></i>回到首页</a>
+      <a class="btn btn-outline-secondary d-inline-flex align-items-center column-gap-2" href="/archives/"><i class="ti ti-archive"></i>看看归档</a>
+      <a class="btn btn-outline-secondary d-inline-flex align-items-center column-gap-2" href="/links/"><i class="ti ti-link"></i>逛逛友链</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

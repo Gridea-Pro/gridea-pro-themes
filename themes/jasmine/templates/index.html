@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% set page_active = "index" %}
+
+{% block content %}
+<div id="index-content" class="d-flex flex-column">
+  {% if posts and posts|length > 0 %}
+    {% for p in posts %}
+      {% if not p.hideInList %}
+        {% set card_post = p %}
+        {% if theme_config.indexLayout == "moment" %}
+          {% include "partials/post-card-moment.html" %}
+        {% else %}
+          {% include "partials/post-card.html" %}
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    <div class="card border-0 py-5 text-center text-body-tertiary">
+      <i class="ti ti-book-2 fs-1 mb-2"></i>
+      <p>这里还没有文章，先去 Gridea Pro 写一篇吧。</p>
+    </div>
+  {% endif %}
+</div>
+{% include "partials/pagination.html" %}
+{% endblock %}

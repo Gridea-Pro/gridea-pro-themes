@@ -1,0 +1,47 @@
+{# 顶栏 navbar：sticky-top + 毛玻璃 + 菜单 + 搜索 #}
+<nav class="navbar navbar-expand-lg border-bottom py-0 fw-medium sticky-top navbar-background border-light-subtle bg-body bg-opacity-75">
+  <div class="container-fluid p-lg-4 px-4 py-3" itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+    {# 移动端 brand #}
+    <a class="navbar-brand d-block d-lg-none nav-link p-0 d-flex align-items-center justify-content-center column-gap-1" href="/">
+      {% if theme_config.logoUrl %}<img src="{{ theme_config.logoUrl }}" alt="{{ config.siteName }}" width="42" height="42" class="d-inline-block align-text-top rounded">{% endif %}
+      {{ config.siteName }}
+    </a>
+    <div class="d-flex d-block d-lg-none">
+      <a class="nav-link p-0 d-flex align-items-center justify-content-center" data-action="toggle-theme" href="javascript:void(0)" aria-label="切换模式"><i class="ti ti-sun-moon px-3 py-1 rounded fs-5"></i></a>
+      <button class="navbar-toggler border-0 pe-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobile-navbar" aria-controls="mobile-navbar" aria-label="打开菜单">
+        <i class="ti ti-menu-2 fs-4"></i>
+      </button>
+    </div>
+
+    <div class="collapse navbar-collapse pt-3 pt-lg-0 overflow-x-auto" id="navbarNav">
+      <ul class="navbar-nav column-gap-5 me-auto flex-lg-wrap flex-nowrap list-group-horizontal" id="navbarNavLeft">
+        <li class="nav-item">
+          <a class="nav-link px-0 py-0 text-nowrap{% if page_active == 'index' %} active{% endif %}" href="/">首页</a>
+        </li>
+        {% if menus %}
+          {% for menu in menus %}
+            <li class="nav-item">
+              <a class="nav-link px-0 py-0 text-nowrap" href="{{ menu.link }}">{{ menu.name }}</a>
+            </li>
+          {% endfor %}
+        {% else %}
+          <li class="nav-item"><a class="nav-link px-0 py-0 text-nowrap" href="/archives/">归档</a></li>
+          <li class="nav-item"><a class="nav-link px-0 py-0 text-nowrap" href="/categories/">分类</a></li>
+          <li class="nav-item"><a class="nav-link px-0 py-0 text-nowrap" href="/tags/">标签</a></li>
+          <li class="nav-item"><a class="nav-link px-0 py-0 text-nowrap" href="/memos/">闪念</a></li>
+          <li class="nav-item"><a class="nav-link px-0 py-0 text-nowrap" href="/links/">友链</a></li>
+          <li class="nav-item"><a class="nav-link px-0 py-0 text-nowrap" href="/about/">关于</a></li>
+        {% endif %}
+      </ul>
+      {% if theme_config.searchEnable and theme_config.searchEnable != "false" %}
+      <ul class="nav column-gap-4 ms-auto d-none d-lg-block">
+        <li class="nav-item">
+          <a class="nav-link p-0 d-flex align-items-center justify-content-center px-2 py-2 rounded-circle" id="form-search-icon" data-action="open-search" href="javascript:void(0)" title="搜索（Cmd/Ctrl+K）" aria-label="搜索">
+            <i class="ti ti-search"></i>
+          </a>
+        </li>
+      </ul>
+      {% endif %}
+    </div>
+  </div>
+</nav>

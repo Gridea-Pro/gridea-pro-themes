@@ -1,0 +1,20 @@
+{# 右栏：站点描述 + widgets #}
+<div class="col-lg-3 sticky-bottom d-none d-lg-block border-start border-light-subtle" id="right">
+  {% if theme_config.widgetSiteInfo and theme_config.widgetSiteInfo != "false" %}
+  <div class="container-fluid p-4 border-bottom border-light-subtle">
+    <div class="row gap-2">
+      <div class="col-12">
+        <p class="text-body-secondary mb-0 fs-6 py-1">
+          {% if config.siteDescription %}{{ config.siteDescription }}{% else %}{{ config.siteName }}{% endif %}
+        </p>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  <div class="sticky-top">
+    {% if theme_config.widgetRecent and theme_config.widgetRecent != "false" %}{% include "partials/widget-recent.html" %}{% endif %}
+    {% if theme_config.widgetTags and theme_config.widgetTags != "false" %}{% include "partials/widget-tags.html" %}{% endif %}
+    {% if theme_config.widgetLinks and theme_config.widgetLinks != "false" %}{% include "partials/widget-links.html" %}{% endif %}
+    {% if theme_config.widgetSiteLinks and theme_config.widgetSiteLinks != "false" %}{% include "partials/widget-site-links.html" %}{% endif %}
+  </div>
+</div>

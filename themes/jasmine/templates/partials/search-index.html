@@ -1,0 +1,18 @@
+{# 客户端搜索索引 - 用 data-* 属性承载数据，避开 to_json filter
+   优点：HTML attribute 自动 HTML-escape，Pongo2 / Python Jinja2 都能正确处理 #}
+<div id="search-index-data" hidden>
+  {% if posts %}
+    {% for sp in posts %}
+      {% if not sp.hideInList %}
+      <article
+        data-link="{{ sp.link }}"
+        data-title="{{ sp.title }}"
+        data-date="{{ sp.date }}"
+        data-feature="{% if sp.feature %}{{ sp.feature }}{% endif %}"
+        data-tags="{% for t in sp.tags %}{{ t.name }}{% if not loop.last %}|{% endif %}{% endfor %}"
+        data-excerpt="{{ sp.content|strip_html|truncatechars:"200" }}"
+      ></article>
+      {% endif %}
+    {% endfor %}
+  {% endif %}
+</div>

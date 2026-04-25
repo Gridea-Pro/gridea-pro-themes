@@ -1,0 +1,61 @@
+{
+  "name": "jasmine",
+  "version": "1.0.0",
+  "description": "Jasmine 主题 - Bootstrap 5 + Tabler Icons 三栏极简布局，复刻自 liaocp666/Jasmine（Typecho）",
+  "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "author": "Kent Liao (Origin) / Gridea Pro Theme Team (Port)",
+  "license": "GPL-3.0",
+  "preview": "/media/preview.png",
+  "customConfig": [
+    { "name": "logoUrl", "label": "站点 Logo", "group": "基础", "value": "", "type": "input", "note": "左竖栏与移动端 navbar 显示的小图标，留空则不显示。建议方形 PNG/SVG" },
+
+    { "name": "primaryColor", "label": "主色调（RGB）", "group": "外观", "value": "13, 110, 253", "type": "input", "note": "用 RGB 三段数字（不要 #）。默认 Bootstrap 蓝。例：220, 53, 69 紫红 / 25, 135, 84 绿" },
+    { "name": "primaryBgAlpha", "label": "主色背景透明度", "group": "外观", "value": "0.2", "type": "input", "note": "链接 hover 高亮条 / 标签按钮的底色不透明度，0~1" },
+    { "name": "lightBg", "label": "浅色模式背景（RGB）", "group": "外观", "value": "245, 245, 244", "type": "input", "note": "页面外部的米色背景。例：250, 250, 250 / 247, 248, 249" },
+    { "name": "darkBg", "label": "深色模式背景（RGB）", "group": "外观", "value": "10, 12, 25", "type": "input" },
+    { "name": "fontFamily", "label": "全站字体栈", "group": "外观", "value": "MiSans VF, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, PingFang SC, Microsoft YaHei, sans-serif", "type": "input", "note": "中英文字体回退栈" },
+    { "name": "fontCdn", "label": "MiSans 字体 CDN", "group": "外观", "value": "https://cdn.jsdelivr.net/gh/Sec-ant/MiSans-VF/dist/MiSansVF.woff2", "type": "input", "note": "留空则不加载，仅用系统字体栈。MiSans VF 为小米开源字体" },
+    { "name": "defaultTheme", "label": "默认配色", "group": "外观", "value": "auto", "type": "radio", "options": [
+      { "label": "跟随系统", "value": "auto" },
+      { "label": "始终浅色", "value": "light" },
+      { "label": "始终深色", "value": "dark" }
+    ], "note": "用户首次访问时使用" },
+
+    { "name": "indexLayout", "label": "首页文章布局", "group": "首页", "value": "default", "type": "radio", "options": [
+      { "label": "标准（左标题/摘要 + 右缩略图）", "value": "default" },
+      { "label": "闪念风（无标题、对话气泡）", "value": "moment" }
+    ], "note": "原主题按 postType 字段分两种卡片样式，移植版按全局开关或文章 frontmatter 控制" },
+    { "name": "indexCoverEnable", "label": "首页卡片显示缩略图", "group": "首页", "value": "true", "type": "switch" },
+    { "name": "excerptLength", "label": "首页摘要长度（字数）", "group": "首页", "value": "70", "type": "input", "note": "实际写死 100 字符（受工具限制），此项仅用于 GUI 提示" },
+
+    { "name": "navCategoryNum", "label": "顶栏显示前 N 个分类", "group": "顶栏", "value": "5", "type": "input", "note": "Gridea Pro 的 menus 已扁平，此项仅 GUI 提示，实际生效靠菜单设置" },
+    { "name": "leftRailEnable", "label": "左竖栏（图标导航）", "group": "顶栏", "value": "true", "type": "switch", "note": "PC 端显示，移动端始终隐藏改为 offcanvas" },
+    { "name": "searchEnable", "label": "全局搜索", "group": "顶栏", "value": "true", "type": "switch" },
+
+    { "name": "rightRailEnable", "label": "右栏 widgets", "group": "侧栏", "value": "true", "type": "switch" },
+    { "name": "widgetSiteInfo", "label": "侧栏 - 站点描述", "group": "侧栏", "value": "true", "type": "switch" },
+    { "name": "widgetRecent", "label": "侧栏 - 最近文章", "group": "侧栏", "value": "true", "type": "switch", "note": "替代原主题热门文章 widget（Gridea Pro 无浏览数据）" },
+    { "name": "widgetTags", "label": "侧栏 - 热门标签", "group": "侧栏", "value": "true", "type": "switch" },
+    { "name": "widgetLinks", "label": "侧栏 - 友情链接", "group": "侧栏", "value": "true", "type": "switch" },
+    { "name": "widgetSiteLinks", "label": "侧栏 - 网站链接（RSS / Sitemap）", "group": "侧栏", "value": "true", "type": "switch" },
+
+    { "name": "tocEnable", "label": "文章页 TOC", "group": "增强", "value": "true", "type": "switch", "note": "客户端 JS 解析 h1-h6 自动生成" },
+    { "name": "readingProgress", "label": "顶部阅读进度条", "group": "增强", "value": "false", "type": "switch" },
+    { "name": "codeCopy", "label": "代码块复制按钮", "group": "增强", "value": "true", "type": "switch" },
+    { "name": "scrollToTop", "label": "回到顶部按钮", "group": "增强", "value": "true", "type": "switch" },
+    { "name": "viewsScript", "label": "访问统计脚本（如不蒜子）", "group": "增强", "value": "", "type": "textarea", "note": "粘贴第三方统计脚本，留空则关闭" },
+
+    { "name": "memosBgImg", "label": "闪念页顶图（可选）", "group": "闪念", "value": "", "type": "input" },
+    { "name": "heatmapEnable", "label": "闪念热力图", "group": "闪念", "value": "true", "type": "switch" },
+
+    { "name": "footerExtra", "label": "页脚附加 HTML", "group": "页脚", "value": "<a href=\"https://github.com/Gridea-Pro/gridea-pro\" rel=\"nofollow\" target=\"_blank\">Powered by Gridea Pro · Theme Jasmine</a>", "type": "textarea" },
+    { "name": "footerIcp", "label": "备案号 / 版权附加", "group": "页脚", "value": "", "type": "input" },
+
+    { "name": "injectHead", "label": "注入 <head>", "group": "高级", "value": "", "type": "textarea" },
+    { "name": "injectBody", "label": "注入 </body> 之前", "group": "高级", "value": "", "type": "textarea" },
+    { "name": "customCss", "label": "自定义 CSS", "group": "高级", "value": "", "type": "textarea" },
+    { "name": "customJs", "label": "自定义 JS", "group": "高级", "value": "", "type": "textarea" }
+  ]
+}

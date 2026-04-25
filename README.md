@@ -16,6 +16,7 @@
 |---|---|---|
 | **bitcron-pro** | Jinja2 (Pongo2) | Bitcron 风格博客主题，支持博客/闪念/友链页面 |
 | **liushen** | Jinja2 (Pongo2) | 柳神（Butterfly 衍生）风格双栏粉蓝渐变主题，复刻自 willow-god/hexo-theme-liushen |
+| **jasmine** | Jinja2 (Pongo2) | Bootstrap 5 + Tabler Icons 三栏极简博客主题，复刻自 liaocp666/Jasmine（Typecho） |
 
 <!-- GALLERY:END -->
 
