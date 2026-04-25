@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f7f3f7"/>
+      <stop offset="100%" stop-color="#e9e4ea"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="600" fill="url(#g)"/>
+  <g fill="#bbb" font-family="-apple-system, PingFang SC, Microsoft YaHei, sans-serif" text-anchor="middle">
+    <text x="600" y="305" font-size="72" font-weight="200" letter-spacing="6">Initial</text>
+    <text x="600" y="360" font-size="20" letter-spacing="8">简约而不简单</text>
+  </g>
+</svg>

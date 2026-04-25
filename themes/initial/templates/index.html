@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% for post in posts %}
+{% if not post.hideInList %}
+{% include "partials/post-card.html" %}
+{% endif %}
+{% endfor %}
+{% include "partials/pagination.html" %}
+{% endblock %}

@@ -1,0 +1,12 @@
+<div id="cornertool">
+<ul>
+{% if theme_config.showCornerTop %}
+<li id="top" class="hidden" aria-label="返回顶部" title="返回顶部"></li>
+{% endif %}
+{% if theme_config.showThemeToggle %}
+<li id="themetoggle" aria-label="切换深浅模式" title="切换深浅模式"></li>
+{% endif %}
+<li id="cornersearch" data-search-open aria-label="站内搜索" title="站内搜索"></li>
+{% block corner_extra %}{% endblock %}
+</ul>
+</div>

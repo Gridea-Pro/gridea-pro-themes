@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}关于 - {{ config.siteName }}{% endblock %}
+{% block og_title %}关于 - {{ config.siteName }}{% endblock %}
+
+{% block body_extra_class %} about-page{% endblock %}
+
+{% block content %}
+{% set breadcrumb_items = [{"label": "关于"}] %}
+{% include "partials/breadcrumbs.html" %}
+
+<article class="post">
+<h1 class="post-title">关于</h1>
+<div class="post-content">
+{% if config.avatar %}
+<p class="thumb"><img src="{{ config.avatar }}" alt="{{ config.siteName }}" style="max-width:140px;border-radius:50%;"></p>
+{% endif %}
+{% if config.siteDescription %}
+<p style="text-align:center;color:var(--in-fg-muted);">{{ config.siteDescription }}</p>
+{% endif %}
+<hr>
+<p>这里是「{{ config.siteName }}」。</p>
+<p>这是一个使用 <a href="https://gridea.pro" target="_blank" rel="noopener">Gridea Pro</a> 搭建、由 <strong>Initial</strong> 主题驱动的极简博客。</p>
+<p>原 Initial 主题为 <a href="https://github.com/jielive/initial" target="_blank" rel="noopener">JIElive</a> 为 Typecho 编写，遵循「<em>简约而不简单 · 还原本质 · 勿忘初心</em>」的设计理念。本主题是其 Jinja2 移植版。</p>
+<p>如果你也喜欢这种风格，欢迎在你自己的博客里把这个页面改成你的故事。</p>
+</div>
+</article>
+
+{% endblock %}

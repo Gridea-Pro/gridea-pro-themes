@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}归档 - {{ config.siteName }}{% endblock %}
+{% block og_title %}归档 - {{ config.siteName }}{% endblock %}
+
+{% block content %}
+{% set breadcrumb_items = [{"label": "归档"}] %}
+{% include "partials/breadcrumbs.html" %}
+
+<article class="post">
+<h1 class="post-title">归档</h1>
+<p class="taxonomy-summary">站点共有 {{ posts|length }} 篇文章。</p>
+<div id="archives">
+{% if archives and archives|length > 0 %}
+{% for year_block in archives %}
+<h3>{{ year_block.year }} 年</h3>
+<ul>
+{% for post in year_block.posts %}
+<li>{{ post.date|date:"01/02" }}：<a href="{{ post.link }}">{{ post.title }}</a></li>
+{% endfor %}
+</ul>
+{% endfor %}
+{% else %}
+<ul>
+{% for post in posts %}
+<li>{{ post.dateFormat }}：<a href="{{ post.link }}">{{ post.title }}</a></li>
+{% endfor %}
+</ul>
+{% endif %}
+</div>
+</article>
+{% endblock %}

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+{# 防闪暗色：在 CSS 加载之前同步设置 data-theme #}
+<script>(function(){try{var m={% if theme_config.themeMode %}"{{ theme_config.themeMode }}"{% else %}"auto"{% endif %};var k="initial-theme";var s=null;try{s=localStorage.getItem(k);}catch(e){}var v="light";if(m==="dark")v="dark";else if(m==="light")v="light";else if(m==="user"){v=(s==="dark"||s==="light")?s:"light";}else{if(s==="dark"||s==="light"){v=s;}else if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches){v="dark";}}if(v==="dark")document.documentElement.setAttribute("data-theme","dark");}catch(e){}})();</script>
+
+<title>{% block title %}{{ config.siteName }}{% if theme_config.siteSubTitle %} - {{ theme_config.siteSubTitle }}{% endif %}{% endblock %}</title>
+
+{% if theme_config.favicon %}
+<link rel="shortcut icon" href="{{ theme_config.favicon }}">
+{% elif config.favicon %}
+<link rel="shortcut icon" href="{{ config.favicon }}">
+{% else %}
+<link rel="shortcut icon" href="/favicon.ico">
+{% endif %}
+
+<meta name="description" content="{% block meta_description %}{{ config.siteDescription }}{% endblock %}">
+<meta name="generator" content="Gridea Pro">
+<meta property="og:site_name" content="{{ config.siteName }}">
+<meta property="og:type" content="{% block og_type %}website{% endblock %}">
+<meta property="og:title" content="{% block og_title %}{{ config.siteName }}{% endblock %}">
+<meta property="og:description" content="{% block og_description %}{{ config.siteDescription }}{% endblock %}">
+{% block og_extra %}{% endblock %}
+
+<link rel="alternate" type="application/atom+xml" title="{{ config.siteName }} - Atom" href="/atom.xml">
+<link rel="stylesheet" href="/styles/main.css">
+
+{% block extra_head %}{% endblock %}
+
+{% if theme_config.customCSS %}
+<style>{{ theme_config.customCSS|safe }}</style>
+{% endif %}
+{% if theme_config.customHeadHtml %}
+{{ theme_config.customHeadHtml|safe }}
+{% endif %}
+</head>
+<body class="{% if theme_config.oneColumn %}one-col{% else %}bd{% endif %}{% if theme_config.headFixed %} head-fixed{% endif %}{% block body_extra_class %}{% endblock %}">
+
+{% include "partials/header.html" %}
+
+<div id="body">
+<div class="container clearfix">
+<div id="main">
+{% block content %}{% endblock %}
+</div>{# /#main #}
+{% if not theme_config.oneColumn %}
+{% include "partials/sidebar.html" %}
+{% endif %}
+</div>{# /.container #}
+</div>{# /#body #}
+
+{% include "partials/footer.html" %}
+
+{# 全屏搜索 modal #}
+{% include "partials/search-modal.html" %}
+
+{# 右下角浮动小工具 #}
+{% include "partials/cornertool.html" %}
+
+{# 文章详情页：浮动 TOC #}
+{% block toc_panel %}{% endblock %}
+
+{# 阅读进度条容器（仅文章页用，留空也无副作用） #}
+{% block reading_progress %}{% endblock %}
+
+{# 注入主题运行时配置给 main.js #}
+<script>
+window.__INITIAL_CFG__ = {
+  themeMode: "{% if theme_config.themeMode %}{{ theme_config.themeMode }}{% else %}auto{% endif %}",
+  siteUrl: "{{ config.domain }}"
+};
+</script>
+<script src="/scripts/main.js" defer></script>
+
+{% if theme_config.customBodyEndHtml %}
+{{ theme_config.customBodyEndHtml|safe }}
+{% endif %}
+
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

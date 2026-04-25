@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}友情链接 - {{ config.siteName }}{% endblock %}
+{% block og_title %}友情链接 - {{ config.siteName }}{% endblock %}
+
+{% block content %}
+{% set breadcrumb_items = [{"label": "友情链接"}] %}
+{% include "partials/breadcrumbs.html" %}
+
+<article class="post">
+<h1 class="post-title">友情链接</h1>
+<div class="post-content">
+{% if links and links|length > 0 %}
+<ul class="links">
+{% for link in links %}
+<li{% if link.avatar %} class="l_logo"{% endif %}>
+<a href="{{ link.siteLink }}" target="_blank" rel="noopener" title="{% if link.description %}{{ link.description }}{% else %}{{ link.siteName }}{% endif %}">
+{% if link.avatar %}<img src="{{ link.avatar }}" alt="{{ link.siteName }}">{% endif %}
+{{ link.siteName }}
+</a>
+</li>
+{% endfor %}
+</ul>
+{% else %}
+<p style="text-align:center;color:var(--in-fg-mute);padding:2em 0;">暂无友情链接</p>
+{% endif %}
+</div>
+</article>
+
+{% endblock %}

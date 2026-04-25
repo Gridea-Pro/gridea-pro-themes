@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}404 - 页面没找到 - {{ config.siteName }}{% endblock %}
+{% block og_title %}404 - 页面没找到{% endblock %}
+
+{% block content %}
+<div class="error-page">
+<h2 class="post-title">404 - 页面没找到</h2>
+<p>你要查看的页面已被转移或删除了</p>
+<p><a href="{{ config.domain }}/">&laquo; 返回首页</a></p>
+</div>
+{% endblock %}

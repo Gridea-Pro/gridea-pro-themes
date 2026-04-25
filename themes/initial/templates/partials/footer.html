@@ -1,0 +1,37 @@
+<footer id="footer">
+<div class="container">
+
+{% if links and links|length > 0 %}
+<ul class="links">
+{% for link in links %}
+{% if loop.index <= 12 %}
+<li><a href="{{ link.siteLink }}" target="_blank" rel="noopener">{{ link.siteName }}</a></li>
+{% endif %}
+{% endfor %}
+</ul>
+{% endif %}
+
+{% if theme_config.footerSlogan %}
+<p>{{ theme_config.footerSlogan|safe }}</p>
+{% endif %}
+
+<p>&copy; {{ now|date:"2006" }} <a href="{{ config.domain }}/">{{ config.siteName }}</a>{% if theme_config.footerShowPower %}. Powered by <a href="https://gridea.pro" target="_blank" rel="noopener">Gridea Pro</a> &amp; <a href="https://github.com/jielive/initial" target="_blank" rel="noopener">Initial</a>{% endif %}.</p>
+
+{% if theme_config.footerICP %}
+<p><a href="https://beian.miit.gov.cn" class="icpnum" target="_blank" rel="noopener noreferrer">{{ theme_config.footerICP }}</a></p>
+{% endif %}
+{% if theme_config.footerPolice %}
+<p><a href="http://www.beian.gov.cn/portal/registerSystemInfo" class="icpnum" target="_blank" rel="noopener noreferrer">{{ theme_config.footerPolice }}</a></p>
+{% endif %}
+
+{% if theme_config.viewsScript == "busuanzi" %}
+<p><span id="busuanzi_container_site_pv">本站总访问量 <span id="busuanzi_value_site_pv"></span> 次</span> · <span id="busuanzi_container_site_uv">访客 <span id="busuanzi_value_site_uv"></span> 人</span></p>
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+{% endif %}
+
+{% if theme_config.footerExtra %}
+{{ theme_config.footerExtra|safe }}
+{% endif %}
+
+</div>
+</footer>
