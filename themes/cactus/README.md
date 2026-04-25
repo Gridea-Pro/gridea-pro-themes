@@ -51,7 +51,7 @@
 
 ## 截图
 
-预览图位于 `assets/media/preview.png`（待补）。
+预览图：`assets/media/preview.png`（1200×800）。
 
 ## 致谢
 
