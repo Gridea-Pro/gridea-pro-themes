@@ -1,0 +1,21 @@
+{# 客户端搜索索引：把全站文章 dump 成 JSON，main.js 用它做匹配 #}
+<script id="search-index-data" type="application/json">
+{
+  "posts": [
+    {% if posts %}
+      {% for sp in posts %}
+        {% if not sp.hideInList %}
+        {
+          "title": {{ sp.title|to_json|safe }},
+          "link": {{ sp.link|to_json|safe }},
+          "date": {{ sp.date|to_json|safe }},
+          "feature": {{ sp.feature|to_json|safe }},
+          "tags": [{% for t in sp.tags %}{{ t.name|to_json|safe }}{% if not loop.last %},{% endif %}{% endfor %}],
+          "excerpt": {{ sp.content|strip_html|truncatechars:200|to_json|safe }}
+        }{% if not loop.last %},{% endif %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  ]
+}
+</script>

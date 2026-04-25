@@ -1,0 +1,16 @@
+{# 全屏搜索弹窗 #}
+<div id="search-modal" class="search-modal" hidden>
+  <div class="search-modal-backdrop" data-action="close-search"></div>
+  <div class="search-modal-panel">
+    <div class="search-modal-header">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input id="search-input" type="search" placeholder="搜索文章标题、标签、内容…" autocomplete="off" spellcheck="false">
+      <button class="search-modal-close" data-action="close-search" type="button" aria-label="关闭搜索"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="search-modal-body">
+      <ul id="search-results" class="search-results"></ul>
+      <div id="search-empty" class="search-empty" hidden>未找到匹配的内容</div>
+      <div id="search-tip" class="search-tip">输入关键词开始搜索，按 Esc 关闭</div>
+    </div>
+  </div>
+</div>

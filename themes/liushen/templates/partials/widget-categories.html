@@ -1,0 +1,21 @@
+{# 分类列表 #}
+<div class="card-widget card-categories">
+  <div class="item-headline"><i class="fa-solid fa-folder-open"></i><span>分类</span></div>
+  <ul class="card-category-list">
+    {% if categories and categories|length > 0 %}
+      {% for cat in categories %}
+        {% if loop.index <= 10 %}
+        <li class="card-category-list-item">
+          {% set _ccnt = cat.count %}{% if not _ccnt %}{% set _ccnt = 0 %}{% endif %}
+          <a class="card-category-list-link" href="{{ cat.link }}">
+            <span class="card-category-list-name">{{ cat.name }}</span>
+            <span class="card-category-list-count">{{ _ccnt }}</span>
+          </a>
+        </li>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <li class="aside-empty">暂无分类</li>
+    {% endif %}
+  </ul>
+</div>

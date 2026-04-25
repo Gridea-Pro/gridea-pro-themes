@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-index{% endblock %}
+{% block wrap_class %}wrap-index{% endblock %}
+{% block layout_class %}layout-with-aside layout-index{% endblock %}
+
+{% block page_header %}
+  {% set page_header_mode = "home" %}
+  {% set page_header_img = theme_config.defaultTopImg %}
+  {% include "partials/page-header.html" %}
+{% endblock %}
+
+{% block content %}
+<section id="recent-posts" class="recent-posts" data-layout="{{ theme_config.indexLayout|default:'alternate' }}">
+  <div class="recent-post-items">
+    {% if posts and posts|length > 0 %}
+      {% for p in posts %}
+        {% if not p.hideInList %}
+          {% set card_post = p %}
+          {% set card_index = loop.index0 %}
+          {% include "partials/post-card.html" %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <div class="empty-tip card-widget">
+        <i class="fa-solid fa-feather"></i>
+        <p>这里还没有文章，先去 Gridea Pro 写一篇吧</p>
+      </div>
+    {% endif %}
+  </div>
+  {% include "partials/pagination.html" %}
+</section>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% set _cname = "" %}
+{% if current_category %}{% set _cname = current_category %}{% elif category %}{% set _cname = category.name %}{% else %}{% set _cname = "分类" %}{% endif %}
+
+{% block title %}{{ _cname }} | {{ config.siteName }}{% endblock %}
+{% block body_class %}page-category{% endblock %}
+
+{% block page_header %}
+  {% set page_header_mode = "small" %}
+  {% set page_title = "📁" %}
+  {% set page_subtitle = _cname %}
+  {% include "partials/page-header.html" %}
+{% endblock %}
+
+{% block content %}
+<section class="category-detail card-widget">
+  <div class="item-headline"><i class="fa-solid fa-folder-open"></i><span>分类：{{ _cname }} · {% if posts %}{{ posts|length }}{% else %}0{% endif %} 篇</span></div>
+  <div class="article-sort">
+    {% if posts and posts|length > 0 %}
+      {% for group in posts|group_by:"year" %}
+      <div class="archive-year-block">
+        <h3 class="article-sort-item year">{{ group.key }}</h3>
+        <ul class="article-sort-list">
+          {% for ap in group.items %}
+          <li class="article-sort-item {% if not ap.feature %}no-article-cover{% endif %}">
+            {% if ap.feature %}
+            <a class="article-sort-item-img" href="{{ ap.link }}"><img src="{{ ap.feature }}" alt="{{ ap.title }}" loading="lazy"></a>
+            {% endif %}
+            <div class="article-sort-item-info">
+              <div class="article-sort-item-time"><i class="far fa-calendar-alt"></i> {{ ap.date }}</div>
+              <a class="article-sort-item-title" href="{{ ap.link }}">{{ ap.title }}</a>
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="aside-empty">该分类下暂无文章</div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

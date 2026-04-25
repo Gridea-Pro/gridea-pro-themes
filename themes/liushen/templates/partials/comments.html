@@ -1,0 +1,10 @@
+{# Gridea Pro 标准评论挂载点 #}
+<section id="post-comment" class="post-comment">
+  <div class="comment-headline">
+    <i class="fa-solid fa-comments"></i>
+    <span>评论</span>
+  </div>
+  <div id="gridea-comments" data-post-link="{% if post %}{{ post.link }}{% endif %}">
+    <p class="comment-loading"><i class="fa-solid fa-spinner fa-spin"></i> 评论组件加载中…</p>
+  </div>
+</section>

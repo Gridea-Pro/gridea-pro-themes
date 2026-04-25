@@ -1,0 +1,38 @@
+{# 首页 / 列表的文章卡片，依赖父级 set 的 card_post 与 card_index #}
+{% set p = card_post %}
+{% set i = card_index %}
+{% if not i %}{% set i = 0 %}{% endif %}
+{% set layout = theme_config.indexLayout|default:"alternate" %}
+{% set side = "" %}
+{% if layout == "right" %}{% set side = "right" %}{% elif layout == "alternate" %}{% if i % 2 == 0 %}{% set side = "left" %}{% else %}{% set side = "right" %}{% endif %}{% else %}{% set side = "left" %}{% endif %}
+
+<article class="recent-post-item">
+  {% if p.feature and theme_config.indexCoverEnable and theme_config.indexCoverEnable != "false" %}
+  <div class="post_cover {{ side }}">
+    <a href="{{ p.link }}" title="{{ p.title }}">
+      <img class="post-bg" src="{{ p.feature }}" alt="{{ p.title }}" loading="lazy" onerror="this.onerror=null;this.src='/media/images/default-cover.svg';">
+    </a>
+  </div>
+  <div class="recent-post-info">
+  {% else %}
+  <div class="recent-post-info no-cover">
+  {% endif %}
+    <a class="article-title" href="{{ p.link }}" title="{{ p.title }}">
+      {% if p.isTop %}<i class="fas fa-thumbtack sticky" title="置顶"></i>{% endif %}
+      {{ p.title }}
+    </a>
+    <div class="article-meta-wrap">
+      <span class="post-meta-date"><i class="far fa-calendar-alt"></i><time datetime="{{ p.date }}">{{ p.date }}</time></span>
+      {% if p.tags|length > 0 %}
+      <span class="article-meta-separator">|</span>
+      <span class="article-meta tags"><i class="fas fa-tag"></i>
+        {% for tag in p.tags %}<a class="article-meta__tags" href="{{ tag.link }}">{{ tag.name }}</a>{% if not loop.last %}<span class="article-meta-link">·</span>{% endif %}{% endfor %}
+      </span>
+      {% endif %}
+      <span class="article-meta-separator">|</span>
+      <span class="article-meta"><i class="far fa-clock"></i> {{ p.content|reading_time }} 分钟</span>
+    </div>
+    <div class="content">{{ p.content|excerpt:200|striptags }}</div>
+    <a class="article-readmore" href="{{ p.link }}" title="阅读全文">查看更多 <i class="fa-solid fa-angles-right"></i></a>
+  </div>
+</article>

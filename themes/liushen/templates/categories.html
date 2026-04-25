@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}分类 | {{ config.siteName }}{% endblock %}
+{% block body_class %}page-categories{% endblock %}
+
+{% block page_header %}
+  {% set page_header_mode = "small" %}
+  {% set page_title = "文章分类" %}
+  {% set page_subtitle = "用结构整理碎片" %}
+  {% include "partials/page-header.html" %}
+{% endblock %}
+
+{% block content %}
+<section class="categories-page card-widget">
+  <div class="item-headline"><i class="fa-solid fa-folder-open"></i><span>共 {% if categories %}{{ categories|length }}{% else %}0{% endif %} 个分类</span></div>
+  <ul class="categories-list">
+    {% if categories and categories|length > 0 %}
+      {% for cat in categories %}
+        {% set _catcnt = cat.count %}{% if not _catcnt %}{% set _catcnt = 0 %}{% endif %}
+        <li class="categories-list-item">
+          <a class="categories-list-link" href="{{ cat.link }}">
+            <span class="name">{{ cat.name }}</span>
+            <span class="count">{{ _catcnt }} 篇</span>
+          </a>
+        </li>
+      {% endfor %}
+    {% else %}
+      <li class="aside-empty">暂无分类</li>
+    {% endif %}
+  </ul>
+</section>
+{% endblock %}

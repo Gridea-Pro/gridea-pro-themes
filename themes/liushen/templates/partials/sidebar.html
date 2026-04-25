@@ -1,0 +1,13 @@
+{# 侧栏 widget 容器：按 customConfig 控开关 #}
+<aside id="aside-content" class="aside-content">
+  <div class="card-widget-wrap">
+    {% if theme_config.widgetAuthor and theme_config.widgetAuthor != "false" %}{% include "partials/widget-author.html" %}{% endif %}
+    {% if theme_config.widgetWelcome and theme_config.widgetWelcome != "false" %}{% include "partials/widget-welcome.html" %}{% endif %}
+    {% if theme_config.widgetAnnouncement and theme_config.widgetAnnouncement != "false" %}{% include "partials/widget-announcement.html" %}{% endif %}
+    {% if theme_config.widgetRecent and theme_config.widgetRecent != "false" %}{% include "partials/widget-recent.html" %}{% endif %}
+    {% if theme_config.widgetCategories and theme_config.widgetCategories != "false" %}{% include "partials/widget-categories.html" %}{% endif %}
+    {% if theme_config.widgetTags and theme_config.widgetTags != "false" %}{% include "partials/widget-tags.html" %}{% endif %}
+    {% if theme_config.widgetArchives and theme_config.widgetArchives != "false" %}{% include "partials/widget-archives.html" %}{% endif %}
+    {% if theme_config.widgetWebInfo and theme_config.widgetWebInfo != "false" %}{% include "partials/widget-webinfo.html" %}{% endif %}
+  </div>
+</aside>

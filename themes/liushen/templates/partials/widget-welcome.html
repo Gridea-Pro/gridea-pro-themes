@@ -1,0 +1,8 @@
+{# 欢迎卡 #}
+<div class="card-widget card-welcome">
+  <div class="item-headline"><i class="fa-solid fa-hand-sparkles"></i><span>嗨～</span></div>
+  <div class="welcome-content">
+    {% set welcome = theme_config.welcomeText|default:"很高兴你能来" %}
+    <p>{{ welcome|linebreaksbr|safe }}</p>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+{# 公告 #}
+<div class="card-widget card-announcement">
+  <div class="item-headline"><i class="fa-solid fa-bullhorn"></i><span>公告</span></div>
+  <div class="announcement-content">
+    {% set ann = theme_config.announcementText|default:"欢迎来访" %}
+    <p>{{ ann|linebreaksbr|safe }}</p>
+  </div>
+</div>

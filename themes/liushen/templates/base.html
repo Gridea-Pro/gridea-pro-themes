@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="auto" class="not-loaded">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="generator" content="Gridea Pro · Liushen Theme">
+  <title>{% block title %}{{ config.siteName }}{% if config.siteDescription %} - {{ config.siteDescription }}{% endif %}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{% if config.siteDescription %}{{ config.siteDescription }}{% else %}{{ config.siteName }}{% endif %}{% endblock %}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{% block og_title %}{{ config.siteName }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{% if config.siteDescription %}{{ config.siteDescription }}{% else %}{{ config.siteName }}{% endif %}{% endblock %}">
+  {% if config.avatar %}<meta property="og:image" content="{{ config.avatar }}">{% endif %}
+  {% if config.avatar %}<link rel="icon" href="{{ config.avatar }}" type="image/x-icon">{% endif %}
+  <link rel="alternate" type="application/atom+xml" title="{{ config.siteName }}" href="/atom.xml">
+
+  {% if theme_config.fontAwesomeCdn %}<link rel="stylesheet" href="{{ theme_config.fontAwesomeCdn }}" media="print" onload="this.media='all'">{% endif %}
+  <link rel="stylesheet" href="/styles/main.css">
+
+  <style id="liushen-theme-vars">
+    :root{
+      {% if theme_config.primaryColor %}--primary:{{ theme_config.primaryColor }};{% endif %}
+      {% if theme_config.accentColor %}--accent:{{ theme_config.accentColor }};{% endif %}
+      {% if theme_config.textColor %}--text:{{ theme_config.textColor }};{% endif %}
+      {% if theme_config.cardRadius %}--card-radius:{{ theme_config.cardRadius }}px;{% endif %}
+      {% if theme_config.bodyFont %}--body-font:{{ theme_config.bodyFont|safe }};{% endif %}
+      {% if theme_config.codeFont %}--code-font:{{ theme_config.codeFont|safe }};{% endif %}
+      {% if theme_config.sidebarGradient %}--sidebar-gradient:{{ theme_config.sidebarGradient|safe }};{% endif %}
+      {% if theme_config.bgImageLight %}--bg-image-light:url('{{ theme_config.bgImageLight }}');{% endif %}
+      {% if theme_config.bgImageDark %}--bg-image-dark:url('{{ theme_config.bgImageDark }}');{% endif %}
+    }
+  </style>
+  {% if theme_config.customCss %}<style id="liushen-custom-css">{{ theme_config.customCss|safe }}</style>{% endif %}
+
+  <script>
+    (function(){
+      var pref="{% if theme_config.defaultTheme %}{{ theme_config.defaultTheme }}{% else %}auto{% endif %}";
+      try{var saved=localStorage.getItem('liushen-theme');if(saved)pref=saved;}catch(e){}
+      var resolved=pref;
+      if(pref==='auto'){var h=new Date().getHours();resolved=(h>=6&&h<18)?'light':'dark';}
+      document.documentElement.setAttribute('data-theme',resolved);
+      document.documentElement.dataset.themePref=pref;
+    })();
+  </script>
+
+  {% block head_extra %}{% endblock %}
+  {% if theme_config.injectHead %}{{ theme_config.injectHead|safe }}{% endif %}
+</head>
+<body class="{% block body_class %}page-default{% endblock %}">
+
+  {% if theme_config.readingProgress and theme_config.readingProgress != "false" %}
+  <div id="reading-progress" aria-hidden="true"><span></span></div>
+  {% endif %}
+
+  <div id="web-bg" aria-hidden="true"></div>
+  <div id="sun-moon-cover" aria-hidden="true"></div>
+
+  {% include "partials/mobile-sidebar.html" %}
+  {% include "partials/header.html" %}
+
+  <div id="body-wrap" class="{% block wrap_class %}wrap-default{% endblock %}">
+    {% block page_header %}{% include "partials/page-header.html" %}{% endblock %}
+
+    <main id="content-inner" class="layout {% block layout_class %}layout-with-aside{% endblock %}">
+      <div id="content" class="content">
+        {% block content %}{% endblock %}
+      </div>
+      {% block aside %}
+        {% include "partials/sidebar.html" %}
+      {% endblock %}
+    </main>
+
+    <footer id="footer">
+      {% include "partials/footer.html" %}
+    </footer>
+  </div>
+
+  {% include "partials/rightside.html" %}
+  {% if theme_config.searchEnable and theme_config.searchEnable != "false" %}
+    {% include "partials/search-modal.html" %}
+    {% include "partials/search-index.html" %}
+  {% endif %}
+
+  {% set _defaultTheme = "auto" %}
+  {% if theme_config.defaultTheme %}{% set _defaultTheme = theme_config.defaultTheme %}{% endif %}
+  {% set _subtitleSpeed = "120" %}
+  {% if theme_config.subtitleSpeed %}{% set _subtitleSpeed = theme_config.subtitleSpeed %}{% endif %}
+  {% set _subtitleList = "" %}
+  {% if theme_config.subtitleList %}{% set _subtitleList = theme_config.subtitleList %}{% endif %}
+  {% set _navMenuJson = "[]" %}
+  {% if theme_config.navMenuJson %}{% set _navMenuJson = theme_config.navMenuJson %}{% endif %}
+  <script id="liushen-config-data" type="application/json">
+{
+  "domain": {{ config.domain|to_json|safe }},
+  "siteName": {{ config.siteName|to_json|safe }},
+  "defaultTheme": {{ _defaultTheme|to_json|safe }},
+  "tocEnable": {% if theme_config.tocEnable and theme_config.tocEnable != "false" %}true{% else %}false{% endif %},
+  "codeCopy": {% if theme_config.codeCopy and theme_config.codeCopy != "false" %}true{% else %}false{% endif %},
+  "readingProgress": {% if theme_config.readingProgress and theme_config.readingProgress != "false" %}true{% else %}false{% endif %},
+  "scrollToTop": {% if theme_config.scrollToTop and theme_config.scrollToTop != "false" %}true{% else %}false{% endif %},
+  "heatmapEnable": {% if theme_config.heatmapEnable and theme_config.heatmapEnable != "false" %}true{% else %}false{% endif %},
+  "randomPostEnable": {% if theme_config.randomPostEnable and theme_config.randomPostEnable != "false" %}true{% else %}false{% endif %},
+  "subtitleSpeed": {{ _subtitleSpeed }},
+  "subtitleList": {{ _subtitleList|to_json|safe }},
+  "navMenuJson": {{ _navMenuJson|to_json|safe }}
+}
+  </script>
+  <script>
+    (function(){
+      try { window.LIUSHEN_CONFIG = JSON.parse(document.getElementById('liushen-config-data').textContent); }
+      catch (e) { window.LIUSHEN_CONFIG = {}; }
+    })();
+  </script>
+  <script src="/scripts/main.js" defer></script>
+  {% if theme_config.viewsScript %}{{ theme_config.viewsScript|safe }}{% endif %}
+  {% if theme_config.injectBody %}{{ theme_config.injectBody|safe }}{% endif %}
+  {% if theme_config.customJs %}<script>{{ theme_config.customJs|safe }}</script>{% endif %}
+  {% block body_extra %}{% endblock %}
+</body>
+</html>

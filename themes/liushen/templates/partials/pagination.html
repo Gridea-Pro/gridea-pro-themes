@@ -1,0 +1,16 @@
+{# 分页：上一页 / 下一页 #}
+{% if pagination and (pagination.prev or pagination.next) %}
+<nav class="pagination" aria-label="分页">
+  {% if pagination.prev %}
+    <a class="page-number prev" href="{{ pagination.prev }}" rel="prev"><i class="fa-solid fa-angle-left"></i> 上一页</a>
+  {% else %}
+    <span class="page-number prev disabled"><i class="fa-solid fa-angle-left"></i> 上一页</span>
+  {% endif %}
+  <span class="page-info"><i class="fa-solid fa-feather"></i></span>
+  {% if pagination.next %}
+    <a class="page-number next" href="{{ pagination.next }}" rel="next">下一页 <i class="fa-solid fa-angle-right"></i></a>
+  {% else %}
+    <span class="page-number next disabled">下一页 <i class="fa-solid fa-angle-right"></i></span>
+  {% endif %}
+</nav>
+{% endif %}

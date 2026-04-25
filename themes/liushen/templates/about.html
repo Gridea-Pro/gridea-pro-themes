@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}关于 | {{ config.siteName }}{% endblock %}
+{% block body_class %}page-about{% endblock %}
+
+{% block page_header %}
+  {% set page_header_mode = "small" %}
+  {% set page_title = "站长资料" %}
+  {% set page_subtitle = "Hello~" %}
+  {% include "partials/page-header.html" %}
+{% endblock %}
+
+{% block content %}
+<section class="about-page card-widget">
+  <div class="about-header">
+    <img class="about-avatar" src="{{ config.avatar|default:'/media/images/default-avatar.svg' }}" alt="{{ config.siteName }}" onerror="this.onerror=null;this.src='/media/images/default-avatar.svg';">
+    <h1 class="about-name">{{ config.siteName }}</h1>
+    {% if config.siteDescription %}<p class="about-tagline">{{ config.siteDescription }}</p>{% endif %}
+    <div class="about-social">
+      {% include "partials/social-icons.html" %}
+    </div>
+  </div>
+
+  <div class="about-content article-container post-content">
+    {% if about_post %}
+      {{ about_post.content|safe }}
+    {% else %}
+      <h2>关于本站</h2>
+      <p>这是 <strong>{{ config.siteName }}</strong> 的关于页面。</p>
+      <p>你可以在 Gridea Pro 的「页面 → 关于」里编辑这块内容。如果创建了 about 页面，它的正文会自动显示在这里。</p>
+      <h3>这个主题</h3>
+      <p>「Liushen」主题复刻自 <a href="https://github.com/willow-god/hexo-theme-liushen" target="_blank" rel="noopener">willow-god/hexo-theme-liushen</a>，由 Gridea Pro 主题团队迁移到 Jinja2 模板引擎。</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

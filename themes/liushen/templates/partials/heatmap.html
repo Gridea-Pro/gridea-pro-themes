@@ -1,0 +1,19 @@
+{# 闪念热力图（仿 GitHub）—— 53 周 × 7 天，main.js 渲染数据 #}
+{% if theme_config.heatmapEnable and theme_config.heatmapEnable != "false" %}
+<div id="memos-heatmap" class="memos-heatmap card-widget" data-source="memos">
+  <div class="item-headline"><i class="fa-solid fa-fire"></i><span>闪念热力</span></div>
+  <div class="heatmap-wrap">
+    <div class="heatmap-months" id="heatmap-months"></div>
+    <div class="heatmap-grid" id="heatmap-grid" role="grid" aria-label="闪念活跃度"></div>
+    <div class="heatmap-legend">
+      <span class="heatmap-legend-label">少</span>
+      <span class="heatmap-cell level-0"></span>
+      <span class="heatmap-cell level-1"></span>
+      <span class="heatmap-cell level-2"></span>
+      <span class="heatmap-cell level-3"></span>
+      <span class="heatmap-cell level-4"></span>
+      <span class="heatmap-legend-label">多</span>
+    </div>
+  </div>
+</div>
+{% endif %}

@@ -1,0 +1,25 @@
+{# 最新文章 #}
+<div class="card-widget card-recent-post">
+  <div class="item-headline"><i class="fa-solid fa-history"></i><span>最新文章</span></div>
+  <div class="aside-list">
+    {% if posts and posts|length > 0 %}
+      {% for p in posts %}
+        {% if loop.index <= 5 %}
+        <div class="aside-list-item">
+          {% if p.feature %}
+          <a class="thumbnail" href="{{ p.link }}" title="{{ p.title }}"><img src="{{ p.feature }}" alt="{{ p.title }}" onerror="this.onerror=null;this.src='/media/images/default-cover.svg';"></a>
+          {% else %}
+          <a class="thumbnail no-cover" href="{{ p.link }}" title="{{ p.title }}"><i class="fa-solid fa-file-lines"></i></a>
+          {% endif %}
+          <div class="content">
+            <a class="title" href="{{ p.link }}" title="{{ p.title }}">{{ p.title }}</a>
+            <time class="date">{{ p.date }}</time>
+          </div>
+        </div>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <div class="aside-empty">暂无文章</div>
+    {% endif %}
+  </div>
+</div>

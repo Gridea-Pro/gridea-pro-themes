@@ -1,0 +1,16 @@
+{# 网站统计 #}
+<div class="card-widget card-webinfo">
+  <div class="item-headline"><i class="fa-solid fa-chart-pie"></i><span>网站统计</span></div>
+  <div class="webinfo">
+    <div class="webinfo-item"><span class="webinfo-label">文章</span><span class="webinfo-value">{% if posts %}{{ posts|length }}{% else %}0{% endif %}</span></div>
+    <div class="webinfo-item"><span class="webinfo-label">标签</span><span class="webinfo-value">{% if tags %}{{ tags|length }}{% else %}0{% endif %}</span></div>
+    <div class="webinfo-item"><span class="webinfo-label">分类</span><span class="webinfo-value">{% if categories %}{{ categories|length }}{% else %}0{% endif %}</span></div>
+    <div class="webinfo-item"><span class="webinfo-label">运行</span><span class="webinfo-value" id="webinfo-runtime" data-since="{{ theme_config.siteRunDate|default:'2024-01-01' }}">--</span><span class="webinfo-unit">天</span></div>
+    <div class="webinfo-item" id="webinfo-busuanzi" hidden>
+      <span class="webinfo-label">访客</span><span class="webinfo-value" id="busuanzi_value_site_uv">--</span>
+    </div>
+    <div class="webinfo-item" id="webinfo-busuanzi-pv" hidden>
+      <span class="webinfo-label">浏览</span><span class="webinfo-value" id="busuanzi_value_site_pv">--</span>
+    </div>
+  </div>
+</div>

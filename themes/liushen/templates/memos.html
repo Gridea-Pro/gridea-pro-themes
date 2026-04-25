@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}日常说说 | {{ config.siteName }}{% endblock %}
+{% block body_class %}page-memos{% endblock %}
+
+{% block page_header %}
+  {% set page_header_mode = "small" %}
+  {% if theme_config.memosBgImg %}{% set page_header_img = theme_config.memosBgImg %}{% else %}{% set page_header_img = theme_config.defaultTopImg %}{% endif %}
+  {% set page_title = "日常说说" %}
+  {% set page_subtitle = "记录每个有意思的瞬间" %}
+  {% include "partials/page-header.html" %}
+{% endblock %}
+
+{% block content %}
+<section class="memos-page">
+  {% include "partials/heatmap.html" %}
+
+  <div class="memo-list" id="memo-list">
+    {% if memos and memos|length > 0 %}
+      {% for m in memos %}
+      <article class="memo-item card-widget" data-date="{{ m.date }}">
+        <header class="memo-header">
+          <img class="memo-avatar" src="{{ config.avatar|default:'/media/images/default-avatar.svg' }}" alt="{{ config.siteName }}" onerror="this.onerror=null;this.src='/media/images/default-avatar.svg';">
+          <div class="memo-meta">
+            <span class="memo-name">{{ config.siteName }}</span>
+            <time class="memo-date">{{ m.date }}</time>
+          </div>
+        </header>
+        <div class="memo-content article-container">{{ m.content|safe }}</div>
+      </article>
+      {% endfor %}
+    {% else %}
+      <div class="empty-tip card-widget">
+        <i class="fa-solid fa-comment-dots"></i>
+        <p>还没有任何说说，去 Gridea Pro 的「闪念」里写一条吧～</p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

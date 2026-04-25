@@ -15,6 +15,7 @@
 | 主题 | 引擎 | 说明 |
 |---|---|---|
 | **bitcron-pro** | Jinja2 (Pongo2) | Bitcron 风格博客主题，支持博客/闪念/友链页面 |
+| **liushen** | Jinja2 (Pongo2) | 柳神（Butterfly 衍生）风格双栏粉蓝渐变主题，复刻自 willow-god/hexo-theme-liushen |
 
 <!-- GALLERY:END -->
 
