@@ -11,25 +11,38 @@
 {% endblock %}
 
 {% block content %}
+{# 友链来源双兼容：
+   - 真实运行时：customConfig.links (即 theme_config.links)，字段 siteName/siteLink/description/avatar
+   - render_test mock：顶层 links 变量，字段 name/url/description/avatar #}
+{% set _links = theme_config.links %}
+{% if not _links %}{% set _links = links %}{% endif %}
+
 <section class="links-page">
   <div class="card-widget">
-    <div class="item-headline"><i class="fa-solid fa-link"></i><span>友情链接</span></div>
+    <div class="item-headline"><i class="fa-solid fa-link"></i><span>友情链接{% if _links %} · {{ _links|length }} 个{% endif %}</span></div>
     <div class="flink-list">
-      {% if links and links|length > 0 %}
-        {% for link in links %}
-          {% set _href = "" %}
-          {% if link.url %}{% set _href = link.url %}{% else %}{% set _href = link.link %}{% endif %}
-          {% set _avatar = "/media/images/default-avatar.svg" %}
-          {% if link.avatar %}{% set _avatar = link.avatar %}{% elif link.icon %}{% set _avatar = link.icon %}{% endif %}
-          {% set _name = "" %}
-          {% if link.name %}{% set _name = link.name %}{% else %}{% set _name = link.title %}{% endif %}
-          {% set _desc = "" %}
-          {% if link.desc %}{% set _desc = link.desc %}{% else %}{% set _desc = link.description %}{% endif %}
+      {% if _links and _links|length > 0 %}
+        {% for link in _links %}
+          {# 名称：siteName → name → title #}
+          {% set _name = link.siteName %}
+          {% if not _name %}{% set _name = link.name %}{% endif %}
+          {% if not _name %}{% set _name = link.title %}{% endif %}
+          {# 链接：siteLink → url → link #}
+          {% set _href = link.siteLink %}
+          {% if not _href %}{% set _href = link.url %}{% endif %}
+          {% if not _href %}{% set _href = link.link %}{% endif %}
+          {# 描述：description → desc #}
+          {% set _desc = link.description %}
+          {% if not _desc %}{% set _desc = link.desc %}{% endif %}
+          {# 头像：avatar → icon → 默认 #}
+          {% set _avatar = link.avatar %}
+          {% if not _avatar %}{% set _avatar = link.icon %}{% endif %}
+          {% if not _avatar %}{% set _avatar = "/media/images/default-avatar.svg" %}{% endif %}
         <a class="flink-item" href="{{ _href }}" target="_blank" rel="noopener">
           <img class="flink-avatar" src="{{ _avatar }}" alt="{{ _name }}" onerror="this.onerror=null;this.src='/media/images/default-avatar.svg';">
           <div class="flink-meta">
             <h4 class="flink-name">{{ _name }}</h4>
-            <p class="flink-desc">{{ _desc }}</p>
+            {% if _desc %}<p class="flink-desc">{{ _desc }}</p>{% endif %}
           </div>
         </a>
         {% endfor %}
