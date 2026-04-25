@@ -1,0 +1,22 @@
+<svg width="300" height="300" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- 芒果主体 -->
+  <path d="M150 30
+       C80 30, 40 90, 40 150
+       C40 220, 110 260, 170 250
+       C230 240, 260 190, 250 140
+       C240 90, 200 30, 150 30 Z" fill="#FFC933" stroke="#E6A800" stroke-width="4"></path>
+
+  <!-- 高光 -->
+  <path d="M110 70
+       C80 100, 70 140, 80 180
+       C85 200, 105 215, 115 220" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="6" stroke-linecap="round"></path>
+
+  <!-- 叶子 -->
+  <path d="M170 20
+       C200 -10, 250 -5, 260 20
+       C230 30, 200 40, 170 20 Z" fill="#2E8B57"></path>
+
+  <!-- 叶脉 -->
+  <path d="M175 20 C210 15, 235 20, 255 22" fill="none" stroke="#1F6F43" stroke-width="2"></path>
+</svg>

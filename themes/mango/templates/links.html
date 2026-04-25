@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block body_class %}links-page{% endblock %}
+
+{% block title %}友情链接 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="col-lg-8">
+  <div class="post_container_title">
+    <h1><i class="bi bi-people-fill me-2"></i>友情链接</h1>
+    <p>那些值得一访的小站。</p>
+  </div>
+
+  <div class="post_container">
+    <div class="mango-links">
+      {% if links|length > 0 %}
+        <div class="row g-3 mango-links-grid">
+          {% for link in links %}
+            <div class="col-6 col-md-6 col-xl-4">
+              <div class="mango-link-card">
+                <span class="mango-link-avatar">
+                  {% if link.avatar %}
+                    <img src="{{ link.avatar }}" alt="{{ link.name }}" width="64" height="64" loading="lazy" decoding="async">
+                  {% else %}
+                    <img src="/media/images/default-avatar.svg" alt="{{ link.name }}" width="64" height="64" loading="lazy" decoding="async">
+                  {% endif %}
+                </span>
+                <span class="mango-link-main">
+                  <a class="mango-link-name-link"
+                     href="{{ link.url }}"
+                     target="_blank"
+                     rel="noopener">
+                    {{ link.name }}
+                  </a>
+                </span>
+                {% if link.description %}
+                  <span class="mango-link-tooltip">{{ link.description }}</span>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="mango-empty">
+          <i class="bi bi-emoji-frown"></i>
+          <p>暂无友情链接。请在 Gridea Pro 后台 → 友链 中添加。</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% include "partials/sidebar.html" %}
+{% endblock %}

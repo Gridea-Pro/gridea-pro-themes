@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="renderer" content="webkit">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="{% block meta_description %}{% if config.siteDescription %}{{ config.siteDescription }}{% else %}{{ config.siteName }}{% endif %}{% endblock %}">
+<meta name="generator" content="Gridea Pro">
+
+<title>{% block title %}{{ config.siteName }}{% if config.siteDescription %} | {{ config.siteDescription }}{% endif %}{% endblock %}</title>
+
+<meta property="og:type" content="{% block og_type %}website{% endblock %}">
+<meta property="og:title" content="{% block og_title %}{{ config.siteName }}{% endblock %}">
+<meta property="og:description" content="{% block og_description %}{% if config.siteDescription %}{{ config.siteDescription }}{% else %}{{ config.siteName }}{% endif %}{% endblock %}">
+{% block og_extra %}{% endblock %}
+
+{% if config.favicon %}
+<link rel="icon" href="{{ config.favicon }}" type="image/x-icon">
+{% else %}
+<link rel="icon" href="/media/images/mango-logo.svg" type="image/svg+xml">
+{% endif %}
+
+<link rel="stylesheet" href="/styles/bootstrap.min.css">
+<link rel="stylesheet" href="/styles/bootstrap-icons.css">
+<link rel="stylesheet" href="/styles/fancybox.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+<style>
+:root {
+  --mango-brand: {{ theme_config.primaryColor|default:"#4270f5" }};
+  --mango-accent: {{ theme_config.accentColor|default:"#ffc008" }};
+}
+.dark {
+  --mango-brand: {{ theme_config.primaryColor|default:"#4270f5" }};
+  --mango-accent: {{ theme_config.accentColor|default:"#ffc008" }};
+}
+{% if theme_config.useLxgwFont %}
+body, button, input, select, textarea {
+  font-family: 'LXGW', "PingFang SC", "Microsoft YaHei", system-ui, sans-serif !important;
+}
+{% endif %}
+{% if theme_config.customCss %}
+{{ theme_config.customCss|safe }}
+{% endif %}
+</style>
+
+<script>
+(function() {
+  function isDaytime() {
+    var h = new Date().getHours();
+    return h >= 6 && h < 18;
+  }
+  var themeMode = {% if theme_config.defaultTheme %}"{{ theme_config.defaultTheme }}"{% else %}"auto"{% endif %};
+  function setDark()    { localStorage.setItem("isDarkMode", "1"); document.documentElement.classList.add("dark"); }
+  function removeDark() { localStorage.setItem("isDarkMode", "0"); document.documentElement.classList.remove("dark"); }
+  var saved = localStorage.getItem("isDarkMode");
+  if (saved === "1" || saved === "0") {
+    saved === "1" ? setDark() : removeDark();
+  } else if (themeMode === "auto") {
+    isDaytime() ? removeDark() : setDark();
+  } else if (themeMode === "dark") {
+    setDark();
+  } else {
+    removeDark();
+  }
+  if (themeMode === "auto" && !saved) {
+    function nextChange() {
+      var now = new Date(), next = new Date();
+      if (isDaytime()) { next.setHours(18, 0, 0, 0); }
+      else { next.setHours(6, 0, 0, 0); if (next <= now) next.setDate(next.getDate() + 1); }
+      return next.getTime() - now.getTime();
+    }
+    function schedule() {
+      setTimeout(function () {
+        if (!localStorage.getItem("isDarkMode")) {
+          isDaytime() ? removeDark() : setDark();
+          schedule();
+        }
+      }, nextChange());
+    }
+    schedule();
+  }
+  window.switchDarkMode = function () {
+    localStorage.getItem("isDarkMode") === "1" ? removeDark() : setDark();
+  };
+})();
+</script>
+
+{% if theme_config.headInjection %}
+{{ theme_config.headInjection|safe }}
+{% endif %}
+{% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}home blog{% endblock %}">
+
+{% include "partials/header.html" %}
+
+{% block hero %}{% endblock %}
+
+<section class="index_area">
+  <div class="container">
+    <div class="row g-4">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</section>
+
+{% include "partials/footer.html" %}
+
+<script src="/scripts/jquery.min.js"></script>
+<script src="/scripts/fancybox.js"></script>
+<script>
+window.MangoConfig = window.MangoConfig || {};
+window.MangoConfig.siteUrl = "{{ config.domain }}";
+window.MangoConfig.searchEnabled = {% if theme_config.enableSearch %}true{% else %}false{% endif %};
+window.MangoConfig.showCodeCopy = {% if theme_config.showCodeCopy %}true{% else %}false{% endif %};
+window.MangoConfig.showReadingProgress = {% if theme_config.showReadingProgress %}true{% else %}false{% endif %};
+window.MangoConfig.showBackToTop = {% if theme_config.showBackToTop %}true{% else %}false{% endif %};
+window.MangoConfig.showSidebarToc = {% if theme_config.showSidebarToc %}true{% else %}false{% endif %};
+window.MangoConfig.memosShowHeatmap = {% if theme_config.memosShowHeatmap %}true{% else %}false{% endif %};
+</script>
+<script src="/scripts/main.js"></script>
+
+{% block extra_scripts %}{% endblock %}
+
+{% if theme_config.footerInjection %}
+{{ theme_config.footerInjection|safe }}
+{% endif %}
+
+</body>
+</html>

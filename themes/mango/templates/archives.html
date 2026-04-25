@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block body_class %}archives{% endblock %}
+
+{% block title %}归档 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="col-lg-8">
+  <div class="post_container_title">
+    <h1><i class="bi bi-clock-history me-2"></i>历史归档</h1>
+    <p>共 {{ posts|length }} 篇文章，按年份归档。</p>
+  </div>
+
+  <div class="post_container">
+    <div class="mango-archives">
+      {% if posts|length > 0 %}
+        {% for group in posts|group_by:"year" %}
+          <section class="mango-archive-year">
+            <h2 class="mango-archive-year-title">
+              <i class="bi bi-calendar-heart me-2"></i>{{ group.key }}
+              <small>{{ group.items|length }} 篇</small>
+            </h2>
+            <ul class="mango-archive-list">
+              {% for post in group.items %}
+                <li class="mango-archive-item">
+                  <span class="mango-archive-date">{{ post.date }}</span>
+                  <a class="mango-archive-link" href="{{ post.link }}">{{ post.title }}</a>
+                  {% if post.tags|length > 0 %}
+                    <span class="mango-archive-tags">
+                      {% for tag in post.tags %}
+                        <a href="{{ tag.link }}"><i class="bi bi-hash"></i>{{ tag.name }}</a>{% if not loop.last %} {% endif %}
+                      {% endfor %}
+                    </span>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </section>
+        {% endfor %}
+      {% else %}
+        <div class="mango-empty">暂无文章可归档</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% include "partials/sidebar.html" %}
+{% endblock %}

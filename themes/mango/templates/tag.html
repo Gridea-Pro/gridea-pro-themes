@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block body_class %}tag-page{% endblock %}
+
+{% set tag_name = "" %}
+{% if current_tag %}
+  {% set tag_name = current_tag.name %}
+{% elif tag %}
+  {% set tag_name = tag.name %}
+{% endif %}
+
+{% block title %}{{ tag_name }} - 标签 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="col-lg-8">
+  <div class="catbox">
+    <div class="cat_head">
+      <div class="cat_head_r">
+        <h2><i class="bi bi-hash me-1"></i>{{ tag_name|default:"标签" }}</h2>
+        <p>该标签下共 {{ posts|length }} 篇文章。</p>
+      </div>
+    </div>
+    <div class="post_box">
+      {% if posts|length > 0 %}
+        {% for post in posts %}
+          {% if not post.hideInList %}
+            {% include "partials/post-card.html" %}
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <div class="mango-empty">该标签下暂无文章</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% include "partials/sidebar.html" %}
+{% endblock %}

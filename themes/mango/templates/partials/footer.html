@@ -1,0 +1,37 @@
+{% if theme_config.showFooterLinks and config.linkList %}
+<section class="links mobile_none">
+  <div class="container">
+    <span>友情链接：</span>
+    {% for link in config.linkList %}
+      <a href="{{ link.url }}" target="_blank" rel="me noopener" title="{{ link.title }}">{{ link.title }}</a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<footer class="footbox">
+  <div class="container">
+    <div class="copyright">
+      {% if theme_config.footerCopyright %}
+        {{ theme_config.footerCopyright|safe }}
+      {% else %}
+        &copy; {{ now|date:"2006" }} {{ config.siteName }}.
+      {% endif %}
+      <a href="https://github.com/Gridea-Pro/gridea-pro" rel="external nofollow" target="_blank" style="color: #fff;">Gridea Pro</a> 强力驱动.
+      <p class="hidden">Theme by <a href="https://github.com/jkjoy/Typecho-Theme-Mango" rel="external nofollow" target="_blank" style="color: #fff;">老孙 / HUiTHEME</a> · Jinja2 移植版.</p>
+      {% if theme_config.icpBeian %}
+      <a class="beian" href="https://beian.miit.gov.cn/" rel="external nofollow" target="_blank" title="备案号">
+        <i class="bi bi-shield-check me-1"></i>{{ theme_config.icpBeian }}
+      </a>
+      {% endif %}
+    </div>
+  </div>
+</footer>
+
+{% if theme_config.viewsScript %}
+{{ theme_config.viewsScript|safe }}
+{% endif %}
+
+{% if theme_config.showBackToTop %}
+<button class="scrollToTopBtn" title="返回顶部" aria-label="返回顶部"><i class="bi bi-chevron-up"></i></button>
+{% endif %}

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block body_class %}blog{% endblock %}
+
+{% block title %}博客 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="col-lg-8">
+  <div class="catbox">
+    <div class="cat_head">
+      <div class="cat_head_r">
+        <h2><i class="bi bi-journal-text me-2"></i>博客</h2>
+        <p>所有公开文章，按时间倒序。</p>
+      </div>
+    </div>
+    <div class="post_box">
+      {% if posts|length > 0 %}
+        {% for post in posts %}
+          {% if not post.hideInList %}
+            {% include "partials/post-card.html" %}
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <div class="mango-empty"><p>还没有任何博客文章</p></div>
+      {% endif %}
+    </div>
+  </div>
+  {% include "partials/pagination.html" %}
+</div>
+{% include "partials/sidebar.html" %}
+{% endblock %}

@@ -1,0 +1,50 @@
+{% set featured = [] %}
+{% set featured_max = theme_config.featuredCount|default:"3" %}
+{% if theme_config.featuredTag and posts %}
+  <section class="index_banner">
+    <div class="container">
+      <div id="banner" class="carousel" data-mango-carousel>
+        <div class="carousel-indicators">
+          {% set indicator_idx = 0 %}
+          {% for post in posts %}
+            {% if post.tags and indicator_idx < 5 %}
+              {% for tag in post.tags %}
+                {% if tag.name == theme_config.featuredTag %}
+                  <button type="button" class="{% if indicator_idx == 0 %}active{% endif %}" data-mango-slide-to="{{ indicator_idx }}"></button>
+                  {% set indicator_idx = indicator_idx + 1 %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <div class="carousel-inner">
+          {% set slide_idx = 0 %}
+          {% for post in posts %}
+            {% if post.tags and slide_idx < 5 %}
+              {% for tag in post.tags %}
+                {% if tag.name == theme_config.featuredTag %}
+                  <div class="carousel-item {% if slide_idx == 0 %}active{% endif %}">
+                    <a class="banlist" href="{{ post.link }}">
+                      <img src="{{ post.feature|default:"/media/images/default-cover.svg" }}"
+                           alt="{{ post.title }}"
+                           class="post-images"
+                           decoding="async"
+                           loading="{% if slide_idx == 0 %}eager{% else %}lazy{% endif %}">
+                      <h2>{{ post.title }}</h2>
+                      <i>置顶精彩</i>
+                    </a>
+                  </div>
+                  {% set slide_idx = slide_idx + 1 %}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-mango-slide="prev" aria-label="上一个"><i class="bi bi-chevron-left"></i></button>
+        <button class="carousel-control-next" type="button" data-mango-slide="next" aria-label="下一个"><i class="bi bi-chevron-right"></i></button>
+      </div>
+    </div>
+  </section>
+{% endif %}

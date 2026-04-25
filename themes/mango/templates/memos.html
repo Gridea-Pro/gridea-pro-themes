@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block body_class %}memos{% endblock %}
+
+{% block title %}闪念 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="col-lg-8">
+  <div class="post_container_title">
+    <h1><i class="bi bi-lightning-fill me-2"></i>闪念</h1>
+    <p>那些不值得长篇大论，但值得记一笔的瞬间。</p>
+  </div>
+
+  {% if theme_config.memosShowHeatmap and memos|length > 0 %}
+    <div class="post_container mango-memos-heatmap-wrap">
+      <h3 class="widget-title">最近一年的闪念热力</h3>
+      <div id="mango-memos-heatmap" class="mango-memos-heatmap" data-mango-heatmap></div>
+      <div class="mango-memos-heatmap-legend">
+        <span>少</span>
+        <i class="lvl0"></i><i class="lvl1"></i><i class="lvl2"></i><i class="lvl3"></i><i class="lvl4"></i>
+        <span>多</span>
+      </div>
+      <script type="application/json" id="mango-memos-data">
+        [
+          {% for memo in memos %}
+            {"date": "{{ memo.date }}"}{% if not loop.last %},{% endif %}
+          {% endfor %}
+        ]
+      </script>
+    </div>
+  {% endif %}
+
+  <div class="post_container mango-memos-list">
+    {% if memos|length > 0 %}
+      {% for memo in memos %}
+        <article class="mango-memo">
+          <div class="mango-memo-meta">
+            <img src="{{ config.avatar|default:"/media/images/default-avatar.svg" }}" width="40" height="40" alt="">
+            <div>
+              <strong>{{ config.siteName }}</strong>
+              <time datetime="{{ memo.date }}">{{ memo.date }}</time>
+            </div>
+          </div>
+          <div class="mango-memo-body wznrys">
+            {{ memo.content|safe }}
+          </div>
+        </article>
+      {% endfor %}
+    {% else %}
+      <div class="mango-empty">
+        <i class="bi bi-feather"></i>
+        <p>还没有闪念。在 Gridea Pro 写一篇打了 <code>{{ theme_config.memosTagName|default:"memo" }}</code> 标签的文章，或在「闪念」面板里发布一条，就会显示在这里。</p>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% include "partials/sidebar.html" %}
+{% endblock %}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="robots" content="noindex">
+<title>页面未找到 | {{ config.siteName }}</title>
+<link rel="icon" href="/media/images/mango-logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles/bootstrap.min.css">
+<link rel="stylesheet" href="/styles/bootstrap-icons.css">
+<link rel="stylesheet" href="/styles/main.css">
+<style>
+  body { background: #f7f7f7; }
+  .dark body, html.dark body { background: #212121; }
+  .mango-404 {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    text-align: center;
+  }
+  .mango-404 h2 { font-size: 32px; font-weight: 600; margin: 16px 0; }
+  .mango-404 p { font-size: 16px; color: #666; }
+  .mango-404 a { color: var(--mango-brand, #4270f5); border-bottom: 1px solid currentColor; }
+  .mango-404 svg { width: 200px; height: 200px; }
+  html.dark .mango-404 p { color: #c0c2cc; }
+</style>
+<script>
+(function () {
+  if (localStorage.getItem('isDarkMode') === '1') {
+    document.documentElement.classList.add('dark');
+  }
+})();
+</script>
+</head>
+<body>
+<main class="mango-404">
+  <h2>看来您迷路了</h2>
+  <p>我们找不到您想要的页面，<a href="{{ config.domain }}">返回首页</a>。</p>
+  <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <path d="M512 425.6a80 57.6 0 1 0 160 0 80 57.6 0 1 0-160 0Z" fill="var(--mango-brand, #4270f5)"></path>
+    <path d="M480 537.6a32 25.6 0 1 0 64 0 32 25.6 0 1 0-64 0Z" fill="var(--mango-brand, #4270f5)"></path>
+    <path d="M704 336c124.8 0 224-67.2 224-153.6S828.8 32 704 32s-224 67.2-224 153.6 99.2 150.4 224 150.4z" fill="var(--mango-brand, #4270f5)"></path>
+    <path d="M723.2 608c-83.2 0-160 22.4-214.4 60.8-9.6 6.4-12.8 22.4-6.4 35.2 6.4 12.8 22.4 16 32 6.4 48-32 115.2-51.2 188.8-51.2 134.4 0 252.8 67.2 252.8 140.8 0 76.8-118.4 140.8-252.8 140.8-51.2 0-105.6-6.4-147.2-19.2-3.2 0-211.2-54.4-384-198.4V176H144V736c0 6.4 3.2 16 6.4 19.2 182.4 156.8 403.2 214.4 409.6 214.4 41.6 12.8 105.6 19.2 160 19.2 166.4 0 300.8-86.4 300.8-192S889.6 608 723.2 608z" fill="var(--mango-brand, #4270f5)"></path>
+  </svg>
+</main>
+</body>
+</html>

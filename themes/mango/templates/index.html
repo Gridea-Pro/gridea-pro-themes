@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block body_class %}home blog{% endblock %}
+
+{% block hero %}
+{% if theme_config.featuredTag %}
+  {% include "partials/slides.html" %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="col-lg-8">
+  <div class="post_box">
+    {% if posts|length > 0 %}
+      {% for post in posts %}
+        {% if not post.hideInList %}
+          {% include "partials/post-card.html" %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <div class="mango-empty">
+        <i class="bi bi-feather"></i>
+        <p>这里还没有文章，快去 Gridea Pro 写下第一篇吧。</p>
+      </div>
+    {% endif %}
+  </div>
+  {% include "partials/pagination.html" %}
+</div>
+{% include "partials/sidebar.html" %}
+{% endblock %}
