@@ -40,13 +40,13 @@
     - **页脚**：版权文字、备案号
     - **高级**：自定义 CSS / 统计代码
 
-## 目录约定与限制
+## 数据接入说明
 
-| 项目 | 说明 |
+| 项目 | 接入方式 |
 |---|---|
-| 「分类」 | Gridea Pro 数据模型只有 tags，没有独立的 categories。本主题把 `/tags` 兼任「Tags & Categories」入口 |
-| 搜索 JSON | 本地搜索默认请求 `/search.json`。若 Gridea Pro 未生成该文件，可在配置里改用 Google / Bing 兜底 |
-| 上下篇 | 通过 fetch `/index.json` 注入，若该文件不存在则不显示，不报错 |
+| 分类 | 走 Gridea Pro 标准的 `post.categories[]`：在文章卡片、文章页 meta 处显示分类，每个分类自动渲染列表页到 `/category/<slug>/`（模板 `category.html`） |
+| 全站搜索 | 从 Gridea Pro 自动生成的 `/api/search.json` 拉数据；在主题配置里也可切到 Google / Bing 站内搜索 |
+| 上下篇 | 直接读 `post.prevPost / post.nextPost`（Gridea Pro 标准字段），不需要额外脚本 |
 | 评论 | 仅提供 `#gridea-comments` 挂载点，具体服务在 Gridea Pro 全局评论设置里选 |
 
 ## 截图

@@ -7,8 +7,8 @@
         {% if theme_config.showSearch and theme_config.showSearch != "false" %}
           <li><a href="#" class="search-trigger" aria-label="搜索"><i class="ic ic-search"></i></a></li>
         {% endif %}
-        <li><a href="#" data-role="post-prev" aria-label="上一篇"><i class="ic ic-chevron-left"></i></a></li>
-        <li><a href="#" data-role="post-next" aria-label="下一篇"><i class="ic ic-chevron-right"></i></a></li>
+        {% if post and post.prevPost %}<li><a href="{{ post.prevPost.link }}" aria-label="上一篇"><i class="ic ic-chevron-left"></i></a></li>{% endif %}
+        {% if post and post.nextPost %}<li><a href="{{ post.nextPost.link }}" aria-label="下一篇"><i class="ic ic-chevron-right"></i></a></li>{% endif %}
         <li><a href="#" data-role="back-top" aria-label="返回顶部"><i class="ic ic-chevron-up"></i></a></li>
       </ul>
     </nav>

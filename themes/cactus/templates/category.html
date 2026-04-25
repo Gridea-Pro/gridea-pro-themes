@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% set _cname = "" %}
+{% if category %}{% set _cname = category.name %}{% elif current_category %}{% set _cname = current_category %}{% else %}{% set _cname = "分类" %}{% endif %}
+
+{% block body_class %}page-category{% endblock %}
+{% block title %}{{ _cname }} · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<section id="archive" class="archive">
+  <span class="h1"><span class="hash-prefix"></span>{{ _cname }} <small class="muted">· {% if posts %}{{ posts|length }}{% else %}0{% endif %} 篇</small></span>
+
+  <ul class="post-list" id="post-list">
+    {% if posts and posts|length > 0 %}
+      {% for post in posts %}
+        {% if not post.hideInList %}
+          {% include "partials/post-card.html" %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <li class="post-item empty"><span>该分类下还没有文章</span></li>
+    {% endif %}
+  </ul>
+
+  {% include "partials/pagination.html" %}
+</section>
+{% endblock %}

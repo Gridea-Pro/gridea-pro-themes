@@ -30,6 +30,14 @@
             <span class="article-tag"><i class="ic ic-clock"></i> 约 {{ post.content|reading_time }} 分钟</span>
             <span class="article-tag"><i class="ic ic-pen"></i> {{ post.content|word_count }} 字</span>
           {% endif %}
+          {% if post.categories|length > 0 %}
+            <span class="article-tag-box">
+              <i class="ic ic-folder"></i>
+              {% for cat in post.categories %}
+                <a class="tag-link" href="{{ cat.link }}">{{ cat.name }}</a>{% if not loop.last %}<span class="tag-sep">·</span>{% endif %}
+              {% endfor %}
+            </span>
+          {% endif %}
           {% if post.tags|length > 0 %}
             <span class="article-tag-box">
               <i class="ic ic-tag"></i>

@@ -294,6 +294,19 @@ img, video { max-width: 100%; height: auto; }
 }
 .post-item.empty { color: var(--fg-faint); }
 .sticky-flag { color: var(--accent); margin-right: .25em; font-weight: 700; }
+.post-list .post-item .post-item-cats {
+  margin-left: .5em;
+  font-size: 12px;
+}
+.post-list .post-item a.post-item-cat {
+  color: var(--fg-mute);
+  background: none;
+  font-size: 12px;
+}
+.post-list .post-item a.post-item-cat:hover {
+  color: var(--accent);
+  background: none;
+}
 
 @media (min-width: 480px) {
   .post-list .post-item { display: flex; margin-bottom: 5px; }

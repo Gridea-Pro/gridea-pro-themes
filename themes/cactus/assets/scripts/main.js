@@ -119,7 +119,8 @@
   function loadIndex() {
     if (SEARCH.idx || SEARCH.loading) return Promise.resolve(SEARCH.idx);
     SEARCH.loading = true;
-    return fetch('/search.json', { credentials: 'same-origin' })
+    // Gridea Pro 在站点根目录下生成 /api/search.json
+    return fetch('/api/search.json', { credentials: 'same-origin' })
       .then(function (r) { return r.ok ? r.json() : []; })
       .then(function (data) {
         // 兼容多种格式：{ posts: [...] } 或 [...]
@@ -129,7 +130,7 @@
           return {
             title: (p.title || '').toString(),
             link: p.link || p.url || '#',
-            content: (p.content || p.body || p.description || '').toString().replace(/<[^>]+>/g, '')
+            content: (p.content || p.body || p.description || p.excerpt || '').toString().replace(/<[^>]+>/g, '')
           };
         });
         return SEARCH.idx;
@@ -288,57 +289,7 @@
     onScroll();
   }
 
-  /* ------ 8. 上一篇 / 下一篇 ------ */
-  function initPostNav() {
-    if (!CFG.showPrevNext) return;
-    var nav = $('.post-nav');
-    if (!nav && !$('[data-role="post-prev"]')) return;
-    var current = nav ? nav.dataset.current : (location.pathname || '');
-
-    fetch('/index.json', { credentials: 'same-origin' })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (data) {
-        if (!data) return;
-        var posts = (data && data.posts) ? data.posts : (Array.isArray(data) ? data : []);
-        if (!posts.length) return;
-        // posts 默认按时间倒序：[新, ..., 旧]
-        var i = posts.findIndex(function (p) { return (p.link || p.url) === current; });
-        if (i < 0) return;
-        var newer = posts[i - 1];
-        var older = posts[i + 1];
-        applyNav(newer, older);
-      })
-      .catch(function () {});
-
-    function applyNav(newer, older) {
-      // .post-nav block
-      if (nav) {
-        var prevA = nav.querySelector('[data-role="prev-link"]');
-        var prevE = nav.querySelector('[data-role="prev-empty"]');
-        var nextA = nav.querySelector('[data-role="next-link"]');
-        var nextE = nav.querySelector('[data-role="next-empty"]');
-        if (older && prevA) {
-          prevA.href = older.link || older.url;
-          prevA.querySelector('.title').textContent = older.title;
-          prevA.removeAttribute('hidden');
-          if (prevE) prevE.setAttribute('hidden', '');
-        }
-        if (newer && nextA) {
-          nextA.href = newer.link || newer.url;
-          nextA.querySelector('.title').textContent = newer.title;
-          nextA.removeAttribute('hidden');
-          if (nextE) nextE.setAttribute('hidden', '');
-        }
-      }
-      // 浮动菜单 + footer-post 中的 prev/next
-      $$('[data-role="post-prev"]').forEach(function (el) {
-        if (older) { el.setAttribute('href', older.link || older.url); el.removeAttribute('hidden'); }
-      });
-      $$('[data-role="post-next"]').forEach(function (el) {
-        if (newer) { el.setAttribute('href', newer.link || newer.url); el.removeAttribute('hidden'); }
-      });
-    }
-  }
+  /* ------ 8. 上一篇 / 下一篇 已由 Jinja2 模板直接渲染 post.prevPost / post.nextPost，无需 JS ------ */
 
   /* ------ 9. 闪念热力图 ------ */
   function initHeatmap() {
@@ -491,7 +442,6 @@
     initProjects();
     initSearch();
     initToc();
-    initPostNav();
     initHeatmap();
     initBackTop();
     initShare();
