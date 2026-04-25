@@ -1,0 +1,10 @@
+{# 标签云 — 字号随 count 浮动 #}
+{% if tags|length > 0 %}
+<div class="tagcloud-wrap" id="theme-tagcloud">
+  {% for tag in tags %}
+    <a href="{{ tag.link }}" class="tagcloud-item" data-count="{{ tag.count }}" title="{{ tag.name }} · {{ tag.count }} 篇">
+      <span class="tagcloud-hash">#</span>{{ tag.name }}<span class="tagcloud-count">·{{ tag.count }}</span>
+    </a>
+  {% endfor %}
+</div>
+{% endif %}

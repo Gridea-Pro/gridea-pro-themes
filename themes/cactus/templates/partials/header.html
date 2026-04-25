@@ -1,0 +1,22 @@
+{# 顶部 header — Logo + 站点名 + 横向导航 + 主题切换 #}
+<header id="header" role="banner">
+  <a id="logo-link" href="/" aria-label="{{ config.siteName }}">
+    <span id="logo" style="background-image: url('{% if theme_config.siteLogo %}{{ theme_config.siteLogo }}{% elif config.logo %}{{ config.logo }}{% else %}/media/images/logo.svg{% endif %}')"></span>
+  </a>
+  <div id="title">
+    <h1><a href="/">{{ config.siteName }}</a></h1>
+  </div>
+  <nav id="nav" role="navigation" aria-label="主导航">
+    <ul>
+      <li class="icon"><a href="#" id="nav-toggle" aria-label="展开菜单"><i class="ic ic-bars"></i></a></li>
+      <li><a href="/">Home</a></li>
+      {% for menu in menus %}
+        <li><a href="{{ menu.link }}">{{ menu.name }}</a></li>
+      {% endfor %}
+      {% if theme_config.showSearch and theme_config.showSearch != "false" %}
+        <li><a href="#" class="search-trigger" aria-label="搜索"><i class="ic ic-search"></i></a></li>
+      {% endif %}
+      <li><a href="#" id="theme-toggle" aria-label="切换日间/夜间模式"><i class="ic ic-moon"></i></a></li>
+    </ul>
+  </nav>
+</header>

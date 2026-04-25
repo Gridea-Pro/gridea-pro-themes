@@ -1,0 +1,19 @@
+{# 上一篇 / 下一篇 — 在文章页底部，由 main.js 根据 posts.json 注入实际链接 #}
+{% if theme_config.showPrevNext and theme_config.showPrevNext != "false" %}
+<nav class="post-nav" data-current="{{ post.link }}" aria-label="文章导航">
+  <a class="post-nav-prev" href="#" data-role="prev-link" hidden>
+    <span class="label">&laquo; 上一篇</span>
+    <span class="title"></span>
+  </a>
+  <span class="post-nav-prev empty" data-role="prev-empty">
+    <span class="label">&laquo; 没有更早的文章了</span>
+  </span>
+  <a class="post-nav-next" href="#" data-role="next-link" hidden>
+    <span class="label">下一篇 &raquo;</span>
+    <span class="title"></span>
+  </a>
+  <span class="post-nav-next empty" data-role="next-empty">
+    <span class="label">最新的就是这一篇 &raquo;</span>
+  </span>
+</nav>
+{% endif %}

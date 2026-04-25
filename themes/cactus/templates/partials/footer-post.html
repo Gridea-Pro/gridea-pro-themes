@@ -1,0 +1,16 @@
+{# 文章页底部 fixed bar（移动端）— 复刻 Cactus #footer-post #}
+<div id="footer-post-container">
+  <div id="footer-post" aria-label="文章页底部工具栏">
+    <nav id="nav-footer">
+      <ul>
+        <li><a href="/" aria-label="Home"><i class="ic ic-home"></i></a></li>
+        {% if theme_config.showSearch and theme_config.showSearch != "false" %}
+          <li><a href="#" class="search-trigger" aria-label="搜索"><i class="ic ic-search"></i></a></li>
+        {% endif %}
+        <li><a href="#" data-role="post-prev" aria-label="上一篇"><i class="ic ic-chevron-left"></i></a></li>
+        <li><a href="#" data-role="post-next" aria-label="下一篇"><i class="ic ic-chevron-right"></i></a></li>
+        <li><a href="#" data-role="back-top" aria-label="返回顶部"><i class="ic ic-chevron-up"></i></a></li>
+      </ul>
+    </nav>
+  </div>
+</div>

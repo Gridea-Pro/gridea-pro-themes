@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-tag{% endblock %}
+{% block title %}#{{ tag.name }} · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+{% include "partials/tag-cloud.html" %}
+
+<section id="archive" class="archive">
+  <span class="h1"><span class="hash-prefix"></span>{{ tag.name }} <small class="muted">· {{ posts|length }} 篇</small></span>
+  <ul class="post-list" id="post-list">
+    {% if posts|length > 0 %}
+      {% for post in posts %}
+        {% if not post.hideInList %}
+          {% include "partials/post-card.html" %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <li class="post-item empty"><span>该标签下还没有文章</span></li>
+    {% endif %}
+  </ul>
+
+  {% include "partials/pagination.html" %}
+</section>
+{% endblock %}

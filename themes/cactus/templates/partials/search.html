@@ -1,0 +1,13 @@
+{# 搜索浮层 — 全屏遮罩 + 输入框 + 结果列表，由 main.js 控制显隐和检索 #}
+<div class="searchbox" id="searchbox" aria-hidden="true" role="dialog" aria-label="站内搜索">
+  <div class="searchbox-mask" data-role="search-close"></div>
+  <div class="searchbox-container">
+    <div class="searchbox-input-wrapper">
+      <span class="searchbox-prefix"><i class="ic ic-search"></i></span>
+      <input id="search-input" class="searchbox-input" type="search" autocomplete="off" placeholder="输入关键字搜索文章…">
+      <button class="searchbox-close" data-role="search-close" aria-label="关闭"><i class="ic ic-close"></i></button>
+    </div>
+    <ul class="searchbox-results" id="search-results" role="listbox"></ul>
+    <div class="searchbox-hint" id="search-hint">支持搜索标题与正文 · 按 ESC 关闭</div>
+  </div>
+</div>

@@ -1,0 +1,57 @@
+/* Cactus 代码高亮 — 复刻原版 .hljs 配色（适配双主题） */
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: .5em;
+  background: var(--code-bg);
+  color: var(--code-fg);
+}
+
+.hljs-comment, .hljs-quote { color: #969896; font-style: italic; }
+.hljs-addition, .hljs-keyword, .hljs-literal, .hljs-selector-tag, .hljs-type { color: #c9c; }
+.hljs-number, .hljs-selector-attr, .hljs-selector-pseudo { color: #f99157; }
+.hljs-doctag, .hljs-regexp, .hljs-string { color: #8abeb7; }
+.hljs-built_in, .hljs-name, .hljs-section, .hljs-title { color: #b5bd68; }
+.hljs-class .hljs-title, .hljs-selector-id, .hljs-template-variable, .hljs-variable { color: #fc6; }
+.hljs-name, .hljs-section, .hljs-strong { font-weight: 700; }
+.hljs-bullet, .hljs-link, .hljs-meta, .hljs-subst, .hljs-symbol { color: #f99157; }
+.hljs-deletion { color: #dc322f; }
+.hljs-formula { background: #eee8d5; }
+.hljs-attr, .hljs-attribute { color: #81a2be; }
+.hljs-emphasis { font-style: italic; }
+
+/* Light 模式下，配色翻转为更柔和的色调 */
+[data-theme="light"] .hljs { color: #2a2c2f; background: var(--code-bg); }
+[data-theme="light"] .hljs-comment, [data-theme="light"] .hljs-quote { color: #999; }
+[data-theme="light"] .hljs-keyword, [data-theme="light"] .hljs-selector-tag,
+[data-theme="light"] .hljs-literal, [data-theme="light"] .hljs-type { color: #8959a8; }
+[data-theme="light"] .hljs-number, [data-theme="light"] .hljs-selector-attr { color: #f5871f; }
+[data-theme="light"] .hljs-string, [data-theme="light"] .hljs-doctag,
+[data-theme="light"] .hljs-regexp { color: #718c00; }
+[data-theme="light"] .hljs-name, [data-theme="light"] .hljs-section,
+[data-theme="light"] .hljs-built_in, [data-theme="light"] .hljs-title { color: #4271ae; }
+[data-theme="light"] .hljs-variable, [data-theme="light"] .hljs-template-variable,
+[data-theme="light"] .hljs-class .hljs-title { color: #c82829; }
+[data-theme="light"] .hljs-attr, [data-theme="light"] .hljs-attribute { color: #4271ae; }
+[data-theme="light"] .hljs-meta, [data-theme="light"] .hljs-bullet,
+[data-theme="light"] .hljs-link { color: #f5871f; }
+
+/* 复制按钮（main.js 注入） */
+.code-copy-btn {
+  position: absolute;
+  top: 6px; right: 6px;
+  background: rgba(255, 255, 255, .08);
+  border: 0;
+  color: var(--fg-mute);
+  padding: 2px 8px;
+  font: 11px var(--font-mono);
+  border-radius: 3px;
+  cursor: pointer;
+  opacity: 0; transition: opacity .15s ease;
+}
+[data-theme="light"] .code-copy-btn { background: rgba(0, 0, 0, .06); }
+.code-block-wrap { position: relative; }
+.code-block-wrap:hover .code-copy-btn { opacity: 1; }
+.code-copy-btn:hover { color: var(--accent); }
+.code-copy-btn.copied { color: var(--accent); }

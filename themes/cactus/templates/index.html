@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-home{% endblock %}
+{% block title %}{{ config.siteName }}{% endblock %}
+
+{% block content %}
+{# ===== Hero ===== #}
+{% if theme_config.heroEnable and theme_config.heroEnable != "false" %}
+<section id="about" class="hero">
+  <div class="description coding">
+    <span class="prompt prompt-static">{{ theme_config.heroIntro|default:"Hi." }}</span>
+    <br>
+    <span class="prompt typed" id="typed-target" data-phrases="{{ theme_config.heroPhrases|default:"Welcome to my blog." }}"></span><span class="typed-cursor" aria-hidden="true"></span>
+  </div>
+
+  {% if theme_config.social %}
+  <div class="hero-social">
+    Find me on
+    <ul id="sociallinks" data-source="{{ theme_config.social|safe }}">
+      {# JS 会渲染下方占位符为图标列表 #}
+    </ul>
+    {% if theme_config.showSearch and theme_config.showSearch != "false" %}
+      · <a class="search-trigger icon" href="#" aria-label="搜索"><i class="ic ic-search"></i></a>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% if theme_config.heroTagline %}
+  <p class="prompt ad-text">{{ theme_config.heroTagline }}</p>
+  {% endif %}
+</section>
+{% endif %}
+
+{# ===== Writing ===== #}
+<section id="writing" class="home-section">
+  <span class="h1">
+    <a href="{{ theme_config.writingLink|default:"/archives" }}">{{ theme_config.writingTitle|default:"Writing" }}</a>
+  </span>
+  <ul class="post-list" id="post-list">
+    {% set _limit = 0 %}
+    {% if theme_config.writingCount %}{% set _limit = theme_config.writingCount|add:0 %}{% endif %}
+    {% if posts|length > 0 %}
+      {% for post in posts %}
+        {% if not post.hideInList %}
+          {% if _limit == 0 or loop.index <= _limit %}
+            {% include "partials/post-card.html" %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <li class="post-item empty"><span>暂时还没有文章</span></li>
+    {% endif %}
+  </ul>
+</section>
+
+{# ===== Projects ===== #}
+{% if theme_config.projectsEnable and theme_config.projectsEnable != "false" and theme_config.projects %}
+<section id="projects" class="home-section">
+  <span class="h1">{{ theme_config.projectsTitle|default:"Projects" }}</span>
+  <ul class="project-list" data-source="{{ theme_config.projects|safe }}">
+    {# main.js 会把 textarea 解析为列表项 #}
+  </ul>
+</section>
+{% endif %}
+
+{# ===== 文章流分页（仅当首页直接当列表用，非 Hero 模式时） ===== #}
+{% if not theme_config.heroEnable or theme_config.heroEnable == "false" %}
+  {% include "partials/pagination.html" %}
+{% endif %}
+{% endblock %}

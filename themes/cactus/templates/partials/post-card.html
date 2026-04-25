@@ -1,0 +1,10 @@
+{# 文章列表行 — Cactus 风格的紧凑日期 + 标题 #}
+<li class="post-item" data-link="{{ post.link }}" data-date="{{ post.date }}">
+  <div class="meta">
+    {% if post.isTop %}<span class="sticky-flag">[置顶]</span> {% endif %}
+    <time datetime="{{ post.date }}">{{ post.date }}</time>
+  </div>
+  <span class="post-item-title">
+    <a href="{{ post.link }}">{{ post.title }}</a>
+  </span>
+</li>

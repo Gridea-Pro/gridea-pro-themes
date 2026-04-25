@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-memos{% endblock %}
+{% block title %}{{ theme_config.memosTitle|default:"Memos" }} · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<section id="memos">
+  <span class="h1">{{ theme_config.memosTitle|default:"Memos" }}</span>
+
+  {% include "partials/heatmap.html" %}
+
+  {% if memos|length > 0 %}
+    <ul class="memo-list">
+      {% for memo in memos %}
+        <li class="memo-item" data-date="{% if memo.date %}{{ memo.date }}{% elif memo.createdAt %}{{ memo.createdAt }}{% endif %}">
+          <div class="memo-time">
+            <time>{% if memo.dateFormat %}{{ memo.dateFormat }}{% else %}{{ memo.date }}{% endif %}</time>
+          </div>
+          <div class="memo-body">
+            <div class="memo-inner">{{ memo.content|safe }}</div>
+            {% if memo.tags|length > 0 %}
+              <div class="memo-tags">
+                {% for t in memo.tags %}<span class="memo-tag"><span class="hash">#</span>{{ t }}</span>{% endfor %}
+              </div>
+            {% endif %}
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="empty">还没有闪念。在 Gridea Pro 的「闪念」面板里写下第一条吧。</p>
+  {% endif %}
+</section>
+{% endblock %}

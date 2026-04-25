@@ -1,0 +1,50 @@
+{# 文章页右上角浮动菜单（PC 端）— 复刻 Cactus #header-post #}
+<aside id="header-post" aria-label="文章工具栏">
+  <a id="menu-icon" href="#" data-role="menu-toggle" aria-label="展开菜单"><i class="ic ic-bars"></i></a>
+  <a id="menu-icon-tablet" href="#" data-role="menu-toggle" aria-label="展开菜单"><i class="ic ic-bars"></i></a>
+  <a id="top-icon-tablet" href="#" data-role="back-top" aria-label="返回顶部" hidden><i class="ic ic-chevron-up"></i></a>
+
+  <div id="menu">
+    <nav id="nav" aria-label="文章页导航">
+      <ul>
+        <li><a href="/">Home</a></li>
+        {% for menu in menus %}<li><a href="{{ menu.link }}">{{ menu.name }}</a></li>{% endfor %}
+      </ul>
+    </nav>
+    <div id="actions">
+      <ul>
+        {% if theme_config.showSearch and theme_config.showSearch != "false" %}
+          <li><a class="icon search-trigger" href="#" data-info="i-search" aria-label="搜索"><i class="ic ic-search"></i></a></li>
+        {% endif %}
+        <li><a class="icon" href="#" data-role="post-prev" data-info="i-prev" aria-label="上一篇" hidden><i class="ic ic-chevron-left"></i></a></li>
+        <li><a class="icon" href="#" data-role="post-next" data-info="i-next" aria-label="下一篇" hidden><i class="ic ic-chevron-right"></i></a></li>
+        <li><a class="icon" href="#" data-role="back-top" data-info="i-top" aria-label="返回顶部"><i class="ic ic-chevron-up"></i></a></li>
+        {% if theme_config.showShare and theme_config.showShare != "false" %}
+          <li><a class="icon" href="#" data-role="share-toggle" data-info="i-share" aria-label="分享"><i class="ic ic-share"></i></a></li>
+        {% endif %}
+      </ul>
+      <span id="i-search" class="info" hidden>Search</span>
+      <span id="i-prev" class="info" hidden>Previous post</span>
+      <span id="i-next" class="info" hidden>Next post</span>
+      <span id="i-top" class="info" hidden>Back to top</span>
+      <span id="i-share" class="info" hidden>Share post</span>
+    </div>
+
+    {% if theme_config.showShare and theme_config.showShare != "false" %}
+    <div id="share" hidden>
+      <ul data-share-url="{% if post %}{{ config.domain }}{{ post.link }}{% endif %}" data-share-title="{% if post %}{{ post.title }}{% endif %}">
+        <li><a class="icon" href="#" data-share="twitter" aria-label="Twitter"><i class="ic ic-twitter"></i></a></li>
+        <li><a class="icon" href="#" data-share="weibo" aria-label="微博"><i class="ic ic-weibo"></i></a></li>
+        <li><a class="icon" href="#" data-share="email" aria-label="邮件"><i class="ic ic-email"></i></a></li>
+        <li><a class="icon" href="#" data-share="copy" aria-label="复制链接"><i class="ic ic-link"></i></a></li>
+      </ul>
+    </div>
+    {% endif %}
+
+    {% if theme_config.showToc and theme_config.showToc != "false" %}
+    <div id="toc">
+      <nav id="TableOfContents" aria-label="本文目录"></nav>
+    </div>
+    {% endif %}
+  </div>
+</aside>

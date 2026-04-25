@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-post{% endblock %}
+{% block title %}{{ post.title }} · {{ config.siteName }}{% endblock %}
+{% block description %}{{ post.content|striptags|truncatechars:160 }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{{ post.content|striptags|truncatechars:160 }}{% endblock %}
+
+{% block head_extra %}
+{% if post.feature %}<meta property="og:image" content="{{ post.feature }}">{% endif %}
+<link rel="canonical" href="{{ config.domain }}{{ post.link }}">
+{% endblock %}
+
+{% block body %}
+{% include "partials/header-post.html" %}
+
+<div class="content index width mx-auto px3 my3">
+  {% include "partials/header.html" %}
+
+  <main class="site-main" id="wrapper">
+    <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+      <header>
+        <h1 class="posttitle" itemprop="name headline">{{ post.title }}</h1>
+        <div class="meta">
+          <span class="postdate">
+            <time datetime="{{ post.date }}" itemprop="datePublished">{{ post.date }}</time>
+          </span>
+          {% if theme_config.showReadingTime and theme_config.showReadingTime != "false" %}
+            <span class="article-tag"><i class="ic ic-clock"></i> 约 {{ post.content|reading_time }} 分钟</span>
+            <span class="article-tag"><i class="ic ic-pen"></i> {{ post.content|word_count }} 字</span>
+          {% endif %}
+          {% if post.tags|length > 0 %}
+            <span class="article-tag-box">
+              <i class="ic ic-tag"></i>
+              {% for tag in post.tags %}
+                <a class="tag-link" href="{{ tag.link }}">{{ tag.name }}</a>{% if not loop.last %}<span class="tag-sep">·</span>{% endif %}
+              {% endfor %}
+            </span>
+          {% endif %}
+        </div>
+      </header>
+
+      {% if post.feature %}
+      <div class="post-feature">
+        <img src="{{ post.feature }}" alt="{{ post.title }}" loading="lazy">
+      </div>
+      {% endif %}
+
+      <div class="content article-content" itemprop="articleBody" id="post-content">
+        {{ post.content|safe }}
+      </div>
+
+      <footer class="post-footer">
+        <h2><span class="hash-prefix"></span>本文链接</h2>
+        <p><a href="{{ config.domain }}{{ post.link }}">{{ config.domain }}{{ post.link }}</a></p>
+        {% include "partials/post-nav.html" %}
+      </footer>
+    </article>
+
+    {% include "partials/comments.html" %}
+  </main>
+</div>
+
+{% include "partials/footer.html" %}
+{% include "partials/footer-post.html" %}
+{% endblock %}

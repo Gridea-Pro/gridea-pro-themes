@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="{{ theme_config.themeMode|default:"dark" }}">
+<head>
+{% include "partials/head.html" %}
+</head>
+<body class="{% block body_class %}page-default{% endblock %}">
+{% block body %}
+<div class="content index width mx-auto px3 my4">
+  {% include "partials/header.html" %}
+  <main class="site-main" id="wrapper">
+    {% block content %}{% endblock %}
+  </main>
+</div>
+{% include "partials/footer.html" %}
+{% endblock %}
+
+{% if theme_config.showSearch and theme_config.showSearch != "false" %}
+{% include "partials/search.html" %}
+{% endif %}
+
+<script>
+window.__CACTUS__ = {
+  domain: "{{ config.domain }}",
+  themeMode: "{{ theme_config.themeMode|default:"dark" }}",
+  searchProvider: "{{ theme_config.searchProvider|default:"local" }}",
+  showSearch: {% if theme_config.showSearch and theme_config.showSearch != "false" %}true{% else %}false{% endif %},
+  showToc: {% if theme_config.showToc and theme_config.showToc != "false" %}true{% else %}false{% endif %},
+  showPrevNext: {% if theme_config.showPrevNext and theme_config.showPrevNext != "false" %}true{% else %}false{% endif %},
+  memosHeatmap: {% if theme_config.memosHeatmap and theme_config.memosHeatmap != "false" %}true{% else %}false{% endif %}
+};
+</script>
+<script src="/scripts/main.js" defer></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>
