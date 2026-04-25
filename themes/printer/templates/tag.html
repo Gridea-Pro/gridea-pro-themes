@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}{% if current_tag %}{{ current_tag.name }}{% elif tag %}{{ tag.name }}{% else %}标签{% endif %} · 标签 · {{ config.siteName }}{% endblock %}
+{% block body_class %}tag-detail{% endblock %}
+
+{% block content %}
+<h2 class="paper-title">标签：{% if current_tag %}{{ current_tag.name }}{% elif tag %}{{ tag.name }}{% else %}—{% endif %}</h2>
+<p class="paper-subtitle">共 {{ posts|length }} 篇文章</p>
+
+<ul class="post-list">
+    {% if posts|length > 0 %}
+        {% for post in posts %}
+            {% if not post.hideInList %}
+                {% include "partials/post-card.html" %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <li class="no-results">该标签下还没有文章。</li>
+    {% endif %}
+</ul>
+{% endblock %}

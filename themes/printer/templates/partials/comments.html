@@ -1,0 +1,17 @@
+{# 评论挂载点。Gridea Pro 的标准评论服务（Disqus / Gitalk / Waline / Twikoo / 内置评论）
+   会查找 #gridea-comments / [data-gridea-comments] 容器并接管渲染。
+   主题侧只负责样式骨架与占位提示，不处理表单提交。 #}
+{% if theme_config.enableComments %}
+<section class="comments-section" id="comments">
+    <h3 class="comments-title">评论</h3>
+
+    <div id="gridea-comments"
+         data-gridea-comments="true"
+         data-post-link="{% if post %}{{ post.link }}{% endif %}"
+         data-post-title="{% if post %}{{ post.title }}{% endif %}">
+        <div class="comments-placeholder">
+            评论由 Gridea Pro 评论服务驱动。请在 Gridea Pro 设置中开启对应服务（Disqus / Gitalk / Waline / Twikoo 等）。
+        </div>
+    </div>
+</section>
+{% endif %}

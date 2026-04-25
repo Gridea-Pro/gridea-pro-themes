@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}博客 · {{ config.siteName }}{% endblock %}
+{% block body_class %}blog{% endblock %}
+
+{% block content %}
+<h2 class="paper-title">博客</h2>
+<p class="paper-subtitle">共 {{ posts|length }} 篇内容</p>
+
+<ul class="post-list">
+    {% if posts|length > 0 %}
+        {% for post in posts %}
+            {% if not post.hideInList %}
+                {% include "partials/post-card.html" %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <li class="no-results">暂无文章。</li>
+    {% endif %}
+</ul>
+
+{% include "partials/pagination.html" %}
+{% endblock %}

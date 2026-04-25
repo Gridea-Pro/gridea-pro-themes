@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block body_class %}home{% endblock %}
+
+{% block content %}
+<h2 class="paper-title">{{ config.siteName }}</h2>
+<p class="paper-subtitle">共 {{ posts|length }} 篇内容</p>
+
+{# 仿原 Typecho 的 paper-meta：活动 / 分类 #}
+<section class="paper-meta">
+    <div class="meta-group">
+        <p class="meta-label">
+            <span class="meta-label-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" focusable="false">
+                    <rect x="2" y="3" width="12" height="10" rx="2" ry="2"></rect>
+                    <path d="M4 5h8v2H4z"></path>
+                </svg>
+            </span>
+            活动
+        </p>
+        <div class="meta-tags">
+            {% if posts|length > 0 %}
+                {% for p in posts %}{% if loop.first %}<a href="{{ p.link }}">最新文章</a>{% endif %}{% endfor %}
+            {% else %}
+                <a href="/">最新文章</a>
+            {% endif %}
+            <a href="#" id="random-read-link" data-random-read>随机阅读</a>
+            <a href="/archives/">归档</a>
+        </div>
+    </div>
+    <div class="meta-group">
+        <p class="meta-label">
+            <span class="meta-label-icon" aria-hidden="true">
+                <svg viewBox="0 0 16 16" focusable="false">
+                    <path d="M2 4.5A1.5 1.5 0 0 1 3.5 3h3A1.5 1.5 0 0 1 8 4.5V6A1.5 1.5 0 0 1 6.5 7h-3A1.5 1.5 0 0 1 2 5.5z"></path>
+                    <path d="M2 10.5A1.5 1.5 0 0 1 3.5 9h7A1.5 1.5 0 0 1 12 10.5v1A1.5 1.5 0 0 1 10.5 13h-7A1.5 1.5 0 0 1 2 11.5z"></path>
+                </svg>
+            </span>
+            分类
+        </p>
+        <div class="meta-tags">
+            {% for tag in tags %}
+                <a href="{{ tag.link }}">{{ tag.name }} ({{ tag.count }})</a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<ul class="post-list">
+    {% if posts|length > 0 %}
+        {% for post in posts %}
+            {% if not post.hideInList %}
+                {% include "partials/post-card.html" %}
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <li class="no-results">暂无文章，先去写一篇吧。</li>
+    {% endif %}
+</ul>
+
+{% include "partials/pagination.html" %}
+{% endblock %}

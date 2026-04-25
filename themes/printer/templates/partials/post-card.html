@@ -1,0 +1,8 @@
+{# 文章列表项：极简打印纸风。日期 + 标题 + 80 字摘要。无封面图。 #}
+<li class="post-item">
+    <p class="post-date">{{ post.date }}</p>
+    <h3 class="post-title">
+        <a href="{{ post.link }}">{{ post.title }}</a>
+    </h3>
+    <p class="post-excerpt">{{ post.content|excerpt:80|striptags }}</p>
+</li>

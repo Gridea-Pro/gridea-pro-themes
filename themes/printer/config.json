@@ -1,0 +1,206 @@
+{
+  "name": "Printer",
+  "version": "1.0.0",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "author": "原 Typecho 主题：zhinan (https://zhinan.blog) · Gridea Pro Jinja2 移植：Eric",
+  "description": "仿打印机面板 / 网格纸 / 宋体衬线的复古博客主题。单栏极简、深浅自适应、内置阅读进度 / 搜索 / 估读时长 / 回到顶部。从 Ouxxxxxjoe/Printer-Typecho 移植。",
+  "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
+  "customConfig": [
+    {
+      "name": "logoText",
+      "label": "Logo 文字（留空则用站点名）",
+      "group": "基础设置",
+      "type": "input",
+      "value": "",
+      "note": "顶栏品牌区第一行的标题，不填就用 Gridea Pro 站点设置里的站点名"
+    },
+    {
+      "name": "subTitle",
+      "label": "副标题",
+      "group": "基础设置",
+      "type": "input",
+      "value": "",
+      "note": "顶栏品牌区第二行的小字。不填就用 Gridea Pro 站点设置里的站点描述"
+    },
+    {
+      "name": "footerCopyright",
+      "label": "页脚版权",
+      "group": "基础设置",
+      "type": "input",
+      "value": "",
+      "note": "为空时显示 © {年份} {站点名}"
+    },
+    {
+      "name": "showThemeCredit",
+      "label": "显示主题署名",
+      "group": "基础设置",
+      "type": "boolean",
+      "value": true
+    },
+    {
+      "name": "primaryColor",
+      "label": "主题色（强调）",
+      "group": "外观设置",
+      "type": "color",
+      "value": "#95c394",
+      "note": "ON 指示灯、按钮、链接 hover 等"
+    },
+    {
+      "name": "externalLinkColor",
+      "label": "外链 / 文章分类强调色",
+      "group": "外观设置",
+      "type": "color",
+      "value": "#ff6b35",
+      "note": "正文中外链与分类胶囊的主色"
+    },
+    {
+      "name": "fontFamily",
+      "label": "正文字体",
+      "group": "外观设置",
+      "type": "select",
+      "value": "serif",
+      "options": [
+        { "label": "宋体衬线（默认）", "value": "serif" },
+        { "label": "无衬线（PingFang/雅黑）", "value": "sans" }
+      ]
+    },
+    {
+      "name": "defaultTheme",
+      "label": "默认配色",
+      "group": "外观设置",
+      "type": "select",
+      "value": "auto",
+      "options": [
+        { "label": "跟随系统", "value": "auto" },
+        { "label": "始终亮色", "value": "light" },
+        { "label": "始终暗色", "value": "dark" }
+      ]
+    },
+    {
+      "name": "showReadingTime",
+      "label": "文章页显示估读时长",
+      "group": "文章",
+      "type": "boolean",
+      "value": true
+    },
+    {
+      "name": "showReadingProgress",
+      "label": "文章页显示阅读进度条",
+      "group": "文章",
+      "type": "boolean",
+      "value": true
+    },
+    {
+      "name": "showCodeCopy",
+      "label": "代码块显示「复制」按钮",
+      "group": "文章",
+      "type": "boolean",
+      "value": true
+    },
+    {
+      "name": "enableSearch",
+      "label": "启用全局搜索",
+      "group": "搜索",
+      "type": "boolean",
+      "value": true,
+      "note": "Cmd/Ctrl+K 唤出全屏搜索；同时保留顶栏的展开式搜索框"
+    },
+    {
+      "name": "memosHeatmap",
+      "label": "闪念页显示热力图",
+      "group": "闪念",
+      "type": "boolean",
+      "value": true
+    },
+    {
+      "name": "memosTitle",
+      "label": "闪念页标题",
+      "group": "闪念",
+      "type": "input",
+      "value": "闪念"
+    },
+    {
+      "name": "memosDescription",
+      "label": "闪念页描述",
+      "group": "闪念",
+      "type": "input",
+      "value": "一些不成文章的碎片想法"
+    },
+    {
+      "name": "githubUrl",
+      "label": "GitHub 链接",
+      "group": "社交",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "twitterUrl",
+      "label": "Twitter / X 链接",
+      "group": "社交",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "weiboUrl",
+      "label": "微博链接",
+      "group": "社交",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "rssUrl",
+      "label": "RSS 链接",
+      "group": "社交",
+      "type": "input",
+      "value": "/atom.xml"
+    },
+    {
+      "name": "contactEmail",
+      "label": "联系邮箱",
+      "group": "社交",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "enableComments",
+      "label": "启用评论",
+      "group": "评论",
+      "type": "boolean",
+      "value": true,
+      "note": "评论由 Gridea Pro 标准评论服务接管（Disqus / Gitalk / Waline / Twikoo 等），主题侧只提供挂载点和样式骨架"
+    },
+    {
+      "name": "visitStatsCode",
+      "label": "访问统计代码",
+      "group": "高级设置",
+      "type": "code",
+      "value": "",
+      "note": "粘贴 不蒜子 / Umami / Plausible / GA 的 <script>，会渲染到页脚 #visit-stats 旁边"
+    },
+    {
+      "name": "headerInjectCode",
+      "label": "Head 注入代码",
+      "group": "高级设置",
+      "type": "code",
+      "value": "",
+      "note": "在 </head> 之前注入"
+    },
+    {
+      "name": "footerInjectCode",
+      "label": "Footer 注入代码",
+      "group": "高级设置",
+      "type": "code",
+      "value": "",
+      "note": "在 </body> 之前注入"
+    },
+    {
+      "name": "customCss",
+      "label": "自定义 CSS",
+      "group": "高级设置",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到主题样式末尾"
+    }
+  ]
+}
