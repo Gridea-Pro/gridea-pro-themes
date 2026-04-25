@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}404 · {{ config.siteName }}{% endblock %}
+{% block body_class %}page-404{% endblock %}
+
+{# 404 不显示常规 header / footer / 友链横条，只保留极简的回首页提示 #}
+{% block header %}{% endblock %}
+{% block footer %}{% endblock %}
+
+{% block main %}
+<div class="page-404-wrap">
+  <div class="page-404-inner">
+    <img src="/media/images/404.svg" alt="404" class="page-404-illustration">
+
+    <p class="page-404-text">这里没有内容，可能是页面被搬走了，或者地址输错了。</p>
+
+    <div class="page-404-actions">
+      <a href="/" class="page-404-btn page-404-btn--primary">
+        <i class="bi bi-house-door"></i> 回首页
+      </a>
+      <a href="/archives/" class="page-404-btn">
+        <i class="bi bi-archive"></i> 看归档
+      </a>
+      {% if theme_config.enableSearch %}
+        <button class="page-404-btn" type="button"
+                data-bs-toggle="offcanvas" data-bs-target="#searchPanel">
+          <i class="bi bi-search"></i> 搜一搜
+        </button>
+      {% endif %}
+    </div>
+
+    <p class="page-404-tip">提示：浏览器地址栏直接试试 <code>/archives/</code>、<code>/tags/</code>、<code>/categories/</code>、<code>/memos/</code>、<code>/about/</code>、<code>/links/</code> 这几个常驻页面。</p>
+  </div>
+</div>
+{% endblock %}

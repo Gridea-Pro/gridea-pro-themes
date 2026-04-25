@@ -1,0 +1,35 @@
+{# 闪念热力图 · GitHub 风格 7×52 网格，数据由 main.js 读取 window.__memoDates 后填充 #}
+<div class="memo-heatmap-wrap">
+  <div class="memo-heatmap-header">
+    <div class="memo-heatmap-title">
+      <i class="bi bi-grid-3x3"></i>
+      <span>过去一年的闪念</span>
+      <strong id="memoHeatmapCount" class="memo-heatmap-count" aria-live="polite">—</strong>
+    </div>
+    <div class="memo-heatmap-legend" aria-hidden="true">
+      <span>少</span>
+      <span class="memo-heatmap-cell memo-heatmap-cell--l0"></span>
+      <span class="memo-heatmap-cell memo-heatmap-cell--l1"></span>
+      <span class="memo-heatmap-cell memo-heatmap-cell--l2"></span>
+      <span class="memo-heatmap-cell memo-heatmap-cell--l3"></span>
+      <span class="memo-heatmap-cell memo-heatmap-cell--l4"></span>
+      <span>多</span>
+    </div>
+  </div>
+  <div class="memo-heatmap-scroll">
+    <div id="memoHeatmap" class="memo-heatmap-grid" role="img" aria-label="闪念热力图">
+      {# 53 列 × 7 行 = 371 格，预渲染骨架，实际密度由 JS 在 ready 后写入 #}
+      {% for col in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXY" %}
+        <div class="memo-heatmap-col" data-col="{{ loop.index0 }}">
+          <span class="memo-heatmap-cell memo-heatmap-cell--l0"></span>
+          <span class="memo-heatmap-cell memo-heatmap-cell--l0"></span>
+          <span class="memo-heatmap-cell memo-heatmap-cell--l0"></span>
+          <span class="memo-heatmap-cell memo-heatmap-cell--l0"></span>
+          <span class="memo-heatmap-cell memo-heatmap-cell--l0"></span>
+          <span class="memo-heatmap-cell memo-heatmap-cell--l0"></span>
+          <span class="memo-heatmap-cell memo-heatmap-cell--l0"></span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}友情链接 · {{ config.siteName }}{% endblock %}
+{% block body_class %}page-links{% endblock %}
+{% block og_url %}/links/{% endblock %}
+
+{% block main %}
+<div class="container">
+  <header class="cat_info_top">
+    <h1 class="cat_info_top_title"><i class="bi bi-bookmark-star"></i> 友情链接</h1>
+    <p class="cat_info_top_desc">
+      朋友的博客 · 同好的去处。
+      {% if links %}共 <strong>{{ links|length }}</strong> 个链接。{% endif %}
+    </p>
+  </header>
+
+  <section class="index-area">
+    <div class="row g-3">
+      <div class="{% if theme_config.showSidebar %}col-lg-9{% else %}col-12{% endif %}">
+        <div class="links-grid">
+          {% if links and links|length > 0 %}
+            {% for link in links %}
+              <a class="links-card" href="{{ link.url }}" target="_blank" rel="noopener noreferrer">
+                {% if link.avatar %}
+                  <img class="links-card-avatar" src="{{ link.avatar }}" alt="{{ link.name }}" loading="lazy">
+                {% else %}
+                  <span class="links-card-avatar links-card-avatar--placeholder">
+                    <i class="bi bi-globe"></i>
+                  </span>
+                {% endif %}
+                <div class="links-card-body">
+                  <h3 class="links-card-name">{{ link.name }}</h3>
+                  {% if link.desc %}<p class="links-card-desc">{{ link.desc }}</p>{% elif link.description %}<p class="links-card-desc">{{ link.description }}</p>{% endif %}
+                </div>
+                <i class="bi bi-arrow-up-right links-card-arrow"></i>
+              </a>
+            {% endfor %}
+          {% else %}
+            <div class="empty-state">
+              <i class="bi bi-link-45deg"></i>
+              <p>还没有添加友链</p>
+              <p class="empty-state-hint">在 Gridea Pro 桌面客户端的「友情链接」里添加，会自动出现在这里。</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {% if theme_config.showSidebar %}
+        {% include "partials/sidebar.html" %}
+      {% endif %}
+    </div>
+  </section>
+</div>
+{% endblock %}

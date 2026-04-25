@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} · {{ config.siteName }}{% endblock %}
+{% block meta_description %}{{ post.content|strip_html|truncatechars:160 }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{{ post.content|strip_html|truncatechars:160 }}{% endblock %}
+{% block og_url %}{{ post.link }}{% endblock %}
+{% block og_image %}{% if post.feature %}<meta property="og:image" content="{{ post.feature }}">{% else %}{% if config.avatar %}<meta property="og:image" content="{{ config.avatar }}">{% endif %}{% endif %}{% endblock %}
+
+{% block body_class %}page-post{% endblock %}
+
+{% block main %}
+<div class="container">
+  <section class="index-area">
+    <div class="row g-3">
+      <div class="{% if theme_config.showSidebar %}col-lg-9{% else %}col-12{% endif %}">
+
+        <article class="post_container post-detail">
+
+          {# 标题区 #}
+          <header class="post-detail-head">
+            <h1 class="post-detail-title">{{ post.title }}</h1>
+            <div class="post-detail-meta">
+              <span class="post-meta-item"><i class="bi bi-calendar3"></i> {{ post.date }}</span>
+              <span class="post-meta-item"><i class="bi bi-file-text"></i> {{ post.content|word_count }} 字</span>
+              <span class="post-meta-item"><i class="bi bi-clock"></i> 约 {{ post.content|reading_time }} 分钟</span>
+              {% if post.tags|length > 0 %}
+                <span class="post-meta-item">
+                  <i class="bi bi-tags"></i>
+                  {% for tag in post.tags %}
+                    <a href="{{ tag.link }}" class="post-detail-tag">{{ tag.name }}</a>{% if not loop.last %}<span class="post-meta-tag-sep">·</span>{% endif %}
+                  {% endfor %}
+                </span>
+              {% endif %}
+            </div>
+          </header>
+
+          {# 特色图 #}
+          {% if post.feature %}
+            <figure class="post-detail-feature">
+              <img src="{{ post.feature }}" alt="{{ post.title }}" loading="lazy">
+            </figure>
+          {% endif %}
+
+          {# 正文 #}
+          <div class="post-detail-content wznrys">
+            {{ post.content|safe }}
+          </div>
+
+          {# 文章底部：标签 + 作者卡 #}
+          <footer class="post-detail-foot">
+
+            {% if post.tags|length > 0 %}
+              <div class="post_author_r post-detail-tags-block">
+                <span class="post_author_tag-label"><i class="bi bi-tag"></i> 本文标签</span>
+                <span class="post_author_tag">
+                  {% for tag in post.tags %}
+                    <em><a href="{{ tag.link }}">#{{ tag.name }}</a></em>
+                  {% endfor %}
+                </span>
+              </div>
+            {% endif %}
+
+            <div class="post-detail-author author_show_box author_show_box--inline">
+              {% if config.avatar %}
+                <a href="/about/" class="post-detail-author-avatar"><img src="{{ config.avatar }}" alt="{{ config.siteName }}"></a>
+              {% endif %}
+              <div class="post-detail-author-info">
+                <h4><a href="/about/">{{ config.siteName }}</a></h4>
+                {% if config.siteDescription %}<p>{{ config.siteDescription }}</p>{% endif %}
+                <div class="post-detail-author-social">
+                  {% if theme_config.githubUrl %}<a href="{{ theme_config.githubUrl }}" target="_blank" rel="noopener" aria-label="GitHub"><i class="bi bi-github"></i></a>{% endif %}
+                  {% if theme_config.twitterUrl %}<a href="{{ theme_config.twitterUrl }}" target="_blank" rel="noopener" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>{% endif %}
+                  {% if theme_config.weiboUrl %}<a href="{{ theme_config.weiboUrl }}" target="_blank" rel="noopener" aria-label="Weibo"><i class="bi bi-sina-weibo"></i></a>{% endif %}
+                  {% if theme_config.emailAddress %}<a href="mailto:{{ theme_config.emailAddress }}" aria-label="Email"><i class="bi bi-envelope"></i></a>{% endif %}
+                  {% if theme_config.rssUrl %}<a href="{{ theme_config.rssUrl }}" aria-label="RSS"><i class="bi bi-rss"></i></a>{% endif %}
+                </div>
+              </div>
+            </div>
+          </footer>
+
+        </article>
+
+        {# 上一篇 / 下一篇（Gridea Pro 不在 post 上下文里给 prev/next，由 main.js 在 search-index 里查邻居） #}
+        <nav class="post-nav-around" id="postNavAround" data-current-link="{{ post.link }}" hidden>
+          <a class="post-nav-side post-nav-prev" id="postNavPrev" href="#" hidden>
+            <span class="post-nav-side-label"><i class="bi bi-arrow-left"></i> 上一篇</span>
+            <span class="post-nav-side-title"></span>
+          </a>
+          <a class="post-nav-side post-nav-next" id="postNavNext" href="#" hidden>
+            <span class="post-nav-side-label">下一篇 <i class="bi bi-arrow-right"></i></span>
+            <span class="post-nav-side-title"></span>
+          </a>
+        </nav>
+
+        {# 相关文章（按 tag 交集，client-side） #}
+        <section class="post-related" id="postRelated" hidden>
+          <h3 class="post-related-title"><i class="bi bi-stars"></i> 相关文章</h3>
+          <ul class="post-related-list" id="postRelatedList"></ul>
+        </section>
+
+        {# 评论 #}
+        {% include "partials/comments.html" %}
+
+      </div>
+
+      {% if theme_config.showSidebar %}
+        {% include "partials/sidebar.html" %}
+      {% endif %}
+    </div>
+  </section>
+</div>
+
+{# 给 main.js 用：当前文章 tag 列表，便于客户端做相关推荐 #}
+<script id="post-tags-data" type="application/json">
+[{% for tag in post.tags %}{{ tag.name|to_json|safe }}{% if not loop.last %},{% endif %}{% endfor %}]
+</script>
+{% endblock %}

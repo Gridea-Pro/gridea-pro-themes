@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}归档 · {{ config.siteName }}{% endblock %}
+{% block body_class %}page-archives{% endblock %}
+{% block og_url %}/archives/{% endblock %}
+
+{% block main %}
+<div class="container">
+  <header class="cat_info_top">
+    <h1 class="cat_info_top_title"><i class="bi bi-archive"></i> 归档</h1>
+    <p class="cat_info_top_desc">
+      共 <strong>{{ posts|length }}</strong> 篇文章 ·
+      <strong>{{ tags|length }}</strong> 个标签
+    </p>
+  </header>
+
+  <section class="index-area">
+    <div class="row g-3">
+      <div class="{% if theme_config.showSidebar %}col-lg-9{% else %}col-12{% endif %}">
+        <div class="archives-content">
+          {% for group in posts|group_by:"year" %}
+            <section class="archive-year-block">
+              <h2 class="archive-year-title">
+                <span>{{ group.key }}</span>
+                <small>{{ group.items|length }} 篇</small>
+              </h2>
+              <ul class="archive-list">
+                {% for post in group.items %}
+                  <li class="archive-item">
+                    <time class="archive-date" datetime="{{ post.date }}">{{ post.date }}</time>
+                    <a class="archive-link" href="{{ post.link }}">
+                      {% if post.isTop %}<i class="bi bi-pin-angle-fill archive-pin" title="置顶"></i> {% endif %}
+                      {{ post.title }}
+                    </a>
+                    {% if post.tags|length > 0 %}
+                      <span class="archive-tags d-none d-md-inline">
+                        {% for tag in post.tags %}{% if loop.index <= 2 %}
+                          <a href="{{ tag.link }}" class="archive-tag">{{ tag.name }}</a>
+                        {% endif %}{% endfor %}
+                      </span>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ul>
+            </section>
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if theme_config.showSidebar %}
+        {% include "partials/sidebar.html" %}
+      {% endif %}
+    </div>
+  </section>
+</div>
+{% endblock %}

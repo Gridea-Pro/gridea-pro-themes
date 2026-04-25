@@ -1,0 +1,83 @@
+{# 侧栏 · 4 个可独立开关的模块（移植自 Once 的 sidebar.php，热评/热门/最近回复因静态站不可移植，已替换为分类导航/标签云）#}
+<aside class="sidebar col-lg-3">
+
+  {# 1. 作者卡 #}
+  {% if theme_config.sidebarShowAuthor %}
+  <div class="widget widget-author author_show_box">
+    {% if config.avatar %}
+      <a href="/about/" class="widget-author-avatar">
+        <img src="{{ config.avatar }}" alt="{{ config.siteName }}">
+      </a>
+    {% endif %}
+    <h3 class="widget-author-name">
+      <a href="/about/">{{ config.siteName }}</a>
+    </h3>
+    {% if config.siteDescription %}
+      <p class="widget-author-bio">{{ config.siteDescription }}</p>
+    {% endif %}
+    <div class="widget-author-stats">
+      <div class="widget-author-stat">
+        <strong>{{ posts|length|default:0 }}</strong>
+        <small>文章</small>
+      </div>
+      <div class="widget-author-stat">
+        <strong>{{ tags|length|default:0 }}</strong>
+        <small>标签</small>
+      </div>
+    </div>
+    <div class="widget-author-social">
+      {% if theme_config.githubUrl %}<a href="{{ theme_config.githubUrl }}" target="_blank" rel="noopener" aria-label="GitHub" title="GitHub"><i class="bi bi-github"></i></a>{% endif %}
+      {% if theme_config.twitterUrl %}<a href="{{ theme_config.twitterUrl }}" target="_blank" rel="noopener" aria-label="Twitter" title="Twitter"><i class="bi bi-twitter-x"></i></a>{% endif %}
+      {% if theme_config.weiboUrl %}<a href="{{ theme_config.weiboUrl }}" target="_blank" rel="noopener" aria-label="Weibo" title="微博"><i class="bi bi-sina-weibo"></i></a>{% endif %}
+      {% if theme_config.emailAddress %}<a href="mailto:{{ theme_config.emailAddress }}" aria-label="Email" title="Email"><i class="bi bi-envelope"></i></a>{% endif %}
+      {% if theme_config.rssUrl %}<a href="{{ theme_config.rssUrl }}" target="_blank" rel="noopener" aria-label="RSS" title="RSS"><i class="bi bi-rss"></i></a>{% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  {# 2. 最近文章（按 posts 顺序取前 N 篇，posts 已由 Gridea 按日期倒序排好）#}
+  {% if theme_config.sidebarShowRecent and posts and posts|length > 0 %}
+  <div class="widget widget-recent">
+    <h3 class="widget-title"><i class="bi bi-clock-history"></i> 最新文章</h3>
+    <ul class="widget-recent-list">
+      {% for post in posts %}{% if loop.index <= 8 %}
+        <li class="widget-recent-item">
+          <a href="{{ post.link }}" class="widget-recent-title">{{ post.title }}</a>
+          <time class="widget-recent-date">{{ post.date }}</time>
+        </li>
+      {% endif %}{% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {# 3. 分类导航（取标签数 ≥1 的，作为分类入口，Gridea 用 tag 替代 category）#}
+  {% if theme_config.sidebarShowCategories and tags and tags|length > 0 %}
+  <div class="widget widget-categories">
+    <h3 class="widget-title"><i class="bi bi-collection"></i> 分类导航</h3>
+    <ul class="widget-categories-list">
+      {% for tag in tags %}{% if loop.index <= 10 %}
+        <li class="widget-categories-item">
+          <a href="{{ tag.link }}">
+            <span class="widget-categories-name">{{ tag.name }}</span>
+            <span class="widget-categories-count">{{ tag.count }}</span>
+          </a>
+        </li>
+      {% endif %}{% endfor %}
+    </ul>
+    <a href="/categories/" class="widget-more">查看全部 <i class="bi bi-arrow-right"></i></a>
+  </div>
+  {% endif %}
+
+  {# 4. 标签云 #}
+  {% if theme_config.sidebarShowTags and tags and tags|length > 0 %}
+  <div class="widget widget-tags">
+    <h3 class="widget-title"><i class="bi bi-tags"></i> 标签云</h3>
+    <div class="widget-tags-cloud">
+      {% for tag in tags %}{% if loop.index <= 30 %}
+        <a href="{{ tag.link }}" class="widget-tag" title="{{ tag.name }} · {{ tag.count }} 篇">{{ tag.name }}</a>
+      {% endif %}{% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+</aside>

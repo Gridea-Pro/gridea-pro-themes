@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <defs>
+    <linearGradient id="num" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6598ff"/>
+      <stop offset="100%" stop-color="#0a59f8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="transparent"/>
+  <g transform="translate(400,260)" text-anchor="middle">
+    <text font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="220" font-weight="800" fill="url(#num)" letter-spacing="-8">404</text>
+    <text y="80" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="28" fill="#6b7280">这里没有内容，回首页看看吧</text>
+  </g>
+  <g fill="none" stroke="#c7d2fe" stroke-width="2" opacity="0.6">
+    <circle cx="120" cy="120" r="40"/>
+    <circle cx="680" cy="380" r="60"/>
+    <line x1="80" y1="420" x2="200" y2="420" stroke-linecap="round"/>
+    <line x1="600" y1="100" x2="720" y2="100" stroke-linecap="round"/>
+  </g>
+</svg>

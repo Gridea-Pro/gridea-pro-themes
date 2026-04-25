@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}所有分类 · {{ config.siteName }}{% endblock %}
+{% block body_class %}page-categories{% endblock %}
+{% block og_url %}/categories/{% endblock %}
+
+{% block main %}
+<div class="container">
+  <header class="cat_info_top">
+    <h1 class="cat_info_top_title"><i class="bi bi-collection"></i> 所有分类</h1>
+    <p class="cat_info_top_desc">
+      Gridea Pro 用标签作为内容组织的主要维度，下面把每个标签视作一个分类入口。
+    </p>
+  </header>
+
+  <section class="index-area">
+    <div class="row g-3">
+      <div class="{% if theme_config.showSidebar %}col-lg-9{% else %}col-12{% endif %}">
+        <div class="categories-grid">
+          {% if tags|length > 0 %}
+            {% for tag in tags %}
+              <a href="{{ tag.link }}" class="categories-card">
+                <div class="categories-card-icon">
+                  <i class="bi bi-folder2-open"></i>
+                </div>
+                <h3 class="categories-card-name">{{ tag.name }}</h3>
+                <p class="categories-card-count">{{ tag.count }} 篇</p>
+              </a>
+            {% endfor %}
+          {% else %}
+            <div class="empty-state">
+              <i class="bi bi-folder-x"></i>
+              <p>暂无分类</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {% if theme_config.showSidebar %}
+        {% include "partials/sidebar.html" %}
+      {% endif %}
+    </div>
+  </section>
+</div>
+{% endblock %}

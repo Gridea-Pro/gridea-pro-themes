@@ -1,0 +1,279 @@
+{
+  "name": "memos",
+  "version": "1.0.0",
+  "author": "Eric",
+  "description": "双栏博客主题 Once 的 Jinja2 移植：sticky 顶栏 + 卡片列表 + 多模块侧栏 + 友链横条 + 闪念时间线（含热力图）。",
+  "templateEngine": "jinja2",
+  "engine": "jinja2",
+  "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
+  "customConfig": [
+    {
+      "name": "subtitle",
+      "label": "站点副标题",
+      "group": "基础设置",
+      "type": "input",
+      "value": "",
+      "note": "显示在站点 logo 下的小字，不填则不显示"
+    },
+    {
+      "name": "postsPerPage",
+      "label": "每页文章数",
+      "group": "基础设置",
+      "type": "number",
+      "value": 8,
+      "note": "首页和博客列表页每页显示的文章数，建议 6-12"
+    },
+    {
+      "name": "footerCopyright",
+      "label": "页脚版权文字",
+      "group": "基础设置",
+      "type": "input",
+      "value": "© 用 Gridea Pro 与 memos 主题构建",
+      "note": "出现在页脚，留空则不显示"
+    },
+    {
+      "name": "icpBeian",
+      "label": "ICP 备案号",
+      "group": "基础设置",
+      "type": "input",
+      "value": "",
+      "note": "如「京 ICP 备 12345678 号」，会渲染为指向工信部备案系统的链接"
+    },
+    {
+      "name": "primaryColor",
+      "label": "主题色（链接 / 高亮）",
+      "group": "外观设置",
+      "type": "color",
+      "value": "#4270f5",
+      "note": "顶栏 logo 强调、链接 hover、卡片标题 hover 等"
+    },
+    {
+      "name": "accentColor",
+      "label": "强调色（点赞 / 标签 hover）",
+      "group": "外观设置",
+      "type": "color",
+      "value": "#ffc008",
+      "note": "图标点亮态、警示徽标等"
+    },
+    {
+      "name": "defaultTheme",
+      "label": "默认配色",
+      "group": "外观设置",
+      "type": "select",
+      "value": "auto",
+      "options": [
+        { "label": "跟随系统 / 时间", "value": "auto" },
+        { "label": "浅色", "value": "light" },
+        { "label": "深色", "value": "dark" }
+      ],
+      "note": "auto 模式：6:00–18:00 浅色、其余时段深色，每天到点自动切换"
+    },
+    {
+      "name": "enableLxgw",
+      "label": "启用霞鹜文楷字体",
+      "group": "外观设置",
+      "type": "boolean",
+      "value": false,
+      "note": "开启后全站正文换 LXGW 屏幕阅读字体（额外加载约 120KB woff2）"
+    },
+    {
+      "name": "enableSlide",
+      "label": "首页显示轮播",
+      "group": "首页设置",
+      "type": "boolean",
+      "value": true,
+      "note": "首页主区顶部显示轮播 + 推荐分组"
+    },
+    {
+      "name": "slideTag",
+      "label": "轮播来源标签",
+      "group": "首页设置",
+      "type": "input",
+      "value": "推荐",
+      "note": "把要进轮播的文章打上这个标签，最多取最新 5 篇"
+    },
+    {
+      "name": "slideMidTag",
+      "label": "中央推荐标签",
+      "group": "首页设置",
+      "type": "input",
+      "value": "",
+      "note": "轮播右侧上方的推荐分组来源标签，留空则不显示该分组"
+    },
+    {
+      "name": "slideRightTag",
+      "label": "右侧推荐标签",
+      "group": "首页设置",
+      "type": "input",
+      "value": "",
+      "note": "轮播右侧下方的推荐分组来源标签，留空则不显示该分组"
+    },
+    {
+      "name": "showSidebar",
+      "label": "显示侧边栏",
+      "group": "布局设置",
+      "type": "boolean",
+      "value": true,
+      "note": "关闭后所有页面采用全宽布局"
+    },
+    {
+      "name": "showLinksBar",
+      "label": "显示页脚友链横条",
+      "group": "布局设置",
+      "type": "boolean",
+      "value": true,
+      "note": "深色横条形式的友链快速入口，移动端会自动隐藏"
+    },
+    {
+      "name": "sidebarShowAuthor",
+      "label": "侧栏：作者卡片",
+      "group": "侧栏模块",
+      "type": "boolean",
+      "value": true,
+      "note": "头像 + 站点名 + 副标题 + 社交图标"
+    },
+    {
+      "name": "sidebarShowRecent",
+      "label": "侧栏：最新文章",
+      "group": "侧栏模块",
+      "type": "boolean",
+      "value": true
+    },
+    {
+      "name": "sidebarShowCategories",
+      "label": "侧栏：分类导航",
+      "group": "侧栏模块",
+      "type": "boolean",
+      "value": true
+    },
+    {
+      "name": "sidebarShowTags",
+      "label": "侧栏：标签云",
+      "group": "侧栏模块",
+      "type": "boolean",
+      "value": true
+    },
+    {
+      "name": "sidebarRecentCount",
+      "label": "侧栏最新文章数",
+      "group": "侧栏模块",
+      "type": "number",
+      "value": 8
+    },
+    {
+      "name": "sidebarTagsCount",
+      "label": "侧栏标签数量",
+      "group": "侧栏模块",
+      "type": "number",
+      "value": 30,
+      "note": "按文章数从高到低取，超出部分不显示"
+    },
+    {
+      "name": "memosTag",
+      "label": "闪念来源标签",
+      "group": "闪念设置",
+      "type": "input",
+      "value": "memo",
+      "note": "把要在闪念页展示的短文打上这个标签"
+    },
+    {
+      "name": "memosTitle",
+      "label": "闪念页标题",
+      "group": "闪念设置",
+      "type": "input",
+      "value": "闪念"
+    },
+    {
+      "name": "memosDescription",
+      "label": "闪念页描述",
+      "group": "闪念设置",
+      "type": "input",
+      "value": "把当下的想法、读后感、片段写在这里。"
+    },
+    {
+      "name": "enableMemosHeatmap",
+      "label": "闪念页显示热力图",
+      "group": "闪念设置",
+      "type": "boolean",
+      "value": true,
+      "note": "GitHub 风格 365 天网格，按闪念发布密度着色"
+    },
+    {
+      "name": "enableSearch",
+      "label": "启用全站搜索",
+      "group": "搜索设置",
+      "type": "boolean",
+      "value": true,
+      "note": "顶栏搜索按钮 + Cmd/Ctrl+K 唤出。关闭后不会注入 search-index"
+    },
+    {
+      "name": "enableComments",
+      "label": "启用评论",
+      "group": "评论设置",
+      "type": "boolean",
+      "value": true,
+      "note": "在文章详情页底部渲染 #gridea-comments 容器，由 Gridea Pro 标准评论服务接管（Disqus / Waline / Twikoo / Giscus 任选）"
+    },
+    {
+      "name": "githubUrl",
+      "label": "GitHub 链接",
+      "group": "社交设置",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "twitterUrl",
+      "label": "Twitter / X 链接",
+      "group": "社交设置",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "weiboUrl",
+      "label": "微博链接",
+      "group": "社交设置",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "emailAddress",
+      "label": "Email 地址",
+      "group": "社交设置",
+      "type": "input",
+      "value": "",
+      "note": "填了会渲染 mailto: 链接"
+    },
+    {
+      "name": "rssUrl",
+      "label": "RSS 地址",
+      "group": "社交设置",
+      "type": "input",
+      "value": "/atom.xml",
+      "note": "默认 Gridea Pro 生成路径"
+    },
+    {
+      "name": "customCss",
+      "label": "自定义 CSS",
+      "group": "高级设置",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到主题样式末尾，可覆盖默认规则"
+    },
+    {
+      "name": "headerScript",
+      "label": "Head 注入代码",
+      "group": "高级设置",
+      "type": "code",
+      "value": "",
+      "note": "在 </head> 前注入。可放统计代码（不蒜子 / Umami / Plausible / GA）"
+    },
+    {
+      "name": "footerScript",
+      "label": "Footer 注入代码",
+      "group": "高级设置",
+      "type": "code",
+      "value": "",
+      "note": "在 </body> 前注入。可放评论组件 SDK、客服浮窗等"
+    }
+  ]
+}

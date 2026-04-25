@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" width="1200" height="600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#eef2ff"/>
+      <stop offset="100%" stop-color="#dbe4ff"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6598ff"/>
+      <stop offset="100%" stop-color="#0a59f8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="600" fill="url(#bg)"/>
+  <g transform="translate(600,260)" text-anchor="middle">
+    <text font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="96" font-weight="700" fill="url(#accent)">memos</text>
+    <text y="76" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="28" fill="#6b7280" letter-spacing="6">a Gridea Pro theme</text>
+  </g>
+  <g stroke="#c7d2fe" stroke-width="1" opacity="0.6">
+    <line x1="80" y1="500" x2="1120" y2="500"/>
+    <line x1="80" y1="520" x2="900" y2="520"/>
+    <line x1="80" y1="540" x2="1000" y2="540"/>
+  </g>
+</svg>

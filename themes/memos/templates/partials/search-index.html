@@ -1,0 +1,26 @@
+{# 搜索索引 · 把全部文章序列化为前端 JS 可读的数组，main.js 在用户输入时本地匹配 #}
+<script id="search-index-data" type="application/json">
+[
+{% for post in posts %}
+  {
+    "title": {{ post.title|to_json|safe }},
+    "link": {{ post.link|to_json|safe }},
+    "date": {{ post.date|to_json|safe }},
+    "excerpt": {{ post.content|strip_html|truncatechars:160|to_json|safe }},
+    "tags": [{% for tag in post.tags %}{{ tag.name|to_json|safe }}{% if not loop.last %},{% endif %}{% endfor %}],
+    "isMemo": {% if theme_config.memosTag %}{% set isMemo = false %}{% for tag in post.tags %}{% if tag.name == theme_config.memosTag %}{% set isMemo = true %}{% endif %}{% endfor %}{% if isMemo %}true{% else %}false{% endif %}{% else %}false{% endif %}
+  }{% if not loop.last %},{% endif %}
+{% endfor %}
+]
+</script>
+<script>
+(function(){
+  try {
+    var el = document.getElementById('search-index-data');
+    window.__searchIndex = el ? JSON.parse(el.textContent) : [];
+  } catch (e) {
+    console.warn('search-index parse failed:', e);
+    window.__searchIndex = [];
+  }
+})();
+</script>

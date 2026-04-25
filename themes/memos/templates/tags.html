@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}所有标签 · {{ config.siteName }}{% endblock %}
+{% block body_class %}page-tags{% endblock %}
+{% block og_url %}/tags/{% endblock %}
+
+{% block main %}
+<div class="container">
+  <header class="cat_info_top">
+    <h1 class="cat_info_top_title"><i class="bi bi-tags"></i> 所有标签</h1>
+    <p class="cat_info_top_desc">
+      共 <strong>{{ tags|length }}</strong> 个标签
+    </p>
+  </header>
+
+  <section class="index-area">
+    <div class="row g-3">
+      <div class="{% if theme_config.showSidebar %}col-lg-9{% else %}col-12{% endif %}">
+        <div class="tags-cloud-page">
+          {% if tags|length > 0 %}
+            {% for tag in tags %}
+              <a href="{{ tag.link }}" class="tags-cloud-item" data-count="{{ tag.count }}" title="{{ tag.name }} · {{ tag.count }} 篇">
+                <span class="tags-cloud-name">{{ tag.name }}</span>
+                <span class="tags-cloud-count">{{ tag.count }}</span>
+              </a>
+            {% endfor %}
+          {% else %}
+            <div class="empty-state">
+              <i class="bi bi-tags"></i>
+              <p>暂无标签</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+
+      {% if theme_config.showSidebar %}
+        {% include "partials/sidebar.html" %}
+      {% endif %}
+    </div>
+  </section>
+</div>
+{% endblock %}
