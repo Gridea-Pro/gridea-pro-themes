@@ -1,0 +1,118 @@
+<header class="header sticky-top">
+  <div class="container">
+    <div class="top">
+      <button class="mobile_an" type="button" aria-label="打开菜单" data-mango-toggle="mobile_right_nav">
+        <i class="bi bi-list"></i>
+      </button>
+      <div class="top_l">
+        <h1 class="logo">
+          <a href="{{ config.domain }}" title="{{ config.siteName }}">
+            {% if config.logo %}<img src="{{ config.logo }}" alt="{{ config.siteName }}">{% endif %}
+            <b>{{ config.siteName }}</b>
+          </a>
+        </h1>
+        <nav class="header-menu">
+          <ul id="menu-menu-1" class="header-menu-ul">
+            <li class="menu-item menu-item-home">
+              <a href="{{ config.domain }}"><i class="bi bi-house-door-fill me-1"></i>首页</a>
+            </li>
+            {% if menus|length > 0 %}
+              {% for menu in menus %}
+                <li class="menu-item">
+                  <a href="{{ menu.link }}"><i class="bi bi-bookmark-fill me-1"></i>{{ menu.name }}</a>
+                </li>
+              {% endfor %}
+            {% else %}
+              <li class="menu-item">
+                <a href="{{ config.domain }}/archives/"><i class="bi bi-clock-history me-1"></i>归档</a>
+              </li>
+              <li class="menu-item">
+                <a href="{{ config.domain }}/memos/"><i class="bi bi-lightning-fill me-1"></i>闪念</a>
+              </li>
+              <li class="menu-item">
+                <a href="{{ config.domain }}/links/"><i class="bi bi-people-fill me-1"></i>友链</a>
+              </li>
+              <li class="menu-item">
+                <a href="{{ config.domain }}/about/"><i class="bi bi-person-fill me-1"></i>关于</a>
+              </li>
+            {% endif %}
+            {% if tags|length > 0 %}
+              <li class="menu-item-has-children">
+                <a title="标签" href="{{ config.domain }}/tags/"><i class="bi bi-folder-fill me-1"></i>标签</a>
+                <ul class="sub-menu" style="display: none;">
+                  {% for tag in tags %}
+                    <li class="menu-item">
+                      <a href="{{ tag.link }}"><i class="bi bi-hash"></i>{{ tag.name }}</a>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </li>
+            {% endif %}
+          </ul>
+        </nav>
+      </div>
+      <div class="top_r">
+        <div class="top_r_an theme-switch me-4" onclick="switchDarkMode()" role="button" tabindex="0" aria-label="切换主题">
+          <i class="bi bi-lightbulb-fill"></i>
+        </div>
+        {% if theme_config.enableSearch %}
+        <button class="top_r_an" type="button" data-mango-toggle="c_sousuo" aria-label="打开搜索">
+          <i class="bi bi-search"></i>
+        </button>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</header>
+
+{% if theme_config.enableSearch %}
+{% include "partials/search-modal.html" %}
+{% endif %}
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="mobile_right_nav">
+  <div class="mobile_head">
+    <div class="mobile_head_logo">
+      <a href="{{ config.domain }}" title="{{ config.siteName }}">
+        {% if config.logo %}<img src="{{ config.logo }}" alt="{{ config.siteName }}">{% endif %}
+        <b>{{ config.siteName }}</b>
+      </a>
+    </div>
+    <div class="theme-switch" onclick="switchDarkMode()" role="button" tabindex="0" aria-label="切换主题">
+      <i class="bi bi-lightbulb-fill"></i>
+    </div>
+    <button type="button" class="btn-close text-reset" data-mango-dismiss="mobile_right_nav" aria-label="关闭"></button>
+  </div>
+  <div id="sjcldnav" class="menu-zk">
+    <ul id="menu-mobile">
+      <li class="menu-item">
+        <a href="{{ config.domain }}">首页</a>
+      </li>
+      {% if menus|length > 0 %}
+        {% for menu in menus %}
+          <li class="menu-item"><a href="{{ menu.link }}">{{ menu.name }}</a></li>
+        {% endfor %}
+      {% else %}
+        <li class="menu-item"><a href="{{ config.domain }}/archives/">归档</a></li>
+        <li class="menu-item"><a href="{{ config.domain }}/memos/">闪念</a></li>
+        <li class="menu-item"><a href="{{ config.domain }}/links/">友链</a></li>
+        <li class="menu-item"><a href="{{ config.domain }}/about/">关于</a></li>
+      {% endif %}
+      {% if tags|length > 0 %}
+        <li class="menu-item menu-item-has-children">
+          <a href="{{ config.domain }}/tags/">标签</a>
+          <ul class="sub-menu">
+            {% for tag in tags %}
+              <li class="menu-item">
+                <a href="{{ tag.link }}">{{ tag.name }} ({{ tag.count }})</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+</div>
+
+{% if theme_config.showReadingProgress %}
+<div id="reading-progress" class="reading-progress" aria-hidden="true"><span></span></div>
+{% endif %}

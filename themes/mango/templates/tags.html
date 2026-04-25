@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block body_class %}tags{% endblock %}
+
+{% block title %}标签 / 分类 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="col-lg-8">
+  <div class="post_container_title">
+    <h1><i class="bi bi-tags-fill me-2"></i>标签 / 分类</h1>
+    <p>共 {{ tags|length }} 个标签，点击进入对应文章列表。</p>
+  </div>
+
+  <div class="post_container">
+    {% if tags|length > 0 %}
+      <div class="mango-tags-grid">
+        {% for tag in tags %}
+          <a class="mango-tag-card" href="{{ tag.link }}" title="{{ tag.count }} 篇文章">
+            <i class="bi bi-hash"></i>
+            <span class="mango-tag-name">{{ tag.name }}</span>
+            <span class="mango-tag-count">{{ tag.count }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="mango-empty">还没有任何标签</div>
+    {% endif %}
+  </div>
+</div>
+
+{% include "partials/sidebar.html" %}
+{% endblock %}

@@ -1,0 +1,114 @@
+<div class="col-lg-4">
+  <div class="sidebar_sticky">
+    <div class="author_show_box">
+
+      <div class="author_show_head">
+        <img src="{{ config.avatar|default:"/media/images/default-avatar.svg" }}"
+             alt="{{ config.siteName }}"
+             class="avatar avatar-80 photo"
+             height="80" width="80"
+             loading="lazy" decoding="async">
+        <h3>{{ config.siteName }}</h3>
+        {% if theme_config.subTitle %}<p>{{ theme_config.subTitle }}</p>{% endif %}
+      </div>
+
+      <div class="author_show_info">
+        {% if posts %}
+          <span><i class="bi bi-book"></i><b>文章</b>{{ posts|length }}</span>
+        {% else %}
+          <span><i class="bi bi-book"></i><b>文章</b><em data-mango-total-posts>—</em></span>
+        {% endif %}
+        <span><i class="bi bi-tags"></i><b>标签</b>{{ tags|length }}</span>
+      </div>
+
+      {% if theme_config.showSidebarRecent %}
+        <ul class="author_post" data-mango-recent="{{ theme_config.sidebarRecentCount|default:'3' }}">
+          {% if posts %}
+            {% for post in posts %}
+              {% if loop.index <= 3 %}
+                <li>
+                  <div class="thumbnail-container">
+                    <img width="400" height="280"
+                         src="{{ post.feature|default:"/media/images/default-cover.svg" }}"
+                         class="thumbnail"
+                         alt="{{ post.title }}"
+                         loading="lazy" decoding="async">
+                  </div>
+                  <div class="author_title">
+                    <a href="{{ post.link }}" class="stretched-link">{{ post.title }}</a>
+                    <p>{{ post.date }}</p>
+                  </div>
+                </li>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        </ul>
+      {% endif %}
+
+      {% if is_post and theme_config.showSidebarToc %}
+        <aside id="toc-2" class="widget widget_toc" data-mango-toc style="display:none;">
+          <h3 class="widget-title">文章目录</h3>
+          <div class="toc-content"></div>
+        </aside>
+      {% endif %}
+
+      {% if theme_config.showSidebarHot %}
+        <aside class="widget widget_hot_posts">
+          <h3 class="widget-title">热门文章</h3>
+          <ul class="widget_hot_post" data-mango-hot="{{ theme_config.sidebarHotCount|default:'5' }}">
+            {% if posts %}
+              {% for post in posts %}
+                {% if loop.index <= 5 %}
+                  <li class="widget_hot_li">
+                    <img width="400" height="280"
+                         src="{{ post.feature|default:"/media/images/default-cover.svg" }}"
+                         class="thumbnail"
+                         alt="{{ post.title }}"
+                         loading="lazy" decoding="async">
+                    <div class="hot_post_info">
+                      <h4>
+                        <a class="stretched-link" href="{{ post.link }}">{{ post.title }}</a>
+                      </h4>
+                      <p>{{ post.date }}</p>
+                    </div>
+                  </li>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </aside>
+      {% endif %}
+
+      {% if theme_config.showSidebarTags and tags|length > 0 %}
+        <aside class="widget widget_hot_tags">
+          <h3 class="widget-title">热门标签</h3>
+          <div class="tagcloud">
+            {% for tag in tags %}
+              {% if loop.index <= 20 %}
+                <a href="{{ tag.link }}"
+                   title="{{ tag.name }}"
+                   class="tag-item">{{ tag.name }}</a>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </aside>
+      {% endif %}
+
+      <aside class="widget widget_misc">
+        <h3 class="widget-title">其它</h3>
+        <ul class="widget_misc_ul">
+          <li>
+            <a href="{{ config.domain }}/atom.xml"><i class="bi bi-rss me-1"></i> 订阅 RSS</a>
+          </li>
+          <li>
+            <a href="{{ config.domain }}/archives/"><i class="bi bi-clock-history me-1"></i> 历史归档</a>
+          </li>
+          <li>
+            <a href="{{ config.domain }}/about/"><i class="bi bi-person-circle me-1"></i> 关于本站</a>
+          </li>
+        </ul>
+      </aside>
+
+    </div>
+  </div>
+</div>

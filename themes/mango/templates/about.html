@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block body_class %}about-page{% endblock %}
+
+{% block title %}关于 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="col-lg-8">
+  <div class="post_container_title">
+    <h1><i class="bi bi-person-fill me-2"></i>关于</h1>
+  </div>
+
+  <div class="post_container">
+    <div class="mango-about-card">
+      <img class="mango-about-avatar"
+           src="{{ config.avatar|default:"/media/images/default-avatar.svg" }}"
+           alt="{{ config.siteName }}"
+           width="120" height="120">
+      <h2 class="mango-about-name">{{ config.siteName }}</h2>
+      {% if theme_config.subTitle %}
+        <p class="mango-about-subtitle">{{ theme_config.subTitle }}</p>
+      {% endif %}
+      <div class="mango-about-stats">
+        <span><strong>{{ tags|length }}</strong> 标签</span>
+        {% if theme_config.icpBeian %}
+          <span><i class="bi bi-shield-check"></i> {{ theme_config.icpBeian }}</span>
+        {% endif %}
+      </div>
+    </div>
+
+    <article class="wznrys mango-about-bio">
+      {% if config.siteDescription %}
+        <p>{{ config.siteDescription }}</p>
+      {% else %}
+        <p>这里是 <strong>{{ config.siteName }}</strong> 的关于页面。</p>
+        <p>这部分内容可以在 Gridea Pro 中创建一篇 <code>slug = about</code> 的页面文章来覆盖；或者在主题设置中编辑站点描述。</p>
+      {% endif %}
+    </article>
+  </div>
+</div>
+
+{% include "partials/sidebar.html" %}
+{% endblock %}

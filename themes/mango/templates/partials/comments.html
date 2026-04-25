@@ -1,0 +1,25 @@
+<div class="post_comment" id="post_comment_anchor">
+  <div id="comments" class="comments-area">
+    <h3 class="comments-title">
+      <i class="bi bi-filter me-2"></i>评论 <small>(由 Gridea Pro 评论服务接管)</small>
+    </h3>
+
+    <!--
+      Gridea Pro 标准评论容器：
+      由 Gridea Pro 内置或用户安装的评论服务（Disqus / Waline / Twikoo / Giscus / Artalk 等）
+      在 “高级注入 → <body> 末尾注入代码” 中挂载到 #gridea-comments 上。
+      原 Mango 评论 UI 样式仍然在 main.css 中保留，第三方评论组件可读到这些 CSS token。
+    -->
+    <div id="gridea-comments"
+         data-post-slug="{{ post.fileName }}"
+         data-post-link="{{ post.link }}"
+         data-post-title="{{ post.title }}">
+      <div class="no-comments">
+        <svg class="icon" viewBox="0 0 1024 1024" width="48" height="48" aria-hidden="true">
+          <path d="M512 64C264.6 64 64 248.6 64 480c0 90.5 30.7 174.6 82.7 242.4L96 960l243.7-77.5C403.6 904.5 456.4 916 512 916c247.4 0 448-184.6 448-436S759.4 64 512 64z" fill="currentColor"></path>
+        </svg>
+        <p>评论区由 Gridea Pro 评论服务驱动。请在主题设置 → 高级注入 → <code>&lt;body&gt; 末尾注入代码</code> 中挂载评论组件。</p>
+      </div>
+    </div>
+  </div>
+</div>

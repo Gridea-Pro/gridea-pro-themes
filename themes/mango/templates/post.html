@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% set is_post = true %}
+
+{% block body_class %}post-detail{% endblock %}
+
+{% block title %}{{ post.title }} | {{ config.siteName }}{% endblock %}
+
+{% block meta_description %}{{ post.content|excerpt:160|striptags }}{% endblock %}
+
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{{ post.content|excerpt:160|striptags }}{% endblock %}
+{% block og_extra %}
+{% if post.feature %}<meta property="og:image" content="{{ post.feature }}">{% endif %}
+<meta property="article:published_time" content="{{ post.date }}">
+{% endblock %}
+
+{% block content %}
+<div class="col-lg-8">
+  <div class="post_container_title">
+    <h1>{{ post.title }}</h1>
+    <p>
+      <span><i class="bi bi-clock"></i>{{ post.date }}</span>
+      {% if post.tags|length > 0 %}
+        <span><i class="bi bi-card-list"></i>
+          {% for tag in post.tags %}
+            <a href="{{ tag.link }}">{{ tag.name }}</a>{% if not loop.last %}, {% endif %}
+          {% endfor %}
+        </span>
+      {% endif %}
+      <span><i class="bi bi-eye"></i>
+        <span class="post-views" data-mango-views="{{ post.fileName }}" id="busuanzi_value_page_pv">—</span>
+      </span>
+      <span><i class="bi bi-stopwatch"></i>{{ post.content|reading_time }} 分钟阅读</span>
+    </p>
+  </div>
+
+  <div class="post_container">
+    <article class="wznrys">
+      {{ post.content|safe }}
+    </article>
+
+    {% if post.tags|length > 0 %}
+      <div class="post_loop_tag">
+        {% for tag in post.tags %}
+          <em>
+            <a href="{{ tag.link }}"><i class="bi bi-hash"></i>{{ tag.name }}</a>
+          </em>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="post_author">
+    <div class="post_author_l">
+      <img src="{{ config.avatar|default:"/media/images/default-avatar.svg" }}" width="60" height="60" alt="{{ config.siteName }}">
+      <span>{{ config.siteName }}</span>
+    </div>
+    <div class="post_author_r">
+      <div class="post_author_icon">
+        <a href="#post_comment_anchor" title="评论">
+          <i class="bi bi-chat-square-dots-fill"></i>
+          <small class="count" id="gridea-comments-count">0</small>
+        </a>
+        <a href="javascript:;" data-action="like" data-id="{{ post.fileName }}" class="specsZan">
+          <i class="bi bi-hand-thumbs-up-fill"></i>
+          <small class="count">0</small>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="next_prev_posts" data-mango-prevnext="{{ post.fileName }}">
+    {# JS 在浏览器端从 atom.xml 索引取上下篇 —— 静态站没法在模板里表达 prev/next 关系 #}
+    <div class="prev_next_box nav_previous"></div>
+    <div class="prev_next_box nav_next"></div>
+  </div>
+
+  <div class="post_related mb-3" data-mango-related="{{ post.fileName }}" style="display:none;">
+    <h3 class="widget-title">相关文章</h3>
+    <div class="post_related_list_wrap"></div>
+  </div>
+
+  {% include "partials/comments.html" %}
+</div>
+
+{% include "partials/sidebar.html" %}
+{% endblock %}

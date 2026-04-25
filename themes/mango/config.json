@@ -1,0 +1,233 @@
+{
+  "name": "mango",
+  "label": "Mango",
+  "version": "1.0.0",
+  "author": "jkjoy / 老孙 (原主题) · Gridea Pro 移植",
+  "description": "芒果主题 — 双栏布局，明亮干净，自带推荐位轮播 / 多图九宫格卡片 / 闪念热力图 / 全屏搜索 / 暗色模式 / 霞鹜文楷可选。Typecho-Theme-Mango Jinja2 移植版。",
+  "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "customConfig": [
+    {
+      "name": "subTitle",
+      "label": "副标题",
+      "group": "基础设置",
+      "type": "input",
+      "value": "",
+      "note": "显示在站点 LOGO 下方的一句话（移动端 / 搜索面板中可见）"
+    },
+    {
+      "name": "footerCopyright",
+      "label": "页脚版权信息",
+      "group": "基础设置",
+      "type": "input",
+      "value": "",
+      "note": "留空则自动生成 “© 当前年份 · 站点名” 格式"
+    },
+    {
+      "name": "icpBeian",
+      "label": "ICP 备案号",
+      "group": "基础设置",
+      "type": "input",
+      "value": "",
+      "note": "填写后页脚显示为可点击的备案链接，留空则不展示"
+    },
+    {
+      "name": "primaryColor",
+      "label": "主题色",
+      "group": "外观设置",
+      "type": "color",
+      "value": "#4270f5",
+      "note": "链接 / 按钮 / 高亮等元素的主要颜色，默认为 mango 蓝"
+    },
+    {
+      "name": "accentColor",
+      "label": "辅色（强调色）",
+      "group": "外观设置",
+      "type": "color",
+      "value": "#ffc008",
+      "note": "标签徽标 / 点赞 / 活跃指示等醒目元素的颜色"
+    },
+    {
+      "name": "defaultTheme",
+      "label": "默认主题模式",
+      "group": "外观设置",
+      "type": "select",
+      "value": "auto",
+      "options": [
+        { "label": "自动跟随时间（6:00–18:00 浅色，其余深色）", "value": "auto" },
+        { "label": "始终浅色", "value": "light" },
+        { "label": "始终深色", "value": "dark" }
+      ],
+      "note": "用户在前端按了主题切换按钮后会覆盖此默认行为"
+    },
+    {
+      "name": "useLxgwFont",
+      "label": "启用霞鹜文楷字体",
+      "group": "外观设置",
+      "type": "toggle",
+      "value": false,
+      "note": "开启后全站正文字体切换为 LXGW 霞鹜文楷（约 120KB woff2，首屏会多一次字体加载）"
+    },
+    {
+      "name": "featuredTag",
+      "label": "首页推荐位标签",
+      "group": "首页设置",
+      "type": "input",
+      "value": "",
+      "note": "首页顶部轮播位会从该标签下取最新若干篇。留空则不显示推荐位"
+    },
+    {
+      "name": "featuredCount",
+      "label": "推荐位文章数",
+      "group": "首页设置",
+      "type": "input",
+      "value": "3",
+      "note": "推荐位轮播展示的文章数量（建议 2-5）"
+    },
+    {
+      "name": "showFooterLinks",
+      "label": "页脚显示友情链接条",
+      "group": "首页设置",
+      "type": "toggle",
+      "value": true,
+      "note": "首页等列表页底部、页脚上方的横向友链条是否显示（移动端始终隐藏）"
+    },
+    {
+      "name": "showSidebarRecent",
+      "label": "侧栏：显示最新文章",
+      "group": "侧栏设置",
+      "type": "toggle",
+      "value": true,
+      "note": "在右侧侧栏展示最近发布的若干篇文章"
+    },
+    {
+      "name": "showSidebarHot",
+      "label": "侧栏：显示热门文章",
+      "group": "侧栏设置",
+      "type": "toggle",
+      "value": true,
+      "note": "在右侧侧栏展示置顶 / 热门文章列表（按置顶 + 发布顺序取前 N 篇）"
+    },
+    {
+      "name": "showSidebarToc",
+      "label": "侧栏：显示文章目录",
+      "group": "侧栏设置",
+      "type": "toggle",
+      "value": true,
+      "note": "仅文章详情页生效，浏览器端自动从正文 h2 / h3 解析生成目录"
+    },
+    {
+      "name": "showSidebarTags",
+      "label": "侧栏：显示标签云",
+      "group": "侧栏设置",
+      "type": "toggle",
+      "value": true,
+      "note": "在侧栏底部展示热门标签"
+    },
+    {
+      "name": "sidebarRecentCount",
+      "label": "最新文章数量",
+      "group": "侧栏设置",
+      "type": "input",
+      "value": "3",
+      "note": "侧栏「最新文章」模块展示的文章数量"
+    },
+    {
+      "name": "sidebarHotCount",
+      "label": "热门文章数量",
+      "group": "侧栏设置",
+      "type": "input",
+      "value": "5",
+      "note": "侧栏「热门文章」模块展示的文章数量"
+    },
+    {
+      "name": "sidebarTagsCount",
+      "label": "热门标签数量",
+      "group": "侧栏设置",
+      "type": "input",
+      "value": "20",
+      "note": "侧栏「热门标签」展示的标签数量"
+    },
+    {
+      "name": "showCodeCopy",
+      "label": "代码块复制按钮",
+      "group": "增强功能",
+      "type": "toggle",
+      "value": true,
+      "note": "文章详情页代码块右上角自动注入 “Copy” 按钮和语言标签"
+    },
+    {
+      "name": "showReadingProgress",
+      "label": "阅读进度条",
+      "group": "增强功能",
+      "type": "toggle",
+      "value": true,
+      "note": "文章详情页顶部展示阅读进度条（仅当文章高度 ≥ 1.5 屏时显示）"
+    },
+    {
+      "name": "showBackToTop",
+      "label": "回到顶部按钮",
+      "group": "增强功能",
+      "type": "toggle",
+      "value": true,
+      "note": "页面右下角显示返回顶部圆形按钮"
+    },
+    {
+      "name": "enableSearch",
+      "label": "全站搜索",
+      "group": "增强功能",
+      "type": "toggle",
+      "value": true,
+      "note": "顶栏注入搜索按钮 + 全屏搜索面板（基于本地 search.json，无需服务端）"
+    },
+    {
+      "name": "memosTagName",
+      "label": "闪念页标签名",
+      "group": "闪念页",
+      "type": "input",
+      "value": "memo",
+      "note": "闪念页（/memos/）会以该标签下的文章作为 memo 单条来源（无该标签则页面会有空状态提示）"
+    },
+    {
+      "name": "memosShowHeatmap",
+      "label": "闪念页显示热力图",
+      "group": "闪念页",
+      "type": "toggle",
+      "value": true,
+      "note": "在闪念页头部展示一年内的发布热力图（53 周 × 7 天，仿 GitHub 风格）"
+    },
+    {
+      "name": "viewsScript",
+      "label": "浏览数统计代码",
+      "group": "高级注入",
+      "type": "textarea",
+      "value": "<script async src=\"//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js\"></script>",
+      "note": "默认接入不蒜子。模板会输出 #busuanzi_value_page_pv 容器，可改为接其他第三方计数"
+    },
+    {
+      "name": "headInjection",
+      "label": "<head> 注入代码",
+      "group": "高级注入",
+      "type": "textarea",
+      "value": "",
+      "note": "注入到所有页面 </head> 之前，可用于添加 Google Analytics 等统计 / 验证 meta 标签"
+    },
+    {
+      "name": "footerInjection",
+      "label": "<body> 末尾注入代码",
+      "group": "高级注入",
+      "type": "textarea",
+      "value": "",
+      "note": "注入到所有页面 </body> 之前，可用于挂载评论组件 / 客服小部件等"
+    },
+    {
+      "name": "customCss",
+      "label": "自定义 CSS",
+      "group": "高级注入",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到主题 CSS 末尾，可覆盖默认样式"
+    }
+  ]
+}
