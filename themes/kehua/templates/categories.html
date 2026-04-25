@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{# 分类列表页。
+   ⚠️ 实现说明：Gridea Pro 在数据层只暴露 tags（不存在独立的 categories 数据）。
+   本主题把 tags 同时呈现为"分类"，以分组卡片网格的视觉强调相对 tags 页的差异。
+   用户可在 Gridea Pro 后台用「标签」即可同时驱动 /tags 与 /categories 两个落地页。 #}
+
+{% block title %}分类 · {{ config.siteName }}{% endblock %}
+{% block body_class %}categories{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="category-header">
+        <h1 class="category-title">分类</h1>
+        <p class="category-desc">共 {{ tags|length }} 个分类</p>
+    </div>
+
+    {% if tags|length > 0 %}
+    <div class="categories-grid">
+        {% for tag in tags %}
+        <a href="{{ tag.link }}" class="category-card">
+            <div class="category-card-name">{{ tag.name }}</div>
+            <div class="category-card-count">{{ tag.count }} 篇</div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-results">
+        <p>暂无任何分类。</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

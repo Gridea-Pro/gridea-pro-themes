@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}归档 · {{ config.siteName }}{% endblock %}
+{% block body_class %}archives{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="category-header">
+        <h1 class="category-title">归档</h1>
+        <p class="category-desc">站内全部文章，按时间倒序</p>
+    </div>
+
+    {# 统计卡片 #}
+    <div class="archive-stats">
+        <div class="archive-stat">
+            <div class="archive-stat-number">{{ posts|length }}</div>
+            <div class="archive-stat-label">篇文章</div>
+        </div>
+        <div class="archive-stat">
+            <div class="archive-stat-number">{{ tags|length }}</div>
+            <div class="archive-stat-label">个标签</div>
+        </div>
+    </div>
+
+    {# 按年份分组（依赖 group_by 自定义 filter） #}
+    {% if posts|length > 0 %}
+        {% for group in posts|group_by:"year" %}
+        <section class="archive-year">
+            <h2 class="archive-year-title">{{ group.key }}</h2>
+            <ul class="archive-list">
+                {% for post in group.items %}
+                {% if not post.hideInList %}
+                <li class="archive-item">
+                    <span class="archive-date">{{ post.date }}</span>
+                    <span class="archive-title"><a href="{{ post.link }}">{{ post.title }}</a></span>
+                    {% if post.tags|length > 0 %}
+                    <span class="archive-category">
+                        {% for tag in post.tags %}{{ tag.name }}{% if not loop.last %}, {% endif %}{% endfor %}
+                    </span>
+                    {% endif %}
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </section>
+        {% endfor %}
+    {% else %}
+        <div class="no-results">
+            <p>暂无任何归档。</p>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

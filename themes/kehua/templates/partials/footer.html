@@ -1,0 +1,26 @@
+{# 页脚 + 回到顶部按钮。回到顶部由主题配置控制是否显示 #}
+<footer class="footer" role="contentinfo">
+    <div class="container">
+        {% if theme_config.subtitle %}
+        <p class="footer-text">{{ theme_config.subtitle }}</p>
+        {% endif %}
+
+        {% if theme_config.footerCopyright %}
+        <p class="footer-copyright">{{ theme_config.footerCopyright }}</p>
+        {% else %}
+        <p class="footer-copyright">&copy; {{ now|date:"2006" }} {{ config.siteName }}</p>
+        {% endif %}
+
+        {% if theme_config.showThemeCredit %}
+        <p class="footer-theme">Theme by <a href="https://kehua.me" target="_blank" rel="noopener noreferrer">kehua</a> · 移植 by <a href="https://gridea.pro" target="_blank" rel="noopener noreferrer">Gridea Pro</a></p>
+        {% endif %}
+    </div>
+</footer>
+
+{% if theme_config.showBackToTop %}
+<button class="back-to-top" id="back-to-top" type="button" title="回到顶部" aria-label="回到顶部">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <polyline points="18 15 12 9 6 15"></polyline>
+    </svg>
+</button>
+{% endif %}

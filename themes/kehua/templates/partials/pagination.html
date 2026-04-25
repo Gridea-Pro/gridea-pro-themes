@@ -1,0 +1,20 @@
+{# 通用分页组件。Gridea Pro 的 pagination 对象只暴露 prev / next 字符串 URL #}
+{% if pagination %}
+{% if pagination.prev or pagination.next %}
+<nav class="pagination" aria-label="分页导航">
+    {% if pagination.prev %}
+        <a href="{{ pagination.prev }}" class="pagination-item pagination-prev" rel="prev">← 上一页</a>
+    {% else %}
+        <span class="pagination-item pagination-disabled">← 上一页</span>
+    {% endif %}
+
+    <span class="pagination-info">翻页</span>
+
+    {% if pagination.next %}
+        <a href="{{ pagination.next }}" class="pagination-item pagination-next" rel="next">下一页 →</a>
+    {% else %}
+        <span class="pagination-item pagination-disabled">下一页 →</span>
+    {% endif %}
+</nav>
+{% endif %}
+{% endif %}

@@ -1,0 +1,245 @@
+{
+  "name": "kehua",
+  "version": "1.0.0",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "author": "kehua / 刻画 (https://kehua.me) · Gridea Pro 移植：Eric",
+  "description": "刻画 · 留白主题 — 来自 kehuame/whitespace 的 Gridea Pro Jinja2 移植版。单栏极简、PC + 移动响应、深浅模式、内置搜索 / 闪念热力图 / 评论。",
+  "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
+  "customConfig": [
+    {
+      "name": "subtitle",
+      "label": "副标题",
+      "group": "基础设置",
+      "type": "input",
+      "value": "克制 · 留白 · 一记一画",
+      "note": "显示在页脚（也可用于头部 SEO description）"
+    },
+    {
+      "name": "footerCopyright",
+      "label": "页脚版权信息",
+      "group": "基础设置",
+      "type": "input",
+      "value": "© 2026 刻画主题 · Powered by Gridea Pro",
+      "note": "为空则不显示版权行"
+    },
+    {
+      "name": "showThemeCredit",
+      "label": "显示主题署名（Theme by kehua）",
+      "group": "基础设置",
+      "type": "boolean",
+      "value": true,
+      "note": "如希望支持原作者，请保留开启"
+    },
+    {
+      "name": "primaryColor",
+      "label": "主题色",
+      "group": "外观设置",
+      "type": "color",
+      "value": "#e53935",
+      "note": "链接 hover、置顶徽标、按钮等强调元素的颜色"
+    },
+    {
+      "name": "primaryColorHover",
+      "label": "主题色（hover 加深）",
+      "group": "外观设置",
+      "type": "color",
+      "value": "#c62828",
+      "note": "鼠标悬停时的更深一档主题色"
+    },
+    {
+      "name": "contentWidth",
+      "label": "正文最大宽度",
+      "group": "外观设置",
+      "type": "select",
+      "value": "720",
+      "options": [
+        { "label": "窄 (640px)", "value": "640" },
+        { "label": "标准 (720px)", "value": "720" },
+        { "label": "宽 (840px)", "value": "840" },
+        { "label": "超宽 (960px)", "value": "960" }
+      ]
+    },
+    {
+      "name": "fontFamily",
+      "label": "正文字体",
+      "group": "外观设置",
+      "type": "select",
+      "value": "sans",
+      "options": [
+        { "label": "无衬线（系统默认）", "value": "sans" },
+        { "label": "衬线（思源宋体）", "value": "serif" }
+      ]
+    },
+    {
+      "name": "defaultTheme",
+      "label": "默认配色",
+      "group": "外观设置",
+      "type": "select",
+      "value": "auto",
+      "options": [
+        { "label": "跟随系统", "value": "auto" },
+        { "label": "始终亮色", "value": "light" },
+        { "label": "始终暗色", "value": "dark" }
+      ],
+      "note": "用户在前端切换后以本地存储为准；此项决定首次访问的默认值"
+    },
+    {
+      "name": "showFeatured",
+      "label": "首页显示置顶推荐",
+      "group": "首页",
+      "type": "boolean",
+      "value": true,
+      "note": "开启后，文章列表中标记为置顶（isTop）的第一篇会以推荐样式醒目展示"
+    },
+    {
+      "name": "indexHero",
+      "label": "首页 Hero 文案",
+      "group": "首页",
+      "type": "textarea",
+      "value": "",
+      "note": "为空则不显示。可写一句箴言、一段简介或欢迎词"
+    },
+    {
+      "name": "showReadingProgress",
+      "label": "文章页显示阅读进度条",
+      "group": "文章",
+      "type": "boolean",
+      "value": true
+    },
+    {
+      "name": "showCodeCopy",
+      "label": "代码块显示「复制」按钮",
+      "group": "文章",
+      "type": "boolean",
+      "value": true
+    },
+    {
+      "name": "showBackToTop",
+      "label": "显示「回到顶部」按钮",
+      "group": "文章",
+      "type": "boolean",
+      "value": true
+    },
+    {
+      "name": "enableSearch",
+      "label": "启用全局搜索",
+      "group": "搜索",
+      "type": "boolean",
+      "value": true,
+      "note": "Cmd/Ctrl+K 唤出。基于全站 posts JSON 的本地模糊搜索，零依赖、不发请求"
+    },
+    {
+      "name": "memosHeatmap",
+      "label": "闪念页显示热力图",
+      "group": "闪念",
+      "type": "boolean",
+      "value": true,
+      "note": "GitHub 风格的 365 天热力图，按 memo 发布日期密度着色"
+    },
+    {
+      "name": "memosTitle",
+      "label": "闪念页标题",
+      "group": "闪念",
+      "type": "input",
+      "value": "闪念",
+      "note": "在 memos 页面顶部显示"
+    },
+    {
+      "name": "memosDescription",
+      "label": "闪念页描述",
+      "group": "闪念",
+      "type": "input",
+      "value": "一些不成文章的碎片想法",
+      "note": "在标题下方显示，可留空"
+    },
+    {
+      "name": "aboutAvatar",
+      "label": "关于页头像",
+      "group": "关于页",
+      "type": "image",
+      "value": "",
+      "note": "为空时使用站点全局 avatar"
+    },
+    {
+      "name": "aboutBio",
+      "label": "关于页一句话简介",
+      "group": "关于页",
+      "type": "input",
+      "value": "一个热爱生活、热爱技术的普通人",
+      "note": "显示在头像下方"
+    },
+    {
+      "name": "githubUrl",
+      "label": "GitHub 链接",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "完整 URL，为空则不显示图标"
+    },
+    {
+      "name": "twitterUrl",
+      "label": "Twitter / X 链接",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "完整 URL"
+    },
+    {
+      "name": "rssUrl",
+      "label": "RSS 链接",
+      "group": "社交",
+      "type": "input",
+      "value": "/atom.xml",
+      "note": "Gridea Pro 默认在 /atom.xml 输出"
+    },
+    {
+      "name": "contactEmail",
+      "label": "联系邮箱",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "用于关于页 mailto 图标"
+    },
+    {
+      "name": "enableComments",
+      "label": "启用评论",
+      "group": "评论",
+      "type": "boolean",
+      "value": true,
+      "note": "评论由 Gridea Pro 标准评论服务接管，主题侧只提供挂载容器与 UI 样式"
+    },
+    {
+      "name": "commentsPlaceholder",
+      "label": "评论区占位提示",
+      "group": "评论",
+      "type": "input",
+      "value": "评论功能由 Gridea Pro 评论服务驱动，请在 Gridea Pro 设置中开启对应服务（Disqus / Gitalk / Waline / Twikoo 等）。",
+      "note": "在 Gridea Pro 评论服务尚未配置时显示"
+    },
+    {
+      "name": "headerInjectCode",
+      "label": "Head 注入代码",
+      "group": "高级设置",
+      "type": "code",
+      "value": "",
+      "note": "在 </head> 之前注入。用于添加统计 / 自定义 meta / web 字体 / 自定义脚本"
+    },
+    {
+      "name": "footerInjectCode",
+      "label": "Footer 注入代码",
+      "group": "高级设置",
+      "type": "code",
+      "value": "",
+      "note": "在 </body> 之前注入。可用于第三方评论、客服、统计"
+    },
+    {
+      "name": "customCss",
+      "label": "自定义 CSS",
+      "group": "高级设置",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到主题样式末尾，可覆盖任何默认样式"
+    }
+  ]
+}

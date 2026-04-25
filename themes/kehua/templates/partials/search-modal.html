@@ -1,0 +1,24 @@
+{# 全局搜索弹窗。索引数据由 partials/search-index.html 注入到 window.__KEHUA_SEARCH_INDEX__，
+   在 main.js 中实现本地模糊匹配 —— 静态站不依赖任何后端服务 #}
+<div class="search-modal" id="search-modal" role="dialog" aria-modal="true" aria-label="站内搜索">
+    <div class="search-modal-content">
+        <div class="search-input-wrapper">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="search-input" class="search-input" placeholder="搜索文章、闪念、标签..." autocomplete="off" spellcheck="false" aria-label="搜索关键词">
+            <button type="button" class="search-close" id="search-close" aria-label="关闭搜索">&times;</button>
+        </div>
+
+        <div class="search-results" id="search-results" role="listbox" aria-label="搜索结果">
+            <p class="search-empty">输入关键词开始搜索 · 支持标题 / 摘要 / 标签 / 闪念</p>
+        </div>
+
+        <div class="search-shortcuts">
+            <span><kbd>↵</kbd> 打开</span>
+            <span><kbd>↑</kbd><kbd>↓</kbd> 切换</span>
+            <span><kbd>esc</kbd> 关闭</span>
+        </div>
+    </div>
+</div>

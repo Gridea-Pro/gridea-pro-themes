@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}页面未找到 · {{ config.siteName }}{% endblock %}
+{% block body_class %}error-page{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="error-page">
+        <div class="error-code">404</div>
+        <h1 class="error-title">页面未找到</h1>
+        <p class="error-message">抱歉，您访问的页面不存在或已被删除。</p>
+        <div class="error-actions">
+            <a href="/" class="error-btn">返回首页</a>
+            <a href="javascript:history.back();" class="error-btn error-btn-secondary">返回上页</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

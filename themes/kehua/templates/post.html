@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} · {{ config.siteName }}{% endblock %}
+{% block body_class %}post{% endblock %}
+
+{% block content %}
+<article class="article-detail">
+
+    <header class="article-header">
+        <h1 class="article-title">{{ post.title }}</h1>
+        <div class="article-meta">
+            <time class="article-date" datetime="{{ post.date }}">{{ post.date }}</time>
+            {% if post.tags|length > 0 %}
+            <span class="article-meta-sep">·</span>
+            <span class="article-category">
+                {% for tag in post.tags %}<a href="{{ tag.link }}">{{ tag.name }}</a>{% if not loop.last %}<span class="tag-sep">,</span> {% endif %}{% endfor %}
+            </span>
+            {% endif %}
+            <span class="article-meta-sep">·</span>
+            <span class="article-reading-time">{{ post.content|reading_time }} 分钟阅读</span>
+            <span class="article-meta-sep">·</span>
+            <span class="article-word-count">{{ post.content|word_count }} 字</span>
+        </div>
+    </header>
+
+    {% if post.feature %}
+    <div class="article-cover">
+        <img src="{{ post.feature }}" alt="{{ post.title }}">
+    </div>
+    {% endif %}
+
+    <div class="article-content">
+        {{ post.content|safe }}
+    </div>
+
+    {% if post.tags|length > 0 %}
+    <div class="article-tags">
+        <span class="tag-label">标签：</span>
+        {% for tag in post.tags %}
+            <a href="{{ tag.link }}" class="tag">{{ tag.name }}</a>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {# 上一篇 / 下一篇。Gridea Pro 在 post 对象上暴露 prev / next（如未支持则不渲染） #}
+    {% if post.prev or post.next %}
+    <nav class="article-nav" aria-label="文章导航">
+        {% if post.prev %}
+        <a href="{{ post.prev.link }}" class="article-nav-item article-nav-prev">
+            <span class="article-nav-label">← 上一篇</span>
+            <span class="article-nav-title">{{ post.prev.title }}</span>
+        </a>
+        {% else %}
+        <span class="article-nav-item article-nav-disabled">
+            <span class="article-nav-label">← 上一篇</span>
+            <span class="article-nav-title">已是最早一篇</span>
+        </span>
+        {% endif %}
+
+        {% if post.next %}
+        <a href="{{ post.next.link }}" class="article-nav-item article-nav-next">
+            <span class="article-nav-label">下一篇 →</span>
+            <span class="article-nav-title">{{ post.next.title }}</span>
+        </a>
+        {% else %}
+        <span class="article-nav-item article-nav-disabled">
+            <span class="article-nav-label">下一篇 →</span>
+            <span class="article-nav-title">已是最新一篇</span>
+        </span>
+        {% endif %}
+    </nav>
+    {% endif %}
+</article>
+
+{% include "partials/comments.html" %}
+{% endblock %}
+
+{% block scripts %}
+{# 标记当前页面需要阅读进度条 / 代码复制等增强 #}
+<script>
+  window.__KEHUA_PAGE_FLAGS__ = {
+    readingProgress: {% if theme_config.showReadingProgress %}true{% else %}false{% endif %},
+    codeCopy: {% if theme_config.showCodeCopy %}true{% else %}false{% endif %}
+  };
+</script>
+{% endblock %}
