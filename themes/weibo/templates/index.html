@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main id="main" class="width-half index" role="main">
+
+<div class="heading">
+<div class="inner">
+<ul class="nav-menu-main">
+<li class="active"><a href="{{ config.domain }}/">全部</a></li>
+{% for tag in tags %}{% if loop.index <= 5 %}<li><a href="{{ tag.link }}">{{ tag.name }}</a></li>{% endif %}{% endfor %}
+</ul>
+</div>
+</div>
+
+<div id="primary" class="list">
+{% if posts and posts|length > 0 %}
+{% for post in posts %}
+{% if not post.hideInList %}
+{% include "partials/post-card.html" %}
+{% endif %}
+{% endfor %}
+{% else %}
+<div class="none-content" style="text-align:center;padding:4em 0;background:var(--wb-card-bg);border:1px solid var(--wb-border);border-radius:4px;">
+<p style="color:var(--wb-fg-mute);">暂无内容，写点什么吧。</p>
+</div>
+{% endif %}
+</div>
+
+{% include "partials/pagination.html" %}
+
+</main>
+{% endblock %}

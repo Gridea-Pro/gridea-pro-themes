@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}博客 - {{ config.siteName }}{% endblock %}
+{% block og_title %}博客 - {{ config.siteName }}{% endblock %}
+
+{% block banner %}{% endblock %}
+
+{% block content %}
+{% set breadcrumb_items = [{"label": "博客"}] %}
+{% include "partials/breadcrumbs.html" %}
+
+<main id="main" class="width-half index" role="main">
+<div id="primary" class="list">
+{% if posts and posts|length > 0 %}
+{% for post in posts %}
+{% if not post.hideInList %}
+{% include "partials/post-card.html" %}
+{% endif %}
+{% endfor %}
+{% else %}
+<div class="none-content" style="text-align:center;padding:4em 0;background:var(--wb-card-bg);border:1px solid var(--wb-border);border-radius:4px;">
+<p>没有找到内容</p>
+</div>
+{% endif %}
+</div>
+
+{% include "partials/pagination.html" %}
+</main>
+{% endblock %}

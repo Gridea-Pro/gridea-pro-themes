@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f76d24">
+
+{# 防闪暗色：在 CSS 加载之前同步设置 data-theme #}
+<script>(function(){try{var m={% if theme_config.themeMode %}"{{ theme_config.themeMode }}"{% else %}"auto"{% endif %};var k="weibo-theme";var s=null;try{s=localStorage.getItem(k);}catch(e){}var v="light";if(m==="dark")v="dark";else if(m==="light")v="light";else if(m==="user"){v=(s==="dark"||s==="light")?s:"light";}else{if(s==="dark"||s==="light"){v=s;}else if(window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches){v="dark";}}if(v==="dark")document.documentElement.setAttribute("data-theme","dark");}catch(e){}})();</script>
+
+<title>{% block title %}{{ config.siteName }}{% endblock %}</title>
+
+{% if config.favicon %}
+<link rel="shortcut icon" href="{{ config.favicon }}">
+{% else %}
+<link rel="shortcut icon" href="/media/images/favicon.ico">
+{% endif %}
+
+<meta name="description" content="{% block meta_description %}{{ config.siteDescription }}{% endblock %}">
+<meta name="generator" content="Gridea Pro">
+<meta property="og:site_name" content="{{ config.siteName }}">
+<meta property="og:type" content="{% block og_type %}website{% endblock %}">
+<meta property="og:title" content="{% block og_title %}{{ config.siteName }}{% endblock %}">
+<meta property="og:description" content="{% block og_description %}{{ config.siteDescription }}{% endblock %}">
+{% block og_extra %}{% endblock %}
+
+<link rel="alternate" type="application/atom+xml" title="{{ config.siteName }} - Atom" href="/atom.xml">
+<link rel="stylesheet" href="/styles/main.css">
+
+{% block extra_head %}{% endblock %}
+
+{% if theme_config.customCSS %}
+<style>{{ theme_config.customCSS|safe }}</style>
+{% endif %}
+{% if theme_config.customHeadHtml %}
+{{ theme_config.customHeadHtml|safe }}
+{% endif %}
+</head>
+<body class="home blog">
+
+{# 移动端顶栏（< 901px 显示，PC 端隐藏） #}
+<div id="mobilebar">
+<span class="brand"><a href="{{ config.domain }}/" style="color:inherit">{{ config.siteName }}</a></span>
+<div class="actions">
+<button type="button" data-search-open aria-label="搜索">🔍</button>
+{% if theme_config.showThemeToggle %}<button type="button" data-theme-toggle aria-label="切换深浅">☾</button>{% endif %}
+</div>
+</div>
+
+<div id="wrapper" class="theme">
+
+{# PC 端顶栏 #}
+{% include "partials/header.html" %}
+
+{# Banner 资料卡（首页 / 列表页用，详情页 block 内不渲染） #}
+{% block banner %}
+{% include "partials/banner.html" %}
+{% endblock %}
+
+{# 主区域 #}
+<section id="contents" class="width">
+{% block layout %}
+{% include "partials/sidebar.html" %}
+<div id="loop" class="right">
+{% block content %}{% endblock %}
+</div>
+{% endblock %}
+</section>
+
+{# 页脚 #}
+{% include "partials/footer.html" %}
+
+</div>{# /#wrapper #}
+
+{# 返回顶部 #}
+{% if theme_config.showCornerTop %}
+<div class="gotop" aria-label="返回顶部" title="返回顶部"></div>
+{% endif %}
+
+{# 全屏搜索 modal #}
+{% include "partials/search-modal.html" %}
+
+{# 阅读进度条（详情页等用） #}
+{% block reading_progress %}{% endblock %}
+
+{# 注入主题运行时配置 #}
+<script>
+window.__WEIBO_CFG__ = {
+  themeMode: "{% if theme_config.themeMode %}{{ theme_config.themeMode }}{% else %}auto{% endif %}",
+  siteUrl: "{{ config.domain }}"
+};
+</script>
+<script src="/scripts/main.js" defer></script>
+
+{% if theme_config.customBodyEndHtml %}
+{{ theme_config.customBodyEndHtml|safe }}
+{% endif %}
+
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>

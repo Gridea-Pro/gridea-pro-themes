@@ -1,0 +1,54 @@
+<section class="banner bg{% if not theme_config.cardBgUrl %} has-default-bg{% endif %}"{% if theme_config.cardBgUrl %} style="background-image:url('{{ theme_config.cardBgUrl }}')"{% endif %}>
+
+<div class="big-title">
+<a style="color:#fff;" href="{{ config.domain }}/">
+<h1 class="big-title-h1">
+{% if theme_config.yourNickname %}{{ theme_config.yourNickname }}{% else %}{{ config.siteName }}{% endif %}
+<i class="male"></i>
+<i class="vip_lev"></i>
+</h1>
+</a>
+<h3 class="big-title-h3">{% if theme_config.yourDescription %}{{ theme_config.yourDescription }}{% else %}{{ config.siteDescription }}{% endif %}</h3>
+</div>
+
+<div class="contactme">
+{% if theme_config.profileText1 %}
+<div class="weixin">
+{{ theme_config.profileText1 }}
+{% if theme_config.profileLink1 %}
+<div class="weixin_drop-content">
+<img src="{{ theme_config.profileLink1 }}" alt="二维码">
+</div>
+{% endif %}
+</div>
+{% endif %}
+{% if theme_config.profileText2 %}
+<a class="qq" href="{% if theme_config.profileLink2 %}{{ theme_config.profileLink2 }}{% else %}#{% endif %}"{% if theme_config.profileLink2 and "http" in theme_config.profileLink2 %} target="_blank" rel="noopener"{% endif %}>{{ theme_config.profileText2 }}</a>
+{% endif %}
+<div class="menu">
+<span>☰</span>
+<div class="menu_drop-content">
+<ul>
+<li><a href="{{ config.domain }}/">首页</a></li>
+<li><a href="{{ config.domain }}/archives/">归档</a></li>
+<li><a href="{{ config.domain }}/tags/">标签</a></li>
+<li><a href="{{ config.domain }}/categories/">分类</a></li>
+<li><a href="{{ config.domain }}/links/">友链</a></li>
+<li><a href="{{ config.domain }}/about/">关于</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+</section>
+
+<div class="touxiang">
+<a href="{{ config.domain }}/">
+<img src="{% if theme_config.headImgUrl %}{{ theme_config.headImgUrl }}{% elif config.avatar %}{{ config.avatar }}{% else %}/media/images/default-avatar.svg{% endif %}" alt="头像">
+</a>
+<span class="renzheng" title="微博认证"></span>
+</div>
+
+<div class="banner-item width">
+<a class="active" href="{{ config.domain }}/">我的主页</a>
+</div>

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}关于 - {{ config.siteName }}{% endblock %}
+{% block og_title %}关于 - {{ config.siteName }}{% endblock %}
+
+{% block banner %}{% endblock %}
+
+{% block content %}
+{% set breadcrumb_items = [{"label": "关于"}] %}
+{% include "partials/breadcrumbs.html" %}
+
+<main class="plain width-half single">
+<div class="about-page">
+<h1 class="taxonomy-title">关于</h1>
+
+<div class="content">
+<div class="entry-content">
+<p style="text-align:center;">
+<img src="{% if theme_config.headImgUrl %}{{ theme_config.headImgUrl }}{% elif config.avatar %}{{ config.avatar }}{% else %}/media/images/default-avatar.svg{% endif %}" alt="{{ config.siteName }}" style="width:120px;height:120px;border-radius:50%;border:3px solid var(--wb-card-bg);box-shadow:var(--wb-shadow-md);margin:1em auto;">
+</p>
+<p style="text-align:center;color:var(--wb-fg-muted);">{% if theme_config.yourDescription %}{{ theme_config.yourDescription }}{% else %}{{ config.siteDescription }}{% endif %}</p>
+<hr style="border:0;border-top:1px solid var(--wb-border);margin:2em 0;">
+
+<h2>关于这个博客</h2>
+<p>这是一个用 <a href="https://gridea.pro" target="_blank" rel="noopener">Gridea Pro</a> 搭建、由 <strong>Weibo</strong> 主题驱动的博客。</p>
+<p>Weibo 主题原版由 <a href="https://rowingbohe.com" target="_blank" rel="noopener">Pomelo</a> 为 Typecho 编写，复刻了新浪微博经典版的视觉外观。本主题是其 Jinja2 移植版。</p>
+<p>「微言大艺 · The Art of Sublime Words」是 Weibo 主题的口号——希望在这个微博式的卡片流里，能保留一点对内容的认真。</p>
+
+<h2>联系方式</h2>
+<p>可以通过 banner 上的「{% if theme_config.profileText1 %}{{ theme_config.profileText1 }}{% else %}微信{% endif %}」「{% if theme_config.profileText2 %}{{ theme_config.profileText2 }}{% else %}QQ{% endif %}」按钮联系我。</p>
+</div>
+</div>
+</div>
+</main>
+{% endblock %}

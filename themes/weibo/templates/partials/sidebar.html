@@ -1,0 +1,86 @@
+{# 微博风资料卡 + widgets #}
+<aside id="aside" class="left">
+<div class="inner">
+
+{% if theme_config.sidebarShowStats %}
+<ul class="sns web-info" id="widget-stats-bar">
+<li class="frinum"><a href="{{ config.domain }}/archives/"><b data-stat="posts">…</b><span>文章</span></a></li>
+<li class="vitnum"><a href="{{ config.domain }}/categories/"><b data-stat="categories">…</b><span>分类</span></a></li>
+<li class="ptnum"><a href="{{ config.domain }}/tags/"><b data-stat="tags">…</b><span>标签</span></a></li>
+</ul>
+{% endif %}
+
+{% if theme_config.sidebarShowMaster %}
+<div class="sns master-info">
+<div class="person-info">
+<p class="verify clearfix">
+<span class="weibo_renz" title="{% if theme_config.verified %}{{ theme_config.verified }}{% else %}微博认证{% endif %}"></span>
+<a class="master_lev" href="javascript:void(0);" title="当前等级">
+<span>LV.{% if theme_config.levelNumber %}{{ theme_config.levelNumber }}{% else %}1{% endif %}</span>
+</a>
+</p>
+<p class="info">{% if theme_config.verified %}{{ theme_config.verified }}{% else %}{{ config.siteDescription }}{% endif %}</p>
+</div>
+<ul class="m_info-items">
+<li class="item"><i>📍</i><span>居住地：{% if theme_config.yourPlace %}{{ theme_config.yourPlace }}{% else %}未填写{% endif %}</span></li>
+<li class="item"><i>🎂</i><span>生日：{% if theme_config.yourBirthday %}{{ theme_config.yourBirthday }}{% else %}未填写{% endif %}</span></li>
+<li class="item"><i>😊</i><span>简介：{% if theme_config.yourDescription %}{{ theme_config.yourDescription }}{% else %}{{ config.siteDescription }}{% endif %}</span></li>
+<li class="item last"><i>🔗</i><a href="{{ config.domain }}/" target="_blank" rel="noopener" style="color:var(--wb-link-hover)">{{ config.domain }}</a></li>
+</ul>
+<div class="readmore"><a href="{{ config.domain }}/about/">查看更多 ></a></div>
+</div>
+{% endif %}
+
+{% if tags and tags|length > 0 %}
+<div class="widget">
+<h3 class="widget-title"><i>🏷</i>热门标签</h3>
+<div class="textwidget">
+{% for tag in tags %}
+{% if loop.index <= 18 %}
+<a href="{{ tag.link }}" style="display:inline-block;margin:3px;padding:2px 10px;background:var(--wb-card-bg-soft);color:var(--wb-fg);border-radius:3px;font-size:12px;">{{ tag.name }}</a>
+{% endif %}
+{% endfor %}
+</div>
+</div>
+{% endif %}
+
+{% if theme_config.sidebarShowRecentComments %}
+<div class="widget">
+<h3 class="widget-title"><i>💬</i>他们抢着跟我说这些</h3>
+<div class="textwidget">
+<ul class="items hot-comment" id="widget-recent-comments">
+<li class="item" style="color:var(--wb-fg-mute);font-size:13px;">评论数据由全局评论组件加载…</li>
+</ul>
+</div>
+</div>
+{% endif %}
+
+{% if theme_config.sidebarShowLinks and links and links|length > 0 %}
+<div class="widget">
+<h3 class="widget-title"><i>😄</i>左邻右舍</h3>
+<ul class="items hot-comment">
+{% for link in links %}
+{% if loop.index <= 6 %}
+<li class="item">
+<div class="image">
+<a href="{{ link.siteLink }}" target="_blank" rel="noopener">
+<img src="{% if link.avatar %}{{ link.avatar }}{% else %}/media/images/default-avatar.svg{% endif %}" alt="{{ link.siteName }}">
+</a>
+</div>
+<div class="info">
+<a href="{{ link.siteLink }}" target="_blank" rel="noopener"><h4 class="title nowrap">{{ link.siteName }}</h4></a>
+<div class="meta nowrap">
+<a class="hot-comment-link" href="{{ link.siteLink }}" target="_blank" rel="noopener">
+<p>{% if link.description %}{{ link.description }}{% else %}{{ link.siteLink }}{% endif %}</p>
+</a>
+</div>
+</div>
+</li>
+{% endif %}
+{% endfor %}
+</ul>
+</div>
+{% endif %}
+
+</div>{# /.inner #}
+</aside>
