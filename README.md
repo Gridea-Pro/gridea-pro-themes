@@ -26,6 +26,12 @@
 | <a href="./themes/nacre/"><img src="./themes/nacre/assets/media/preview.png" width="240" alt="Nacre 预览"></a> | [**nacre**](./themes/nacre/) | Jinja2 (Pongo2) | 温柔静谧的深色主题，如珍珠母在暗处生辉，支持 Swiper 头图与多内容面板 |
 | <a href="./themes/liushen/"><img src="./themes/liushen/assets/media/preview.png" width="240" alt="liushen 预览"></a> | [**liushen**](./themes/liushen/) | Jinja2 (Pongo2) | 柳神（Butterfly 衍生）风格双栏粉蓝渐变主题，复刻自 willow-god/hexo-theme-liushen |
 | <a href="./themes/jasmine/"><img src="./themes/jasmine/assets/media/preview.png" width="240" alt="Jasmine 预览"></a> | [**jasmine**](./themes/jasmine/) | Jinja2 (Pongo2) | Bootstrap 5 + Tabler Icons 三栏极简博客主题，复刻自 liaocp666/Jasmine（Typecho） |
+| <a href="./themes/cactus/"><img src="./themes/cactus/assets/media/preview.png" width="240" alt="Cactus 预览"></a> | [**cactus**](./themes/cactus/) | Jinja2 (Pongo2) | 等宽极简文艺主题，#2bbc8a 招牌绿 + Menlo 字体 + 39rem 窄容器，复刻自 Seevil/cactus（Typecho） |
+| <a href="./themes/initial/"><img src="./themes/initial/assets/media/preview.png" width="240" alt="Initial 预览"></a> | [**initial**](./themes/initial/) | Jinja2 (Pongo2) | 「简约而不简单」双栏极简博客，1060px 容器 + #3354aa 蓝调，复刻自 jielive/initial（Typecho） |
+| <a href="./themes/weibo/"><img src="./themes/weibo/assets/media/preview.png" width="240" alt="Weibo 预览"></a> | [**weibo**](./themes/weibo/) | Jinja2 (Pongo2) | 高仿新浪微博经典版「微言大艺」，#f76d24 橙 + 280px Banner 资料卡，复刻自 PomeloOfficial/Weibo（Typecho） |
+| <a href="./themes/kehua/"><img src="./themes/kehua/assets/media/preview.png" width="240" alt="Kehua 预览"></a> | [**kehua**](./themes/kehua/) | Jinja2 (Pongo2) | 扁平卡片 + 双栏留白主题，朴素配色，不依赖 Bootstrap |
+| <a href="./themes/printer/"><img src="./themes/printer/assets/media/preview.png" width="240" alt="Printer 预览"></a> | [**printer**](./themes/printer/) | Jinja2 (Pongo2) | 打字机字体 + 文档风排版主题，复刻自 Ouxxxxxjoe/Printer-Typecho |
+| <a href="./themes/memos/"><img src="./themes/memos/assets/media/preview.png" width="240" alt="memos 预览"></a> | [**memos**](./themes/memos/) | Jinja2 (Pongo2) | Bootstrap 5 双栏博客主题，sticky 顶栏 + Offcanvas 汉堡 + 闪念页，复刻自 jkjoy/Typecho-Theme-Once |
 
 > 上方前 7 个为初始入库的种子主题（其中 `flavor` 为 Gridea Pro 官方旗舰），下方按入库顺序排列社区主题。
 
