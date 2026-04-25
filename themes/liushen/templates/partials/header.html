@@ -1,0 +1,47 @@
+{# 顶栏：logo + 多级菜单 + 右侧操作区 #}
+<nav id="nav" class="{% if theme_config.navFixed and theme_config.navFixed != 'false' %}nav-fixed{% endif %}">
+  <span id="blog-info">
+    <a class="nav-site-title" href="/" title="{{ config.siteName }}">
+      {% if config.logo %}<img class="site-icon" src="{{ config.logo }}" alt="Logo">{% endif %}
+      <span class="site-name">{{ config.siteName }}</span>
+    </a>
+  </span>
+
+  <div id="menus">
+    {# 默认菜单：Gridea Pro 扁平 menus，会被 main.js 在 navMenuJson 非空时替换为多级 dropdown #}
+    <div class="menus_items visible">
+      {% if menus %}
+        {% for menu in menus %}
+          <div class="menus_item">
+            <a class="site-page" href="{{ menu.link }}"><i class="fa-fw fa-solid fa-bookmark"></i><span> {{ menu.name }}</span></a>
+          </div>
+        {% endfor %}
+      {% else %}
+        <div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fa-solid fa-house"></i><span> 首页</span></a></div>
+        <div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fa-solid fa-archive"></i><span> 归档</span></a></div>
+        <div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fa-solid fa-tags"></i><span> 标签</span></a></div>
+        <div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fa-solid fa-folder-open"></i><span> 分类</span></a></div>
+        <div class="menus_item"><a class="site-page" href="/memos/"><i class="fa-fw fa-solid fa-comment-dots"></i><span> 闪念</span></a></div>
+        <div class="menus_item"><a class="site-page" href="/links/"><i class="fa-fw fa-solid fa-link"></i><span> 友链</span></a></div>
+        <div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fa-solid fa-address-card"></i><span> 关于</span></a></div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div id="nav-right">
+    {% if theme_config.travellingsLink %}
+    <div id="travellings"><a class="site-page" href="{{ theme_config.travellingsLink }}" title="友链接力 - 随机开往" rel="nofollow noopener" target="_blank"><i class="fa-solid fa-bus fa-fw"></i></a></div>
+    {% endif %}
+    {% if theme_config.tenYearsLink %}
+    <div id="ten-years"><a class="site-page" href="{{ theme_config.tenYearsLink }}" title="十年之约" rel="nofollow noopener" target="_blank"><i class="fa-brands fa-nfc-symbol fa-fw"></i></a></div>
+    {% endif %}
+    {% if theme_config.randomPostEnable and theme_config.randomPostEnable != "false" %}
+    <div id="random"><a class="site-page" href="javascript:void(0);" title="随机文章" data-action="random-post"><i class="fa-solid fa-shuffle fa-fw"></i></a></div>
+    {% endif %}
+    {% if theme_config.searchEnable and theme_config.searchEnable != "false" %}
+    <div id="search-button"><span class="site-page social-icon search" data-action="open-search" title="搜索"><i class="fa-solid fa-magnifying-glass fa-fw"></i></span></div>
+    {% endif %}
+    <div id="theme-switch"><span class="site-page" data-action="toggle-theme" title="切换配色"><i class="fa-solid fa-circle-half-stroke fa-fw"></i></span></div>
+    <div id="toggle-menu"><span class="site-page" data-action="toggle-mobile-menu" title="展开菜单"><i class="fa-solid fa-bars fa-fw"></i></span></div>
+  </div>
+</nav>

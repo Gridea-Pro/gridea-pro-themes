@@ -1,0 +1,16 @@
+{# 标签云 #}
+<div class="card-widget card-tags">
+  <div class="item-headline"><i class="fa-solid fa-tags"></i><span>标签云</span></div>
+  <div class="card-tag-cloud">
+    {% if tags and tags|length > 0 %}
+      {% for tag in tags %}
+        {% if loop.index <= 30 %}
+          {% set _wcnt = tag.count %}{% if not _wcnt %}{% set _wcnt = 0 %}{% endif %}
+          <a href="{{ tag.link }}" title="{{ tag.name }} ({{ _wcnt }})" class="tag-cloud-item" data-count="{{ _wcnt }}">{{ tag.name }}<sup>{{ _wcnt }}</sup></a>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <div class="aside-empty">暂无标签</div>
+    {% endif %}
+  </div>
+</div>

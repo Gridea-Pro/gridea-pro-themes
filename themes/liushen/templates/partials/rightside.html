@@ -1,0 +1,12 @@
+{# 右下浮动按钮组 #}
+<div id="rightside" class="rightside">
+  <div id="rightside-config-hide">
+    <button class="rightside-btn" data-action="toggle-toc" title="目录" hidden id="rightside-toc"><i class="fa-solid fa-list"></i></button>
+    <button class="rightside-btn" data-action="toggle-theme" title="切换主题"><i class="fa-solid fa-circle-half-stroke"></i></button>
+  </div>
+  {% if theme_config.scrollToTop and theme_config.scrollToTop != "false" %}
+  <button class="rightside-btn scroll-to-top" data-action="scroll-to-top" title="回到顶部" hidden><i class="fa-solid fa-angle-up"></i></button>
+  {% endif %}
+</div>
+
+{# TOC 面板：post.html 内会单独 include #}

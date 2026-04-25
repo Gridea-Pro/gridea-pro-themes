@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}时光卷轴 | {{ config.siteName }}{% endblock %}
+{% block body_class %}page-archives{% endblock %}
+
+{% block page_header %}
+  {% set page_header_mode = "small" %}
+  {% set page_title = "时光卷轴" %}
+  {% set page_subtitle = "踏过的每一步，都算数" %}
+  {% include "partials/page-header.html" %}
+{% endblock %}
+
+{% block content %}
+<section class="archives-page">
+  <div class="archives-header">
+    <h2 class="archives-title">
+      <i class="fa-solid fa-archive"></i>
+      共 <strong>{% if posts %}{{ posts|length }}{% else %}0{% endif %}</strong> 篇文章
+    </h2>
+  </div>
+  <div class="article-sort">
+    {% if posts and posts|length > 0 %}
+      {% for group in posts|group_by:"year" %}
+      <div class="archive-year-block" id="year-{{ group.key }}">
+        <h3 class="article-sort-item year"><i class="fa-solid fa-calendar"></i> {{ group.key }}</h3>
+        <ul class="article-sort-list">
+          {% for ap in group.items %}
+          <li class="article-sort-item {% if not ap.feature %}no-article-cover{% endif %}">
+            {% if ap.feature %}
+            <a class="article-sort-item-img" href="{{ ap.link }}" title="{{ ap.title }}">
+              <img src="{{ ap.feature }}" alt="{{ ap.title }}" loading="lazy" onerror="this.onerror=null;this.src='/media/images/default-cover.svg';">
+            </a>
+            {% endif %}
+            <div class="article-sort-item-info">
+              <div class="article-sort-item-time"><i class="far fa-calendar-alt"></i> <time>{{ ap.date }}</time></div>
+              <a class="article-sort-item-title" href="{{ ap.link }}" title="{{ ap.title }}">{{ ap.title }}</a>
+              {% if ap.tags|length > 0 %}
+              <div class="article-sort-item-tags">
+                {% for t in ap.tags %}<a href="{{ t.link }}">#{{ t.name }}</a>{% endfor %}
+              </div>
+              {% endif %}
+            </div>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty-tip card-widget"><p>暂无文章</p></div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

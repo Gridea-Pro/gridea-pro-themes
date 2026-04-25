@@ -1,0 +1,29 @@
+{# 移动端抽屉 #}
+<div id="mobile-sidebar" class="mobile-sidebar" hidden>
+  <div class="mobile-sidebar-backdrop" data-action="close-mobile-menu"></div>
+  <aside class="mobile-sidebar-panel">
+    <header class="mobile-sidebar-header">
+      <img class="mobile-avatar" src="{{ config.avatar|default:'/media/images/default-avatar.svg' }}" alt="{{ config.siteName }}" onerror="this.onerror=null;this.src='/media/images/default-avatar.svg';">
+      <h3 class="mobile-site-name">{{ config.siteName }}</h3>
+      {% if config.siteDescription %}<p class="mobile-tagline">{{ config.siteDescription }}</p>{% endif %}
+    </header>
+    <nav class="mobile-sidebar-nav" id="mobile-nav-list">
+      {% if menus %}
+        {% for menu in menus %}
+        <a href="{{ menu.link }}" class="mobile-nav-item"><i class="fa-fw fa-solid fa-bookmark"></i><span>{{ menu.name }}</span></a>
+        {% endfor %}
+      {% else %}
+        <a href="/" class="mobile-nav-item"><i class="fa-fw fa-solid fa-house"></i><span>首页</span></a>
+        <a href="/archives/" class="mobile-nav-item"><i class="fa-fw fa-solid fa-archive"></i><span>归档</span></a>
+        <a href="/tags/" class="mobile-nav-item"><i class="fa-fw fa-solid fa-tags"></i><span>标签</span></a>
+        <a href="/categories/" class="mobile-nav-item"><i class="fa-fw fa-solid fa-folder-open"></i><span>分类</span></a>
+        <a href="/memos/" class="mobile-nav-item"><i class="fa-fw fa-solid fa-comment-dots"></i><span>闪念</span></a>
+        <a href="/links/" class="mobile-nav-item"><i class="fa-fw fa-solid fa-link"></i><span>友链</span></a>
+        <a href="/about/" class="mobile-nav-item"><i class="fa-fw fa-solid fa-address-card"></i><span>关于</span></a>
+      {% endif %}
+    </nav>
+    <footer class="mobile-sidebar-footer">
+      {% include "partials/social-icons.html" %}
+    </footer>
+  </aside>
+</div>

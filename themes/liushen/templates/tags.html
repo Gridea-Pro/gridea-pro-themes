@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}标签 | {{ config.siteName }}{% endblock %}
+{% block body_class %}page-tags{% endblock %}
+
+{% block page_header %}
+  {% set page_header_mode = "small" %}
+  {% set page_title = "标签云" %}
+  {% set page_subtitle = "用一片云聚集所有方向" %}
+  {% include "partials/page-header.html" %}
+{% endblock %}
+
+{% block content %}
+<section class="tags-page card-widget">
+  <div class="item-headline"><i class="fa-solid fa-tags"></i><span>共 {% if tags %}{{ tags|length }}{% else %}0{% endif %} 个标签</span></div>
+  <div class="tags-cloud">
+    {% if tags and tags|length > 0 %}
+      {% for tag in tags %}
+        {% set _cnt = tag.count %}{% if not _cnt %}{% set _cnt = 0 %}{% endif %}
+        <a class="tags-cloud-item" href="{{ tag.link }}" title="{{ tag.name }} ({{ _cnt }} 篇)" data-count="{{ _cnt }}">
+          <span class="name">{{ tag.name }}</span>
+          <sup class="count">{{ _cnt }}</sup>
+        </a>
+      {% endfor %}
+    {% else %}
+      <div class="aside-empty">暂无标签</div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

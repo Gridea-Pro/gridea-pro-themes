@@ -1,0 +1,58 @@
+{# 顶图区：三种状态分别由各页面通过 page_header_mode 变量控制；默认 small #}
+{% set mode = page_header_mode|default:"small" %}
+{% set img = page_header_img %}
+{% if not img %}{% set img = theme_config.defaultTopImg %}{% endif %}
+
+{% if mode == "home" and theme_config.indexTopImgEnable and theme_config.indexTopImgEnable != "false" %}
+  <header id="page-header" class="full_page nav-fixed-spacer" style="background-image:url('{{ img }}')">
+    <div id="site-info">
+      {% if theme_config.infoTitleAvatar %}
+      <div class="info_title_avatar">
+        <img id="site-info-avatar" src="{{ theme_config.infoTitleAvatar }}" alt="avatar" onerror="this.onerror=null;this.style.display='none';">
+      </div>
+      {% endif %}
+      <h1 id="site-title">{% if theme_config.infoTitle %}{{ theme_config.infoTitle }}{% else %}{{ config.siteName }}{% endif %}</h1>
+      {% if theme_config.subtitleEnable and theme_config.subtitleEnable != "false" %}
+      <div id="site-subtitle"><span id="subtitle"></span><span class="typed-cursor" aria-hidden="true">|</span></div>
+      {% endif %}
+      <div id="site-social-icons">
+        {% include "partials/social-icons.html" %}
+      </div>
+    </div>
+    {% if theme_config.scrollDownEnable and theme_config.scrollDownEnable != "false" %}
+    <div id="scroll-down" data-action="scroll-down"><i class="fa-solid fa-angle-down scroll-down-effects" aria-hidden="true"></i></div>
+    {% endif %}
+    {% if theme_config.wavesEnable and theme_config.wavesEnable != "false" %}
+      {% include "partials/waves.html" %}
+    {% endif %}
+  </header>
+{% elif mode == "post" %}
+  <header id="page-header" class="post-bg nav-fixed-spacer" style="background-image:url('{{ img }}')">
+    <div id="post-info">
+      <h1 class="post-title">{{ post.title }}</h1>
+      <div id="post-meta">
+        <span class="post-meta-item"><i class="far fa-calendar-alt"></i> <time datetime="{{ post.date }}">{{ post.date }}</time></span>
+        {% if post.tags|length > 0 %}
+        <span class="post-meta-item"><i class="fas fa-tag"></i>
+          {% for tag in post.tags %}<a href="{{ tag.link }}">{{ tag.name }}</a>{% if not loop.last %}<span class="sep">·</span>{% endif %}{% endfor %}
+        </span>
+        {% endif %}
+        <span class="post-meta-item"><i class="far fa-clock"></i> {{ post.content|reading_time }} 分钟阅读</span>
+        <span class="post-meta-item"><i class="fa-solid fa-pen-nib"></i> {{ post.content|word_count }} 字</span>
+      </div>
+    </div>
+    {% if theme_config.wavesEnable and theme_config.wavesEnable != "false" %}
+      {% include "partials/waves.html" %}
+    {% endif %}
+  </header>
+{% else %}
+  <header id="page-header" class="not-home-page nav-fixed-spacer" style="background-image:url('{{ img }}')">
+    <div id="page-site-info">
+      <h1 id="site-title">{% if page_title %}{{ page_title }}{% else %}{{ config.siteName }}{% endif %}</h1>
+      {% if page_subtitle %}<p id="page-subtitle">{{ page_subtitle }}</p>{% endif %}
+    </div>
+    {% if theme_config.wavesEnable and theme_config.wavesEnable != "false" %}
+      {% include "partials/waves.html" %}
+    {% endif %}
+  </header>
+{% endif %}

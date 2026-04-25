@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} | {{ config.siteName }}{% endblock %}
+{% block description %}{{ post.content|excerpt:160|striptags }}{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{{ post.content|excerpt:160|striptags }}{% endblock %}
+{% block body_class %}page-post type-post{% endblock %}
+
+{% block page_header %}
+  {% set page_header_mode = "post" %}
+  {% if post.feature %}{% set page_header_img = post.feature %}{% else %}{% set page_header_img = theme_config.defaultTopImg %}{% endif %}
+  {% include "partials/page-header.html" %}
+{% endblock %}
+
+{% block content %}
+<article id="post" class="post-detail" data-link="{{ post.link }}">
+  <div id="article-container" class="article-container post-content">
+    {{ post.content|safe }}
+  </div>
+
+  <div class="post-bottom">
+    <div class="post-copyright">
+      <ul class="post-copyright-list">
+        <li><strong>本文标题：</strong><span>{{ post.title }}</span></li>
+        <li><strong>文章作者：</strong><span>{{ config.siteName }}</span></li>
+        <li><strong>发布时间：</strong><span>{{ post.date }}</span></li>
+        {% if config.domain %}<li><strong>本文链接：</strong><a href="{{ config.domain }}{{ post.link }}">{{ config.domain }}{{ post.link }}</a></li>{% endif %}
+        <li><strong>版权声明：</strong><span>本博客所有文章除特别声明外，均默认采用 CC BY-NC-SA 4.0 许可协议。</span></li>
+      </ul>
+    </div>
+
+    {% if post.tags|length > 0 %}
+    <div class="post-tags">
+      <i class="fa-solid fa-tags"></i>
+      {% for tag in post.tags %}<a href="{{ tag.link }}" class="post-tag">#{{ tag.name }}</a>{% endfor %}
+    </div>
+    {% endif %}
+  </div>
+
+  {% include "partials/post-nav.html" %}
+
+  <div class="related-posts" id="related-posts" hidden>
+    <div class="related-posts-headline"><i class="fa-solid fa-link"></i><span>相关推荐</span></div>
+    <div class="related-posts-list" id="related-posts-list"></div>
+  </div>
+
+  {% include "partials/comments.html" %}
+</article>
+{% endblock %}
+
+{% block aside %}
+  {% include "partials/sidebar.html" %}
+  {% if theme_config.tocEnable and theme_config.tocEnable != "false" %}
+  <div id="toc-aside" class="toc-aside card-widget" hidden>
+    <div class="item-headline"><i class="fa-solid fa-list"></i><span>目录</span></div>
+    <ol id="toc-list" class="toc-list"></ol>
+  </div>
+  {% endif %}
+{% endblock %}

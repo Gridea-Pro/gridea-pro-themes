@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}友情链接 | {{ config.siteName }}{% endblock %}
+{% block body_class %}page-links{% endblock %}
+
+{% block page_header %}
+  {% set page_header_mode = "small" %}
+  {% set page_title = "友情链接" %}
+  {% set page_subtitle = "走过路过的小伙伴们" %}
+  {% include "partials/page-header.html" %}
+{% endblock %}
+
+{% block content %}
+<section class="links-page">
+  <div class="card-widget">
+    <div class="item-headline"><i class="fa-solid fa-link"></i><span>友情链接</span></div>
+    <div class="flink-list">
+      {% if links and links|length > 0 %}
+        {% for link in links %}
+          {% set _href = "" %}
+          {% if link.url %}{% set _href = link.url %}{% else %}{% set _href = link.link %}{% endif %}
+          {% set _avatar = "/media/images/default-avatar.svg" %}
+          {% if link.avatar %}{% set _avatar = link.avatar %}{% elif link.icon %}{% set _avatar = link.icon %}{% endif %}
+          {% set _name = "" %}
+          {% if link.name %}{% set _name = link.name %}{% else %}{% set _name = link.title %}{% endif %}
+          {% set _desc = "" %}
+          {% if link.desc %}{% set _desc = link.desc %}{% else %}{% set _desc = link.description %}{% endif %}
+        <a class="flink-item" href="{{ _href }}" target="_blank" rel="noopener">
+          <img class="flink-avatar" src="{{ _avatar }}" alt="{{ _name }}" onerror="this.onerror=null;this.src='/media/images/default-avatar.svg';">
+          <div class="flink-meta">
+            <h4 class="flink-name">{{ _name }}</h4>
+            <p class="flink-desc">{{ _desc }}</p>
+          </div>
+        </a>
+        {% endfor %}
+      {% else %}
+        <div class="aside-empty">还没有友链。打开 Gridea Pro 的「友情链接」面板添加吧。</div>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if links_intro %}
+  <div class="card-widget article-container post-content">
+    {{ links_intro|safe }}
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

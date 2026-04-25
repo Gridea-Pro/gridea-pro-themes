@@ -1,0 +1,90 @@
+{
+  "name": "liushen",
+  "version": "1.0.0",
+  "description": "柳神（Liushen）主题——Butterfly 风格的双栏粉蓝渐变博客主题，复刻自 willow-god/hexo-theme-liushen",
+  "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "author": "willow-god / Liushen (Ported by Gridea Pro Theme Team)",
+  "license": "Apache-2.0",
+  "preview": "/media/preview.png",
+  "customConfig": [
+    { "name": "infoTitle", "label": "首页大标题", "group": "基础", "value": "清羽 〄 飞扬", "type": "input", "note": "首页全屏 banner 中央的大标题，可填入特殊符号" },
+    { "name": "infoTitleAvatar", "label": "首页大标题头像", "group": "基础", "value": "", "type": "input", "note": "首页大标题上方的头像 URL，留空则不显示" },
+    { "name": "subtitleEnable", "label": "启用打字机副标题", "group": "基础", "value": "true", "type": "switch", "note": "首页大标题下方的打字机滚动文字" },
+    { "name": "subtitleList", "label": "副标题文字（每行一句）", "group": "基础", "value": "既然选择远方，当不负青春，砥砺前行。\n青春由磨砺而出彩，人生因奋斗而升华！\n但行前路，不负韶华！\n每一个裂缝都是为透出光而努力", "type": "textarea", "note": "每行一句，会被打字机轮播显示" },
+    { "name": "subtitleSpeed", "label": "打字速度（毫秒）", "group": "基础", "value": "120", "type": "input", "note": "数字越小越快，默认 120ms" },
+    { "name": "scrollDownEnable", "label": "首页底部显示向下箭头", "group": "基础", "value": "true", "type": "switch" },
+
+    { "name": "primaryColor", "label": "主色调", "group": "外观", "value": "#2679cc", "type": "input", "note": "全站链接 / 按钮 / 标题强调色，HEX 格式" },
+    { "name": "accentColor", "label": "强调色", "group": "外观", "value": "#00c4b6", "type": "input", "note": "用于二级强调（分页、TOC 当前项）" },
+    { "name": "textColor", "label": "正文颜色", "group": "外观", "value": "#1f2d3d", "type": "input" },
+    { "name": "bodyFont", "label": "全站字体栈", "group": "外观", "value": "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Lato, Roboto, 'PingFang SC', 'Microsoft YaHei', sans-serif", "type": "input" },
+    { "name": "codeFont", "label": "代码字体栈", "group": "外观", "value": "Consolas, Menlo, 'PingFang SC', 'Microsoft YaHei', monospace", "type": "input" },
+    { "name": "cardRadius", "label": "卡片圆角（px）", "group": "外观", "value": "12", "type": "input" },
+    { "name": "sidebarGradient", "label": "侧栏渐变背景", "group": "外观", "value": "linear-gradient(60deg, #ffd7e4 0%, #c8f1ff 100%)", "type": "input", "note": "粉→蓝渐变，原主题特征" },
+    { "name": "bgImageLight", "label": "网站背景图（浅色）", "group": "外观", "value": "/media/images/bg-light.svg", "type": "input", "note": "全站底层背景，留空则纯色" },
+    { "name": "bgImageDark", "label": "网站背景图（深色）", "group": "外观", "value": "/media/images/bg-dark.svg", "type": "input" },
+    { "name": "defaultTopImg", "label": "默认顶图", "group": "外观", "value": "/media/images/default-top.svg", "type": "input", "note": "页面 / 文章未单独设置封面时使用" },
+    { "name": "defaultTheme", "label": "默认配色模式", "group": "外观", "value": "auto", "type": "radio", "options": [
+      { "label": "跟随时间（白天浅 / 夜间深）", "value": "auto" },
+      { "label": "始终浅色", "value": "light" },
+      { "label": "始终深色", "value": "dark" }
+    ]},
+
+    { "name": "indexTopImgEnable", "label": "首页全屏 Banner", "group": "首页", "value": "true", "type": "switch" },
+    { "name": "indexLayout", "label": "文章卡片布局", "group": "首页", "value": "alternate", "type": "radio", "options": [
+      { "label": "图片在左", "value": "left" },
+      { "label": "图片在右", "value": "right" },
+      { "label": "左右交替", "value": "alternate" }
+    ]},
+    { "name": "indexCoverEnable", "label": "卡片显示封面图", "group": "首页", "value": "true", "type": "switch" },
+    { "name": "excerptLength", "label": "首页摘要长度", "group": "首页", "value": "180", "type": "input" },
+
+    { "name": "widgetAuthor", "label": "侧栏: 作者卡", "group": "侧栏", "value": "true", "type": "switch" },
+    { "name": "authorBio", "label": "作者简介", "group": "侧栏", "value": "一个热爱生活的开发者", "type": "input" },
+    { "name": "widgetAnnouncement", "label": "侧栏: 公告", "group": "侧栏", "value": "true", "type": "switch" },
+    { "name": "announcementText", "label": "公告内容", "group": "侧栏", "value": "欢迎来访 ✨ 这是一个清羽飞扬的博客", "type": "textarea" },
+    { "name": "widgetWelcome", "label": "侧栏: 欢迎卡", "group": "侧栏", "value": "false", "type": "switch", "note": "适合首页摆放的欢迎语卡片" },
+    { "name": "welcomeText", "label": "欢迎卡文字", "group": "侧栏", "value": "Hi～\n很高兴你能来", "type": "textarea" },
+    { "name": "widgetRecent", "label": "侧栏: 最新文章", "group": "侧栏", "value": "true", "type": "switch" },
+    { "name": "widgetCategories", "label": "侧栏: 分类", "group": "侧栏", "value": "true", "type": "switch" },
+    { "name": "widgetTags", "label": "侧栏: 标签云", "group": "侧栏", "value": "true", "type": "switch" },
+    { "name": "widgetArchives", "label": "侧栏: 归档", "group": "侧栏", "value": "false", "type": "switch" },
+    { "name": "widgetWebInfo", "label": "侧栏: 网站统计", "group": "侧栏", "value": "true", "type": "switch", "note": "字数 / 文章数 / 标签数 / 运行时长" },
+    { "name": "siteRunDate", "label": "建站时间（YYYY-MM-DD）", "group": "侧栏", "value": "2024-01-01", "type": "input", "note": "用于网站统计 widget 的运行天数计算" },
+
+    { "name": "navMenuJson", "label": "顶栏多级菜单（JSON 字符串）", "group": "增强", "value": "[]", "type": "textarea", "note": "为空时使用默认 menus；填入则覆盖。格式：[{\"label\":\"整理\",\"icon\":\"fa-solid fa-folder-open\",\"children\":[{\"label\":\"归档\",\"link\":\"/archives/\",\"icon\":\"fa-solid fa-archive\"}]}]" },
+    { "name": "navFixed", "label": "顶栏固定", "group": "增强", "value": "true", "type": "switch" },
+    { "name": "wavesEnable", "label": "顶图底部 SVG 波浪", "group": "增强", "value": "true", "type": "switch" },
+    { "name": "searchEnable", "label": "启用全屏搜索", "group": "增强", "value": "true", "type": "switch" },
+    { "name": "tocEnable", "label": "文章页右侧目录", "group": "增强", "value": "true", "type": "switch" },
+    { "name": "readingProgress", "label": "顶部阅读进度条", "group": "增强", "value": "true", "type": "switch" },
+    { "name": "codeCopy", "label": "代码块复制按钮", "group": "增强", "value": "true", "type": "switch" },
+    { "name": "scrollToTop", "label": "回到顶部按钮", "group": "增强", "value": "true", "type": "switch" },
+    { "name": "travellingsLink", "label": "随机开往（友链接力）链接", "group": "增强", "value": "https://www.travellings.cn/go.html", "type": "input", "note": "留空则不显示" },
+    { "name": "tenYearsLink", "label": "十年之约链接", "group": "增强", "value": "https://foreverblog.cn/go.html", "type": "input" },
+    { "name": "randomPostEnable", "label": "随机文章按钮", "group": "增强", "value": "true", "type": "switch" },
+    { "name": "viewsScript", "label": "访问统计脚本（如不蒜子）", "group": "增强", "value": "<script async src=\"//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js\"></script>", "type": "textarea", "note": "粘贴第三方统计脚本，留空则关闭" },
+
+    { "name": "memosBgImg", "label": "闪念页顶图", "group": "闪念", "value": "/media/images/default-top.svg", "type": "input" },
+    { "name": "heatmapEnable", "label": "闪念热力图", "group": "闪念", "value": "true", "type": "switch" },
+
+    { "name": "socialEmail", "label": "社交: 邮箱", "group": "社交", "value": "", "type": "input", "note": "留空则不显示该图标" },
+    { "name": "socialQq", "label": "社交: QQ 链接", "group": "社交", "value": "", "type": "input" },
+    { "name": "socialGithub", "label": "社交: GitHub", "group": "社交", "value": "", "type": "input" },
+    { "name": "socialWeibo", "label": "社交: 微博", "group": "社交", "value": "", "type": "input" },
+    { "name": "socialBilibili", "label": "社交: B 站", "group": "社交", "value": "", "type": "input" },
+    { "name": "socialRss", "label": "社交: RSS", "group": "社交", "value": "/atom.xml", "type": "input" },
+
+    { "name": "footerCopyright", "label": "页脚版权", "group": "页脚", "value": "© 2024 - {YEAR} · Liushen", "type": "input", "note": "{YEAR} 会自动替换为当前年份" },
+    { "name": "footerIcp", "label": "页脚备案号", "group": "页脚", "value": "", "type": "input" },
+    { "name": "footerExtra", "label": "页脚附加 HTML", "group": "页脚", "value": "<a href=\"https://hexo.io\">Powered by Gridea Pro</a>", "type": "textarea" },
+
+    { "name": "fontAwesomeCdn", "label": "FontAwesome CDN", "group": "高级", "value": "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css", "type": "input", "note": "用于多级菜单 / 社交图标" },
+    { "name": "injectHead", "label": "注入 <head>", "group": "高级", "value": "", "type": "textarea" },
+    { "name": "injectBody", "label": "注入 </body> 之前", "group": "高级", "value": "", "type": "textarea" },
+    { "name": "customCss", "label": "自定义 CSS", "group": "高级", "value": "", "type": "textarea" },
+    { "name": "customJs", "label": "自定义 JS", "group": "高级", "value": "", "type": "textarea" }
+  ]
+}

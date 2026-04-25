@@ -1,0 +1,20 @@
+{# 归档（按年） #}
+<div class="card-widget card-archives">
+  <div class="item-headline"><i class="fa-solid fa-archive"></i><span>归档</span></div>
+  <ul class="card-archive-list">
+    {% if posts and posts|length > 0 %}
+      {% for group in posts|group_by:"year" %}
+        {% if loop.index <= 6 %}
+        <li class="card-archive-list-item">
+          <a class="card-archive-list-link" href="/archives/#year-{{ group.key }}">
+            <span class="card-archive-list-date">{{ group.key }}</span>
+            <span class="card-archive-list-count">{{ group.items|length }}</span>
+          </a>
+        </li>
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <li class="aside-empty">暂无归档</li>
+    {% endif %}
+  </ul>
+</div>

@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}博客 | {{ config.siteName }}{% endblock %}
+{% block body_class %}page-blog{% endblock %}
+
+{% block page_header %}
+  {% set page_header_mode = "small" %}
+  {% set page_header_img = theme_config.defaultTopImg %}
+  {% set page_title = "博客" %}
+  {% set page_subtitle = "记录与分享，持续更新" %}
+  {% include "partials/page-header.html" %}
+{% endblock %}
+
+{% block content %}
+<section id="recent-posts" class="recent-posts" data-layout="{{ theme_config.indexLayout|default:'alternate' }}">
+  <div class="recent-post-items">
+    {% if posts and posts|length > 0 %}
+      {% for p in posts %}
+        {% if not p.hideInList %}
+          {% set card_post = p %}
+          {% set card_index = loop.index0 %}
+          {% include "partials/post-card.html" %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <div class="empty-tip card-widget"><p>暂无文章</p></div>
+    {% endif %}
+  </div>
+  {% include "partials/pagination.html" %}
+</section>
+{% endblock %}

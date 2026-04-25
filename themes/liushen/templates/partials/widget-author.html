@@ -1,0 +1,29 @@
+{# 作者卡 - 头像 + 站名 + 简介 + 统计 + 社交 #}
+<div class="card-widget card-info">
+  <div class="card-content">
+    <div class="card-info-avatar">
+      <img class="avatar-img" src="{{ config.avatar|default:'/media/images/default-avatar.svg' }}" alt="{{ config.siteName }}" onerror="this.onerror=null;this.src='/media/images/default-avatar.svg';">
+    </div>
+    <div class="card-info-data">
+      <div class="author-info-name">{{ config.siteName }}</div>
+      <div class="author-info-description">{% if theme_config.authorBio %}{{ theme_config.authorBio }}{% else %}{{ config.siteDescription }}{% endif %}</div>
+    </div>
+    <div class="card-info-counts">
+      <div class="count-item">
+        <div class="headline">{% if posts %}{{ posts|length }}{% else %}0{% endif %}</div>
+        <div class="length-num">文章</div>
+      </div>
+      <div class="count-item">
+        <div class="headline">{% if tags %}{{ tags|length }}{% else %}0{% endif %}</div>
+        <div class="length-num">标签</div>
+      </div>
+      <div class="count-item">
+        <div class="headline" id="card-info-runtime">--</div>
+        <div class="length-num">天</div>
+      </div>
+    </div>
+    <div class="card-info-social">
+      {% include "partials/social-icons.html" %}
+    </div>
+  </div>
+</div>

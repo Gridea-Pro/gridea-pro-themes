@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}页面未找到 | {{ config.siteName }}{% endblock %}
+{% block body_class %}page-404{% endblock %}
+
+{% block page_header %}
+  {% set page_header_mode = "small" %}
+  {% set page_title = "404" %}
+  {% set page_subtitle = "页面未找到" %}
+  {% include "partials/page-header.html" %}
+{% endblock %}
+
+{% block content %}
+<section class="error-page card-widget">
+  <div class="error-content">
+    <h1 class="error-code">4<span class="error-code-emoji">🫠</span>4</h1>
+    <p class="error-msg">这个页面可能被风吹走了</p>
+    <p class="error-tip">你可以：</p>
+    <ul class="error-actions">
+      <li><a href="/"><i class="fa-solid fa-house-laptop"></i> 回到首页</a></li>
+      <li><a href="/archives/"><i class="fa-solid fa-archive"></i> 看看归档</a></li>
+      <li><a href="/links/"><i class="fa-solid fa-link"></i> 逛逛友链</a></li>
+    </ul>
+  </div>
+</section>
+{% endblock %}
+
+{% block aside %}{% endblock %}
