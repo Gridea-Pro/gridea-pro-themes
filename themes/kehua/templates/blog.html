@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}博客 · {{ config.siteName }}{% endblock %}
+{% block body_class %}blog{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="category-header">
+        <h1 class="category-title">博客</h1>
+        {% if config.siteDescription %}
+        <p class="category-desc">{{ config.siteDescription }}</p>
+        {% endif %}
+    </div>
+
+    <div class="post-list">
+        {% if posts|length > 0 %}
+            {% for post in posts %}
+                {% if not post.hideInList %}
+                    {% include "partials/post-card.html" %}
+                {% endif %}
+            {% endfor %}
+        {% else %}
+            <div class="no-results">
+                <p>暂无文章。</p>
+            </div>
+        {% endif %}
+    </div>
+
+    {% include "partials/pagination.html" %}
+</div>
+{% endblock %}

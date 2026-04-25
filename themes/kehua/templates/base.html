@@ -1,0 +1,112 @@
+{# 主体骨架。所有页面 extends 此文件，覆写 title / content / extra_head / scripts 等 block。
+   ⚠️ 重要：所有可被子模板覆盖的 {% block %} 都必须在本文件内**直接**定义，
+   不能放在 include 进来的 partial 里 —— Pongo2 / 标准 Jinja2 都不支持
+   "子模板覆盖 include 内的 block" 这种间接覆盖。 #}
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+
+    <title>{% block title %}{{ config.siteName }}{% endblock %}</title>
+
+    {# 描述：详情页用文章摘要，列表 / 自定义页用站点描述 + 副标题 #}
+    {% block meta_description %}
+    <meta name="description" content="{% if post %}{{ post.content|excerpt:160|striptags }}{% else %}{{ config.siteDescription }}{% if theme_config.subtitle %} · {{ theme_config.subtitle }}{% endif %}{% endif %}">
+    {% endblock %}
+
+    {# Open Graph #}
+    <meta property="og:site_name" content="{{ config.siteName }}">
+    <meta property="og:type" content="{% if post %}article{% else %}website{% endif %}">
+    <meta property="og:title" content="{% block og_title %}{% if post %}{{ post.title }}{% else %}{{ config.siteName }}{% endif %}{% endblock %}">
+    <meta property="og:description" content="{% if post %}{{ post.content|excerpt:160|striptags }}{% else %}{{ config.siteDescription }}{% endif %}">
+    {% if post and post.feature %}
+    <meta property="og:image" content="{{ post.feature }}">
+    {% elif config.avatar %}
+    <meta property="og:image" content="{{ config.avatar }}">
+    {% endif %}
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% if post %}{{ post.title }}{% else %}{{ config.siteName }}{% endif %}">
+    <meta name="twitter:description" content="{% if post %}{{ post.content|excerpt:160|striptags }}{% else %}{{ config.siteDescription }}{% endif %}">
+
+    {# Favicon #}
+    {% if config.favicon %}
+    <link rel="icon" href="{{ config.favicon }}">
+    {% elif config.logo %}
+    <link rel="icon" href="{{ config.logo }}">
+    {% endif %}
+
+    {# RSS / Atom #}
+    {% if theme_config.rssUrl %}
+    <link rel="alternate" type="application/atom+xml" title="{{ config.siteName }}" href="{{ theme_config.rssUrl }}">
+    {% endif %}
+
+    {# 主题样式（注意：assets/styles/main.css 在输出后路径变成 /styles/main.css） #}
+    <link rel="stylesheet" href="/styles/main.css">
+
+    {# 主题色变量注入：把 customConfig 里的颜色 / 宽度 / 字体一次性同步到 :root，避免 CSS 中的 fallback 失效 #}
+    <style>
+    :root {
+      --color-primary: {{ theme_config.primaryColor|default:"#e53935" }};
+      --color-primary-hover: {{ theme_config.primaryColorHover|default:"#c62828" }};
+      --container-width: {{ theme_config.contentWidth|default:"720" }}px;
+      --font-stack-body: {% if theme_config.fontFamily == "serif" %}"Noto Serif SC", "Source Han Serif SC", Georgia, "Times New Roman", serif{% else %}"PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif{% endif %};
+    }
+    </style>
+
+    {# 防 FOUC：在页面渲染前确定 light/dark，避免黑闪白。脚本必须放在 <head>，且早于任何样式应用 #}
+    <script>
+    (function(){
+      try {
+        var saved = localStorage.getItem('kehua-theme');
+        var preset = "{{ theme_config.defaultTheme|default:'auto' }}";
+        var theme;
+        if (saved === 'dark' || saved === 'light') {
+          theme = saved;
+        } else if (preset === 'dark' || preset === 'light') {
+          theme = preset;
+        } else {
+          theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        if (theme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch(e) {}
+    })();
+    </script>
+
+    {# 用户自定义 CSS / Head 注入 #}
+    {% if theme_config.customCss %}
+    <style id="kehua-user-css">{{ theme_config.customCss|safe }}</style>
+    {% endif %}
+    {% if theme_config.headerInjectCode %}
+    {{ theme_config.headerInjectCode|safe }}
+    {% endif %}
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}page{% endblock %}">
+    {% include "partials/header.html" %}
+
+    <main class="main" role="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "partials/footer.html" %}
+
+    {# 搜索数据：放在 body 末尾，优先于 main.js 加载 #}
+    {% include "partials/search-index.html" %}
+
+    {# 主题脚本（注意：assets/scripts/main.js 在输出后路径变成 /scripts/main.js） #}
+    <script src="/scripts/main.js" defer></script>
+
+    {# 用户底部注入代码 #}
+    {% if theme_config.footerInjectCode %}
+        {{ theme_config.footerInjectCode|safe }}
+    {% endif %}
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

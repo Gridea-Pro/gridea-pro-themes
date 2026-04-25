@@ -1,0 +1,24 @@
+{# 把站点搜索数据写入 window 全局，供 main.js 中的搜索逻辑使用。
+   只挑必要字段（title / link / date / tags / 摘要），避免把完整 HTML 放到每页 #}
+{% if theme_config.enableSearch %}
+<script id="kehua-search-data" type="application/json">
+{
+  "posts": [
+    {% for p in posts %}{
+      "title": {{ p.title|to_json|safe }},
+      "link": {{ p.link|to_json|safe }},
+      "date": {{ p.date|to_json|safe }},
+      "excerpt": {{ p.content|excerpt:120|striptags|to_json|safe }},
+      "tags": [{% for t in p.tags %}{{ t.name|to_json|safe }}{% if not loop.last %},{% endif %}{% endfor %}]
+    }{% if not loop.last %},{% endif %}{% endfor %}
+  ],
+  "tags": [
+    {% for t in tags %}{
+      "name": {{ t.name|to_json|safe }},
+      "link": {{ t.link|to_json|safe }},
+      "count": {{ t.count }}
+    }{% if not loop.last %},{% endif %}{% endfor %}
+  ]
+}
+</script>
+{% endif %}

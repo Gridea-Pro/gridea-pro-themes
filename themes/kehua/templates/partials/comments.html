@@ -1,0 +1,37 @@
+{# 评论挂载点。Gridea Pro 的标准评论服务（Disqus / Gitalk / Waline / Twikoo / 内置评论等）
+   会查找 #gridea-comments / [data-gridea-comments] 容器并接管渲染。
+   主题侧只负责样式骨架与占位提示，不直接处理表单提交。 #}
+{% if theme_config.enableComments %}
+<section class="comments-section" id="comments">
+    <h3 class="comments-title">评论</h3>
+
+    {# Gridea Pro 评论服务挂载容器：所有官方支持的评论服务都会向 #gridea-comments 注入 DOM #}
+    <div id="gridea-comments"
+         data-gridea-comments="true"
+         data-post-link="{% if post %}{{ post.link }}{% endif %}"
+         data-post-title="{% if post %}{{ post.title }}{% endif %}">
+
+        {# 占位 UI：评论服务尚未配置 / 加载失败时显示，加载成功后会被服务的 DOM 接管 #}
+        <div class="comments-placeholder">
+            <div class="comment-form-skeleton">
+                <textarea class="comment-textarea" placeholder="写下你的评论..." disabled></textarea>
+                <div class="comment-form-footer">
+                    <div class="comment-form-info">
+                        <input class="comment-input" placeholder="昵称 *" disabled>
+                        <input class="comment-input" placeholder="邮箱 *" disabled>
+                        <input class="comment-input" placeholder="网站（选填）" disabled>
+                    </div>
+                    <div class="comment-form-actions">
+                        <button class="comment-submit" disabled>发表评论</button>
+                    </div>
+                </div>
+            </div>
+            <p class="comments-placeholder-note">{{ theme_config.commentsPlaceholder|default:"评论功能由 Gridea Pro 评论服务驱动，请在后台配置评论服务。" }}</p>
+        </div>
+    </div>
+</section>
+{% else %}
+<section class="comments-section" id="comments">
+    <h3 class="comments-title">评论已关闭</h3>
+</section>
+{% endif %}

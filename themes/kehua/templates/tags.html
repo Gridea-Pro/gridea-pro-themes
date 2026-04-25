@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}标签 · {{ config.siteName }}{% endblock %}
+{% block body_class %}tags{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="category-header">
+        <h1 class="category-title">标签</h1>
+        <p class="category-desc">共 {{ tags|length }} 个标签</p>
+    </div>
+
+    {% if tags|length > 0 %}
+    <div class="tag-cloud">
+        {% for tag in tags %}
+        <a href="{{ tag.link }}" class="tag-cloud-item" title="{{ tag.name }} · {{ tag.count }} 篇">
+            <span class="tag-cloud-name">{{ tag.name }}</span>
+            <span class="tag-cloud-count">{{ tag.count }}</span>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-results">
+        <p>暂无任何标签。</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

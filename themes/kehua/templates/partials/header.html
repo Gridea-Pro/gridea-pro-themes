@@ -1,0 +1,66 @@
+{# 顶栏：logo / 主菜单 / 主题切换 / 搜索 / 移动端汉堡 #}
+<header class="header" role="banner">
+    <div class="header-inner">
+        <a href="/" class="logo" aria-label="{{ config.siteName }}">
+            {% if config.logo %}
+                <img src="{{ config.logo }}" alt="{{ config.siteName }}" class="logo-img">
+            {% else %}
+                <span class="logo-text">{{ config.siteName }}</span>
+            {% endif %}
+        </a>
+
+        <nav class="nav" aria-label="主导航">
+            {% for menu in menus %}
+                <a href="{{ menu.link }}" class="nav-link">{{ menu.name }}</a>
+            {% endfor %}
+        </nav>
+
+        <div class="header-actions">
+            <button class="btn-icon" id="theme-toggle" type="button" title="切换主题（Cmd/Ctrl+D）" aria-label="切换深浅模式">
+                <svg class="icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                <svg class="icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </button>
+
+            {% if theme_config.enableSearch %}
+            <button class="btn-icon" id="search-toggle" type="button" title="搜索（Cmd/Ctrl+K）" aria-label="搜索">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </button>
+            {% endif %}
+
+            <button class="btn-icon mobile-menu-toggle" id="mobile-menu-toggle" type="button" aria-label="打开移动端菜单" aria-expanded="false">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+            </button>
+        </div>
+    </div>
+</header>
+
+{# 移动端导航（汉堡展开） #}
+<div class="mobile-nav" id="mobile-nav" aria-label="移动端导航">
+    {% for menu in menus %}
+        <a href="{{ menu.link }}" class="mobile-nav-link">{{ menu.name }}</a>
+    {% endfor %}
+</div>
+
+{# 搜索弹窗：搜索 toggle 启用时才渲染 #}
+{% if theme_config.enableSearch %}
+{% include "partials/search-modal.html" %}
+{% endif %}

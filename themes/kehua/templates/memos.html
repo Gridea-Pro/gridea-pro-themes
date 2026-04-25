@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}{{ theme_config.memosTitle|default:"闪念" }} · {{ config.siteName }}{% endblock %}
+{% block body_class %}memos{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="category-header">
+        <h1 class="category-title">{{ theme_config.memosTitle|default:"闪念" }}</h1>
+        {% if theme_config.memosDescription %}
+        <p class="category-desc">{{ theme_config.memosDescription }}</p>
+        {% endif %}
+    </div>
+
+    {# 热力图：JS 在 main.js 中根据 memos 日期分布渲染 #}
+    {% if theme_config.memosHeatmap %}
+    <section class="memo-heatmap-wrap" aria-label="近一年闪念分布">
+        <div class="memo-heatmap-stats">
+            <span class="memo-heatmap-count"><strong>{{ memos|length }}</strong> 条闪念</span>
+        </div>
+        <div class="memo-heatmap" id="memo-heatmap" data-memos="{% for memo in memos %}{{ memo.date }}{% if not loop.last %},{% endif %}{% endfor %}">
+            <div class="memo-heatmap-loading">加载中…</div>
+        </div>
+        <div class="memo-heatmap-legend">
+            <span class="memo-heatmap-legend-label">少</span>
+            <span class="memo-heatmap-cell" data-level="0"></span>
+            <span class="memo-heatmap-cell" data-level="1"></span>
+            <span class="memo-heatmap-cell" data-level="2"></span>
+            <span class="memo-heatmap-cell" data-level="3"></span>
+            <span class="memo-heatmap-cell" data-level="4"></span>
+            <span class="memo-heatmap-legend-label">多</span>
+        </div>
+    </section>
+    {% endif %}
+
+    {# Memo 列表，时间轴样式 #}
+    {% if memos|length > 0 %}
+    <div class="memo-timeline">
+        {% for memo in memos %}
+        <article class="memo-item">
+            <div class="memo-dot" aria-hidden="true"></div>
+            <div class="memo-body">
+                <div class="memo-content">{{ memo.content|safe }}</div>
+                <time class="memo-date" datetime="{{ memo.date }}">{{ memo.date }}</time>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-results">
+        <p>还没有任何闪念。</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
