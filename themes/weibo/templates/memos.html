@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}{% if theme_config.memosTitle %}{{ theme_config.memosTitle }}{% else %}微博碎碎念{% endif %} - {{ config.siteName }}{% endblock %}
+{% block og_title %}{% if theme_config.memosTitle %}{{ theme_config.memosTitle }}{% else %}微博碎碎念{% endif %} - {{ config.siteName }}{% endblock %}
+
+{% block banner %}{% endblock %}
+
+{% block content %}
+{% set breadcrumb_items = [{"label": (theme_config.memosTitle if theme_config.memosTitle else "微博碎碎念")}] %}
+{% include "partials/breadcrumbs.html" %}
+
+<main class="plain width-half single">
+<div class="memos-page">
+<h1>{% if theme_config.memosTitle %}{{ theme_config.memosTitle }}{% else %}微博碎碎念{% endif %}</h1>
+<p class="memos-intro">短想法和片刻的记录。共 {{ memos|length }} 条。</p>
+
+{% if theme_config.memosShowHeatmap and memos and memos|length > 0 %}
+{% set memo_dates = "" %}{% for m in memos %}{% set memo_dates = memo_dates + m.createdAtISO + "|" %}{% endfor %}
+<div class="heatmap" id="memos-heatmap" data-dates="{{ memo_dates }}"></div>
+<div class="heatmap__legend">
+<span>少</span>
+<span class="heatmap__cell"></span>
+<span class="heatmap__cell lvl-1"></span>
+<span class="heatmap__cell lvl-2"></span>
+<span class="heatmap__cell lvl-3"></span>
+<span class="heatmap__cell lvl-4"></span>
+<span>多</span>
+</div>
+{% endif %}
+
+{% if memos and memos|length > 0 %}
+<div class="memos-list">
+{% for memo in memos %}
+<div class="memo-item" data-date="{{ memo.createdAtISO }}">
+<div class="memo-item__date">{{ memo.createdAt }}</div>
+<div class="memo-item__content">{{ memo.content|safe }}</div>
+{% if memo.tags and memo.tags|length > 0 %}
+<div class="memo-item__tags">
+{% for t in memo.tags %}<span class="memo-tag">#{{ t }}</span>{% endfor %}
+</div>
+{% endif %}
+</div>
+{% endfor %}
+</div>
+{% else %}
+<div class="taxonomy-empty">还没有写下任何片刻。</div>
+{% endif %}
+</div>
+</main>
+{% endblock %}

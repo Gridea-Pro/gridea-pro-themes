@@ -1,0 +1,282 @@
+{
+  "name": "weibo",
+  "version": "1.0.0",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "author": "Eric (port) / Pomelo (original)",
+  "description": "Weibo - 微言大艺。从 Typecho 主题 PomeloOfficial/Weibo 移植到 Gridea Pro 的高仿新浪微博经典版主题。",
+  "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
+  "preview": "/media/preview.png",
+  "customConfig": [
+    {
+      "name": "yourNickname",
+      "label": "昵称（资料卡大标题）",
+      "group": "资料卡",
+      "type": "input",
+      "value": "",
+      "note": "留空则使用站点名称"
+    },
+    {
+      "name": "yourDescription",
+      "label": "个人简介",
+      "group": "资料卡",
+      "type": "input",
+      "value": "",
+      "note": "资料卡副标题与侧栏「简介」字段（留空使用站点描述）"
+    },
+    {
+      "name": "headImgUrl",
+      "label": "头像 URL",
+      "group": "资料卡",
+      "type": "input",
+      "value": "",
+      "note": "100×100 圆形头像，留空使用 config.avatar 或默认 SVG"
+    },
+    {
+      "name": "bgUrl",
+      "label": "页面背景图 URL",
+      "group": "资料卡",
+      "type": "input",
+      "value": "",
+      "note": "宽屏顶部背景图，留空使用主题默认（蓝灰渐变）"
+    },
+    {
+      "name": "cardBgUrl",
+      "label": "资料卡 Banner 背景图",
+      "group": "资料卡",
+      "type": "input",
+      "value": "",
+      "note": "Banner 区 280px 高的封面图，留空使用主题默认渐变"
+    },
+    {
+      "name": "yourPlace",
+      "label": "居住地",
+      "group": "资料卡",
+      "type": "input",
+      "value": "未填写",
+      "note": "侧栏「居住地」字段"
+    },
+    {
+      "name": "yourBirthday",
+      "label": "生日",
+      "group": "资料卡",
+      "type": "input",
+      "value": "未填写",
+      "note": "侧栏「生日」字段，例如 1995-07-21"
+    },
+    {
+      "name": "verified",
+      "label": "微博认证文案",
+      "group": "资料卡",
+      "type": "input",
+      "value": "认证：博主",
+      "note": "资料卡顶部微博认证标签后的文字"
+    },
+    {
+      "name": "levelNumber",
+      "label": "用户等级（LV.N）",
+      "group": "资料卡",
+      "type": "input",
+      "value": "16",
+      "note": "侧栏与 banner 上的 LV.N 数字"
+    },
+    {
+      "name": "profileText1",
+      "label": "联系方式按钮 1 文字",
+      "group": "联系方式",
+      "type": "input",
+      "value": "微信",
+      "note": "Banner 右下第一个橙色按钮"
+    },
+    {
+      "name": "profileLink1",
+      "label": "联系方式 1 二维码图片",
+      "group": "联系方式",
+      "type": "input",
+      "value": "",
+      "note": "鼠标悬停按钮显示的图片（通常是微信二维码）。留空隐藏 hover 弹层"
+    },
+    {
+      "name": "profileText2",
+      "label": "联系方式按钮 2 文字",
+      "group": "联系方式",
+      "type": "input",
+      "value": "QQ",
+      "note": "Banner 右下第二个灰色按钮"
+    },
+    {
+      "name": "profileLink2",
+      "label": "联系方式 2 链接",
+      "group": "联系方式",
+      "type": "input",
+      "value": "",
+      "note": "如 mailto:xxx@xx.com 或 tencent://message/?uin=xxx"
+    },
+    {
+      "name": "themeMode",
+      "label": "深浅模式",
+      "group": "外观",
+      "type": "select",
+      "value": "auto",
+      "options": [
+        {"value": "auto", "label": "跟随系统"},
+        {"value": "light", "label": "始终亮色"},
+        {"value": "dark", "label": "始终暗色"},
+        {"value": "user", "label": "由读者切换（默认亮色）"}
+      ],
+      "note": "暗色模式自动调整页面与卡片配色"
+    },
+    {
+      "name": "showThemeToggle",
+      "label": "显示明暗切换按钮",
+      "group": "外观",
+      "type": "toggle",
+      "value": true,
+      "note": "在顶栏右侧显示 ☀ / ☾ 切换按钮"
+    },
+    {
+      "name": "primaryColor",
+      "label": "主色（链接 hover）",
+      "group": "外观",
+      "type": "color",
+      "value": "#f76d24",
+      "note": "微博主题的招牌橙色"
+    },
+    {
+      "name": "containerWidth",
+      "label": "信息流容器最大宽度",
+      "group": "外观",
+      "type": "input",
+      "value": "920",
+      "note": "main 区域最大宽度（像素，不带单位）"
+    },
+    {
+      "name": "showCornerTop",
+      "label": "返回顶部按钮",
+      "group": "外观",
+      "type": "toggle",
+      "value": true,
+      "note": "右下浮动 ▲ 返回顶部"
+    },
+    {
+      "name": "indexExcerptLength",
+      "label": "首页摘要字数",
+      "group": "首页",
+      "type": "input",
+      "value": "140",
+      "note": "首页文章卡的摘要字数（原版 140）"
+    },
+    {
+      "name": "indexShowFeature",
+      "label": "首页显示大图",
+      "group": "首页",
+      "type": "toggle",
+      "value": true,
+      "note": "首页文章卡片是否显示文章特色图（post.feature）"
+    },
+    {
+      "name": "showBreadcrumbs",
+      "label": "面包屑导航",
+      "group": "首页",
+      "type": "toggle",
+      "value": true,
+      "note": "归档/标签/分类/友链/关于页是否显示「Home »」面包屑"
+    },
+    {
+      "name": "sidebarShowStats",
+      "label": "显示「文章/评论/分类」统计",
+      "group": "侧栏",
+      "type": "toggle",
+      "value": true,
+      "note": "侧栏顶部三栏数字统计"
+    },
+    {
+      "name": "sidebarShowMaster",
+      "label": "显示资料卡详情",
+      "group": "侧栏",
+      "type": "toggle",
+      "value": true,
+      "note": "认证 LV / 居住地 / 生日 / 简介 / 域名"
+    },
+    {
+      "name": "sidebarShowRecentComments",
+      "label": "显示最近评论 widget",
+      "group": "侧栏",
+      "type": "toggle",
+      "value": true,
+      "note": "侧栏「他们抢着跟我说这些」（接入 Gridea 评论后由客户端注入）"
+    },
+    {
+      "name": "sidebarShowLinks",
+      "label": "显示友链 widget",
+      "group": "侧栏",
+      "type": "toggle",
+      "value": true,
+      "note": "侧栏「左邻右舍」"
+    },
+    {
+      "name": "memosTitle",
+      "label": "闪念页标题",
+      "group": "闪念",
+      "type": "input",
+      "value": "微博碎碎念",
+      "note": "memos 页面大标题"
+    },
+    {
+      "name": "memosShowHeatmap",
+      "label": "显示热力图",
+      "group": "闪念",
+      "type": "toggle",
+      "value": true,
+      "note": "闪念列表上方展示 53×7 发布热力图"
+    },
+    {
+      "name": "footerSlogan",
+      "label": "页脚附加文案",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "如「萌 ICP 备 XXXX 号」/ 自定义口号"
+    },
+    {
+      "name": "footerICP",
+      "label": "ICP 备案号",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "中国大陆备案号（留空不显示）"
+    },
+    {
+      "name": "footerShowPower",
+      "label": "显示 Powered by",
+      "group": "页脚",
+      "type": "toggle",
+      "value": true,
+      "note": "页脚显示「Powered by Gridea Pro · Theme by Weibo」"
+    },
+    {
+      "name": "customCSS",
+      "label": "自定义 CSS",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到所有页面 <head> 末尾"
+    },
+    {
+      "name": "customHeadHtml",
+      "label": "自定义 head HTML",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "注入到 <head> 末尾（统计代码 / meta / link）"
+    },
+    {
+      "name": "customBodyEndHtml",
+      "label": "自定义 body 末尾 HTML",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "注入到 </body> 之前"
+    }
+  ]
+}

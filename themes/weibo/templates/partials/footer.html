@@ -1,0 +1,12 @@
+<div id="footer" class="site-footer">
+<div class="inner textcenter">
+<div class="copyright">
+<span>Copyright &copy; {{ now|date:"2006" }} <a href="{{ config.domain }}/">{{ config.siteName }}</a>.{% if theme_config.footerShowPower %} Powered by <a href="https://gridea.pro" target="_blank" rel="noopener">Gridea Pro</a> · Theme by <a href="https://github.com/PomeloOfficial/Weibo" target="_blank" rel="noopener">Weibo</a>.{% endif %}{% if theme_config.footerSlogan %} {{ theme_config.footerSlogan|safe }}{% endif %}</span>
+</div>
+{% if theme_config.footerICP %}
+<div class="copyright" style="margin-top:6px;">
+<a href="https://beian.miit.gov.cn" class="icpnum" target="_blank" rel="noopener">{{ theme_config.footerICP }}</a>
+</div>
+{% endif %}
+</div>
+</div>

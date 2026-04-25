@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}分类 {{ category.name }} - {{ config.siteName }}{% endblock %}
+{% block og_title %}分类 {{ category.name }} - {{ config.siteName }}{% endblock %}
+{% block meta_description %}分类 {{ category.name }} 下共有 {{ category.count }} 篇文章 - {{ config.siteName }}{% endblock %}
+
+{% block banner %}{% endblock %}
+
+{% block content %}
+{% set breadcrumb_items = [{"label": "分类", "link": "/categories/"}, {"label": category.name}] %}
+{% include "partials/breadcrumbs.html" %}
+
+<main id="main" class="width-half index" role="main">
+<div class="taxonomy-page">
+<h1 class="taxonomy-title">分类：<em>{{ category.name }}</em></h1>
+<p class="taxonomy-summary">该分类下共有 {{ category.count }} 篇文章</p>
+</div>
+
+<div id="primary" class="list">
+{% if posts and posts|length > 0 %}
+{% for post in posts %}
+{% if not post.hideInList %}
+{% include "partials/post-card.html" %}
+{% endif %}
+{% endfor %}
+{% else %}
+<div class="taxonomy-empty">该分类下还没有文章</div>
+{% endif %}
+</div>
+
+{% include "partials/pagination.html" %}
+</main>
+{% endblock %}

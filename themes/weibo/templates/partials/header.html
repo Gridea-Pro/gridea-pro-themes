@@ -1,0 +1,23 @@
+<header id="header" class="site-header">
+<section class="topbar">
+<div class="inner top-width clearfix">
+<nav class="nav pull-left">
+<ul id="menu-1" class="nav-menu top-menu icon">
+<li><a href="{{ config.domain }}/">首页</a></li>
+{% for menu in menus %}
+<li><a href="{{ menu.link }}">{{ menu.name }}</a></li>
+{% endfor %}
+</ul>
+</nav>
+<div class="meta pull-right">
+<form id="search" method="get" class="searchform" action="{{ config.domain }}/" role="search">
+<input type="text" id="s" name="s" class="textinput" placeholder="搜索文章..." aria-label="搜索">
+<span class="icon search-icon">🔍</span>
+</form>
+{% if theme_config.showThemeToggle %}
+<span id="themetoggle-top" data-theme-toggle role="button" aria-label="切换深浅模式" title="切换深浅模式"></span>
+{% endif %}
+</div>
+</div>
+</section>
+</header>

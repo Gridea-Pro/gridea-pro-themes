@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}友情链接 - {{ config.siteName }}{% endblock %}
+{% block og_title %}友情链接 - {{ config.siteName }}{% endblock %}
+
+{% block banner %}{% endblock %}
+
+{% block content %}
+{% set breadcrumb_items = [{"label": "友情链接"}] %}
+{% include "partials/breadcrumbs.html" %}
+
+<main class="plain width-half single">
+<div class="links-page">
+<h1 class="taxonomy-title">友情链接</h1>
+<p class="taxonomy-summary">点击头像可访问对应站点</p>
+
+{% if links and links|length > 0 %}
+<div class="links-main">
+{% for link in links %}
+<div class="item{% if not link.avatar %} no-avatar{% endif %}">
+{% if link.avatar %}
+<a class="link-avatar" href="{{ link.siteLink }}" target="_blank" rel="noopener">
+<img src="{{ link.avatar }}" alt="{{ link.siteName }}">
+</a>
+{% endif %}
+<div class="link-info">
+<a class="name" href="{{ link.siteLink }}" target="_blank" rel="noopener">{{ link.siteName }}</a>
+<span class="description">{% if link.description %}{{ link.description }}{% else %}{{ link.siteLink }}{% endif %}</span>
+</div>
+</div>
+{% endfor %}
+</div>
+{% else %}
+<div class="taxonomy-empty">暂无友情链接</div>
+{% endif %}
+</div>
+</main>
+{% endblock %}

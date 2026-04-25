@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}标签 - {{ config.siteName }}{% endblock %}
+{% block og_title %}标签 - {{ config.siteName }}{% endblock %}
+
+{% block banner %}{% endblock %}
+
+{% block content %}
+{% set breadcrumb_items = [{"label": "标签"}] %}
+{% include "partials/breadcrumbs.html" %}
+
+<main class="plain width-half single">
+<div class="taxonomy-page">
+<h1 class="taxonomy-title">所有标签</h1>
+<p class="taxonomy-summary">站点共有 {{ tags|length }} 个标签</p>
+
+{% if tags and tags|length > 0 %}
+<div class="taxonomy-cloud">
+{% for tag in tags %}
+<a href="{{ tag.link }}">{{ tag.name }}<span class="count">{{ tag.count }}</span></a>
+{% endfor %}
+</div>
+{% else %}
+<div class="taxonomy-empty">暂无标签</div>
+{% endif %}
+</div>
+</main>
+{% endblock %}

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffd9c5"/>
+      <stop offset="100%" stop-color="#f76d24"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="600" fill="url(#g)"/>
+  <g fill="#ffffff" font-family="-apple-system, PingFang SC, Microsoft YaHei, sans-serif" text-anchor="middle">
+    <text x="600" y="320" font-size="72" font-weight="600">Weibo</text>
+    <text x="600" y="378" font-size="20" letter-spacing="6">微言大艺</text>
+  </g>
+</svg>

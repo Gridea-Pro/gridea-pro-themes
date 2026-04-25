@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}404 - 页面没找到 - {{ config.siteName }}{% endblock %}
+{% block og_title %}404 - 页面没找到{% endblock %}
+
+{% block banner %}{% endblock %}
+
+{% block content %}
+<main class="plain width-half single">
+<div class="error-page">
+<h2>404</h2>
+<p>你要查看的页面已被转移或删除了</p>
+<p style="margin-top:2em;"><a href="{{ config.domain }}/" style="color:var(--wb-link-hover);text-decoration:underline;">&laquo; 返回首页</a></p>
+</div>
+</main>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - {{ config.siteName }}{% endblock %}
+{% block meta_description %}{% if post.description %}{{ post.description }}{% else %}{{ post.content|striptags|truncatechars:160 }}{% endif %}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{% if post.description %}{{ post.description }}{% else %}{{ post.content|striptags|truncatechars:160 }}{% endif %}{% endblock %}
+{% block og_extra %}{% if post.feature %}<meta property="og:image" content="{{ post.feature }}">{% endif %}<meta property="article:published_time" content="{{ post.dateFormat }}">{% if post.tagsString %}<meta name="keywords" content="{{ post.tagsString }}">{% endif %}{% endblock %}
+
+{% block banner %}{% endblock %}
+
+{% block content %}
+{% set crumbs = [] %}
+{% if post.categories and post.categories|length > 0 %}{% set firstCat = post.categories|first %}{% set crumbs = [{"label": firstCat.name, "link": firstCat.link}, {"label": post.title}] %}{% else %}{% set crumbs = [{"label": post.title}] %}{% endif %}
+{% set breadcrumb_items = crumbs %}
+{% include "partials/breadcrumbs.html" %}
+
+<main class="plain width-half single">
+<div id="primary" class="content">
+<article class="post">
+<header class="entry-header">
+<h1 class="title">{{ post.title }}</h1>
+<div class="meta">
+发布于 <time datetime="{{ post.dateFormat }}">{{ post.dateFormat }}</time>
+{% if post.categories and post.categories|length > 0 %}
+&nbsp;/&nbsp;{% for cat in post.categories %}<a href="{{ cat.link }}">{{ cat.name }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+{% endif %}
+{% if post.tags and post.tags|length > 0 %}
+&nbsp;/&nbsp;Tags: {% for tag in post.tags %}<a href="{{ tag.link }}">{{ tag.name }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+{% endif %}
+{% if post.stats and post.stats.minutes %}
+&nbsp;/&nbsp;约 {{ post.stats.minutes }} 分钟阅读
+{% endif %}
+</div>
+</header>
+
+{% if post.feature %}
+<div class="entry-content" style="padding-top:1em">
+<img src="{{ post.feature }}" alt="{{ post.title }}" style="width:100%;border-radius:4px;">
+</div>
+{% endif %}
+
+<div class="entry-content">
+{{ post.content|safe }}
+</div>
+
+{% include "partials/post-nav.html" %}
+
+{% include "partials/comments.html" %}
+</article>
+</div>
+</main>
+{% endblock %}
+
+{% block reading_progress %}
+<div class="reading-progress" aria-hidden="true"></div>
+{% endblock %}

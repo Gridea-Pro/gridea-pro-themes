@@ -1,0 +1,16 @@
+<ul class="post-near">
+<li>上一篇:
+{% if post.prevPost %}
+<a href="{{ post.prevPost.link }}">{{ post.prevPost.title }}</a>
+{% else %}
+没有了
+{% endif %}
+</li>
+<li>下一篇:
+{% if post.nextPost %}
+<a href="{{ post.nextPost.link }}">{{ post.nextPost.title }}</a>
+{% else %}
+没有了
+{% endif %}
+</li>
+</ul>
