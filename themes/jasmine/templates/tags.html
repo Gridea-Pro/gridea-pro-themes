@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}标签 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="card border-0 py-3 col-12">
+  <div class="d-flex column-gap-2">
+    <div class="card-body p-0 d-flex flex-column justify-content-between row-gap-1 overflow-hidden" id="page-archive-category">
+      <h3 class="d-flex align-items-center gap-2"><i class="ti ti-tags text-primary"></i>标签<small class="text-body-tertiary fs-6">· 共 {% if tags %}{{ tags|length }}{% else %}0{% endif %} 个</small></h3>
+      <div class="row pb-5">
+        <div class="col-12">
+          <div class="d-flex flex-wrap column-gap-4 row-gap-2 fs-5 pt-3">
+            {% if tags and tags|length > 0 %}
+              {% for tag in tags %}
+                {% set _cnt = tag.count %}{% if not _cnt %}{% set _cnt = 0 %}{% endif %}
+                <a href="{{ tag.link }}" title="{{ tag.name }}（{{ _cnt }}）篇文章" data-count="{{ _cnt }}">{{ tag.name }}（{{ _cnt }}）</a>
+              {% endfor %}
+            {% else %}
+              <p class="text-body-tertiary">暂无标签</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} | {{ config.siteName }}{% endblock %}
+{% block description %}{{ post.content|excerpt:"160"|striptags }}{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{{ post.content|excerpt:"160"|striptags }}{% endblock %}
+
+{% block content %}
+<article class="card border-0 py-3 col-12 border-bottom border-light-subtle mb-3 pb-4" id="post-article" itemscope="itemscope" itemtype="http://schema.org/Article">
+  <div class="d-flex column-gap-2">
+    <div class="card-body p-0 d-flex flex-column justify-content-between row-gap-1 overflow-hidden">
+      <h1 class="card-title fs-3" itemprop="headline">{{ post.title }}</h1>
+      <p class="card-text pb-3">
+        <small class="text-body-tertiary">
+          {% if post.tags|length > 0 %}{% for t in post.tags %}<a href="{{ t.link }}" class="text-body-tertiary">{{ t.name }}</a>{% if not loop.last %},{% endif %}{% endfor %} ·{% endif %}
+          <time datetime="{{ post.date }}">{{ post.date }}</time>
+          · <span><i class="ti ti-clock me-1"></i>{{ post.content|reading_time }} 分钟</span>
+          · <span><i class="ti ti-text-size me-1"></i>{{ post.content|word_count }} 字</span>
+        </small>
+      </p>
+      <meta itemprop="author" content="{{ config.siteName }}">
+      {% if post.feature %}<meta itemprop="image" content="{{ post.feature }}">{% endif %}
+
+      {% include "partials/toc.html" %}
+
+      <div id="post-content" class="lh-lg" itemprop="articleBody">
+        {{ post.content|safe }}
+      </div>
+
+      <div class="tags align-content-center py-2 mt-3">
+        <i class="ti ti-tags me-2"></i>
+        {% if post.tags|length > 0 %}
+          {% for t in post.tags %}<a href="{{ t.link }}" class="me-2">{{ t.name }}</a>{% endfor %}
+        {% else %}
+          <span class="text-body-tertiary">无标签</span>
+        {% endif %}
+      </div>
+
+      {% include "partials/post-nav.html" %}
+      {% include "partials/comments.html" %}
+    </div>
+  </div>
+</article>
+{% endblock %}

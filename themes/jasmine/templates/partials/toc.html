@@ -1,0 +1,7 @@
+{# 文章 TOC：客户端 JS 解析正文 h1-h6 自动生成 #}
+{% if theme_config.tocEnable and theme_config.tocEnable != "false" %}
+<div id="toc" class="card border-0 mb-3 bg-secondary-subtle p-3 rounded" hidden>
+  <div class="d-flex align-items-center gap-2 mb-2"><i class="ti ti-list"></i><strong class="fs-6">目录</strong></div>
+  <div id="toc-content"></div>
+</div>
+{% endif %}

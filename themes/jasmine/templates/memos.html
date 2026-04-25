@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}闪念 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="card border-0 py-3 col-12 mb-2">
+  <h3 class="d-flex align-items-center gap-2"><i class="ti ti-bubble-text text-primary"></i>闪念<small class="text-body-tertiary fs-6">· 记录每个有意思的瞬间</small></h3>
+</div>
+
+{% include "partials/heatmap.html" %}
+
+<div id="memo-list" class="d-flex flex-column">
+  {% if memos and memos|length > 0 %}
+    {% for m in memos %}
+    <div class="card border-0 py-3 col-12 border-bottom border-light-subtle memo-item" data-date="{{ m.date }}">
+      <div class="d-flex column-gap-2">
+        <div class="card-body p-0 d-flex justify-content-start row-gap-1 overflow-hidden">
+          <img src="{% if config.avatar %}{{ config.avatar }}{% else %}/media/images/default-avatar.svg{% endif %}" loading="lazy" alt="{{ config.siteName }}" class="rounded float-start me-2" width="42" height="42">
+          <div class="d-flex flex-column row-gap-2 w-100">
+            <small class="text-body-tertiary">{{ config.siteName }}&nbsp;·&nbsp;<time>{{ m.date }}</time></small>
+            <div class="card-text more moment-body p-3 rounded memo-content">{{ m.content|safe }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="card border-0 py-5 text-center text-body-tertiary">
+      <i class="ti ti-bubble-text fs-1 mb-2"></i>
+      <p>还没有任何闪念，去 Gridea Pro 的「闪念」面板里写一条吧～</p>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

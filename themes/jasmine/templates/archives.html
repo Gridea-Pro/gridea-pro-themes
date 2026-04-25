@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}归档 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="card border-0 py-3 col-12">
+  <div class="d-flex column-gap-2">
+    <div class="card-body p-0 d-flex flex-column justify-content-between row-gap-1 overflow-hidden lh-lg" id="page-archive-category">
+      <h3 class="d-flex align-items-center gap-2"><i class="ti ti-archive text-primary"></i>归档<small class="text-body-tertiary fs-6">· 共 {% if posts %}{{ posts|length }}{% else %}0{% endif %} 篇</small></h3>
+      <div class="row pb-5">
+        {% if posts and posts|length > 0 %}
+          {% for group in posts|group_by:"year" %}
+            <h3 class="pt-4">{{ group.key }}</h3>
+            {% for ap in group.items %}
+            <a href="{{ ap.link }}" class="d-block py-1" title="{{ ap.title }}">
+              {{ ap.title }}<span class="text-body-tertiary">&nbsp;&nbsp;-&nbsp;{{ ap.date }}</span>
+            </a>
+            {% endfor %}
+          {% endfor %}
+        {% else %}
+          <p class="text-body-tertiary">暂无文章</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

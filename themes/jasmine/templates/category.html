@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% set _cname = "" %}
+{% if current_category %}{% set _cname = current_category %}{% elif category %}{% set _cname = category.name %}{% else %}{% set _cname = "分类" %}{% endif %}
+
+{% block title %}{{ _cname }} | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="card border-0 py-3 col-12 mb-2">
+  <h3 class="d-flex align-items-center gap-2"><i class="ti ti-folder text-primary"></i>{{ _cname }}<small class="text-body-tertiary fs-6">· {% if posts %}{{ posts|length }}{% else %}0{% endif %} 篇</small></h3>
+</div>
+<div id="index-content" class="d-flex flex-column">
+  {% if posts and posts|length > 0 %}
+    {% for p in posts %}
+      {% set card_post = p %}
+      {% include "partials/post-card.html" %}
+    {% endfor %}
+  {% else %}
+    <div class="card border-0 py-5 text-center text-body-tertiary"><p>该分类下暂无文章</p></div>
+  {% endif %}
+</div>
+{% endblock %}

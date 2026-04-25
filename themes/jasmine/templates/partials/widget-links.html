@@ -1,0 +1,25 @@
+{# 友情链接（取前 6 个，全部见 /links/） #}
+{% set _links = theme_config.links %}
+{% if not _links %}{% set _links = links %}{% endif %}
+{% if _links and _links|length > 0 %}
+<div class="container-fluid p-4 mt-3 border-bottom border-light-subtle">
+  <div class="row gap-2">
+    <div class="col-12 d-flex gap-1 align-content-center justify-content-start fw-medium">
+      <i class="ti ti-friends lh-base"></i><h6 class="lh-base mb-0">友情链接</h6>
+    </div>
+    <div class="col-12">
+      <div class="text-body-secondary" style="line-height: 32px">
+        <ul class="list-group list-group-flush">
+          {% for fl in _links %}
+            {% if loop.index <= 6 %}
+            {% set _name = fl.siteName %}{% if not _name %}{% set _name = fl.name %}{% endif %}
+            {% set _href = fl.siteLink %}{% if not _href %}{% set _href = fl.url %}{% endif %}
+            <li class="list-group-item p-0 border-0 text-truncate"><a href="{{ _href }}" target="_blank" rel="noopener" title="{{ _name }}">{{ _name }}</a></li>
+            {% endif %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

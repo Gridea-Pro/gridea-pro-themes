@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}关于 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<article class="card border-0 py-3 col-12">
+  <div class="card-body p-0">
+    <div class="text-center pb-3 border-bottom border-light-subtle">
+      <img src="{% if config.avatar %}{{ config.avatar }}{% else %}/media/images/default-avatar.svg{% endif %}" alt="{{ config.siteName }}" class="rounded mb-3" width="96" height="96">
+      <h2 class="fs-3 mb-1">{{ config.siteName }}</h2>
+      {% if config.siteDescription %}<p class="text-body-secondary mb-0">{{ config.siteDescription }}</p>{% endif %}
+    </div>
+    <div id="post-content" class="lh-lg pt-4">
+      {% if about_post %}
+        {{ about_post.content|safe }}
+      {% else %}
+        <h2>关于本站</h2>
+        <p>这是 <strong>{{ config.siteName }}</strong> 的关于页面。</p>
+        <p>你可以在 Gridea Pro 的「页面 → 关于」里编辑这块内容。如果创建了 about 页面，它的正文会自动显示在这里。</p>
+        <h3>这个主题</h3>
+        <p>「Jasmine」主题复刻自 <a href="https://github.com/liaocp666/Jasmine" target="_blank" rel="noopener">liaocp666/Jasmine</a>（Typecho），由 Gridea Pro 主题团队迁移到 Jinja2 模板引擎，沿用上游 GPL-3.0 许可。</p>
+      {% endif %}
+    </div>
+  </div>
+</article>
+{% endblock %}

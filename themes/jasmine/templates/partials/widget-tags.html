@@ -1,0 +1,24 @@
+{# 热门标签（按计数排序，限 17 个） #}
+<div class="container-fluid p-4 mt-3 border-bottom border-light-subtle">
+  <div class="row gap-2">
+    <div class="col-12 d-flex gap-1 align-content-center justify-content-start fw-medium">
+      <i class="ti ti-tags lh-base"></i><h6 class="lh-base mb-0">热门标签</h6>
+    </div>
+    <div class="col-12">
+      <div class="text-body-secondary" style="line-height: 32px">
+        <ul class="list-group flex-wrap list-group-horizontal row-gap-1 column-gap-3">
+          {% if tags %}
+            {% for wt in tags %}
+              {% if loop.index <= 17 %}
+              {% set _wcnt = wt.count %}{% if not _wcnt %}{% set _wcnt = 0 %}{% endif %}
+              <li class="list-group-item p-0 border-0"><a href="{{ wt.link }}" title="{{ wt.name }} ({{ _wcnt }} 篇)">{{ wt.name }}</a></li>
+              {% endif %}
+            {% endfor %}
+          {% else %}
+            <li class="list-group-item p-0 border-0 text-body-tertiary">暂无标签</li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

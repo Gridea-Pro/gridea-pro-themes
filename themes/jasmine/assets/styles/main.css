@@ -1,0 +1,436 @@
+/* ==========================================================
+   Jasmine Theme — main.css
+   100% 视觉复刻自 liaocp666/Jasmine（Typecho），原 317 行 + 补全：
+   搜索 modal / 热力图 / Prism 风格代码高亮 / 阅读进度 / 友链卡 /
+   404 / TOC / 移动端覆盖 / 标志性 hover 高亮条
+   ========================================================== */
+
+/* ------ 1. CSS 变量（兼容 light / dark 双套） ------ */
+:root, [data-bs-theme=dark] {
+  --bs-font-sans-serif: "MiSans VF", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bg-auto-rgb: 10, 12, 25;
+  --link-color-rgba: 222, 226, 230, 0.8;
+  --link-color-second-rgba: 222, 226, 230, .65;
+  --primary-color-rgba: 13, 110, 253;
+  --primary-bg-alpha: .2;
+  --primary-bg-rgba: 13, 110, 253, .2;
+}
+:root, [data-bs-theme=light] {
+  --bg-auto-rgb: 245, 245, 244;
+  --bs-font-sans-serif: "MiSans VF", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --link-color-rgba: 0, 0, 0, 1;
+  --link-color-second-rgba: 0, 0, 0, .65;
+  --primary-color-rgba: 13, 110, 253;
+  --primary-bg-alpha: .2;
+  --primary-bg-rgba: 13, 110, 253, .2;
+}
+
+/* primary-bg-rgba 由 base.html 注入的变量动态合成（兼容旧浏览器：默认 .2） */
+
+/* ------ 2. 基础 ------ */
+html { scroll-padding-top: 120px; }
+*, body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: var(--bs-font-sans-serif);
+  min-height: 100vh;
+  background-color: rgb(var(--bg-auto-rgb));
+}
+a {
+  text-decoration: none;
+  color: rgba(var(--link-color-rgba));
+  transition: .15s all ease-in-out;
+}
+a:hover, a:focus, a:focus-visible {
+  text-decoration: none;
+  color: rgba(var(--primary-color-rgba));
+}
+.bg-auto {
+  --bg-auto-opacity: 1;
+  background-color: rgba(var(--bg-auto-rgb), var(--bg-auto-opacity)) !important;
+}
+
+.fs-7 { font-size: .8rem; }
+
+/* ------ 3. 阅读进度条 ------ */
+#reading-progress {
+  position: fixed; left: 0; right: 0; top: 0; height: 3px; z-index: 1100;
+  pointer-events: none; background: transparent;
+}
+#reading-progress > span {
+  display: block; height: 100%; width: 0%;
+  background: rgba(var(--primary-color-rgba));
+  transition: width .15s linear;
+  box-shadow: 0 0 6px rgba(var(--primary-color-rgba));
+}
+
+/* ------ 4. 左竖栏 #left ------ */
+#left { min-height: 100vh; z-index: 1030; }
+#left .nav-link {
+  display: block; width: 50px; height: 50px;
+  color: rgba(var(--link-color-rgba));
+}
+#left .nav-link i {
+  font-size: 24px;
+  padding: .75rem 1rem !important;
+  border-radius: var(--bs-border-radius) !important;
+  transition: all .15s ease-in-out;
+}
+#left .nav-link i:hover {
+  background: rgba(var(--primary-bg-rgba));
+  color: rgba(var(--primary-color-rgba));
+}
+#left .nav-item-title {
+  right: 90px; top: 20%; display: none;
+  padding: .27rem 1rem !important;
+  border-radius: var(--bs-border-radius) !important;
+}
+#left .nav-item:hover .nav-item-title {
+  display: block;
+  background: rgba(var(--primary-bg-rgba));
+  color: rgba(var(--primary-color-rgba));
+  transition: all .15s ease-in-out;
+}
+
+/* ------ 5. 顶栏 navbar ------ */
+#middle .navbar-background { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+
+#middle #form-search-icon { color: rgba(var(--link-color-second-rgba)); }
+#middle #form-search-icon:hover {
+  background: rgba(var(--primary-bg-rgba));
+  color: rgba(var(--primary-color-rgba));
+}
+
+/* navbar 链接 hover：标志性下划线高亮条 */
+#middle .navbar-nav .active,
+#middle #navbarNavLeft .nav-link:hover {
+  color: rgba(var(--primary-color-rgba));
+  box-shadow: 0 -6px 0 0 rgba(var(--primary-bg-rgba)) inset;
+  transition: all .25s ease-in-out;
+}
+
+/* ------ 6. 文章卡片缩略图 ------ */
+#middle .thumbnail {
+  width: 200px; height: 130px; flex: 0 0 auto;
+  background-origin: border-box;
+  background-position: 50%;
+  background-size: cover;
+}
+
+/* ------ 7. 首页 / 列表 ------ */
+#middle #index-content a { color: rgba(var(--link-color-rgba)); }
+#middle #index-content a:hover { color: rgba(var(--primary-color-rgba)); }
+#middle .top-up-flag, #middle .read-more { color: rgba(var(--primary-color-rgba)); }
+
+/* ------ 8. 闪念气泡 ------ */
+#middle .moment-body, .moment-body { background: rgba(var(--primary-bg-rgba)); }
+
+/* ------ 9. 内容区图片 ------ */
+#content img, #post-content img {
+  display: block; max-width: 100%; height: auto;
+}
+#post-content img { margin: 18px auto 24px; border-radius: 4px; }
+
+/* ------ 10. 分页 ------ */
+#pagination .page-link, .sub-category a {
+  color: rgba(var(--link-color-second-rgba)) !important;
+  background-color: rgb(var(--bg-auto-rgb));
+  border-radius: var(--bs-border-radius) !important;
+  transition: all .15s ease-in-out;
+}
+#pagination .page-link:hover, .sub-category a:hover {
+  background: rgba(var(--primary-bg-rgba));
+  color: rgba(var(--primary-color-rgba)) !important;
+}
+#pagination .page-item.disabled .page-link { opacity: .55; }
+
+/* ------ 11. 文章正文 ------ */
+#post-article a { color: rgba(var(--link-color-rgba)); }
+#post-article a:hover { color: rgba(var(--primary-color-rgba)); }
+
+#post-content a {
+  color: rgba(var(--primary-color-rgba));
+  box-shadow: 0 -6px 0 0 rgba(var(--primary-bg-rgba)) inset;
+  transition: box-shadow 0.2s ease-in;
+}
+#post-content a:hover {
+  box-shadow: 0 -10px 0 0 rgba(var(--primary-bg-rgba)) inset;
+}
+
+#post-content h1, #post-content h2, #post-content h3 {
+  display: inline-block;
+  box-shadow: 0 -10px 0 0 rgba(var(--primary-bg-rgba)) inset;
+  padding: 0 3px;
+  font-size: calc(1.275rem + .3vw) !important;
+}
+
+#post-content blockquote, .text-border-left {
+  --bs-text-opacity: 1;
+  color: rgba(var(--link-color-second-rgba)) !important;
+  border-left: 4px solid rgba(var(--link-color-second-rgba));
+  font-weight: 400; letter-spacing: 0.01rem;
+  padding-left: 12px;
+  margin: 16px 0;
+}
+#post-content blockquote p:last-child { margin-bottom: 0; }
+
+#post-content .tags { display: flex; }
+#post-content .tags a { color: RGBA(var(--bs-secondary-rgb), 1) !important; }
+
+#post-content table {
+  width: 100%; margin: 16px 0;
+}
+
+/* 文章 tags 区 */
+#post-article .tags a {
+  margin-right: .5rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(var(--primary-bg-rgba));
+  color: rgba(var(--primary-color-rgba));
+  font-size: 13px;
+}
+
+/* ------ 12. Prism 风格代码高亮（暗色） ------ */
+#post-content pre, pre {
+  background: #22272e;
+  color: #adbac7;
+  border-radius: 6px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
+  font-size: 13px; line-height: 1.6;
+  position: relative;
+  margin: 16px 0;
+}
+#post-content code, code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
+}
+#post-content :not(pre) > code, p > code, li > code, td > code {
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: rgba(var(--primary-bg-rgba));
+  color: rgba(var(--primary-color-rgba));
+  font-size: 0.92em;
+  box-shadow: none !important;
+}
+#post-content pre code {
+  padding: 0; background: transparent; color: inherit;
+}
+.code-copy {
+  position: absolute; top: 8px; right: 10px;
+  background: rgba(255,255,255,.08); color: #adbac7;
+  border: 0; padding: 3px 10px;
+  border-radius: 4px; font-size: 12px;
+  cursor: pointer; opacity: 0;
+  transition: opacity .2s, background .2s;
+}
+pre:hover .code-copy { opacity: 1; }
+.code-copy:hover { background: rgba(255,255,255,.18); }
+
+/* ------ 13. 表单 ------ */
+.form-control, button { box-shadow: none !important; }
+.form-control:focus { border-color: rgba(var(--primary-color-rgba)) !important; }
+
+/* ------ 14. 评论 ------ */
+.avatar { border-radius: var(--bs-border-radius) !important; }
+#comments a { color: rgba(var(--link-color-rgba)); }
+#comments a:hover { color: rgba(var(--primary-color-rgba)); }
+#gridea-comments { min-height: 80px; padding: 8px; }
+
+/* ------ 15. 右栏 widgets ------ */
+#right a { color: rgba(var(--link-color-second-rgba)); }
+#right a:hover { color: rgba(var(--primary-color-rgba)); }
+#right h6 { font-weight: 600; }
+
+/* ------ 16. 移动端 navbar offcanvas ------ */
+#mobile-navbar .btn-close { background: rgba(var(--primary-bg-rgba)); color: rgba(var(--primary-color-rgba)); }
+#mobile-navbar .list-group-item.active { background: rgba(var(--primary-bg-rgba)); color: rgba(var(--primary-color-rgba)); border-color: transparent; }
+#mobile-navbar .list-group-item-action { border-radius: var(--bs-border-radius) !important; }
+#mobile-navbar a { color: rgba(var(--link-color-rgba)); }
+#mobile-navbar a:hover { color: rgba(var(--primary-color-rgba)); }
+
+/* ------ 17. 标签详情 / 分类详情页 ------ */
+#page-archive-category h3 { font-weight: 600; }
+#page-archive-category h3 + .row a { color: rgba(var(--link-color-second-rgba)); }
+#page-archive-category h3 + .row a:hover { color: rgba(var(--primary-color-rgba)); }
+
+/* ------ 18. TOC ------ */
+#toc { font-size: 14px; }
+#toc-content { max-height: 50vh; overflow-y: auto; padding-right: 4px; }
+#toc-content .list-group-item {
+  padding: 4px 8px; border: 0; background: transparent;
+  font-size: 13px; line-height: 1.6;
+}
+#toc-content a {
+  display: block; color: rgba(var(--link-color-second-rgba));
+  text-decoration: none; transition: all .15s ease-in-out;
+}
+#toc-content a:hover, #toc-content .toc-active a {
+  color: rgba(var(--primary-color-rgba));
+  background: rgba(var(--primary-bg-rgba));
+  border-radius: 4px; padding: 0 6px;
+}
+
+/* ------ 19. 友链卡 ------ */
+.flink-item { transition: transform .2s, box-shadow .2s, border-color .2s; }
+.flink-item:hover {
+  border-color: rgba(var(--primary-color-rgba)) !important;
+  transform: translateY(-2px);
+}
+
+/* ------ 20. 全屏搜索 modal ------ */
+.search-modal {
+  position: fixed; inset: 0; z-index: 2000;
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: clamp(60px, 14vh, 140px);
+}
+.search-modal[hidden] { display: none; }
+.search-modal-backdrop {
+  position: absolute; inset: 0;
+  background: rgba(0,0,0,.5);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+}
+.search-modal-panel {
+  position: relative;
+  width: min(640px, calc(100% - 32px));
+  max-height: 70vh; overflow: hidden;
+  display: flex; flex-direction: column;
+}
+.search-modal-body { flex: 1; overflow-y: auto; }
+#search-input {
+  flex: 1;
+  background: transparent;
+  outline: none; box-shadow: none;
+}
+#search-input:focus { background: transparent; box-shadow: none; }
+.search-results .search-item {
+  padding: 10px 12px; border-radius: 6px; cursor: pointer;
+  display: block; color: inherit;
+}
+.search-results .search-item:hover, .search-results .search-item.active {
+  background: rgba(var(--primary-bg-rgba));
+}
+.search-results .search-item-title {
+  font-weight: 600; color: rgba(var(--link-color-rgba));
+  font-size: 14px;
+}
+.search-results .search-item-excerpt {
+  font-size: 12px;
+  color: rgba(var(--link-color-second-rgba));
+  margin-top: 3px; line-height: 1.5;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.search-results em {
+  color: rgba(var(--primary-color-rgba));
+  font-style: normal; font-weight: 700;
+  background: rgba(var(--primary-bg-rgba));
+  padding: 0 2px; border-radius: 2px;
+}
+
+/* ------ 21. 闪念热力图 ------ */
+.heatmap-wrap { font-size: 11px; color: rgba(var(--link-color-second-rgba)); }
+.heatmap-months {
+  display: grid;
+  grid-auto-flow: column; gap: 3px;
+  height: 12px;
+  font-size: 10px;
+  margin-bottom: 4px;
+}
+.heatmap-grid {
+  display: grid;
+  grid-template-rows: repeat(7, 12px);
+  grid-auto-flow: column;
+  grid-auto-columns: 12px;
+  gap: 3px;
+  padding: 2px 0;
+  overflow-x: auto;
+}
+.heatmap-cell {
+  width: 12px; height: 12px; border-radius: 2px;
+  background: rgba(var(--primary-color-rgba), .06);
+  transition: transform .15s ease, background .15s ease;
+}
+.heatmap-cell:hover { transform: scale(1.4); }
+.heatmap-cell.level-0 { background: rgba(var(--primary-color-rgba), .06); }
+.heatmap-cell.level-1 { background: rgba(var(--primary-color-rgba), .25); }
+.heatmap-cell.level-2 { background: rgba(var(--primary-color-rgba), .5); }
+.heatmap-cell.level-3 { background: rgba(var(--primary-color-rgba), .78); }
+.heatmap-cell.level-4 { background: rgba(var(--primary-color-rgba), 1); }
+.heatmap-legend .heatmap-cell { width: 10px; height: 10px; }
+
+/* ------ 22. 闪念正文 ------ */
+.memo-content {
+  background: rgba(var(--primary-bg-rgba));
+  font-size: 14px; line-height: 1.8;
+}
+.memo-content p { margin: 0 0 8px; }
+.memo-content p:last-child { margin-bottom: 0; }
+.memo-content img {
+  max-width: 100%; border-radius: 4px; margin: 6px 0;
+}
+
+/* ------ 23. 文章上下篇 ------ */
+#post-nav .post-nav-link {
+  color: rgba(var(--primary-color-rgba));
+  box-shadow: 0 -6px 0 0 rgba(var(--primary-bg-rgba)) inset;
+  transition: box-shadow .2s;
+}
+#post-nav .post-nav-link:hover {
+  box-shadow: 0 -10px 0 0 rgba(var(--primary-bg-rgba)) inset;
+}
+
+/* ------ 24. 回到顶部按钮 ------ */
+#scroll-to-top {
+  position: fixed; right: 24px; bottom: 30px; z-index: 80;
+  width: 42px; height: 42px;
+  background: rgba(var(--primary-color-rgba));
+  border: 0; box-shadow: 0 4px 18px rgba(var(--primary-color-rgba), .35);
+}
+#scroll-to-top:hover { transform: translateY(-2px); }
+
+/* ------ 25. 容器宽度断点 ------ */
+@media (min-width: 1400px) {
+  .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
+    max-width: 1200px;
+  }
+  #post-content h1, #post-content h2, #post-content h3 {
+    font-size: 1.5rem !important;
+  }
+}
+
+/* ------ 26. 移动端覆盖 ------ */
+@media (max-width: 991.98px) {
+  body { padding: 0 8px; }
+  #middle .thumbnail { display: none !important; }
+  #scroll-to-top { right: 14px; bottom: 18px; }
+  .search-modal-panel { width: calc(100% - 24px); }
+}
+
+@media (max-width: 575.98px) {
+  body { padding: 0 4px; }
+  #post-article .card-title { font-size: 1.4rem !important; }
+  .navbar-nav { gap: 0 !important; }
+}
+
+/* ------ 27. 打印样式 ------ */
+@media print {
+  body { background: #fff !important; }
+  #left, #right, #scroll-to-top, .navbar, #mobile-navbar, .search-modal { display: none !important; }
+  .container.bg-body { box-shadow: none !important; }
+}
+
+/* ------ 28. 图标动画 ------ */
+.ti-spin {
+  animation: ti-spin 1s linear infinite;
+  display: inline-block;
+}
+@keyframes ti-spin { to { transform: rotate(360deg); } }
+
+/* ------ 29. 文章 fade-in 微动画 ------ */
+.card.block, #post-article {
+  animation: fadeIn .35s ease both;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

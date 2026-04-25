@@ -1,0 +1,20 @@
+{# 闪念风文章卡片：头像 + 摘要气泡 #}
+{% set p = card_post %}
+<div class="card border-0 py-3 col-12 border-bottom border-light-subtle">
+  <div class="d-flex column-gap-2 overflow-hidden">
+    <div class="card-body p-0 d-flex justify-content-start row-gap-1 overflow-hidden">
+      <a href="{{ p.link }}">
+        <img src="{% if config.avatar %}{{ config.avatar }}{% else %}/media/images/default-avatar.svg{% endif %}" loading="lazy" alt="{{ config.siteName }}" class="rounded float-start me-2" width="42" height="42">
+      </a>
+      <div class="d-flex flex-column row-gap-2 w-100">
+        <small class="align-content-center justify-content-center text-body-tertiary">
+          {{ config.siteName }}&nbsp;·&nbsp;<time>{{ p.date }}</time>
+        </small>
+        <p class="card-text more p-3 rounded moment-body mb-0">
+          {{ p.content|excerpt:"120"|striptags }}&nbsp;
+          <a href="{{ p.link }}" class="d-inline-block"><span class="read-more"><i class="ti ti-external-link"></i></span></a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

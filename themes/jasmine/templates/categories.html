@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}分类 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="card border-0 py-3 col-12">
+  <div class="d-flex column-gap-2">
+    <div class="card-body p-0 d-flex flex-column justify-content-between row-gap-1 overflow-hidden" id="page-archive-category">
+      <h3 class="d-flex align-items-center gap-2"><i class="ti ti-folder text-primary"></i>分类<small class="text-body-tertiary fs-6">· 共 {% if categories %}{{ categories|length }}{% else %}0{% endif %} 个</small></h3>
+      <div class="row pb-5">
+        <div class="col-12">
+          <div class="d-flex flex-wrap column-gap-4 row-gap-2 fs-5 pt-3">
+            {% if categories and categories|length > 0 %}
+              {% for cat in categories %}
+                {% set _ccnt = cat.count %}{% if not _ccnt %}{% set _ccnt = 0 %}{% endif %}
+                <a href="{{ cat.link }}" title="{{ cat.name }}（{{ _ccnt }}）篇文章">{{ cat.name }}（{{ _ccnt }}）</a>
+              {% endfor %}
+            {% else %}
+              <p class="text-body-tertiary">暂无分类</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

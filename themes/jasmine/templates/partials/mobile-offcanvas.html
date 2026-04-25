@@ -1,0 +1,41 @@
+{# 移动端抽屉 #}
+<div class="offcanvas offcanvas-start w-75" tabindex="-1" id="mobile-navbar" aria-labelledby="mobile-navbarLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="mobile-navbarLabel">{{ config.siteName }}</h5>
+    <button type="button" class="btn-close lh-sm" data-bs-dismiss="offcanvas" aria-label="关闭"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="d-flex flex-column row-gap-4 align-content-between justify-content-between h-100">
+      <div class="d-flex flex-column row-gap-4 navbar-nav">
+        <div class="list-group">
+          <a class="list-group-item list-group-item-action" href="/">首页</a>
+          {% if menus %}
+            {% for menu in menus %}
+            <a class="list-group-item list-group-item-action" href="{{ menu.link }}">{{ menu.name }}</a>
+            {% endfor %}
+          {% else %}
+            <a class="list-group-item list-group-item-action" href="/archives/">归档</a>
+            <a class="list-group-item list-group-item-action" href="/categories/">分类</a>
+            <a class="list-group-item list-group-item-action" href="/tags/">标签</a>
+            <a class="list-group-item list-group-item-action" href="/memos/">闪念</a>
+            <a class="list-group-item list-group-item-action" href="/links/">友链</a>
+            <a class="list-group-item list-group-item-action" href="/about/">关于</a>
+          {% endif %}
+        </div>
+        {% if theme_config.searchEnable and theme_config.searchEnable != "false" %}
+        <button class="btn btn-outline-secondary d-flex column-gap-2 justify-content-center" type="button" data-action="open-search" data-bs-dismiss="offcanvas">
+          <i class="ti ti-search"></i><span>搜索</span>
+        </button>
+        {% endif %}
+      </div>
+      <div class="d-flex column-gap-3 justify-content-around bg-secondary-subtle rounded py-2 px-3 flex-wrap">
+        <a href="/" title="首页" aria-label="首页"><i class="ti ti-home"></i></a>
+        <a href="/archives/" title="归档" aria-label="归档"><i class="ti ti-archive"></i></a>
+        <a href="/categories/" title="分类" aria-label="分类"><i class="ti ti-folder"></i></a>
+        <a href="/tags/" title="标签" aria-label="标签"><i class="ti ti-tags"></i></a>
+        <a href="/memos/" title="闪念" aria-label="闪念"><i class="ti ti-bubble-text"></i></a>
+        <a href="/about/" title="关于" aria-label="关于"><i class="ti ti-user"></i></a>
+      </div>
+    </div>
+  </div>
+</div>

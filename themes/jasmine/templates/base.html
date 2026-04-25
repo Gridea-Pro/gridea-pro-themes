@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="generator" content="Gridea Pro · Jasmine Theme">
+  <title>{% block title %}{{ config.siteName }}{% if config.siteDescription %} | {{ config.siteDescription }}{% endif %}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{% if config.siteDescription %}{{ config.siteDescription }}{% else %}{{ config.siteName }}{% endif %}{% endblock %}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{% block og_title %}{{ config.siteName }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{% if config.siteDescription %}{{ config.siteDescription }}{% else %}{{ config.siteName }}{% endif %}{% endblock %}">
+  {% if config.avatar %}<meta property="og:image" content="{{ config.avatar }}">{% endif %}
+  {% if config.avatar %}<link rel="icon" href="{{ config.avatar }}">{% endif %}
+  <link rel="alternate" type="application/atom+xml" title="{{ config.siteName }}" href="/atom.xml">
+
+  <link rel="stylesheet" href="/styles/bootstrap.min.css">
+  <link rel="stylesheet" href="/styles/tabler-icons.min.css">
+  <link rel="stylesheet" href="/styles/main.css">
+
+  {% if theme_config.fontCdn %}
+  <style>@font-face{font-family:"MiSans VF";src:url("{{ theme_config.fontCdn }}") format("woff2-variations");font-display:swap;}</style>
+  {% endif %}
+
+  <style id="jasmine-theme-vars">
+    :root {
+      {% if theme_config.primaryColor %}--primary-color-rgba: {{ theme_config.primaryColor|safe }};{% endif %}
+      {% if theme_config.primaryBgAlpha %}--primary-bg-alpha: {{ theme_config.primaryBgAlpha }};{% endif %}
+      {% if theme_config.fontFamily %}--bs-font-sans-serif: {{ theme_config.fontFamily|safe }}, "Apple Color Emoji", "Segoe UI Emoji";{% endif %}
+    }
+    :root, [data-bs-theme=light] {
+      {% if theme_config.lightBg %}--bg-auto-rgb: {{ theme_config.lightBg|safe }};{% endif %}
+    }
+    :root, [data-bs-theme=dark] {
+      {% if theme_config.darkBg %}--bg-auto-rgb: {{ theme_config.darkBg|safe }};{% endif %}
+    }
+  </style>
+  {% if theme_config.customCss %}<style id="jasmine-custom-css">{{ theme_config.customCss|safe }}</style>{% endif %}
+
+  <script>
+    (function () {
+      var pref = "{% if theme_config.defaultTheme %}{{ theme_config.defaultTheme }}{% else %}auto{% endif %}";
+      try { var saved = localStorage.getItem('data-bs-theme'); if (saved) pref = saved; } catch (e) {}
+      var resolved = pref;
+      if (pref === 'auto') {
+        try { resolved = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light'; }
+        catch (e) { resolved = 'light'; }
+      }
+      document.documentElement.dataset.themePref = pref;
+      // body 标签还没创建，先在 documentElement 上挂个临时 attr，body 一渲染立刻同步
+      document.documentElement.setAttribute('data-bs-theme', resolved);
+    })();
+  </script>
+
+  {% block head_extra %}{% endblock %}
+  {% if theme_config.injectHead %}{{ theme_config.injectHead|safe }}{% endif %}
+</head>
+<body class="bg-auto" data-bs-theme="light">
+<script>document.body.setAttribute('data-bs-theme', document.documentElement.getAttribute('data-bs-theme'));</script>
+
+{% if theme_config.readingProgress and theme_config.readingProgress != "false" %}
+<div id="reading-progress" aria-hidden="true"><span></span></div>
+{% endif %}
+
+<div style="height: 60px" id="top" class="d-none d-lg-block"></div>
+<div class="container bg-body g-0 rounded shadow-sm">
+  <div class="row g-0">
+
+    {% if theme_config.leftRailEnable and theme_config.leftRailEnable != "false" %}
+      {% include "partials/left-rail.html" %}
+    {% endif %}
+
+    <div class="{% if theme_config.leftRailEnable and theme_config.leftRailEnable != 'false' %}{% if theme_config.rightRailEnable and theme_config.rightRailEnable != 'false' %}col-md-12 col-lg-8{% else %}col-md-12 col-lg-11{% endif %}{% else %}{% if theme_config.rightRailEnable and theme_config.rightRailEnable != 'false' %}col-md-12 col-lg-9{% else %}col-md-12{% endif %}{% endif %}" id="middle">
+      {% include "partials/header.html" %}
+      <div class="container-fluid p-4 d-flex flex-column row-gap-3">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+
+    {% if theme_config.rightRailEnable and theme_config.rightRailEnable != "false" %}
+      {% include "partials/right-rail.html" %}
+    {% endif %}
+
+  </div>
+</div>
+
+<div style="height: 80px"></div>
+{% include "partials/footer.html" %}
+{% include "partials/mobile-offcanvas.html" %}
+
+{% if theme_config.searchEnable and theme_config.searchEnable != "false" %}
+  {% include "partials/search-modal.html" %}
+  {% include "partials/search-index.html" %}
+{% endif %}
+
+{% if theme_config.scrollToTop and theme_config.scrollToTop != "false" %}
+<button class="btn btn-primary rounded-circle scroll-to-top" id="scroll-to-top" type="button" aria-label="回到顶部" hidden>
+  <i class="ti ti-chevrons-up"></i>
+</button>
+{% endif %}
+
+<div id="jasmine-config-data" hidden
+  data-domain="{{ config.domain }}"
+  data-site-name="{{ config.siteName }}"
+  data-toc="{% if theme_config.tocEnable and theme_config.tocEnable != 'false' %}1{% else %}0{% endif %}"
+  data-code-copy="{% if theme_config.codeCopy and theme_config.codeCopy != 'false' %}1{% else %}0{% endif %}"
+  data-reading-progress="{% if theme_config.readingProgress and theme_config.readingProgress != 'false' %}1{% else %}0{% endif %}"
+  data-scroll-to-top="{% if theme_config.scrollToTop and theme_config.scrollToTop != 'false' %}1{% else %}0{% endif %}"
+  data-heatmap="{% if theme_config.heatmapEnable and theme_config.heatmapEnable != 'false' %}1{% else %}0{% endif %}"
+  data-search="{% if theme_config.searchEnable and theme_config.searchEnable != 'false' %}1{% else %}0{% endif %}"
+></div>
+<script>
+  (function () {
+    var d = document.getElementById('jasmine-config-data').dataset;
+    window.JASMINE_CONFIG = {
+      domain: d.domain || '',
+      siteName: d.siteName || '',
+      tocEnable: d.toc === '1',
+      codeCopy: d.codeCopy === '1',
+      readingProgress: d.readingProgress === '1',
+      scrollToTop: d.scrollToTop === '1',
+      heatmapEnable: d.heatmap === '1',
+      searchEnable: d.search === '1'
+    };
+  })();
+</script>
+<script src="/scripts/main.js" defer></script>
+{% if theme_config.viewsScript %}{{ theme_config.viewsScript|safe }}{% endif %}
+{% if theme_config.injectBody %}{{ theme_config.injectBody|safe }}{% endif %}
+{% if theme_config.customJs %}<script>{{ theme_config.customJs|safe }}</script>{% endif %}
+{% block body_extra %}{% endblock %}
+</body>
+</html>

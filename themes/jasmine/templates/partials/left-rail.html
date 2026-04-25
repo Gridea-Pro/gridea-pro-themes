@@ -1,0 +1,52 @@
+{# 左竖栏：图标导航 + 暗色切换 + 回顶 #}
+<div class="col-lg-1 d-none d-lg-block border-end border-light-subtle">
+  <div class="d-flex flex-column align-content-between justify-content-between pt-4 sticky-top" id="left">
+    <ul class="nav flex-column nav-pills gap-0 row-gap-3">
+      {% if theme_config.logoUrl %}
+      <li class="nav-item d-flex justify-content-center mb-4">
+        <a class="nav-link p-0" href="/" title="{{ config.siteName }}">
+          <img class="rounded" src="{{ theme_config.logoUrl }}" loading="lazy" width="50" height="50" alt="{{ config.siteName }}">
+        </a>
+      </li>
+      {% endif %}
+      <li class="nav-item d-flex justify-content-center position-relative">
+        <a class="nav-link p-0 d-flex align-items-center justify-content-center" href="/" title="{{ config.siteName }}"><i class="ti ti-home"></i></a>
+        <span class="position-absolute nav-item-title text-nowrap">{{ config.siteName }}</span>
+      </li>
+      <li class="nav-item d-flex justify-content-center position-relative">
+        <a class="nav-link p-0 d-flex align-items-center justify-content-center" href="/archives/" title="归档"><i class="ti ti-archive"></i></a>
+        <span class="position-absolute nav-item-title text-nowrap">归档</span>
+      </li>
+      <li class="nav-item d-flex justify-content-center position-relative">
+        <a class="nav-link p-0 d-flex align-items-center justify-content-center" href="/categories/" title="分类"><i class="ti ti-folder"></i></a>
+        <span class="position-absolute nav-item-title text-nowrap">分类</span>
+      </li>
+      <li class="nav-item d-flex justify-content-center position-relative">
+        <a class="nav-link p-0 d-flex align-items-center justify-content-center" href="/tags/" title="标签"><i class="ti ti-tags"></i></a>
+        <span class="position-absolute nav-item-title text-nowrap">标签</span>
+      </li>
+      <li class="nav-item d-flex justify-content-center position-relative">
+        <a class="nav-link p-0 d-flex align-items-center justify-content-center" href="/memos/" title="闪念"><i class="ti ti-bubble-text"></i></a>
+        <span class="position-absolute nav-item-title text-nowrap">闪念</span>
+      </li>
+      <li class="nav-item d-flex justify-content-center position-relative">
+        <a class="nav-link p-0 d-flex align-items-center justify-content-center" href="/links/" title="友链"><i class="ti ti-link"></i></a>
+        <span class="position-absolute nav-item-title text-nowrap">友链</span>
+      </li>
+      <li class="nav-item d-flex justify-content-center position-relative">
+        <a class="nav-link p-0 d-flex align-items-center justify-content-center" href="/about/" title="关于"><i class="ti ti-user"></i></a>
+        <span class="position-absolute nav-item-title text-nowrap">关于</span>
+      </li>
+    </ul>
+    <ul class="nav flex-column nav-pills gap-0 row-gap-3 sticky-bottom bottom-0 mb-4">
+      <li class="nav-item d-flex justify-content-center position-relative">
+        <a class="nav-link p-0 d-flex align-items-center justify-content-center" data-action="toggle-theme" href="javascript:void(0)" title="切换模式"><i class="ti ti-sun-moon px-3 py-1 rounded"></i></a>
+        <span class="position-absolute nav-item-title text-nowrap">切换模式</span>
+      </li>
+      <li class="nav-item d-flex justify-content-center position-relative">
+        <a class="nav-link p-0 d-flex align-items-center justify-content-center" href="#top" data-action="scroll-to-top-anchor" title="返回顶部"><i class="ti ti-chevrons-up px-3 py-1 rounded"></i></a>
+        <span class="position-absolute nav-item-title text-nowrap">返回顶部</span>
+      </li>
+    </ul>
+  </div>
+</div>

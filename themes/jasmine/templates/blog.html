@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}博客 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div id="index-content" class="d-flex flex-column">
+  <div class="card border-0 py-3 col-12 mb-2">
+    <h3 class="d-flex align-items-center gap-2 mb-1"><i class="ti ti-pencil-plus text-primary"></i>博客</h3>
+    <p class="text-body-secondary mb-0">记录与分享，持续更新。</p>
+  </div>
+  {% if posts and posts|length > 0 %}
+    {% for p in posts %}
+      {% if not p.hideInList %}
+        {% set card_post = p %}
+        {% include "partials/post-card.html" %}
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    <div class="card border-0 py-5 text-center text-body-tertiary"><p>暂无文章</p></div>
+  {% endif %}
+</div>
+{% include "partials/pagination.html" %}
+{% endblock %}

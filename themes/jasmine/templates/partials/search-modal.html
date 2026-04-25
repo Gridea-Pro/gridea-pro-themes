@@ -1,0 +1,21 @@
+{# 全屏搜索 modal（Bootstrap modal 风格，但用纯原生 JS 控制以减依赖） #}
+<div class="search-modal" id="search-modal" hidden>
+  <div class="search-modal-backdrop" data-action="close-search"></div>
+  <div class="search-modal-panel bg-body rounded shadow">
+    <div class="search-modal-header d-flex align-items-center column-gap-2 px-3 py-3 border-bottom border-light-subtle">
+      <i class="ti ti-search fs-5 text-body-tertiary"></i>
+      <input id="search-input" type="search" class="form-control border-0 fs-6" placeholder="搜索文章标题、标签、内容…" autocomplete="off" spellcheck="false">
+      <kbd class="d-none d-sm-inline-block text-body-tertiary fs-7 me-2">ESC</kbd>
+      <button class="btn btn-sm btn-light rounded-circle" data-action="close-search" type="button" aria-label="关闭"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="search-modal-body p-2">
+      <ul class="search-results list-unstyled mb-0" id="search-results"></ul>
+      <div class="search-empty text-center py-4 text-body-tertiary" id="search-empty" hidden>
+        <i class="ti ti-search-off fs-3 d-block mb-2"></i>未找到匹配的内容
+      </div>
+      <div class="search-tip text-center py-4 text-body-tertiary" id="search-tip">
+        输入关键词开始搜索 · 按 <kbd>↑↓</kbd> 选择 · 按 <kbd>Enter</kbd> 进入 · 按 <kbd>ESC</kbd> 关闭
+      </div>
+    </div>
+  </div>
+</div>
