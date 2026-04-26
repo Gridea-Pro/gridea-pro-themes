@@ -1,0 +1,105 @@
+<div class="Xc_header">
+  <div class="Xc_header_all">
+    <div class="Xc_header-heads">
+      <div class="Xc_header-heads-ggt">
+        {# 移动端汉堡 #}
+        <div class="web-nav">
+          <svg class="wap_active" viewBox="0 0 1152 1024" xmlns="http://www.w3.org/2000/svg" width="18" height="18">
+            <path fill="currentColor" d="M76.032 872a59.968 59.968 0 1 0 0 120h999.936a59.968 59.968 0 1 0 0-120H76.032zm16-420.032a59.968 59.968 0 1 0 0 120h599.936a59.968 59.968 0 1 0 0-119.936H92.032zM76.032 32a59.968 59.968 0 1 0 0 120h999.936a60.032 60.032 0 0 0 0-120H76.032z"/>
+          </svg>
+        </div>
+
+        {# Logo #}
+        <div class="logo">
+          <a class="header_internal-logo" href="{{ config.domain }}/" title="{{ config.siteName }}">
+            {% if theme_config.logoLight %}
+              <img class="Xc_logo" alt="{{ config.siteName }}" src="{{ theme_config.logoLight }}">
+            {% elif config.logo %}
+              <img class="Xc_logo" alt="{{ config.siteName }}" src="{{ config.logo }}">
+            {% else %}
+              <img class="Xc_logo" alt="{{ config.siteName }}" src="/media/images/logo-1.png">
+            {% endif %}
+            {% if theme_config.logoDark %}
+              <img class="Xc_logo night" alt="{{ config.siteName }}" src="{{ theme_config.logoDark }}">
+            {% else %}
+              <img class="Xc_logo night" alt="{{ config.siteName }}" src="/media/images/logo-2.png">
+            {% endif %}
+          </a>
+        </div>
+
+        {# 中部菜单按钮 + 右侧三键 #}
+        <div class="data">
+          <div class="left">
+            <div class="navs">
+              {% for menu in menus %}
+                {% if loop.index <= 3 %}
+                  <a href="{{ menu.link }}" class="Xc_heaer_nav">
+                    <span>{{ menu.name }}</span>
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+
+          <div class="right">
+            <div class="login">
+              <svg class="header_internal-searchicon" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="20" height="20" style="cursor:pointer">
+                <path fill="currentColor" d="M745.88 848.28C672.35 903.35 581.04 935.97 482.11 935.97 238.87 935.97 41.68 738.78 41.68 495.54S238.87 55.11 482.11 55.11s440.43 197.18 440.43 440.43c0 98.92-32.61 190.24-87.68 263.76L971.71 896.15c24.45 24.45 24.53 64.03-0.2 88.77s-64.76 24.21-88.77 0.2L745.88 848.28zM482.11 810.13c173.74 0 314.59-140.84 314.59-314.59S655.86 180.94 482.11 180.94 167.52 321.79 167.52 495.54s140.84 314.59 314.59 314.59z"/>
+              </svg>
+
+              <div class="Xc_action_item mode" style="margin-left:12px;cursor:pointer" title="切换深浅模式">
+                <svg class="icon-1" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                  <path fill="currentColor" d="M587.264 104.96c33.28 57.856 52.224 124.928 52.224 196.608 0 218.112-176.128 394.752-393.728 394.752-29.696 0-58.368-3.584-86.528-9.728C223.744 832.512 369.152 934.4 538.624 934.4c229.376 0 414.72-186.368 414.72-416.256 1.024-212.992-159.744-389.12-366.08-413.184z"/>
+                </svg>
+                <svg class="icon-2 active" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+                  <path fill="var(--routine)" d="M449.51 56.96h127.83v127.83H449.51zM143.64 234.25l90.39-90.39 90.39 90.39-90.39 90.39zM52.89 448.09h127.83v127.83H52.89zm86.92 343.27l90.39-90.39 90.39 90.39-90.39 90.39zM444.01 844.7h127.83v127.83H444.01zm252.91-49.52l90.39-90.39 90.39 90.39-90.39 90.39zM840.63 453.58h127.83v127.83H840.63zM700.68 238.14l90.39-90.39 90.39 90.39-90.39 90.39zM513.02 256.54c-142.38 0-257.69 115.41-257.69 257.69s115.31 257.7 257.69 257.7 257.69-115.41 257.69-257.7S655.4 256.54 513.02 256.54z"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {# 顶部下拉搜索面板 #}
+      <div class="header_top-search">
+        <div class="header_search" style="display:none;">
+          <div class="header_search_all">
+            <div class="Xc_label">
+              <div class="Xc_top_title">
+                <span>
+                  <svg class="icon" viewBox="0 0 1024 1024" width="16" height="16"><path fill="#FC515F" d="M913.9 858.79c19.64 0 36.54 17.36 36.54 36.54 0 19.64-16.9 36.54-36.54 36.54H402.39c-19.64 0-36.54-16.9-36.54-36.54 0-19.18 16.9-36.54 36.54-36.54zm-304.63-133.82c0-19.64 17.36-36.54 36.54-36.54h268.09c19.64 0 36.54 16.9 36.54 36.54 0 19.64-16.9 36.54-36.54 36.54h-268.09c-19.18 0-36.54-16.9-36.54-36.54zm156.2-477.27l-12.33 16.9-236.12-173.09 11.87-16.9c14.61-19.64 43.84-24.21 63.48-9.59l163.05 119.2c10.05 7.31 14.61 16.9 17.36 29.23 2.28 12.33 0 24.21-7.31 34.25zM73.56 912.68c2.28-10.05 16.9-156.2 24.21-224.25l204.61 151.17-206.89 89.97c-5.02 2.28-9.59 2.28-14.61-2.28-5.02-2.74-7.31-10.05-7.31-14.61z m423.83-796.5l233.84 172.64-377.7 514.26-236.12-173.09z m133.82 216.48c7.31-11.87 5.02-29.23-7.31-38.82a30.05 30.05 0 0 0-38.82 7.31L329.31 656.92c-5.02 4.57-5.02 11.87-5.02 19.18 0 7.31 5.02 12.33 10.05 17.36 11.87 7.31 29.23 4.57 38.82-7.31z"/></svg>
+                  关键词搜索
+                </span>
+              </div>
+              <form class="search" method="get" action="/search/">
+                <input maxlength="20" autocomplete="off" placeholder="请输入关键字..." name="s" value="" class="input" type="text">
+                <button type="submit" class="submit">搜索</button>
+              </form>
+              <div class="muse-search-results">
+                <p class="empty">输入关键字开始搜索（按 Esc 关闭，Cmd/Ctrl + K 唤起）</p>
+              </div>
+
+              {# 标签云 #}
+              {% if tags|length > 0 %}
+              <div class="Xc_top_title" style="margin-top:14px;">
+                <span>
+                  <svg class="icon" viewBox="0 0 1024 1024" width="16" height="16"><path fill="#FF623E" d="M683.84 332.12m-49.76 0a49.76 49.76 0 1 0 99.52 0 49.76 49.76 0 1 0-99.52 0Z"/><path fill="#FF623E" d="M868.3 63.96l-377.66 3.31a108.9 108.9 0 0 0-74.75 30.52L69.51 431.93a109.06 109.06 0 0 0-1.41 155.63l364.7 364.7a109.06 109.06 0 0 0 152.81 1.36L933.55 617.52a109.06 109.06 0 0 0 33.17-75.35l10.84-365.95a109.06 109.06 0 0 0-109.88-112.26z"/></svg>
+                  热门标签
+                </span>
+              </div>
+              <ul class="cloud">
+                {% for tag in tags %}
+                  {% if loop.index <= 12 %}
+                    <li class="item"><a style="background:var(--theme)" href="{{ tag.link }}">{{ tag.name }}</a></li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+        <div class="header_hyal" style="display:none;"></div>
+      </div>
+    </div>
+  </div>
+</div>

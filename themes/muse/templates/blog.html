@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}博客列表 · {{ config.siteName }}{% endblock %}
+{% block main_class %}blog{% endblock %}
+
+{% block content %}
+<div class="Xc_home">
+  <ul class="Xc_home_articie-list">
+    {% for post in posts %}
+      {% if not post.hideInList %}
+        {% include "partials/post-card.html" %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  {% include "partials/pagination.html" %}
+</div>
+{% endblock %}

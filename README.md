@@ -33,6 +33,7 @@
 | <a href="./themes/printer/"><img src="./themes/printer/assets/media/preview.png" width="240" alt="Printer 预览"></a> | [**printer**](./themes/printer/) | Jinja2 (Pongo2) | 打字机字体 + 文档风排版主题，复刻自 Ouxxxxxjoe/Printer-Typecho |
 | <a href="./themes/memos/"><img src="./themes/memos/assets/media/preview.png" width="240" alt="memos 预览"></a> | [**memos**](./themes/memos/) | Jinja2 (Pongo2) | Bootstrap 5 双栏博客主题，sticky 顶栏 + Offcanvas 汉堡 + 闪念页，复刻自 jkjoy/Typecho-Theme-Once |
 | <a href="./themes/mango/"><img src="./themes/mango/assets/media/preview.png" width="240" alt="Mango 预览"></a> | [**mango**](./themes/mango/) | Jinja2 (Pongo2) | 双栏明亮博客主题，推荐位轮播 + 多图九宫格卡片 + 闪念热力图，复刻自 jkjoy/Typecho-Theme-Mango |
+| <a href="./themes/muse/"><img src="./themes/muse/assets/media/preview.png" width="240" alt="Muse 预览"></a> | [**muse**](./themes/muse/) | Jinja2 (Pongo2) | 左侧栏导航 + Splash 全屏开场 + 浮动雪花特效 + 4 列封面卡片瀑布墙，复刻自 Miss/Xc-Three（Typecho） |
 
 > 上方前 7 个为初始入库的种子主题（其中 `flavor` 为 Gridea Pro 官方旗舰），下方按入库顺序排列社区主题。
 

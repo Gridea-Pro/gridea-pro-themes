@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#306fff" stop-opacity="0.85"/>
+      <stop offset="55%" stop-color="#73aaff" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#a3c9ff" stop-opacity="0.55"/>
+    </linearGradient>
+    <radialGradient id="dot" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="480" fill="url(#bg)"/>
+  <circle cx="120" cy="100" r="55" fill="url(#dot)"/>
+  <circle cx="640" cy="80" r="35" fill="url(#dot)"/>
+  <circle cx="700" cy="380" r="65" fill="url(#dot)"/>
+  <circle cx="200" cy="380" r="25" fill="url(#dot)"/>
+  <text x="400" y="240" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="42" font-weight="700" fill="#ffffff" text-anchor="middle" letter-spacing="6">MUSE</text>
+  <text x="400" y="278" font-family="PingFang SC, Microsoft YaHei, sans-serif" font-size="14" fill="rgba(255,255,255,0.85)" text-anchor="middle" letter-spacing="3">缪斯 · 灵感与图文之地</text>
+</svg>

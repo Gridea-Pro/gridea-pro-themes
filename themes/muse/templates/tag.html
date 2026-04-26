@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}#{% if tag %}{{ tag.name }}{% elif current_tag %}{{ current_tag.name }}{% endif %} · {{ config.siteName }}{% endblock %}
+{% block main_class %}tag-detail{% endblock %}
+
+{% block content %}
+<div class="Xc_home">
+  <div style="background:var(--background);padding:24px 28px;border-radius:var(--radius-wrap);box-shadow:var(--box-shadow);margin-bottom:18px;">
+    <h1 style="font-size:24px;color:var(--main);margin-bottom:6px;display:flex;align-items:center;gap:8px;">
+      <svg viewBox="0 0 1024 1024" width="22" height="22"><path fill="var(--theme)" d="M868.3 64l-377.66 3.31a108.9 108.9 0 0 0-74.75 30.52L69.51 431.93a109.06 109.06 0 0 0-1.41 155.63l364.7 364.7a109.06 109.06 0 0 0 152.81 1.36L933.55 617.52a109.06 109.06 0 0 0 33.17-75.35l10.84-365.95a109.06 109.06 0 0 0-109.88-112.26z"/></svg>
+      <span>#{% if tag %}{{ tag.name }}{% elif current_tag %}{{ current_tag.name }}{% endif %}</span>
+    </h1>
+    <p style="color:var(--minor);font-size:13px;">
+      共 {% if tag %}{{ tag.count }}{% elif current_tag %}{{ current_tag.count }}{% else %}{{ posts|length }}{% endif %} 篇文章
+      · <a href="/tags/" style="color:var(--theme);">查看全部标签</a>
+    </p>
+  </div>
+
+  <ul class="Xc_home_articie-list">
+    {% for post in posts %}
+      {% include "partials/post-card.html" %}
+    {% endfor %}
+  </ul>
+
+  {% include "partials/pagination.html" %}
+</div>
+{% endblock %}

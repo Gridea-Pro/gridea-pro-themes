@@ -1,0 +1,19 @@
+{% if pagination and (pagination.hasPrev or pagination.hasNext or pagination.prev or pagination.next) %}
+<nav class="muse-pagination" aria-label="分页导航">
+  {% if pagination.hasPrev or pagination.prev %}
+    <a href="{% if pagination.prevURL %}{{ pagination.prevURL }}{% else %}{{ pagination.prev }}{% endif %}" rel="prev">&laquo; 上一页</a>
+  {% else %}
+    <span class="disabled">&laquo; 上一页</span>
+  {% endif %}
+
+  {% if pagination.currentPage and pagination.totalPages %}
+    <span class="info">第 {{ pagination.currentPage }} / {{ pagination.totalPages }} 页</span>
+  {% endif %}
+
+  {% if pagination.hasNext or pagination.next %}
+    <a href="{% if pagination.nextURL %}{{ pagination.nextURL }}{% else %}{{ pagination.next }}{% endif %}" rel="next">下一页 &raquo;</a>
+  {% else %}
+    <span class="disabled">下一页 &raquo;</span>
+  {% endif %}
+</nav>
+{% endif %}

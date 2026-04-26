@@ -1,0 +1,41 @@
+<div class="Xc_footer Xc_total">
+  <div class="Xc_totall">
+    <div class="Xc_totalll">
+      <div class="item">
+        <p>
+          Copyright &copy; {{ now|date:"2006" }} {{ config.siteName }}
+          {% if theme_config.footerSlogan %} · {{ theme_config.footerSlogan }}{% endif %}
+        </p>
+        {% if theme_config.footerICP or theme_config.footerPolice %}
+          <p>
+            {% if theme_config.footerICP %}<a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">{{ theme_config.footerICP }}</a>{% endif %}
+            {% if theme_config.footerICP and theme_config.footerPolice %} 丨 {% endif %}
+            {% if theme_config.footerPolice %}<a href="https://www.beian.gov.cn/" target="_blank" rel="noopener">{{ theme_config.footerPolice }}</a>{% endif %}
+          </p>
+        {% endif %}
+      </div>
+      {% if theme_config.footerShowPower %}
+        <div class="item">
+          <p>本站由 <a href="https://gridea.pro/" target="_blank" rel="noopener" title="Gridea Pro 官网">Gridea Pro</a> 强力驱动 · 搭配 <a href="https://github.com/Gridea-Pro/gridea-pro-themes/tree/main/themes/muse" target="_blank" rel="noopener" title="Muse 主题">Muse</a> 主题使用</p>
+        </div>
+      {% endif %}
+      {% if theme_config.viewsScript == "busuanzi" %}
+        <div class="item">
+          <p>
+            总访问：<span id="busuanzi_value_site_pv">…</span> 次
+            丨 当前在线：<span id="busuanzi_value_site_uv">…</span> 人
+          </p>
+        </div>
+      {% endif %}
+      {% if theme_config.footerExtra %}
+        <div class="item">
+          <p>{{ theme_config.footerExtra|safe }}</p>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% if theme_config.viewsScript == "busuanzi" %}
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+{% endif %}

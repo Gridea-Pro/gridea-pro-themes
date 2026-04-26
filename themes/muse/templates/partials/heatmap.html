@@ -1,0 +1,17 @@
+{# memos 闪念热力图：53 周 × 7 天，由 main.js 读取 data-memos 后渲染填色 #}
+<div class="muse-heatmap">
+  <div class="muse-heatmap-title">
+    <svg viewBox="0 0 1024 1024" width="14" height="14"><path fill="currentColor" d="M512 64C264 64 64 264 64 512s200 448 448 448 448-200 448-448S760 64 512 64z m144 656l-160-128V224h64v288l128 102z"/></svg>
+    发布热力 · 近 53 周
+  </div>
+  <div class="muse-heatmap-grid" data-memos='[{% for memo in memos %}"{{ memo.createdAtISO }}"{% if not loop.last %},{% endif %}{% endfor %}]'></div>
+  <div class="muse-heatmap-legend">
+    <span>少</span>
+    <div class="muse-heat-cell"></div>
+    <div class="muse-heat-cell lvl-1"></div>
+    <div class="muse-heat-cell lvl-2"></div>
+    <div class="muse-heat-cell lvl-3"></div>
+    <div class="muse-heat-cell lvl-4"></div>
+    <span>多</span>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{% if category %}{{ category.name }}{% endif %} · 分类 · {{ config.siteName }}{% endblock %}
+{% block main_class %}category-detail{% endblock %}
+
+{% block content %}
+<div class="Xc_home">
+  <div style="background:var(--background);padding:24px 28px;border-radius:var(--radius-wrap);box-shadow:var(--box-shadow);margin-bottom:18px;">
+    <h1 style="font-size:24px;color:var(--main);margin-bottom:6px;display:flex;align-items:center;gap:8px;">
+      <svg viewBox="0 0 1024 1024" width="22" height="22"><path fill="var(--theme)" d="M880 192H464l-64-96H144c-35.3 0-64 28.7-64 64v672c0 35.3 28.7 64 64 64h736c35.3 0 64-28.7 64-64V256c0-35.3-28.7-64-64-64z"/></svg>
+      <span>{% if category %}{{ category.name }}{% endif %}</span>
+    </h1>
+    <p style="color:var(--minor);font-size:13px;">
+      共 {% if category %}{{ category.count }}{% else %}{{ posts|length }}{% endif %} 篇文章
+    </p>
+  </div>
+
+  <ul class="Xc_home_articie-list">
+    {% for post in posts %}
+      {% include "partials/post-card.html" %}
+    {% endfor %}
+  </ul>
+
+  {% include "partials/pagination.html" %}
+</div>
+{% endblock %}

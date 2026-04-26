@@ -1,0 +1,347 @@
+{
+  "name": "muse",
+  "version": "1.0.0",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "author": "Eric (port) / Miss (original Xc-Three)",
+  "description": "Muse — 缪斯。从 Typecho 主题 Xc-Three（演示站 https://www.tmetu.cn）移植到 Gridea Pro 的图文卡片瀑布流主题。左侧栏导航 + Splash 全屏开场 + 浮动雪花特效 + 主区 4 列封面卡片墙，专为以图为主的博客设计。",
+  "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
+  "preview": "/media/preview.png",
+  "customConfig": [
+    {
+      "name": "siteSubTitle",
+      "label": "副标题",
+      "group": "基础",
+      "type": "input",
+      "value": "🍂总有人间一两风，填我十万八千梦🍂",
+      "note": "在 Splash 开场页和页面 <title> 中展示"
+    },
+    {
+      "name": "authorName",
+      "label": "博主昵称",
+      "group": "基础",
+      "type": "input",
+      "value": "Miss",
+      "note": "左侧栏博主卡片的昵称"
+    },
+    {
+      "name": "authorMotto",
+      "label": "博主签名",
+      "group": "基础",
+      "type": "input",
+      "value": "心中无女人，代码自然神",
+      "note": "左侧栏博主卡片的一句话签名"
+    },
+    {
+      "name": "authorAvatar",
+      "label": "博主头像 URL",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "留空使用站点 avatar；支持 https://thirdqq.qlogo.cn/g?b=qq&nk=QQ号&s=100 这类 QQ 头像 API"
+    },
+    {
+      "name": "favicon",
+      "label": "站点 Favicon",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "网站标签页小图标地址（留空使用主题内置图标）"
+    },
+    {
+      "name": "logoLight",
+      "label": "浅色 Logo",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "浅色模式下的顶栏 Logo（留空使用主题内置 logo-1）"
+    },
+    {
+      "name": "logoDark",
+      "label": "深色 Logo",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "深色模式下的顶栏 Logo（留空使用主题内置 logo-2）"
+    },
+    {
+      "name": "themeMode",
+      "label": "深浅模式默认",
+      "group": "外观",
+      "type": "select",
+      "value": "auto",
+      "options": [
+        {"value": "auto", "label": "跟随系统"},
+        {"value": "light", "label": "始终浅色"},
+        {"value": "dark", "label": "始终深色"},
+        {"value": "user", "label": "由读者切换"}
+      ],
+      "note": "顶栏右上角太阳/月亮按钮可手动切换"
+    },
+    {
+      "name": "primaryColor",
+      "label": "主题色",
+      "group": "外观",
+      "type": "color",
+      "value": "#306fff",
+      "note": "链接、按钮、标签的强调色"
+    },
+    {
+      "name": "primaryColorDark",
+      "label": "深色模式主题色",
+      "group": "外观",
+      "type": "color",
+      "value": "#73aaff",
+      "note": "深色模式下使用的主题色"
+    },
+    {
+      "name": "containerWidth",
+      "label": "容器最大宽度",
+      "group": "外观",
+      "type": "input",
+      "value": "1500",
+      "note": "PC 端最大宽度（像素，不带单位）"
+    },
+    {
+      "name": "asideWidth",
+      "label": "左侧栏宽度",
+      "group": "外观",
+      "type": "input",
+      "value": "260",
+      "note": "PC 端左侧导航栏宽度（像素）"
+    },
+    {
+      "name": "fontFamily",
+      "label": "字体栈",
+      "group": "外观",
+      "type": "input",
+      "value": "PingFang SC, Microsoft YaHei, Hiragino Sans GB, 微软雅黑, Arial, monospace",
+      "note": "全站字体（CSS font-family 字符串）"
+    },
+    {
+      "name": "enableSplash",
+      "label": "启用 Splash 开场",
+      "group": "Splash 开场",
+      "type": "toggle",
+      "value": true,
+      "note": "进站时全屏展示站名 + 副标题，点击或滚动收起"
+    },
+    {
+      "name": "splashImage",
+      "label": "Splash 背景图",
+      "group": "Splash 开场",
+      "type": "input",
+      "value": "",
+      "note": "全屏背景图 URL，可填随机图 API（如 https://api.dujin.org/bing/1920.php）。留空使用主题内置图"
+    },
+    {
+      "name": "splashOnce",
+      "label": "Splash 只显示一次",
+      "group": "Splash 开场",
+      "type": "toggle",
+      "value": false,
+      "note": "开启后每个浏览器 session 只在首次进站显示"
+    },
+    {
+      "name": "enableSnowflake",
+      "label": "启用雪花飘浮特效",
+      "group": "特效",
+      "type": "toggle",
+      "value": true,
+      "note": "页面背景层浮动小圆点雪花动画（canvas 实现，可关闭）"
+    },
+    {
+      "name": "snowflakeColor",
+      "label": "雪花颜色",
+      "group": "特效",
+      "type": "color",
+      "value": "#ffffff",
+      "note": "深色模式下使用此色；浅色模式自动改成主题色"
+    },
+    {
+      "name": "snowflakeCount",
+      "label": "雪花数量",
+      "group": "特效",
+      "type": "input",
+      "value": "60",
+      "note": "屏幕上同时存在的小圆点数量（建议 30-100）"
+    },
+    {
+      "name": "indexFeaturedTag",
+      "label": "首页轮播标签",
+      "group": "首页",
+      "type": "input",
+      "value": "",
+      "note": "首页 Swiper 大轮播筛选的标签名（留空则取最新 5 篇）"
+    },
+    {
+      "name": "indexFeaturedCount",
+      "label": "首页轮播条数",
+      "group": "首页",
+      "type": "input",
+      "value": "5",
+      "note": "首页大轮播展示的文章数（含右侧两张推荐图）"
+    },
+    {
+      "name": "indexHotCount",
+      "label": "首页热度条数",
+      "group": "首页",
+      "type": "input",
+      "value": "4",
+      "note": "首页热度榜（℃ 显示）展示的文章数"
+    },
+    {
+      "name": "indexCardCols",
+      "label": "首页卡片列数",
+      "group": "首页",
+      "type": "select",
+      "value": "4",
+      "options": [
+        {"value": "3", "label": "3 列"},
+        {"value": "4", "label": "4 列"},
+        {"value": "5", "label": "5 列"}
+      ],
+      "note": "PC 端首页文章卡片网格列数"
+    },
+    {
+      "name": "showHeatBadge",
+      "label": "显示热度℃",
+      "group": "首页",
+      "type": "toggle",
+      "value": true,
+      "note": "卡片左上角显示「12,345 ℃」热度标签（数值由阅读数推算）"
+    },
+    {
+      "name": "asideShowGroup",
+      "label": "侧栏分类聚合",
+      "group": "侧栏菜单",
+      "type": "toggle",
+      "value": true,
+      "note": "在主菜单后展开「分类」子菜单（自动从文章分类聚合）"
+    },
+    {
+      "name": "memosTitle",
+      "label": "闪念页标题",
+      "group": "闪念",
+      "type": "input",
+      "value": "闪念",
+      "note": "memos 页面的大标题"
+    },
+    {
+      "name": "memosShowHeatmap",
+      "label": "闪念热力图",
+      "group": "闪念",
+      "type": "toggle",
+      "value": true,
+      "note": "memos 页面顶部展示 53×7 发布热力图"
+    },
+    {
+      "name": "showReadingProgress",
+      "label": "阅读进度条",
+      "group": "增强",
+      "type": "toggle",
+      "value": true,
+      "note": "文章页顶部 2px 阅读进度条"
+    },
+    {
+      "name": "showBackToTop",
+      "label": "返回顶部按钮",
+      "group": "增强",
+      "type": "toggle",
+      "value": true,
+      "note": "页面右下角浮动按钮"
+    },
+    {
+      "name": "showCodeCopy",
+      "label": "代码复制按钮",
+      "group": "增强",
+      "type": "toggle",
+      "value": true,
+      "note": "文章正文 <pre> 代码块右上角的复制按钮"
+    },
+    {
+      "name": "showToc",
+      "label": "文章目录",
+      "group": "增强",
+      "type": "toggle",
+      "value": true,
+      "note": "文章详情页顶部展开目录（来自 post.toc）"
+    },
+    {
+      "name": "viewsScript",
+      "label": "浏览数脚本",
+      "group": "增强",
+      "type": "select",
+      "value": "none",
+      "options": [
+        {"value": "none", "label": "不显示"},
+        {"value": "busuanzi", "label": "不蒜子"}
+      ],
+      "note": "页面浏览数统计（不蒜子需保持开启）"
+    },
+    {
+      "name": "footerSlogan",
+      "label": "页脚标语",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "页脚附加文字"
+    },
+    {
+      "name": "footerICP",
+      "label": "ICP 备案号",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "如：赣ICP备2021000530号-3"
+    },
+    {
+      "name": "footerPolice",
+      "label": "公安备案号",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "如：赣公网安备36012102000663号"
+    },
+    {
+      "name": "footerShowPower",
+      "label": "显示 Powered by",
+      "group": "页脚",
+      "type": "toggle",
+      "value": true,
+      "note": "页脚显示「Powered by Gridea Pro · Muse」"
+    },
+    {
+      "name": "footerExtra",
+      "label": "页脚附加 HTML",
+      "group": "页脚",
+      "type": "textarea",
+      "value": "",
+      "note": "支持 HTML，可注入统计代码 / 弹幕脚本等"
+    },
+    {
+      "name": "customCSS",
+      "label": "自定义 CSS",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到所有页面 <head>，优先级最高"
+    },
+    {
+      "name": "customHeadHtml",
+      "label": "自定义 head HTML",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "注入到 <head> 末尾（meta / link / 统计代码等）"
+    },
+    {
+      "name": "customBodyEndHtml",
+      "label": "自定义 body 末尾 HTML",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "注入到 </body> 之前"
+    }
+  ]
+}

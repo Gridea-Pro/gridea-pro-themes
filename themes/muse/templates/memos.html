@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}{{ theme_config.memosTitle|default:"闪念" }} · {{ config.siteName }}{% endblock %}
+{% block main_class %}memos{% endblock %}
+
+{% block content %}
+<div class="muse-memos-page">
+  <div style="background:var(--background);padding:24px 28px;border-radius:var(--radius-wrap);box-shadow:var(--box-shadow);margin-bottom:18px;">
+    <h1 style="font-size:24px;color:var(--main);margin-bottom:6px;display:flex;align-items:center;gap:10px;">
+      <svg viewBox="0 0 1024 1024" width="22" height="22"><path fill="var(--theme)" d="M512 64a448 448 0 1 0 0 896 448 448 0 0 0 0-896z m48 480h-96a16 16 0 0 1-16-16V272a16 16 0 0 1 16-16h96a16 16 0 0 1 16 16v256a16 16 0 0 1-16 16zm-48 144a64 64 0 1 1 0-128 64 64 0 0 1 0 128z"/></svg>
+      {{ theme_config.memosTitle|default:"闪念" }}
+    </h1>
+    <p style="color:var(--minor);font-size:13px;">记录碎碎念，共 {{ memos|length }} 条</p>
+  </div>
+
+  {% if theme_config.memosShowHeatmap and memos|length > 0 %}
+    {% include "partials/heatmap.html" %}
+  {% endif %}
+
+  <ul class="muse-memo-list">
+    {% if memos|length > 0 %}
+      {% for memo in memos %}
+        <li class="muse-memo-item">
+          <div class="memo-time">{{ memo.createdAt }}</div>
+          <div class="memo-content">{{ memo.content|safe }}</div>
+          {% if memo.tags|length > 0 %}
+            <div class="memo-tags">
+              {% for t in memo.tags %}
+                <span class="tag">#{{ t }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </li>
+      {% endfor %}
+    {% else %}
+      <li class="muse-memo-item" style="text-align:center;color:var(--minor);">还没有任何闪念</li>
+    {% endif %}
+  </ul>
+</div>
+{% endblock %}

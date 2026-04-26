@@ -1,0 +1,8 @@
+{# Gridea Pro 评论标准挂载点：底层评论平台由全局设置注入 #}
+<section class="muse-comments">
+  <div class="muse-comments-title">评论 · {{ post.title }}</div>
+  <div id="gridea-comments"
+       data-post-id="{{ post.id }}"
+       data-post-title="{{ post.title }}"
+       data-post-link="{{ post.link }}"></div>
+</section>

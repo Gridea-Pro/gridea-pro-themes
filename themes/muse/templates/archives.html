@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}归档 · {{ config.siteName }}{% endblock %}
+{% block main_class %}archives{% endblock %}
+
+{% block content %}
+<div class="muse-archives">
+  <h1 style="font-size:24px;color:var(--main);margin-bottom:24px;display:flex;align-items:center;gap:10px;">
+    <svg viewBox="0 0 1024 1024" width="22" height="22"><path fill="var(--theme)" d="M832 192H192c-35.3 0-64 28.7-64 64v544c0 35.3 28.7 64 64 64h640c35.3 0 64-28.7 64-64V256c0-35.3-28.7-64-64-64zM192 256h640v96H192v-96z m640 544H192V416h640v384zM320 480h160v32H320v-32z"/></svg>
+    归档 · 共 {{ posts|length }} 篇文章
+  </h1>
+
+  {% for group in archives %}
+    <section class="muse-archive-year">
+      <h2 class="muse-archive-year-title">{{ group.year }}</h2>
+      <ul class="muse-archive-list">
+        {% for post in group.posts %}
+          <li class="muse-archive-item">
+            <span class="date">{{ post.dateFormat }}</span>
+            <a class="title" href="{{ post.link }}" title="{{ post.title }}">{{ post.title }}</a>
+            {% if post.categories|length > 0 %}
+              <a class="cat" href="{{ post.categories.0.link }}">{{ post.categories.0.name }}</a>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endfor %}
+
+  {# 如果引擎没传 archives，则按月份倒序简单列出 posts #}
+  {% if archives|length == 0 %}
+    <ul class="muse-archive-list">
+      {% for post in posts %}
+        <li class="muse-archive-item">
+          <span class="date">{{ post.dateFormat }}</span>
+          <a class="title" href="{{ post.link }}" title="{{ post.title }}">{{ post.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {% include "partials/pagination.html" %}
+</div>
+{% endblock %}
