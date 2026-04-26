@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} · {{ config.siteName }}{% endblock %}
+{% block meta_description %}{% if post.description %}{{ post.description }}{% else %}{{ config.siteDescription }}{% endif %}{% endblock %}
+{% block meta_keywords %}{{ post.tagsString }}{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{% if post.description %}{{ post.description }}{% else %}{{ config.siteDescription }}{% endif %}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_image %}{% if post.feature %}{{ post.feature }}{% elif config.avatar %}{{ config.avatar }}{% endif %}{% endblock %}
+
+{% block main_class %}post-detail{% endblock %}
+
+{% block content %}
+<article class="muse-post">
+  <header class="muse-post-header">
+    <h1 class="post-title">{{ post.title }}</h1>
+    <div class="post-meta">
+      <span><svg viewBox="0 0 1024 1024" width="13" height="13"><path fill="currentColor" d="M512 64a448 448 0 1 0 0 896 448 448 0 0 0 0-896z m144 528l-160-128V224h64v288l128 102z"/></svg> {{ post.dateFormat }}</span>
+      {% if post.stats and post.stats.minutes > 0 %}
+        <span>· {{ post.stats.text }}</span>
+      {% endif %}
+      {% if post.stats and post.stats.words > 0 %}
+        <span>· {{ post.stats.words }} 字</span>
+      {% endif %}
+      {% if post.categories|length > 0 %}
+        <span>·
+          {% for cat in post.categories %}
+            <a href="{{ cat.link }}">{{ cat.name }}</a>{% if not loop.last %} / {% endif %}
+          {% endfor %}
+        </span>
+      {% endif %}
+      {% if theme_config.viewsScript == "busuanzi" %}
+        <span>· <span id="busuanzi_value_page_pv">…</span> 次阅读</span>
+      {% endif %}
+    </div>
+    {% if post.tags|length > 0 %}
+      <div class="muse-tags-line" style="margin-top:10px;">
+        {% for tag in post.tags %}
+          <a href="{{ tag.link }}" style="font-size:12px;color:var(--theme);background:rgba(48,111,255,.1);padding:3px 10px;border-radius:3px;margin-right:6px;display:inline-block;">#{{ tag.name }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% if post.feature %}
+      <div class="post-cover">
+        <img src="{{ post.feature }}" alt="{{ post.title }}">
+      </div>
+    {% endif %}
+  </header>
+
+  {% if theme_config.showToc and post.toc %}
+    <div class="muse-toc">
+      <div class="muse-toc-title">文章目录</div>
+      {{ post.toc|safe }}
+    </div>
+  {% endif %}
+
+  <div class="muse-post-body">
+    {{ post.content|safe }}
+  </div>
+
+  {# 上下篇 #}
+  {% include "partials/post-nav.html" %}
+
+  {# 评论 #}
+  {% include "partials/comments.html" %}
+</article>
+{% endblock %}

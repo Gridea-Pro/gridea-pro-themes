@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block main_class %}index{% endblock %}
+
+{% block content %}
+<div class="Xc_home">
+
+  {# ===== Swiper 大轮播 + 推荐位 ===== #}
+  {% if posts|length > 0 and pagination.currentPage == 1 %}
+  <div class="Xc_home_roll">
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        {% for post in posts %}
+          {% if loop.index <= 3 %}
+            <div class="swiper-slide">
+              <a class="item" href="{{ post.link }}">
+                <img width="100%" height="100%" class="thumbnail" src="{% if post.feature %}{{ post.feature }}{% else %}/media/images/default-cover.svg{% endif %}" alt="{{ post.title }}">
+                <div class="title">{{ post.title }}</div>
+              </a>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="swiper-pagination"></div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+    </div>
+
+    <div class="Xc_home_roll-recommend">
+      {% for post in posts %}
+        {% if loop.index >= 4 and loop.index <= 5 %}
+          <figure class="item">
+            <a class="thumbnail" href="{{ post.link }}" title="{{ post.title }}">
+              <img width="100%" height="100%" class="lazyload" src="{% if post.feature %}{{ post.feature }}{% else %}/media/images/default-cover.svg{% endif %}" alt="{{ post.title }}">
+            </a>
+            <figcaption class="information">
+              <span class="type">推荐</span>
+              <div class="text">{{ post.title }}</div>
+            </figcaption>
+          </figure>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {# ===== 热度榜（℃ 显示） ===== #}
+  {% if theme_config.showHeatBadge and posts|length > 0 and pagination.currentPage == 1 %}
+  <div class="Xc_home_hot">
+    <ul class="Xc_home_hot-list">
+      {% for post in posts %}
+        {% set hot_limit = theme_config.indexHotCount|default:"4" %}
+        {% if loop.index <= 4 %}
+          <li class="item">
+            <a class="link" href="{{ post.link }}" title="{{ post.title }}">
+              <figure class="inner">
+                <span class="views">{{ post.stats.words }} ℃</span>
+                <img width="100%" height="120" class="image lazyload" src="{% if post.feature %}{{ post.feature }}{% else %}/media/images/default-cover.svg{% endif %}" alt="{{ post.title }}">
+                <figcaption class="title">{{ post.title }}</figcaption>
+              </figure>
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {# ===== 文章卡片网格 ===== #}
+  <ul class="Xc_home_articie-list">
+    {% for post in posts %}
+      {% if not post.hideInList %}
+        {% include "partials/post-card.html" %}
+      {% endif %}
+    {% endfor %}
+  </ul>
+
+  {# ===== 分页 ===== #}
+  {% include "partials/pagination.html" %}
+
+</div>
+{% endblock %}

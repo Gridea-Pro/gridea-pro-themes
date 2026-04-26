@@ -1,0 +1,56 @@
+{# Xc-Three 经典文章卡片：左图右文 + 分类 + 标签 + 元信息（阅读/评论/赞） #}
+<li class="Xc_home_articie-si index3" data-post-id="{{ post.id }}">
+  <div class="Xc_card-img">
+    <a href="{{ post.link }}" rel="noopener">
+      {% if post.feature %}
+        <img class="lazyload" src="{{ post.feature }}" alt="{{ post.title }}" loading="lazy">
+      {% else %}
+        <img class="lazyload" src="/media/images/default-cover.svg" alt="{{ post.title }}" loading="lazy">
+      {% endif %}
+    </a>
+  </div>
+  <div class="Xc_card-main">
+    <div class="Xc_card-title">
+      <a class="Xc_card-title-link" href="{{ post.link }}" title="{{ post.title }}" rel="noopener">
+        {% if post.isTop %}<span class="badge">置顶</span>{% endif %}{{ post.title }}
+      </a>
+    </div>
+    <div class="Xc_card-region">
+      {% if post.categories|length > 0 %}
+        <div class="Xc_card-category">
+          {% for cat in post.categories %}
+            <a class="link" href="{{ cat.link }}" title="{{ cat.name }}">{{ cat.name }}</a>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if post.tags|length > 0 %}
+        <div class="Xc_card-tags">
+          {% for tag in post.tags %}
+            {% if loop.index <= 3 %}
+              <a href="{{ tag.link }}">{{ tag.name }}</a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    <ul class="Xc_card-information">
+      <div class="Xc_card-details-left">
+        <li>{{ post.dateFormat }}</li>
+      </div>
+      <div class="Xc_card-details-right">
+        {% if post.stats %}
+          <li style="margin-right:5px">
+            <svg class="icon2" viewBox="0 0 1024 1024" width="14" height="14">
+              <path fill="currentColor" d="M512 192C234 192 64 416 64 512c0 96 170 320 448 320s448-224 448-320c0-96-170-320-448-320zm0 512a192 192 0 1 1 0-384 192 192 0 0 1 0 384z m0-128a64 64 0 1 0 0-128 64 64 0 0 0 0 128z"/>
+            </svg>{{ post.stats.minutes }}分
+          </li>
+          <li>
+            <svg class="icon2" viewBox="0 0 1024 1024" width="14" height="14">
+              <path fill="currentColor" d="M512 64C264 64 64 264 64 512c0 158 80 296 200 376L240 960l160-50c40 10 70 20 112 20 248 0 448-200 448-448S760 64 512 64z M340 540a40 40 0 1 1 0-80 40 40 0 0 1 0 80z m172 0a40 40 0 1 1 0-80 40 40 0 0 1 0 80z m172 0a40 40 0 1 1 0-80 40 40 0 0 1 0 80z"/>
+            </svg>{{ post.stats.words }}字
+          </li>
+        {% endif %}
+      </div>
+    </ul>
+  </div>
+</li>

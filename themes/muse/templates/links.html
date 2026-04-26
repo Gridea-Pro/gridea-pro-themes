@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}友情链接 · {{ config.siteName }}{% endblock %}
+{% block main_class %}links{% endblock %}
+
+{% block content %}
+<div class="muse-links-page">
+  <div style="background:var(--background);padding:24px 28px;border-radius:var(--radius-wrap);box-shadow:var(--box-shadow);margin-bottom:18px;">
+    <h1 style="font-size:24px;color:var(--main);margin-bottom:6px;display:flex;align-items:center;gap:10px;">
+      <svg viewBox="0 0 1024 1024" width="22" height="22"><path fill="var(--theme)" d="M832 192L640 0H192C156.65 0 128 28.65 128 64v896c0 35.35 28.65 64 64 64h640c35.35 0 64-28.65 64-64V256l-64-64z"/></svg>
+      友情链接 · {{ links|length }} 个
+    </h1>
+    <p style="color:var(--minor);font-size:13px;">这些是站长经常访问、互相欣赏的博客</p>
+  </div>
+
+  <div class="muse-links-grid">
+    {% if links|length > 0 %}
+      {% for link in links %}
+        <a class="muse-link-card" href="{{ link.siteLink }}" target="_blank" rel="noopener nofollow">
+          {% if link.avatar %}
+            <img class="avatar" src="{{ link.avatar }}" alt="{{ link.siteName }}" loading="lazy">
+          {% else %}
+            <img class="avatar" src="/media/images/default-avatar.svg" alt="{{ link.siteName }}">
+          {% endif %}
+          <div class="info">
+            <div class="name">{{ link.siteName }}</div>
+            {% if link.description %}<div class="desc">{{ link.description }}</div>{% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    {% else %}
+      <p style="text-align:center;color:var(--minor);grid-column:1/-1;padding:40px 0;">暂无友情链接，欢迎站长留言申请互链 ✨</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

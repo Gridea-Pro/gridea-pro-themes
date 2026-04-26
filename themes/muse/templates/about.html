@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}关于 · {{ config.siteName }}{% endblock %}
+{% block main_class %}about{% endblock %}
+
+{% block content %}
+<div class="muse-about">
+  <div style="text-align:center;margin-bottom:30px;">
+    {% if config.avatar %}
+      <img src="{{ config.avatar }}" alt="{{ config.siteName }}" style="width:100px;height:100px;border-radius:50%;border:3px solid var(--background);box-shadow:var(--box-shadow);">
+    {% endif %}
+    <h1 style="margin:14px 0 6px;font-size:24px;color:var(--main);text-shadow:none;">{% if theme_config.authorName %}{{ theme_config.authorName }}{% else %}{{ config.siteName }}{% endif %}</h1>
+    {% if theme_config.authorMotto %}
+      <p style="color:var(--minor);">{{ theme_config.authorMotto }}</p>
+    {% elif config.siteDescription %}
+      <p style="color:var(--minor);">{{ config.siteDescription }}</p>
+    {% endif %}
+  </div>
+
+  <hr style="border:none;border-top:1px dashed var(--classB);margin:24px 0;">
+
+  <h2>站点</h2>
+  <p>{{ config.siteName }}{% if theme_config.siteSubTitle %} · {{ theme_config.siteSubTitle }}{% endif %}</p>
+  <p>{{ config.siteDescription }}</p>
+
+  <h2>主题</h2>
+  <p>本博客使用 <a href="https://gridea.pro/" target="_blank" rel="noopener">Gridea Pro</a> 静态生成器 + <a href="https://github.com/Gridea-Pro/gridea-pro-themes/tree/main/themes/muse" target="_blank" rel="noopener">Muse</a> 主题。</p>
+  <p>Muse 主题移植自 Typecho 主题 <a href="https://www.tmetu.cn/" target="_blank" rel="noopener">Xc-Three</a>，由原作者 Miss 设计，左侧栏导航 + 主区卡片瀑布流的图文风布局，配以 Splash 全屏开场和雪花飘浮特效。</p>
+
+  {% if config.domain %}
+    <h2>联系</h2>
+    <p>站点：<a href="{{ config.domain }}/">{{ config.domain }}</a></p>
+  {% endif %}
+</div>
+{% endblock %}

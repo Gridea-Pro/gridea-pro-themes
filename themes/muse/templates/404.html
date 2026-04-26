@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}404 页面未找到 · {{ config.siteName }}{% endblock %}
+{% block main_class %}error-404{% endblock %}
+
+{% block content %}
+<div class="muse-404">
+  <div class="num">404</div>
+  <div class="desc">这里什么也没有，可能是迷失在时间的尽头了 🌙</div>
+  <a class="home-btn" href="{{ config.domain }}/">返回首页</a>
+</div>
+{% endblock %}

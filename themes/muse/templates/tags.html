@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}标签 · {{ config.siteName }}{% endblock %}
+{% block main_class %}tags{% endblock %}
+
+{% block content %}
+<div class="muse-tags-page">
+  <div style="background:var(--background);padding:20px 24px;border-radius:var(--radius-wrap);box-shadow:var(--box-shadow);margin-bottom:18px;">
+    <h1 style="font-size:22px;color:var(--main);margin-bottom:6px;display:flex;align-items:center;gap:10px;">
+      <svg viewBox="0 0 1024 1024" width="20" height="20"><path fill="var(--theme)" d="M868.3 64l-377.66 3.31a108.9 108.9 0 0 0-74.75 30.52L69.51 431.93a109.06 109.06 0 0 0-1.41 155.63l364.7 364.7a109.06 109.06 0 0 0 152.81 1.36L933.55 617.52a109.06 109.06 0 0 0 33.17-75.35l10.84-365.95a109.06 109.06 0 0 0-109.88-112.26z"/></svg>
+      全部标签 · {{ tags|length }} 个
+    </h1>
+    <p style="color:var(--minor);font-size:13px;">每个标签后括号内是该标签下的文章数</p>
+  </div>
+
+  <div class="muse-tag-cloud">
+    {% if tags|length > 0 %}
+      {% for tag in tags %}
+        <a href="{{ tag.link }}" class="muse-tag-cloud-item" title="{{ tag.name }} · {{ tag.count }} 篇">
+          # {{ tag.name }}
+          <span class="count">{{ tag.count }}</span>
+        </a>
+      {% endfor %}
+    {% else %}
+      <p style="color:var(--minor);text-align:center;width:100%;padding:30px 0;">还没有任何标签</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

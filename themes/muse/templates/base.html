@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="muse">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, shrink-to-fit=no, viewport-fit=cover">
+
+  <title>{% block title %}{{ config.siteName }}{% if theme_config.siteSubTitle %} · {{ theme_config.siteSubTitle }}{% endif %}{% endblock %}</title>
+
+  <meta name="description" content="{% block meta_description %}{{ config.siteDescription }}{% endblock %}">
+  <meta name="keywords" content="{% block meta_keywords %}{{ config.siteName }}{% endblock %}">
+
+  {# Open Graph #}
+  <meta property="og:title" content="{% block og_title %}{{ config.siteName }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ config.siteDescription }}{% endblock %}">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:image" content="{% block og_image %}{% if config.avatar %}{{ config.avatar }}{% endif %}{% endblock %}">
+  <meta property="og:site_name" content="{{ config.siteName }}">
+  <meta name="twitter:card" content="summary_large_image">
+
+  {# Favicon #}
+  {% if theme_config.favicon %}
+    <link rel="shortcut icon" href="{{ theme_config.favicon }}">
+  {% else %}
+    <link rel="shortcut icon" href="/media/images/favicon.ico">
+  {% endif %}
+
+  {# 主题样式 #}
+  <link rel="stylesheet" href="/styles/main.css">
+
+  {# 防闪屏：在 CSS 加载前先把 data-night 属性设好 #}
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('data-night');
+        var mode = '{{ theme_config.themeMode|default:"auto" }}';
+        if (saved === 'night') document.documentElement.setAttribute('data-night', 'night');
+        else if (saved !== 'day' && (mode === 'dark' ||
+                  (mode === 'auto' && window.matchMedia &&
+                   window.matchMedia('(prefers-color-scheme: dark)').matches))) {
+          document.documentElement.setAttribute('data-night', 'night');
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  {# 主题色 / 容器宽度 / 字体 / 侧栏宽度 → CSS 变量覆盖 #}
+  <style>
+    html {
+      --theme: {{ theme_config.primaryColor|default:"#306fff" }};
+      --theme-width: {{ theme_config.asideWidth|default:"260" }}px;
+    }
+    html[data-night='night'] body {
+      --theme: {{ theme_config.primaryColorDark|default:"#73aaff" }};
+    }
+    body { font-family: {{ theme_config.fontFamily|default:"PingFang SC, Microsoft YaHei, Hiragino Sans GB, 微软雅黑, Arial, monospace" }}; }
+    .Xc_header, .Xc_total { width: {{ theme_config.containerWidth|default:"1500" }}px; max-width: 100%; }
+    {% if theme_config.indexCardCols == "3" %}.Xc_home_articie-list{grid-template-columns:repeat(3,1fr)!important}{% endif %}
+    {% if theme_config.indexCardCols == "5" %}.Xc_home_articie-list{grid-template-columns:repeat(5,1fr)!important}{% endif %}
+    {% if theme_config.customCSS %}{{ theme_config.customCSS|safe }}{% endif %}
+  </style>
+
+  {# 配置桥接给 main.js #}
+  <script>
+    window.MUSE_CONFIG = {
+      themeMode: "{{ theme_config.themeMode|default:"auto" }}",
+      enableSnowflake: {% if theme_config.enableSnowflake %}true{% else %}false{% endif %},
+      snowflakeColor: "{{ theme_config.snowflakeColor|default:"#ffffff" }}",
+      snowflakeCount: {{ theme_config.snowflakeCount|default:"60" }},
+      primaryColor: "{{ theme_config.primaryColor|default:"#306fff" }}",
+      splashOnce: {% if theme_config.splashOnce %}true{% else %}false{% endif %},
+      showReadingProgress: {% if theme_config.showReadingProgress %}true{% else %}false{% endif %},
+      showBackToTop: {% if theme_config.showBackToTop %}true{% else %}false{% endif %},
+      showCodeCopy: {% if theme_config.showCodeCopy %}true{% else %}false{% endif %}
+    };
+  </script>
+
+  {% block extra_head %}{% endblock %}
+  {% if theme_config.customHeadHtml %}{{ theme_config.customHeadHtml|safe }}{% endif %}
+</head>
+<body>
+
+{# ============ Splash 全屏开场 ============ #}
+{% if theme_config.enableSplash %}
+  {% include "partials/splash.html" %}
+{% endif %}
+
+{# ============ 顶部 Header ============ #}
+{% include "partials/header.html" %}
+
+{# ============ 主体：左侧栏 + 主区 ============ #}
+<div class="Xc_total Xc_Pjax showInUp">
+  {% include "partials/aside.html" %}
+  <div class="aside-lefea-masks"></div>
+
+  <div class="Xc_main-all">
+    <div class="Xc_main {% block main_class %}index{% endblock %}">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+</div>
+
+{# ============ 页脚 ============ #}
+{% include "partials/footer.html" %}
+
+{# ============ 全屏雪花 canvas ============ #}
+{% if theme_config.enableSnowflake %}
+  <canvas id="www_xccx_cc"></canvas>
+{% endif %}
+
+{# ============ 回到顶部 ============ #}
+{% if theme_config.showBackToTop %}
+  <div class="muse-back-to-top" title="返回顶部">
+    <svg viewBox="0 0 1024 1024" width="20" height="20"><path fill="currentColor" d="M 512 320 L 768 576 L 704 640 L 512 448 L 320 640 L 256 576 Z M 256 768 L 768 768 L 768 832 L 256 832 Z"/></svg>
+  </div>
+{% endif %}
+
+{# ============ 阅读进度条容器（main.js 控制 width） ============ #}
+{% if theme_config.showReadingProgress %}
+  <div id="muse-reading-progress"></div>
+{% endif %}
+
+{# ============ 主 JS ============ #}
+<script src="/scripts/main.js"></script>
+
+{% if theme_config.customBodyEndHtml %}{{ theme_config.customBodyEndHtml|safe }}{% endif %}
+{% block extra_body %}{% endblock %}
+</body>
+</html>

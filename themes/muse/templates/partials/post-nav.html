@@ -1,0 +1,24 @@
+<nav class="muse-post-nav" aria-label="上下篇导航">
+  {% if post.prevPost %}
+    <a href="{{ post.prevPost.link }}" class="prev" rel="prev">
+      <span class="label">&laquo; 上一篇</span>
+      <span class="title">{{ post.prevPost.title }}</span>
+    </a>
+  {% else %}
+    <span class="prev placeholder">
+      <span class="label">&laquo; 上一篇</span>
+      <span class="title">没有更早的文章了</span>
+    </span>
+  {% endif %}
+  {% if post.nextPost %}
+    <a href="{{ post.nextPost.link }}" class="next" rel="next">
+      <span class="label">下一篇 &raquo;</span>
+      <span class="title">{{ post.nextPost.title }}</span>
+    </a>
+  {% else %}
+    <span class="next placeholder">
+      <span class="label">下一篇 &raquo;</span>
+      <span class="title">没有更新的文章了</span>
+    </span>
+  {% endif %}
+</nav>
