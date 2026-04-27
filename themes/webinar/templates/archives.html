@@ -12,25 +12,25 @@
 
 <div class="archives-page">
   <h2 class="archives-page__title">归档 · 共 {{ posts|length }} 篇文章</h2>
-  
+
   {% if posts|length > 0 %}
-    {% set grouped = namespace(currentYear="") %}
-    
+    {% set last_year = "" %}
+
     {% for post in posts %}
-      {% set y = post.date[:4] %}
-      
-      {% if y != grouped.currentYear %}
-        {% if not loop.first %}</div>{% endif %}
+      {% set p_year = post.date[0:4] %}
+
+      {% if p_year != last_year %}
+        {% if loop.index > 1 %}</div>{% endif %}
         <div class="archive-year">
-          <h3 class="archive-year__title">{{ y }}</h3>
-        {% set grouped.currentYear = y %}
+          <h3 class="archive-year__title">{{ p_year }}</h3>
+        {% set last_year = p_year %}
       {% endif %}
-      
+
       <div class="archive-post">
-        <span class="archive-post__date">{{ post.date[:10] }}</span>
+        <span class="archive-post__date">{{ post.date[0:10] }}</span>
         <a href="{{ post.link }}" class="archive-post__title">{{ post.title }}</a>
       </div>
-      
+
       {% if loop.last %}</div>{% endif %}
     {% endfor %}
   {% else %}
