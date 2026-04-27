@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}{{ tag.name }} - {{ config.siteName }}{% endblock %}
+{% block content %}
+
+<div class="post__header">
+  <div class="post__back">
+    <svg class="back__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <a class="back__link" href="/">返回</a>
+  </div>
+  <h1 class="post__title"># {{ tag.name }}</h1>
+</div>
+
+<div class="tag-detail__header">
+  <h2 class="tag-detail__title">标签：{{ tag.name }}</h2>
+  <p class="tag-detail__count">共 {{ posts|length }} 篇文章</p>
+</div>
+
+<div class="post__list" style="margin-top: 8px;">
+  {% for post in posts %}
+  <div class="post__item">
+    <div class="post__sidebar">
+      <a class="post__avatar" href="{{ config.siteUrl }}" title="{{ config.siteName }}">
+        <img src="{{ theme_config.headerAvatar or config.avatar or 'https://cdn.v2ex.com/gravatar/000?s=96' }}" alt="{{ config.siteName }}" loading="lazy">
+      </a>
+    </div>
+    <div class="post__main">
+      <div class="post__meta">
+        <span class="meta__name">{{ config.siteName }}</span>
+        <a class="meta__date" href="{{ post.link }}" datetime="{{ post.date }}">{{ post.date }}</a>
+      </div>
+      <div class="post__content">
+        <a href="{{ post.link }}">{{ post.excerpt }}</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% include "partials/pagination.html" %}
+
+{% endblock %}

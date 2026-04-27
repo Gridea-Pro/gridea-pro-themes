@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}文章 - {{ config.siteName }}{% endblock %}
+{% block content %}
+
+<div class="post__header">
+  <div class="post__back">
+    <svg class="back__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <a class="back__link" href="/">返回</a>
+  </div>
+  <h1 class="post__title">全部文章</h1>
+</div>
+
+{% include "partials/tabs.html" %}
+
+<div class="post__list">
+  {% for post in posts %}
+  <div class="post__item">
+    <div class="post__sidebar">
+      <a class="post__avatar" href="{{ config.siteUrl }}" title="{{ config.siteName }}">
+        <img src="{{ theme_config.headerAvatar or config.avatar or 'https://cdn.v2ex.com/gravatar/000?s=96' }}" alt="{{ config.siteName }}" loading="lazy">
+      </a>
+    </div>
+    <div class="post__main">
+      <div class="post__meta">
+        <span class="meta__name">{{ config.siteName }}</span>
+        <a class="meta__date" href="{{ post.link }}" datetime="{{ post.date }}">{{ post.date }}</a>
+      </div>
+      <div class="post__content">
+        <a href="{{ post.link }}">{{ post.excerpt }}</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% include "partials/pagination.html" %}
+
+{% endblock %}

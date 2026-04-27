@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}{{ post.title }} - {{ config.siteName }}{% endblock %}
+{% block head %}
+{% if post.meta %}
+<meta name="description" content="{{ post.meta }}">
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<div class="post__header">
+  <div class="post__back">
+    <svg class="back__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <a class="back__link" href="/">返回</a>
+  </div>
+  <h1 class="post__title">{{ post.title }}</h1>
+</div>
+
+<div class="post__detail">
+  <div class="post__item" style="padding-bottom: 28px;">
+    <div class="post__sidebar">
+      <a class="post__avatar" href="{{ config.siteUrl }}" title="{{ config.siteName }}">
+        <img src="{{ theme_config.headerAvatar or config.avatar or 'https://cdn.v2ex.com/gravatar/000?s=96' }}" alt="{{ config.siteName }}" loading="lazy">
+      </a>
+    </div>
+    <div class="post__main">
+      <div class="post__meta">
+        <span class="meta__name">{{ config.siteName }}</span>
+        <a class="meta__date" href="{{ post.link }}" datetime="{{ post.date }}">{{ post.date }}</a>
+      </div>
+      <div class="post__content">
+        {{ post.content }}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if post.prevPost or post.nextPost %}
+<div class="post__navigation">
+  {% if post.prevPost %}
+  <a href="{{ post.prevPost.link }}" class="post__nav-item">
+    <div class="post__nav-label">← 上一篇</div>
+    <div class="post__nav-title">{{ post.prevPost.title }}</div>
+  </a>
+  {% else %}
+  <div class="post__nav-item"></div>
+  {% endif %}
+  {% if post.nextPost %}
+  <a href="{{ post.nextPost.link }}" class="post__nav-item post__nav-item--next">
+    <div class="post__nav-label">下一篇 →</div>
+    <div class="post__nav-title">{{ post.nextPost.title }}</div>
+  </a>
+  {% else %}
+  <div class="post__nav-item"></div>
+  {% endif %}
+</div>
+{% endif %}
+
+{% include "partials/comments.html" %}
+
+{% endblock %}

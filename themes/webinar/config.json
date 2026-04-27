@@ -1,0 +1,184 @@
+{
+  "name": "webinar",
+  "version": "1.0.0",
+  "author": "Gridea Pro",
+  "description": "A Weibo-style microblog theme inspired by Sagittarius. Features avatar cards, category tabs, sidebar stats, and a social-media-like post stream.",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "customConfig": [
+    {
+      "name": "logo",
+      "label": "站点 Logo",
+      "group": "基础设置",
+      "type": "picture-upload",
+      "value": "",
+      "note": "导航栏 Logo，推荐尺寸 40x40"
+    },
+    {
+      "name": "avatarUrl",
+      "label": "头像源",
+      "group": "基础设置",
+      "type": "select",
+      "value": "v2ex",
+      "options": [
+        { "label": "v2ex", "value": "v2ex" },
+        { "label": "loli", "value": "loli" },
+        { "label": "gravatar", "value": "gravatar" }
+      ],
+      "note": "评论头像使用的 Gravatar 镜像源"
+    },
+    {
+      "name": "bgMode",
+      "label": "背景模式",
+      "group": "基础设置",
+      "type": "select",
+      "value": "color",
+      "options": [
+        { "label": "图片模式", "value": "image" },
+        { "label": "纯色模式", "value": "color" }
+      ],
+      "note": "切换背景显示模式"
+    },
+    {
+      "name": "bgImage",
+      "label": "背景图片 URL",
+      "group": "基础设置",
+      "type": "input",
+      "value": "",
+      "note": "背景模式为图片时生效"
+    },
+    {
+      "name": "bgColor",
+      "label": "背景颜色",
+      "group": "基础设置",
+      "type": "input",
+      "value": "#f1f2f5",
+      "note": "背景模式为纯色时生效，默认为浅灰色"
+    },
+    {
+      "name": "headerImage",
+      "label": "卡片背景图",
+      "group": "首页设置",
+      "type": "picture-upload",
+      "value": "",
+      "note": "个人信息卡片背景图"
+    },
+    {
+      "name": "headerAvatar",
+      "label": "卡片头像",
+      "group": "首页设置",
+      "type": "picture-upload",
+      "value": "",
+      "note": "卡片头像图片，留空则使用站点头像"
+    },
+    {
+      "name": "headerGender",
+      "label": "性别显示",
+      "group": "首页设置",
+      "type": "select",
+      "value": "male",
+      "options": [
+        { "label": "男", "value": "male" },
+        { "label": "女", "value": "female" },
+        { "label": "不显示", "value": "none" }
+      ]
+    },
+    {
+      "name": "showStat",
+      "label": "显示统计",
+      "group": "侧边栏设置",
+      "type": "toggle",
+      "value": true,
+      "note": "在侧边栏显示文章/标签/分类统计"
+    },
+    {
+      "name": "showRecentComments",
+      "label": "最近评论",
+      "group": "侧边栏设置",
+      "type": "toggle",
+      "value": true,
+      "note": "在侧边栏显示最近评论"
+    },
+    {
+      "name": "recentCommentsCount",
+      "label": "最近评论数量",
+      "group": "侧边栏设置",
+      "type": "select",
+      "value": "5",
+      "options": [
+        { "label": "3 条", "value": "3" },
+        { "label": "5 条", "value": "5" },
+        { "label": "8 条", "value": "8" },
+        { "label": "10 条", "value": "10" }
+      ]
+    },
+    {
+      "name": "showSearch",
+      "label": "显示搜索",
+      "group": "功能开关",
+      "type": "toggle",
+      "value": true,
+      "note": "在导航栏显示搜索入口"
+    },
+    {
+      "name": "showHeatmap",
+      "label": "闪念热力图",
+      "group": "功能开关",
+      "type": "toggle",
+      "value": true,
+      "note": "在闪念页显示发布频次热力图"
+    },
+    {
+      "name": "defaultTheme",
+      "label": "默认主题",
+      "group": "外观设置",
+      "type": "select",
+      "value": "light",
+      "options": [
+        { "label": "浅色", "value": "light" },
+        { "label": "深色", "value": "dark" }
+      ],
+      "note": "首次访问时的默认主题"
+    },
+    {
+      "name": "primaryColor",
+      "label": "主题色",
+      "group": "外观设置",
+      "type": "input",
+      "value": "#ff8200",
+      "note": "主色调，默认橙黄色"
+    },
+    {
+      "name": "heatmapColor",
+      "label": "热力图主色",
+      "group": "外观设置",
+      "type": "input",
+      "value": "#39d353",
+      "note": "闪念热力图最深色块"
+    },
+    {
+      "name": "footerInfo",
+      "label": "页脚信息",
+      "group": "基础设置",
+      "type": "textarea",
+      "value": "",
+      "note": "支持 HTML"
+    },
+    {
+      "name": "customCss",
+      "label": "自定义 CSS",
+      "group": "高级设置",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到主样式后面"
+    },
+    {
+      "name": "customJs",
+      "label": "自定义 JavaScript",
+      "group": "高级设置",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到页面底部"
+    }
+  ]
+}

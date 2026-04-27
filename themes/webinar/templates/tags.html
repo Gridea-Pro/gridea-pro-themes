@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}标签 - {{ config.siteName }}{% endblock %}
+{% block content %}
+
+<div class="post__header">
+  <div class="post__back">
+    <svg class="back__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <a class="back__link" href="/">返回</a>
+  </div>
+  <h1 class="post__title">标签</h1>
+</div>
+
+<div class="tags-page">
+  <h2 class="tags-page__title">全部标签 · 共 {{ tags|length }} 个</h2>
+  
+  <div class="tags-cloud">
+    {% for tag in tags %}
+    <a href="{{ tag.link }}" class="tag-chip">
+      {{ tag.name }}
+      {% if tag.count is defined %}
+      <span class="tag-chip__count">{{ tag.count }}</span>
+      {% endif %}
+    </a>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

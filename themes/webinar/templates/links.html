@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}友情链接 - {{ config.siteName }}{% endblock %}
+{% block content %}
+
+<div class="post__header">
+  <div class="post__back">
+    <svg class="back__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <a class="back__link" href="/">返回</a>
+  </div>
+  <h1 class="post__title">友情链接</h1>
+</div>
+
+<div class="links-page">
+  {% if page and page.content %}
+  <div class="links-page__intro">
+    <div class="post__content" style="font-size:14px;">{{ page.content }}</div>
+  </div>
+  {% endif %}
+
+  <div class="links-list">
+    {% for link in links %}
+    <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer" class="links-item">
+      <span class="links-item__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      </span>
+      <div class="links-item__main">
+        <span class="links-item__name">{{ link.name }}</span>
+        {% if link.description %}
+        <span class="links-item__desc">{{ link.description }}</span>
+        {% endif %}
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+
+  {% if links|length == 0 %}
+  <div class="links-empty">
+    <p>暂无友链</p>
+  </div>
+  {% endif %}
+</div>
+
+{% include "partials/comments.html" %}
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% if pagination and (pagination.hasNext or pagination.hasPrev) %}
+<div class="pagination">
+  {% if pagination.hasPrev %}
+  <a href="{{ pagination.prevPageLink }}" class="pagination__item pagination__item--prev">← 上一页</a>
+  {% endif %}
+  {% for page in pagination.pages %}
+  <a href="{{ page.link }}" class="pagination__item{% if page.isCurrent %} active{% endif %}">{{ page.num }}</a>
+  {% endfor %}
+  {% if pagination.hasNext %}
+  <a href="{{ pagination.nextPageLink }}" class="pagination__item pagination__item--next">下一页 →</a>
+  {% endif %}
+</div>
+{% endif %}

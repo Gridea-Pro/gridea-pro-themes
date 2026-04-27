@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}页面不存在 - {{ config.siteName }}{% endblock %}
+{% block content %}
+
+<div class="page-404">
+  <div class="page-404__code">404</div>
+  <p class="page-404__text">你访问的页面不存在</p>
+  <a href="/" class="page-404__link">返回首页</a>
+</div>
+
+{% endblock %}

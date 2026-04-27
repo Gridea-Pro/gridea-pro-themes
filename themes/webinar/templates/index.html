@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}{{ config.siteName }}{% endblock %}
+{% block content %}
+
+{% include "partials/tabs.html" %}
+
+<div class="post__list">
+  {% for post in posts %}
+  <div class="post__item">
+    <div class="post__sidebar">
+      <a class="post__avatar" href="{{ config.siteUrl }}" title="{{ config.siteName }}">
+        <img src="{{ theme_config.headerAvatar or config.avatar or 'https://cdn.v2ex.com/gravatar/000?s=96' }}" alt="{{ config.siteName }}" loading="lazy">
+      </a>
+    </div>
+    <div class="post__main">
+      <div class="post__meta">
+        <span class="meta__name">{{ config.siteName }}</span>
+        <a class="meta__date" href="{{ post.link }}" datetime="{{ post.date }}">{{ post.date }}</a>
+      </div>
+      <div class="post__content">
+        <a href="{{ post.link }}">{{ post.excerpt }}</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% if pagination.hasNext or pagination.hasPrev %}
+<div class="pagination">
+  {% if pagination.hasPrev %}
+  <a href="{{ pagination.prevPageLink }}" class="pagination__item pagination__item--prev">← 上一页</a>
+  {% endif %}
+  {% for page in pagination.pages %}
+  <a href="{{ page.link }}" class="pagination__item{% if page.isCurrent %} active{% endif %}">{{ page.num }}</a>
+  {% endfor %}
+  {% if pagination.hasNext %}
+  <a href="{{ pagination.nextPageLink }}" class="pagination__item pagination__item--next">下一页 →</a>
+  {% endif %}
+</div>
+{% endif %}
+
+{% endblock %}

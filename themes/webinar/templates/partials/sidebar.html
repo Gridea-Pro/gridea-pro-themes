@@ -1,0 +1,59 @@
+<aside class="site__sidebar">
+  {% if theme_config.showStat %}
+  <div class="stat-list">
+    <div class="stat-item">
+      <div class="stat-item__value">{{ stats.postCount }}</div>
+      <div class="stat-item__label">文章</div>
+    </div>
+    {% if stats.commentCount is defined %}
+    <div class="stat-item">
+      <div class="stat-item__value">{{ stats.commentCount }}</div>
+      <div class="stat-item__label">评论</div>
+    </div>
+    {% endif %}
+    <div class="stat-item">
+      <div class="stat-item__value">{{ tags|length }}</div>
+      <div class="stat-item__label">标签</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-item__value">{{ categories|length }}</div>
+      <div class="stat-item__label">分类</div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="info-list">
+    {% if config.siteDescription %}
+    <div class="info-item">
+      <span class="info-item__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </span>
+      <span class="info-item__value">{{ config.siteDescription }}</span>
+    </div>
+    {% endif %}
+    {% if config.siteEmail %}
+    <div class="info-item">
+      <span class="info-item__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </span>
+      <a class="info-item__value" href="mailto:{{ config.siteEmail }}">{{ config.siteEmail }}</a>
+    </div>
+    {% endif %}
+  </div>
+
+  {% if theme_config.showRecentComments and recentComments|length > 0 %}
+  <div class="recent-comments">
+    <h3 class="recent-comments__title">最近评论</h3>
+    <div class="recent-comments__list">
+      {% for comment in recentComments[:theme_config.recentCommentsCount|default:5|to_int] %}
+      <div class="recent-comments__item">
+        <img class="recent-comments__avatar"
+          src="{{ comment.avatar or 'https://cdn.v2ex.com/gravatar/' + comment.mailMd5|default:'000' + '?s=64' }}"
+          alt="{{ comment.author }}" loading="lazy">
+        <a href="{{ comment.link }}" class="recent-comments__content">{{ comment.content }}</a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</aside>

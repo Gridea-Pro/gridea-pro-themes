@@ -1,0 +1,85 @@
+<nav class="site__nav">
+  <a class="site__nav__left" href="/">
+    {% if theme_config.logo %}
+    <div class="site__nav__logo">
+      <img src="{{ theme_config.logo }}" alt="{{ config.siteName }}" />
+    </div>
+    {% endif %}
+    <div class="site__nav__title">{{ config.siteName }}</div>
+  </a>
+
+  <div class="site__nav__center">
+    <div class="site__nav__item site__nav__item--dropdown">
+      <a href="javascript:void(0)">
+        <span>分类</span>
+      </a>
+      <div class="site__nav__dropdown-menu">
+        {% for category in categories %}
+        <a href="{{ category.link }}" class="site__nav__dropdown-item">{{ category.name }}</a>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="site__nav__item">
+      <a href="/tags">标签</a>
+    </div>
+    <div class="site__nav__item">
+      <a href="/archives">归档</a>
+    </div>
+    <div class="site__nav__item">
+      <a href="/memos">闪念</a>
+    </div>
+    {% for page in pages %}
+    {% if page.isPublished %}
+    <div class="site__nav__item">
+      <a href="{{ page.link }}">{{ page.title }}</a>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="site__nav__right">
+    <button class="theme-toggle-btn" id="theme-toggle" aria-label="切换主题">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    {% if theme_config.showSearch %}
+    <button class="site__nav__icon-btn" id="search-toggle" aria-label="搜索">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    {% endif %}
+  </div>
+
+  <div class="site__nav__mobile-toggle" id="mobile-toggle">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <div class="site__nav__mobile-menu" id="mobile-menu">
+    <div class="site__nav__mobile-item">
+      <a href="/">首页</a>
+    </div>
+    <div class="site__nav__mobile-item">
+      <a href="/tags">标签</a>
+    </div>
+    <div class="site__nav__mobile-item">
+      <a href="/archives">归档</a>
+    </div>
+    <div class="site__nav__mobile-item">
+      <a href="/memos">闪念</a>
+    </div>
+    {% for category in categories %}
+    <div class="site__nav__mobile-item">
+      <a href="{{ category.link }}">{{ category.name }}</a>
+    </div>
+    {% endfor %}
+    {% for page in pages %}
+    {% if page.isPublished %}
+    <div class="site__nav__mobile-item">
+      <a href="{{ page.link }}">{{ page.title }}</a>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</nav>

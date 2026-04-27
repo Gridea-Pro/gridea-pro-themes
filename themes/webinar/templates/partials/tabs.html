@@ -1,0 +1,10 @@
+<div class="tab-list">
+  <div class="tab-item{% if not category %} active{% endif %}">
+    <a href="/">全部</a>
+  </div>
+  {% for cat in categories %}
+  <div class="tab-item{% if category and category.slug == cat.slug %} active{% endif %}">
+    <a href="{{ cat.link }}">{{ cat.name }}</a>
+  </div>
+  {% endfor %}
+</div>
