@@ -11,13 +11,15 @@
 </div>
 
 <div class="memos-page">
-  {% if theme_config.showHeatmap and memoStats is defined %}
+  {% if theme_config.showHeatmap %}
   <div class="heatmap-section">
     <h3 class="heatmap-section__title">发布热力图</h3>
     <div class="github-heatmap" id="memos-heatmap">
+      {% if memoStats and memoStats.cells %}
       {% for cell in memoStats.cells %}
       <span class="heatmap-cell" data-level="{{ cell.level }}" title="{{ cell.date }}: {{ cell.count }} 条"></span>
       {% endfor %}
+      {% endif %}
     </div>
   </div>
   {% endif %}

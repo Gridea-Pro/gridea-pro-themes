@@ -17,9 +17,7 @@
     {% for tag in tags %}
     <a href="{{ tag.link }}" class="tag-chip">
       {{ tag.name }}
-      {% if tag.count is defined %}
-      <span class="tag-chip__count">{{ tag.count }}</span>
-      {% endif %}
+      <span class="tag-chip__count">{{ tag.count|default:0 }}</span>
     </a>
     {% endfor %}
   </div>

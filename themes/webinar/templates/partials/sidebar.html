@@ -5,12 +5,10 @@
       <div class="stat-item__value">{{ stats.postCount }}</div>
       <div class="stat-item__label">文章</div>
     </div>
-    {% if stats.commentCount is defined %}
     <div class="stat-item">
-      <div class="stat-item__value">{{ stats.commentCount }}</div>
+      <div class="stat-item__value">{{ stats.commentCount|default:0 }}</div>
       <div class="stat-item__label">评论</div>
     </div>
-    {% endif %}
     <div class="stat-item">
       <div class="stat-item__value">{{ tags|length }}</div>
       <div class="stat-item__label">标签</div>
@@ -45,13 +43,16 @@
   <div class="recent-comments">
     <h3 class="recent-comments__title">最近评论</h3>
     <div class="recent-comments__list">
-      {% for comment in recentComments[:theme_config.recentCommentsCount|default:5|to_int] %}
+      {% set maxCount = theme_config.recentCommentsCount|default:5|to_int %}
+      {% for comment in recentComments %}
+      {% if loop.index0 < maxCount %}
       <div class="recent-comments__item">
         <img class="recent-comments__avatar"
-          src="{{ comment.avatar or 'https://cdn.v2ex.com/gravatar/' + comment.mailMd5|default:'000' + '?s=64' }}"
+          src="{{ comment.avatar }}"
           alt="{{ comment.author }}" loading="lazy">
         <a href="{{ comment.link }}" class="recent-comments__content">{{ comment.content }}</a>
       </div>
+      {% endif %}
       {% endfor %}
     </div>
   </div>
