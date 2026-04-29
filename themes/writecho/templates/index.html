@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ config.siteName }}{% if config.siteDescription %} · {{ config.siteDescription }}{% endif %}{% endblock %}
+{% block og_title %}{{ config.siteName }}{% endblock %}
+
+{% block content %}
+  {% if theme_config.indexShowNotice and theme_config.noticeImage %}
+    <div class="notice">
+      <img src="{{ theme_config.noticeImage }}" alt="公告">
+    </div>
+  {% endif %}
+
+  {% if posts and posts|length > 0 %}
+    <div class="post-list">
+      {% for post in posts %}
+        {% include "partials/post-card.html" %}
+      {% endfor %}
+    </div>
+
+    {% include "partials/pagination.html" %}
+  {% else %}
+    <div class="empty-state">
+      <p>笔尖还在等纸——尚无文章。</p>
+    </div>
+  {% endif %}
+{% endblock %}

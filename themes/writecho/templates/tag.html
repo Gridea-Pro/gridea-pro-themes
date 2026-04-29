@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}标签：{% if current_tag %}{{ current_tag.name }}{% elif tag %}{{ tag.name }}{% endif %} · {{ config.siteName }}{% endblock %}
+{% block og_title %}标签：{% if current_tag %}{{ current_tag.name }}{% elif tag %}{{ tag.name }}{% endif %}{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1># {% if current_tag %}{{ current_tag.name }}{% elif tag %}{{ tag.name }}{% else %}标签{% endif %}</h1>
+    <p>{% if current_tag and current_tag.count %}该标签下共 {{ current_tag.count }} 篇{% elif tag and tag.count %}该标签下共 {{ tag.count }} 篇{% endif %}</p>
+    <span class="deco"></span>
+  </header>
+
+  {% if posts and posts|length > 0 %}
+    <div class="post-list">
+      {% for post in posts %}
+        {% include "partials/post-card.html" %}
+      {% endfor %}
+    </div>
+    {% include "partials/pagination.html" %}
+  {% else %}
+    <div class="empty-state"><p>该标签下尚无文章。</p></div>
+  {% endif %}
+{% endblock %}

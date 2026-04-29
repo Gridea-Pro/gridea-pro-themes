@@ -1,0 +1,49 @@
+{# 期望上下文：post 对象 #}
+<article class="post-card">
+  {% if theme_config.indexShowFeature and post.feature %}
+    <a class="post-cover" href="{{ post.link }}">
+      <img src="{{ post.feature }}" alt="{{ post.title }}" loading="lazy">
+    </a>
+  {% endif %}
+
+  <div class="post-card-meta">
+    <time datetime="{{ post.dateFormat }}">{{ post.dateFormat }}</time>
+    {% if post.categories|length > 0 %}
+      <span class="sep"></span>
+      <span>
+        {% for cat in post.categories %}
+          <a href="{{ cat.link }}">{{ cat.name }}</a>{% if not loop.last %} · {% endif %}
+        {% endfor %}
+      </span>
+    {% endif %}
+    {% if post.stats %}
+      <span class="sep"></span>
+      <span>{{ post.stats.minutes|default:1 }} 分钟阅读</span>
+    {% endif %}
+  </div>
+
+  <h2 class="post-card-title">
+    <a href="{{ post.link }}">{{ post.title }}</a>
+  </h2>
+
+  {% if post.description %}
+    <p class="post-card-excerpt">{{ post.description|truncatechars:200 }}</p>
+  {% elif post.abstract %}
+    <p class="post-card-excerpt">{{ post.abstract|striptags|truncatechars:200 }}</p>
+  {% else %}
+    <p class="post-card-excerpt">{{ post.content|excerpt:200 }}</p>
+  {% endif %}
+
+  <div class="post-card-footer">
+    {% if post.tags|length > 0 %}
+      <div class="post-card-tags">
+        {% for tag in post.tags %}
+          <a href="{{ tag.link }}">{{ tag.name }}</a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <span></span>
+    {% endif %}
+    <a class="post-card-more" href="{{ post.link }}">阅读全文</a>
+  </div>
+</article>

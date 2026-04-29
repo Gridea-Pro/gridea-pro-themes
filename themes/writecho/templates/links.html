@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}友链 · {{ config.siteName }}{% endblock %}
+{% block og_title %}友链 · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1>友情链接</h1>
+    <p>笔尖之外，还有许多有趣的人</p>
+    <span class="deco"></span>
+  </header>
+
+  {% if links and links|length > 0 %}
+    <div class="links">
+      {% for link in links %}
+        <a class="link-card" href="{{ link.siteLink }}" target="_blank" rel="noopener noreferrer">
+          <span class="link-avatar">
+            {% if link.avatar %}
+              <img src="{{ link.avatar }}" alt="{{ link.siteName }}" loading="lazy">
+            {% endif %}
+          </span>
+          <span class="link-info">
+            <span class="link-name">{{ link.siteName }}</span>
+            {% if link.description %}<span class="link-desc">{{ link.description }}</span>{% endif %}
+          </span>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state"><p>还没有友链。</p></div>
+  {% endif %}
+{% endblock %}

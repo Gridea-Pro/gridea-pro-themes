@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}归档 · {{ config.siteName }}{% endblock %}
+{% block og_title %}归档 · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1>归档</h1>
+    <p>按年份串成时间轴，从最近到从前</p>
+    <span class="deco"></span>
+  </header>
+
+  {% if archives and archives|length > 0 %}
+    <div class="archives">
+      {% for year_group in archives %}
+        <section class="archive-year">
+          <h2 class="archive-year-title">{{ year_group.year }}</h2>
+          <ul class="archive-list">
+            {% for post in year_group.posts %}
+              <li class="archive-item">
+                <span class="archive-item-date">{{ post.dateFormat }}</span>
+                <a class="archive-item-title" href="{{ post.link }}">{{ post.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        </section>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state"><p>纸面还很白净——尚无归档。</p></div>
+  {% endif %}
+{% endblock %}

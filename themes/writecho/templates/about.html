@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}关于 · {{ config.siteName }}{% endblock %}
+{% block og_title %}关于 · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+  <article class="about post-detail">
+    <header class="about-card">
+      {% if config.avatar %}
+        <div class="about-avatar"><img src="{{ config.avatar }}" alt="{{ config.siteName }}"></div>
+      {% endif %}
+      <h1 class="about-name">{{ config.siteName }}</h1>
+      {% if theme_config.siteSubTitle %}
+        <p class="about-desc">{{ theme_config.siteSubTitle }}</p>
+      {% elif config.siteDescription %}
+        <p class="about-desc">{{ config.siteDescription }}</p>
+      {% endif %}
+    </header>
+
+    <div class="post-content">
+      {% if post and post.content %}
+        {{ post.content|safe }}
+      {% else %}
+        <p>这是关于页。请在 Gridea Pro 客户端「页面」中创建/编辑「关于」，正文会出现在这里。</p>
+      {% endif %}
+    </div>
+  </article>
+{% endblock %}

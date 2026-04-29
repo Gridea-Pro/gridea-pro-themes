@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}博客 · {{ config.siteName }}{% endblock %}
+{% block og_title %}博客 · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1>博客</h1>
+    <p>所有文章一览，按时间倒序</p>
+    <span class="deco"></span>
+  </header>
+
+  {% if posts and posts|length > 0 %}
+    <div class="post-list">
+      {% for post in posts %}
+        {% include "partials/post-card.html" %}
+      {% endfor %}
+    </div>
+    {% include "partials/pagination.html" %}
+  {% else %}
+    <div class="empty-state"><p>这里还很空，过段时间再来看看吧。</p></div>
+  {% endif %}
+{% endblock %}

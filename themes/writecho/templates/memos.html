@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}{{ theme_config.memosTitle|default:"闪念" }} · {{ config.siteName }}{% endblock %}
+{% block og_title %}{{ theme_config.memosTitle|default:"闪念" }} · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1>{{ theme_config.memosTitle|default:"闪念" }}</h1>
+    <p>笔尖一闪而过的念头，记下来</p>
+    <span class="deco"></span>
+  </header>
+
+  {% include "partials/heatmap.html" %}
+
+  {% if memos and memos|length > 0 %}
+    <div class="memos">
+      {% for memo in memos %}
+        <article class="memo" data-date="{{ memo.createdAtISO }}">
+          <p class="memo-meta">{{ memo.createdAt }}</p>
+          <div class="memo-content">{{ memo.content|safe }}</div>
+          {% if memo.tags|length > 0 %}
+            <div class="memo-tags">
+              {% for t in memo.tags %}<span class="memo-tag">{{ t }}</span>{% endfor %}
+            </div>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state"><p>还没有闪念。</p></div>
+  {% endif %}
+{% endblock %}

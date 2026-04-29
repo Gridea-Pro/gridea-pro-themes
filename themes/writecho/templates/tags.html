@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}标签 · {{ config.siteName }}{% endblock %}
+{% block og_title %}标签 · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1>标签</h1>
+    <p>用关键字找回相关的字句</p>
+    <span class="deco"></span>
+  </header>
+
+  {% if tags and tags|length > 0 %}
+    <div class="tag-cloud">
+      {% for tag in tags %}
+        <a href="{{ tag.link }}">{{ tag.name }}<span class="count">{{ tag.count }}</span></a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state"><p>还没有标签。</p></div>
+  {% endif %}
+{% endblock %}

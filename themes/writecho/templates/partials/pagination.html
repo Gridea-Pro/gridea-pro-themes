@@ -1,0 +1,19 @@
+{% if pagination and (pagination.hasPrev or pagination.hasNext) %}
+  <nav class="pagination" aria-label="分页">
+    {% if pagination.hasPrev %}
+      <a href="{{ pagination.prevURL }}" rel="prev">« 上一页</a>
+    {% else %}
+      <span class="is-disabled">« 上一页</span>
+    {% endif %}
+
+    {% if pagination.totalPages %}
+      <span class="pagination-info">第 {{ pagination.currentPage }} / {{ pagination.totalPages }} 页</span>
+    {% endif %}
+
+    {% if pagination.hasNext %}
+      <a href="{{ pagination.nextURL }}" rel="next">下一页 »</a>
+    {% else %}
+      <span class="is-disabled">下一页 »</span>
+    {% endif %}
+  </nav>
+{% endif %}

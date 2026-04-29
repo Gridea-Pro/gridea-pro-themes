@@ -1,0 +1,29 @@
+{# 上下篇导航。
+   注意：Gridea Pro 的 prevPost = 数组前一项（更新的一篇），与 Hexo / Hugo 习惯相反。
+   本主题使用中性标签「上一篇 / 下一篇」（不带「更早 / 更新」方向暗示）。#}
+{% if post.prevPost or post.nextPost %}
+  <nav class="post-nav" aria-label="文章导航">
+    {% if post.prevPost %}
+      <a class="post-nav-item prev" href="{{ post.prevPost.link }}" rel="prev">
+        <span class="post-nav-label">« 上一篇</span>
+        <span class="post-nav-title">{{ post.prevPost.title }}</span>
+      </a>
+    {% else %}
+      <span class="post-nav-item prev placeholder">
+        <span class="post-nav-label">« 已是最新</span>
+        <span class="post-nav-title">没有了</span>
+      </span>
+    {% endif %}
+    {% if post.nextPost %}
+      <a class="post-nav-item next" href="{{ post.nextPost.link }}" rel="next">
+        <span class="post-nav-label">下一篇 »</span>
+        <span class="post-nav-title">{{ post.nextPost.title }}</span>
+      </a>
+    {% else %}
+      <span class="post-nav-item next placeholder">
+        <span class="post-nav-label">已是最早 »</span>
+        <span class="post-nav-title">没有了</span>
+      </span>
+    {% endif %}
+  </nav>
+{% endif %}

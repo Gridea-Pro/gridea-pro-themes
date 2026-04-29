@@ -1,0 +1,11 @@
+{# 全屏搜索 modal：基于 Gridea Pro 引擎自动产出的 /api/search.json 索引。
+   触发：顶栏搜索按钮 / 按键 "/" / Cmd+K（Ctrl+K）。 #}
+<div id="search-modal" class="search-modal" role="dialog" aria-modal="true" aria-labelledby="search-input-label">
+  <div class="search-modal-panel" role="document">
+    <label for="search-modal-input" id="search-input-label" class="visually-hidden" style="position:absolute;left:-9999px">搜索</label>
+    <input class="search-modal-input" id="search-modal-input" type="search" placeholder="搜索文章 / 标签 / 内容…" autocomplete="off">
+    <p class="search-modal-tip">↑ ↓ 选择 · Enter 进入 · Esc 关闭 · / 唤起 · Cmd+K / Ctrl+K 唤起</p>
+    <div class="search-modal-results" id="search-modal-results"></div>
+    <div class="search-modal-empty" style="display:none"></div>
+  </div>
+</div>

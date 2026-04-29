@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer-when-downgrade">
+
+  <title>{% block title %}{{ config.siteName }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{{ config.siteDescription|default:"" }}{% endblock %}">
+  <meta name="keywords" content="{% block keywords %}{% endblock %}">
+
+  {# ---------- Favicon ---------- #}
+  {% if theme_config.favicon %}
+    <link rel="icon" href="{{ theme_config.favicon }}">
+  {% else %}
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' font-family='serif'>笔</text></svg>">
+  {% endif %}
+
+  {# ---------- 防闪暗色：在 CSS 加载前根据 cfg 设定 data-theme ---------- #}
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('writecho-theme');
+        var defaultMode = '{{ theme_config.themeMode|default:"auto" }}';
+        var mode;
+        if (stored === 'dark' || stored === 'light') { mode = stored; }
+        else if (defaultMode === 'dark') { mode = 'dark'; }
+        else if (defaultMode === 'light') { mode = 'light'; }
+        else {
+          mode = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        if (mode === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      } catch (e) { /* ignore */ }
+    })();
+  </script>
+
+  {# ---------- 自定义主题色变量（覆盖 :root） ---------- #}
+  <style id="writecho-vars">
+    :root {
+      --paper: {{ theme_config.paperColor|default:"#fcf9f3" }};
+      --ink: {{ theme_config.inkColor|default:"#3a2e22" }};
+      --accent: {{ theme_config.accentColor|default:"#a35f3a" }};
+      --container: {{ theme_config.containerWidth|default:"820" }}px;
+      {% if theme_config.fontFamily %}--font-body: {{ theme_config.fontFamily }};{% endif %}
+    }
+  </style>
+
+  {# ---------- 霞鹜文楷 CDN（按开关注入） ---------- #}
+  {% if theme_config.enableLxgw %}
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css">
+  {% endif %}
+
+  {# ---------- 主题样式 ---------- #}
+  <link rel="stylesheet" href="/styles/main.css">
+
+  {# ---------- SEO / Open Graph ---------- #}
+  <link rel="canonical" href="{{ config.domain }}{% block canonical_path %}/{% endblock %}">
+  <meta property="og:site_name" content="{{ config.siteName }}">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}{{ config.siteName }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ config.siteDescription|default:"" }}{% endblock %}">
+  {% block og_image %}{% endblock %}
+
+  {# ---------- RSS ---------- #}
+  <link rel="alternate" type="application/atom+xml" title="{{ config.siteName }} Atom" href="/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="{{ config.siteName }} RSS" href="/feed.xml">
+
+  {# ---------- 自定义 head HTML ---------- #}
+  {% if theme_config.customHeadHtml %}{{ theme_config.customHeadHtml|safe }}{% endif %}
+  {% if theme_config.customCSS %}<style>{{ theme_config.customCSS|safe }}</style>{% endif %}
+
+  {# ---------- 主题运行配置（供 JS 读取） ---------- #}
+  <script type="application/json" id="writecho-config">{
+    "themeMode": "{{ theme_config.themeMode|default:"auto" }}",
+    "showReadingProgress": {% if theme_config.showReadingProgress %}true{% else %}false{% endif %},
+    "showBackToTop": {% if theme_config.showBackToTop %}true{% else %}false{% endif %},
+    "showCodeCopy": {% if theme_config.showCodeCopy %}true{% else %}false{% endif %},
+    "showToc": {% if theme_config.showToc %}true{% else %}false{% endif %},
+    "showSearch": {% if theme_config.showSearch %}true{% else %}false{% endif %},
+    "memosShowHeatmap": {% if theme_config.memosShowHeatmap %}true{% else %}false{% endif %}
+  }</script>
+</head>
+<body>
+
+  {# ---------- 阅读进度条（仅文章页注入显示样式） ---------- #}
+  {% if theme_config.showReadingProgress %}<div class="reading-progress" id="reading-progress" style="display:none"></div>{% endif %}
+
+  {# ---------- Header ---------- #}
+  {% include "partials/header.html" %}
+
+  {# ---------- 主体 ---------- #}
+  <main class="container" role="main">
+    {% block content %}{% endblock %}
+  </main>
+
+  {# ---------- Footer ---------- #}
+  {% include "partials/footer.html" %}
+
+  {# ---------- 回顶按钮 ---------- #}
+  {% if theme_config.showBackToTop %}
+    <button id="back-to-top" class="back-to-top" type="button" aria-label="返回顶部">
+      <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </button>
+  {% endif %}
+
+  {# ---------- 全屏搜索 ---------- #}
+  {% if theme_config.showSearch %}{% include "partials/search-modal.html" %}{% endif %}
+
+  {# ---------- 不蒜子（按开关） ---------- #}
+  {% if theme_config.viewsScript == "busuanzi" %}
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  {% endif %}
+
+  {# ---------- 主题 JS ---------- #}
+  <script src="/scripts/main.js" defer></script>
+
+  {# ---------- 自定义 body 末尾 HTML ---------- #}
+  {% if theme_config.customBodyEndHtml %}{{ theme_config.customBodyEndHtml|safe }}{% endif %}
+  {% if theme_config.footerExtra %}{{ theme_config.footerExtra|safe }}{% endif %}
+
+</body>
+</html>

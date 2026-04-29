@@ -1,0 +1,16 @@
+{# 闪念热力图。53 周 × 7 天，由 main.js 在 DOMContentLoaded 时根据 .memo[data-date] 渲染。 #}
+{% if theme_config.memosShowHeatmap %}
+  <section class="heatmap" aria-label="发布热力图">
+    <p class="heatmap-title">最近一年发布频率</p>
+    <div id="heatmap-grid" class="heatmap-grid"></div>
+    <div class="heatmap-legend">
+      <span>少</span>
+      <span class="heatmap-legend-cell"></span>
+      <span class="heatmap-legend-cell" data-level="1"></span>
+      <span class="heatmap-legend-cell" data-level="2"></span>
+      <span class="heatmap-legend-cell" data-level="3"></span>
+      <span class="heatmap-legend-cell" data-level="4"></span>
+      <span>多</span>
+    </div>
+  </section>
+{% endif %}

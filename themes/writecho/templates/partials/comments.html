@@ -1,0 +1,12 @@
+{# 评论挂载点。Gridea Pro 全局评论组件（Disqus / Gitalk / Waline 等）会接管 #gridea-comments 容器。
+   原 Writecho 主题里 comments.php 默认是注释掉的，本移植版默认开启。#}
+<section class="post-comments">
+  <h3 class="post-comments-title">留下回声</h3>
+  <div id="gridea-comments" data-post-id="{{ post.id }}" data-post-title="{{ post.title }}" data-post-link="{{ post.link }}">
+    {% if commentSetting %}
+      {# 由 Gridea Pro 注入 commentSetting，全局评论组件会读取并挂载 #}
+    {% else %}
+      <p class="comments-placeholder">评论功能未启用，请前往 Gridea Pro 「评论」设置中开启。</p>
+    {% endif %}
+  </div>
+</section>

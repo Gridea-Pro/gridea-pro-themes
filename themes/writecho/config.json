@@ -1,0 +1,262 @@
+{
+  "name": "writecho",
+  "version": "1.0.0",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "author": "Eric (port) / SkyWT (original Writecho)",
+  "description": "Writecho — 听见笔尖回声。从 Typecho 主题 Writecho（作者 SkyWT，https://github.com/Skywt2003/Writecho）移植到 Gridea Pro 的极简手写感主题。暖纸底色 + 霞鹜文楷 + 单栏 820px 容器，保留原作的「100% 手写」气质，并补全 Gridea Pro 全套页面（搜索 / 分页 / 上下篇 / 闪念热力图 / 友链 / 归档 / 标签 / 分类 / 评论挂载）和深浅模式。",
+  "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
+  "preview": "/media/preview.png",
+  "customConfig": [
+    {
+      "name": "siteSubTitle",
+      "label": "副标题",
+      "group": "基础",
+      "type": "input",
+      "value": "听见笔尖回声",
+      "note": "在 header 站名下方展示的一句话副标题"
+    },
+    {
+      "name": "headerImage",
+      "label": "Header 手绘图（可选）",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "原 Writecho 用整张手绘图作为站名。填入图片 URL 后会替代文字站名；留空则展示文字 logo（推荐霞鹜文楷字体）"
+    },
+    {
+      "name": "footerImage",
+      "label": "Footer 手绘图（可选）",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "页脚装饰图。留空则展示文字页脚"
+    },
+    {
+      "name": "noticeImage",
+      "label": "首页公告手绘图（可选）",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "首页顶部公告图（保留 Writecho 原版特色）。留空则不显示"
+    },
+    {
+      "name": "favicon",
+      "label": "站点 Favicon",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "网站标签页小图标地址"
+    },
+    {
+      "name": "themeMode",
+      "label": "深浅模式默认",
+      "group": "外观",
+      "type": "select",
+      "value": "auto",
+      "options": [
+        {"value": "auto", "label": "跟随系统"},
+        {"value": "light", "label": "始终浅色（手写温纸）"},
+        {"value": "dark", "label": "始终深色（夜读墨色）"},
+        {"value": "user", "label": "由读者切换"}
+      ],
+      "note": "顶栏右上角太阳/月亮按钮可手动切换"
+    },
+    {
+      "name": "paperColor",
+      "label": "纸面底色（浅色）",
+      "group": "外观",
+      "type": "color",
+      "value": "#fcf9f3",
+      "note": "Writecho 原版招牌的暖奶油色 #fcf9f3，可改为更深的米色 / 米白"
+    },
+    {
+      "name": "inkColor",
+      "label": "墨色（浅色）",
+      "group": "外观",
+      "type": "color",
+      "value": "#3a2e22",
+      "note": "正文字色（建议棕墨色调，呼应纸面）"
+    },
+    {
+      "name": "accentColor",
+      "label": "强调色（浅色）",
+      "group": "外观",
+      "type": "color",
+      "value": "#a35f3a",
+      "note": "链接 / 标签 / 按钮强调色（建议陶土红 / 桑红）"
+    },
+    {
+      "name": "containerWidth",
+      "label": "容器最大宽度",
+      "group": "外观",
+      "type": "input",
+      "value": "820",
+      "note": "PC 端正文最大宽度（像素，原版 820）"
+    },
+    {
+      "name": "enableLxgw",
+      "label": "启用霞鹜文楷字体",
+      "group": "外观",
+      "type": "toggle",
+      "value": true,
+      "note": "走 jsDelivr CDN 加载霞鹜文楷字体（约 7MB，首次访问会慢）。关闭则使用系统中文栈"
+    },
+    {
+      "name": "fontFamily",
+      "label": "自定义字体栈",
+      "group": "外观",
+      "type": "input",
+      "value": "\"LXGW WenKai\", \"Kaiti SC\", KaiTi, STKaiti, \"PingFang SC\", \"Microsoft YaHei\", serif",
+      "note": "全站字体（CSS font-family 字符串）"
+    },
+    {
+      "name": "indexShowNotice",
+      "label": "首页显示公告",
+      "group": "首页",
+      "type": "toggle",
+      "value": true,
+      "note": "若上方填了「首页公告手绘图」，开启后在首页顶部显示"
+    },
+    {
+      "name": "indexShowFeature",
+      "label": "首页文章卡显示封面",
+      "group": "首页",
+      "type": "toggle",
+      "value": true,
+      "note": "首页文章列表卡片是否展示文章特色图（feature image）。Writecho 原版没有，移植版加入此选项"
+    },
+    {
+      "name": "indexExcerptLength",
+      "label": "首页摘要长度",
+      "group": "首页",
+      "type": "input",
+      "value": "180",
+      "note": "首页文章卡显示的摘要字符数（CJK 友好）"
+    },
+    {
+      "name": "memosTitle",
+      "label": "闪念页标题",
+      "group": "闪念",
+      "type": "input",
+      "value": "闪念",
+      "note": "memos 页面的大标题"
+    },
+    {
+      "name": "memosShowHeatmap",
+      "label": "闪念热力图",
+      "group": "闪念",
+      "type": "toggle",
+      "value": true,
+      "note": "memos 页面顶部展示 53×7 发布热力图"
+    },
+    {
+      "name": "showReadingProgress",
+      "label": "阅读进度条",
+      "group": "增强",
+      "type": "toggle",
+      "value": true,
+      "note": "文章页顶部 2px 阅读进度条（陶土红色）"
+    },
+    {
+      "name": "showBackToTop",
+      "label": "返回顶部按钮",
+      "group": "增强",
+      "type": "toggle",
+      "value": true,
+      "note": "页面右下角浮动按钮"
+    },
+    {
+      "name": "showCodeCopy",
+      "label": "代码复制按钮",
+      "group": "增强",
+      "type": "toggle",
+      "value": true,
+      "note": "文章正文 <pre> 代码块右上角的复制按钮"
+    },
+    {
+      "name": "showToc",
+      "label": "文章目录",
+      "group": "增强",
+      "type": "toggle",
+      "value": true,
+      "note": "文章详情页顶部展开目录（来自 post.toc）"
+    },
+    {
+      "name": "showSearch",
+      "label": "全屏搜索",
+      "group": "增强",
+      "type": "toggle",
+      "value": true,
+      "note": "顶栏搜索按钮 + 全屏搜索框（/、Ctrl+K 唤起）。基于 /api/search.json"
+    },
+    {
+      "name": "viewsScript",
+      "label": "浏览数脚本",
+      "group": "增强",
+      "type": "select",
+      "value": "none",
+      "options": [
+        {"value": "none", "label": "不显示"},
+        {"value": "busuanzi", "label": "不蒜子"}
+      ],
+      "note": "页面浏览数统计（不蒜子需保持开启）"
+    },
+    {
+      "name": "footerSlogan",
+      "label": "页脚标语",
+      "group": "页脚",
+      "type": "input",
+      "value": "笔尖之下，皆是回声",
+      "note": "页脚附加一句话"
+    },
+    {
+      "name": "footerICP",
+      "label": "ICP 备案号",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "如：京ICP备2024000000号"
+    },
+    {
+      "name": "footerShowPower",
+      "label": "显示 Powered by",
+      "group": "页脚",
+      "type": "toggle",
+      "value": true,
+      "note": "页脚显示「Powered by Gridea Pro · Writecho」"
+    },
+    {
+      "name": "footerExtra",
+      "label": "页脚附加 HTML",
+      "group": "页脚",
+      "type": "textarea",
+      "value": "",
+      "note": "支持 HTML，可注入统计代码 / 弹幕脚本等"
+    },
+    {
+      "name": "customCSS",
+      "label": "自定义 CSS",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到所有页面 <head>，优先级最高"
+    },
+    {
+      "name": "customHeadHtml",
+      "label": "自定义 head HTML",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "注入到 <head> 末尾"
+    },
+    {
+      "name": "customBodyEndHtml",
+      "label": "自定义 body 末尾 HTML",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "注入到 </body> 之前"
+    }
+  ]
+}

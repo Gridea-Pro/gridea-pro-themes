@@ -1,0 +1,36 @@
+<header class="site-header">
+  <div class="container site-header-inner">
+    <a class="site-brand" href="/" rel="home">
+      {% if theme_config.headerImage %}
+        <img class="site-brand-image" src="{{ theme_config.headerImage }}" alt="{{ config.siteName }}">
+      {% else %}
+        <h1 class="site-brand-text">{{ config.siteName }}</h1>
+      {% endif %}
+    </a>
+    {% if theme_config.siteSubTitle %}
+      <p class="site-subtitle">{{ theme_config.siteSubTitle }}</p>
+    {% endif %}
+
+    {% if menus and menus|length > 0 %}
+      <nav class="site-nav" aria-label="主导航">
+        {% for menu in menus %}
+          <a href="{{ menu.link }}">{{ menu.name }}</a>
+        {% endfor %}
+      </nav>
+    {% endif %}
+  </div>
+
+  <div class="site-controls">
+    {% if theme_config.showSearch %}
+      <button class="ctrl" type="button" data-action="open-search" aria-label="搜索">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+      </button>
+    {% endif %}
+    {% if theme_config.themeMode == "user" or theme_config.themeMode == "auto" %}
+      <button class="ctrl" type="button" data-action="toggle-theme" aria-label="切换深浅模式">
+        <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+    {% endif %}
+  </div>
+</header>

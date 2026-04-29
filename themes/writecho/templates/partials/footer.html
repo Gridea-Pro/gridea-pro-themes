@@ -1,0 +1,24 @@
+<footer class="site-footer">
+  <div class="container">
+    {% if theme_config.footerImage %}
+      <img src="{{ theme_config.footerImage }}" alt="footer">
+    {% endif %}
+
+    {% if theme_config.footerSlogan %}
+      <p class="footer-slogan">{{ theme_config.footerSlogan }}</p>
+    {% endif %}
+
+    <p>
+      © {{ now|date:"2006" }} <a href="/">{{ config.siteName }}</a>
+      {% if theme_config.footerShowPower %} · Powered by <a href="https://github.com/Gridea-Pro/gridea-pro" target="_blank" rel="noopener">Gridea Pro</a> · Theme <a href="https://github.com/Gridea-Pro/gridea-pro-themes/tree/main/themes/writecho" target="_blank" rel="noopener">Writecho</a>{% endif %}
+    </p>
+
+    {% if theme_config.footerICP %}
+      <p>{{ theme_config.footerICP }}</p>
+    {% endif %}
+
+    {% if theme_config.viewsScript == "busuanzi" %}
+      <p>本站访客 <span id="busuanzi_value_site_uv">-</span> · 总浏览 <span id="busuanzi_value_site_pv">-</span></p>
+    {% endif %}
+  </div>
+</footer>

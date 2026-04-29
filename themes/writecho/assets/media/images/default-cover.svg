@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fcf9f3"/>
+      <stop offset="100%" stop-color="#f1ead9"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#g)"/>
+  <g fill="none" stroke="#a35f3a" stroke-width="2" opacity="0.45">
+    <path d="M 200 360 Q 350 320 500 360 T 800 360 T 1000 360" stroke-linecap="round"/>
+    <path d="M 200 400 Q 350 360 500 400 T 800 400 T 1000 400" stroke-linecap="round" opacity="0.7"/>
+    <path d="M 250 440 Q 400 420 550 440 T 900 440" stroke-linecap="round" opacity="0.5"/>
+  </g>
+  <text x="600" y="350" text-anchor="middle" font-family="serif" font-size="72" fill="#a35f3a" letter-spacing="12">笔</text>
+  <text x="600" y="500" text-anchor="middle" font-family="serif" font-size="20" fill="#998366" letter-spacing="6">听见笔尖回声</text>
+</svg>
