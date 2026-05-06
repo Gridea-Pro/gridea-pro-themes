@@ -1,0 +1,17 @@
+{# Memos heatmap — 53 weeks × 7 days, rendered in main.js by counting
+   .memo-item[data-date] elements on the page. #}
+{% if theme_config.memosShowHeatmap %}
+  <section class="heatmap" aria-label="发布热力图">
+    <p class="heatmap-title">最近一年发布频率</p>
+    <div id="heatmap-grid" class="heatmap-grid"></div>
+    <div class="heatmap-legend">
+      <span>少</span>
+      <span class="heatmap-legend-cell"></span>
+      <span class="heatmap-legend-cell" data-level="1"></span>
+      <span class="heatmap-legend-cell" data-level="2"></span>
+      <span class="heatmap-legend-cell" data-level="3"></span>
+      <span class="heatmap-legend-cell" data-level="4"></span>
+      <span>多</span>
+    </div>
+  </section>
+{% endif %}

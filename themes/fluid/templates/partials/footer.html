@@ -1,0 +1,30 @@
+{# Footer — simple Fluid-style centered text #}
+<div class="footer-inner">
+  <div class="container">
+    <p>©️
+      {% if theme_config.footerStartYear %}{{ theme_config.footerStartYear }} - {% endif %}
+      {{ now|date:"2006" }}
+      {{ config.siteName }}
+      {% if theme_config.siteSubTitle %} · {{ theme_config.siteSubTitle }}{% endif %}
+    </p>
+    <p>
+      Designed by <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="noopener">Fluid</a>
+      · Ported to <a href="https://github.com/Gridea-Pro/gridea-pro-themes" target="_blank" rel="noopener">Gridea Pro</a>
+    </p>
+    {% if theme_config.footerBeian %}
+      <p>
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="external nofollow noopener">
+          <svg class="icon" style="margin-right:4px"><use xlink:href="#icon-shield"/></svg>{{ theme_config.footerBeian }}
+        </a>
+      </p>
+    {% endif %}
+    {% if theme_config.viewsScript == "busuanzi" %}
+      <p>
+        <span id="busuanzi_container_site_pv">本站访问量 <span id="busuanzi_value_site_pv"></span></span>
+        ·
+        <span id="busuanzi_container_site_uv">访客数 <span id="busuanzi_value_site_uv"></span></span>
+      </p>
+    {% endif %}
+    {% if theme_config.footerExtra %}<div>{{ theme_config.footerExtra|safe }}</div>{% endif %}
+  </div>
+</div>

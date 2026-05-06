@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} · {{ config.siteName }}{% endblock %}
+{% block description %}{% if post.description %}{{ post.description }}{% else %}{{ post.content|striptags|truncatechars:160 }}{% endif %}{% endblock %}
+{% block keywords %}{{ post.tagsString }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{% if post.description %}{{ post.description }}{% else %}{{ post.content|striptags|truncatechars:160 }}{% endif %}{% endblock %}
+{% block og_image %}{% if post.feature %}<meta property="og:image" content="{{ post.feature }}">{% endif %}{% endblock %}
+{% block twitter_title %}{{ post.title }}{% endblock %}
+{% block canonical_path %}{{ post.link }}{% endblock %}
+{% block body_class %}post-detail{% endblock %}
+
+{% block hero %}
+  {% include "partials/banner-post.html" %}
+{% endblock %}
+
+{% block content %}
+  <article class="post">
+    {{ post.content|safe }}
+
+    {% if post.tags and post.tags|length > 0 %}
+      <div class="post-tags">
+        {% for tag in post.tags %}
+          <a href="{{ tag.link }}">#{{ tag.name }}</a>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div id="post-meta-bottom">
+      <span>更新于 {% if post.updatedAtFormat %}{{ post.updatedAtFormat }}{% else %}{{ post.dateFormat }}{% endif %}</span>
+      {% if post.stats %}<span>{{ post.stats.text }}</span>{% endif %}
+    </div>
+  </article>
+
+  {% include "partials/post-nav.html" %}
+  {% include "partials/comments.html" %}
+{% endblock %}

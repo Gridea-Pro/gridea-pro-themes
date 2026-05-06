@@ -1,0 +1,49 @@
+{# Index card (row layout, replicates Fluid's index.ejs).
+   - Cover image on left (md), info column on right
+   - Or full-width info if no image #}
+<div class="row index-card">
+  {% if post.feature %}
+    <div class="col-12 col-md-4 m-auto index-img">
+      <a href="{{ post.link }}">
+        <img src="{{ post.feature }}" alt="{{ post.title }}">
+      </a>
+    </div>
+    <article class="col-12 col-md-8 mx-auto index-info">
+  {% else %}
+    <article class="col-12 col-md-12 mx-auto index-info">
+  {% endif %}
+    <h2 class="index-header">
+      {% if post.isTop %}
+        <svg class="icon index-pin" aria-label="置顶"><use xlink:href="#icon-pin"/></svg>
+      {% endif %}
+      <a href="{{ post.link }}">{{ post.title }}</a>
+    </h2>
+
+    <a class="index-excerpt {% if not post.feature %}index-excerpt__noimg{% endif %}" href="{{ post.link }}">
+      <div>{{ post.content|striptags|truncatechars:200 }}</div>
+    </a>
+
+    <div class="index-btm post-metas">
+      <div class="post-meta">
+        <svg class="icon"><use xlink:href="#icon-date"/></svg>
+        <time datetime="{{ post.date }}">{{ post.dateFormat }}</time>
+      </div>
+      {% if post.categories and post.categories|length > 0 %}
+        <div class="post-meta d-flex align-items-center">
+          <svg class="icon"><use xlink:href="#icon-category"/></svg>
+          {% for cat in post.categories %}
+            <a href="{{ cat.link }}">{{ cat.name }}</a>{% if not loop.last %} / {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if post.tags and post.tags|length > 0 %}
+        <div class="post-meta">
+          <svg class="icon"><use xlink:href="#icon-tags"/></svg>
+          {% for tag in post.tags %}
+            <a href="{{ tag.link }}">#{{ tag.name }}</a>{% if not loop.last %} {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </article>
+</div>

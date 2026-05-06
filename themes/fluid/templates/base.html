@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer-when-downgrade">
+
+  <title>{% block title %}{{ config.siteName }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{{ config.siteDescription|default:"" }}{% endblock %}">
+  <meta name="keywords" content="{% block keywords %}{% endblock %}">
+
+  {# Favicon #}
+  {% if theme_config.favicon %}
+    <link rel="icon" href="{{ theme_config.favicon }}">
+  {% else %}
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90' font-family='serif'>F</text></svg>">
+  {% endif %}
+
+  {# Anti-flash dark mode #}
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('fluid-theme');
+        var defaultMode = '{{ theme_config.themeMode|default:"auto" }}';
+        var mode;
+        if (stored === 'dark' || stored === 'light') { mode = stored; }
+        else if (defaultMode === 'dark') { mode = 'dark'; }
+        else if (defaultMode === 'light') { mode = 'light'; }
+        else {
+          mode = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+        }
+        if (mode === 'dark') document.documentElement.setAttribute('data-user-color-scheme', 'dark');
+        else if (mode === 'light') document.documentElement.setAttribute('data-user-color-scheme', 'light');
+      } catch (e) {}
+    })();
+  </script>
+
+  {# Theme color overrides #}
+  <style id="fluid-vars">
+    :root {
+      {% if theme_config.linkHoverColor %}--link-hover-color: {{ theme_config.linkHoverColor }};{% endif %}
+      {% if theme_config.navbarBgColor %}--navbar-bg-color: {{ theme_config.navbarBgColor }};{% endif %}
+      {% if theme_config.boardBgColor %}--board-bg-color: {{ theme_config.boardBgColor }};{% endif %}
+      {% if theme_config.fontFamily %}--font-body: {{ theme_config.fontFamily }};{% endif %}
+      --banner-mask-alpha: {{ theme_config.bannerMaskAlpha|default:"0.3" }};
+      --banner-height: {{ theme_config.bannerHeightVH|default:"100" }}vh;
+      --inner-banner-height: {{ theme_config.innerBannerHeightVH|default:"60" }}vh;
+    }
+    [data-user-color-scheme="dark"] {
+      {% if theme_config.boardBgColorDark %}--board-bg-color: {{ theme_config.boardBgColorDark }};{% endif %}
+    }
+  </style>
+
+  <link rel="stylesheet" href="/styles/main.css">
+
+  {# SEO / OG #}
+  <link rel="canonical" href="{{ config.domain }}{% block canonical_path %}/{% endblock %}">
+  <meta property="og:site_name" content="{{ config.siteName }}">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}{{ config.siteName }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ config.siteDescription|default:"" }}{% endblock %}">
+  {% block og_image %}{% endblock %}
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{% block twitter_title %}{{ config.siteName }}{% endblock %}">
+
+  <link rel="alternate" type="application/atom+xml" title="{{ config.siteName }} Atom" href="/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="{{ config.siteName }} RSS" href="/feed.xml">
+
+  {% if theme_config.customHeadHtml %}{{ theme_config.customHeadHtml|safe }}{% endif %}
+  {% if theme_config.customCSS %}<style>{{ theme_config.customCSS|safe }}</style>{% endif %}
+
+  <script type="application/json" id="fluid-config">{
+    "themeMode": "{{ theme_config.themeMode|default:"auto" }}",
+    "enableTyped": {% if theme_config.enableTyped %}true{% else %}false{% endif %},
+    "showReadingProgress": {% if theme_config.showReadingProgress %}true{% else %}false{% endif %},
+    "showBackToTop": {% if theme_config.showBackToTop %}true{% else %}false{% endif %},
+    "showCodeCopy": {% if theme_config.showCodeCopy %}true{% else %}false{% endif %},
+    "showSearch": {% if theme_config.showSearch %}true{% else %}false{% endif %},
+    "memosShowHeatmap": {% if theme_config.memosShowHeatmap %}true{% else %}false{% endif %},
+    "openExternalInNewTab": {% if theme_config.openExternalInNewTab %}true{% else %}false{% endif %}
+  }</script>
+  {# typed.js loop strings — pass as raw text, JS will split() on newlines #}
+  <script type="text/plain" id="fluid-typed-strings">{% if theme_config.typedStrings %}{{ theme_config.typedStrings }}{% endif %}</script>
+</head>
+<body class="{% block body_class %}page{% endblock %}">
+
+  {# SVG icon symbol library — referenced by <use xlink:href="#icon-..."/> #}
+  <svg xmlns="http://www.w3.org/2000/svg" style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+    <defs>
+      <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><path d="m21 21-4.3-4.3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+      <symbol id="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-arrow-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="icon-arrow-up" viewBox="0 0 24 24"><path d="M18 15l-6-6-6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="icon-date" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M16 2v4M8 2v4M3 10h18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+      <symbol id="icon-category" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+      <symbol id="icon-tags" viewBox="0 0 24 24"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="7" cy="7" r="1.5" fill="currentColor"/></symbol>
+      <symbol id="icon-pin" viewBox="0 0 24 24"><path d="M12 2v6l4 4-1 5h-6l-1-5 4-4V2z" fill="currentColor"/></symbol>
+      <symbol id="icon-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="icon-shield" viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.5 9.4 8 10 4.5-.6 8-5 8-10V6l-8-4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    </defs>
+  </svg>
+
+  {% if theme_config.showReadingProgress %}<div class="reading-progress" id="reading-progress" style="display:none"></div>{% endif %}
+
+  <header>
+    {% include "partials/header.html" %}
+
+    {% block hero %}
+      {# Inner page banner — small banner with current page title #}
+      {% include "partials/banner-inner.html" %}
+    {% endblock %}
+  </header>
+
+  <main>
+    {% block layout %}
+      <div class="container">
+        <div id="board" class="{% block board_class %}{% endblock %}">
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                {% block content %}{% endblock %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endblock %}
+
+    {% if theme_config.showBackToTop %}
+      <button type="button" id="scroll-top-button" aria-label="返回顶部">
+        <svg class="icon"><use xlink:href="#icon-arrow-up"/></svg>
+      </button>
+    {% endif %}
+
+    {% if theme_config.showSearch %}{% include "partials/search-modal.html" %}{% endif %}
+  </main>
+
+  <footer>
+    {% include "partials/footer.html" %}
+  </footer>
+
+  {% if theme_config.viewsScript == "busuanzi" %}
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  {% endif %}
+
+  <script src="/scripts/main.js" defer></script>
+
+  {% if theme_config.customBodyEndHtml %}{{ theme_config.customBodyEndHtml|safe }}{% endif %}
+
+</body>
+</html>

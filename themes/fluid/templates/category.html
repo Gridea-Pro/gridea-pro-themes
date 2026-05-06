@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}分类：{% if category %}{{ category.name }}{% endif %} · {{ config.siteName }}{% endblock %}
+{% block og_title %}分类：{% if category %}{{ category.name }}{% endif %}{% endblock %}
+{% block body_class %}category page{% endblock %}
+{% block banner_title %}{% if category %}{{ category.name }}{% else %}分类{% endif %}{% endblock %}
+
+{% block content %}
+  <header class="page-header">
+    <h1>{% if category %}{{ category.name }}{% else %}分类{% endif %}</h1>
+    <p>{% if category and category.count %}该分类下共 {{ category.count }} 篇{% endif %}</p>
+  </header>
+
+  {% if posts and posts|length > 0 %}
+    {% for post in posts %}
+      {% if not post.hideInList %}
+        {% include "partials/post-card.html" %}
+      {% endif %}
+    {% endfor %}
+  {% else %}
+    <div class="empty-state"><p>该分类下尚无文章。</p></div>
+  {% endif %}
+
+  {% include "partials/pagination.html" %}
+{% endblock %}
