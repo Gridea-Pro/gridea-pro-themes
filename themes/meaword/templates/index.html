@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block body_class %}home blog{% endblock %}
+{% block og_type %}website{% endblock %}
+
+{% block hero %}
+  {% if theme_config.showBanner and posts and posts|length > 0 %}
+    {% include "partials/banner.html" %}
+  {% else %}
+    <div class="nei_top"></div>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="post-box-txt">
+    <h3 class="latest_post">最新文章</h3>
+  </div>
+  <div class="post_loop">
+    {% if posts and posts|length > 0 %}
+      {% for post in posts %}
+        {% if not post.hideInList %}
+          {% include "partials/post-card.html" %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      <div class="empty-state"><p>这里还没有文章 ~</p></div>
+    {% endif %}
+  </div>
+  {% include "partials/pagination.html" %}
+{% endblock %}

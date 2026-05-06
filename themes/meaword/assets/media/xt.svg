@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60">
+  <!-- Linen-like cross-hatch pattern, replicating the xt.svg of the original MeaWord theme -->
+  <defs>
+    <pattern id="linen" patternUnits="userSpaceOnUse" width="6" height="6" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="6" stroke="rgba(0,0,0,0.04)" stroke-width="0.5"/>
+      <line x1="3" y1="0" x2="3" y2="6" stroke="rgba(0,0,0,0.025)" stroke-width="0.5"/>
+    </pattern>
+    <pattern id="dots" patternUnits="userSpaceOnUse" width="20" height="20">
+      <circle cx="2" cy="2" r="0.6" fill="rgba(0,0,0,0.06)"/>
+      <circle cx="12" cy="12" r="0.4" fill="rgba(0,0,0,0.04)"/>
+    </pattern>
+  </defs>
+  <rect width="60" height="60" fill="url(#linen)"/>
+  <rect width="60" height="60" fill="url(#dots)"/>
+</svg>

@@ -1,0 +1,52 @@
+{# Post card — replicates the original list-item:
+   • Cover image OR giant first-character watermark (post_beici)
+   • Title with hover underline
+   • Author / Categories / Date strip
+   • Excerpt
+   Determines if this post belongs to the "memos / shuoshuo" category by
+   matching the configured memos slug, and falls back to a memo-card style. #}
+{% set memoSlug = theme_config.memosCategorySlug|default:"memo" %}
+{% set isMemoPost = false %}
+{% if post.categories and post.categories|length > 0 %}
+  {% for cat in post.categories %}
+    {% if cat.slug == memoSlug %}{% set isMemoPost = true %}{% endif %}
+  {% endfor %}
+{% endif %}
+
+{% if isMemoPost %}
+  {# Memo / shuoshuo style — big day number + speech-bubble excerpt #}
+  <div class="post_list post_list_shuoshuo">
+    <div class="post-date">
+      <span class="post-date-day">{{ post.date|date:"02" }}</span>
+      <span class="post-date-month">{{ post.date|date:"Jan" }}</span>
+    </div>
+    <p>
+      <a href="{{ post.link }}" style="color:inherit; display:block;">{{ post.content|striptags|truncatechars:280 }}</a>
+    </p>
+    <div class="post_loop_info">
+      <span>{{ post.dateFormat }}</span>
+    </div>
+  </div>
+{% else %}
+  {# Standard post card with first-character watermark #}
+  <div class="post_list">
+    {% if post.feature %}
+      <a class="post_cover" href="{{ post.link }}" aria-label="{{ post.title }}" style="background-image:url('{{ post.feature }}');"></a>
+    {% else %}
+      <div class="post_beici" aria-hidden="true">{{ post.title|truncatechars:1 }}</div>
+    {% endif %}
+    <h2><a href="{{ post.link }}" title="{{ post.title }}">{{ post.title }}</a></h2>
+    <p>{{ post.content|striptags|truncatechars:120 }}</p>
+    {% if theme_config.showPostMeta %}
+      <div class="post_loop_info">
+        {% if config.siteName %}<span>{{ config.siteName }}</span>{% endif %}
+        {% if post.categories and post.categories|length > 0 %}
+          {% for cat in post.categories %}
+            <span><a href="{{ cat.link }}" rel="category tag">{{ cat.name }}</a></span>
+          {% endfor %}
+        {% endif %}
+        <span>{{ post.dateFormat }}</span>
+      </div>
+    {% endif %}
+  </div>
+{% endif %}

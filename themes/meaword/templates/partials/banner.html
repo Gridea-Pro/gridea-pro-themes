@@ -1,0 +1,62 @@
+{# Index page banner — sliding carousel of latest N posts.
+   Replicates the original #banner with carousel-indicators / prev / next.
+   Implementation note: original used Bootstrap carousel; this reuses native CSS
+   transform + JS, see bindBanner() in main.js. #}
+{% if theme_config.showBanner and posts and posts|length > 0 %}
+  {% set bannerN = theme_config.bannerCount|default:3 %}
+  <section class="banner" aria-label="精选文章">
+    <div class="banner-inner">
+      <div class="banner-track">
+        {% for post in posts %}
+          {% if forloop.Counter <= bannerN %}
+            <div class="banner-slide">
+              <div class="container">
+                <div class="banner-slide-inner">
+                  {% if post.feature %}
+                    <div class="banner_cover" style="background-image:url('{{ post.feature }}');"></div>
+                  {% else %}
+                    <div class="beici" aria-hidden="true">{{ post.title|truncatechars:1 }}</div>
+                  {% endif %}
+                  <h2><a href="{{ post.link }}" title="{{ post.title }}">{{ post.title }}</a></h2>
+                  <div class="banner-slide-info">
+                    {% if config.siteName %}
+                      <span>
+                        <svg viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
+                        {{ config.siteName }}
+                      </span>
+                    {% endif %}
+                    {% if post.categories and post.categories|length > 0 %}
+                      {% for cat in post.categories %}
+                        <span>
+                          <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+                          <a href="{{ cat.link }}">{{ cat.name }}</a>
+                        </span>
+                      {% endfor %}
+                    {% endif %}
+                    <span>
+                      <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                      {{ post.dateFormat }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div class="banner-indicators" role="tablist">
+        {% for post in posts %}
+          {% if forloop.Counter <= bannerN %}
+            <button type="button" role="tab" aria-label="切换到第 {{ forloop.Counter }} 篇" {% if forloop.first %}class="is-active"{% endif %}></button>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <button type="button" class="banner-control-prev" aria-label="上一篇">
+        <svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+      </button>
+      <button type="button" class="banner-control-next" aria-label="下一篇">
+        <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+      </button>
+    </div>
+  </section>
+{% endif %}
