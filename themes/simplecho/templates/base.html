@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-sc-palette="{{ theme_config.themePalette|default:"gray" }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <meta name="referrer" content="no-referrer-when-downgrade">
+
+  <title>{% block title %}{{ config.siteName }}{% if theme_config.siteSubTitle %} · {{ theme_config.siteSubTitle }}{% endif %}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{{ config.siteDescription|default:"" }}{% endblock %}">
+  <meta name="keywords" content="{% block keywords %}{% endblock %}">
+
+  {# ---------- Favicon ---------- #}
+  {% if theme_config.favicon %}
+    <link rel="icon" href="{{ theme_config.favicon }}">
+  {% else %}
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.92em' font-size='90'>💖</text></svg>">
+  {% endif %}
+
+  {# ---------- 防闪配色：在样式加载前根据 theme_config + localStorage + matchMedia 设定 data-sc-palette ---------- #}
+  <script>
+    (function () {
+      try {
+        var defaultPalette = '{{ theme_config.themePalette|default:"gray" }}';
+        var autoDark = {% if theme_config.themeAutoDark %}true{% else %}false{% endif %};
+        var stored = localStorage.getItem('simplecho-palette');
+        var palette;
+        if (stored === 'gray' || stored === 'white' || stored === 'green' || stored === 'black') {
+          palette = stored;
+        } else if (autoDark && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          palette = 'black';
+        } else {
+          palette = defaultPalette;
+        }
+        document.documentElement.setAttribute('data-sc-palette', palette);
+      } catch (e) { /* ignore */ }
+    })();
+  </script>
+
+  {# ---------- CSS 变量（容器宽度 / 字体栈） ---------- #}
+  <style id="sc-vars">
+    :root {
+      --sc-container: {{ theme_config.containerWidth|default:"1000" }}px;
+      {% if theme_config.fontFamily %}--sc-font: {{ theme_config.fontFamily|safe }};{% endif %}
+    }
+  </style>
+
+  {# ---------- 主题样式 ---------- #}
+  <link rel="stylesheet" href="/styles/main.css">
+
+  {# ---------- SEO / Open Graph ---------- #}
+  <link rel="canonical" href="{{ config.domain }}{% block canonical_path %}/{% endblock %}">
+  <meta property="og:site_name" content="{{ config.siteName }}">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}{{ config.siteName }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ config.siteDescription|default:"" }}{% endblock %}">
+  {% block og_image %}{% endblock %}
+
+  {# ---------- RSS ---------- #}
+  <link rel="alternate" type="application/atom+xml" title="{{ config.siteName }} Atom" href="/atom.xml">
+  <link rel="alternate" type="application/rss+xml" title="{{ config.siteName }} RSS" href="/feed.xml">
+
+  {# ---------- 自定义 head HTML ---------- #}
+  {% if theme_config.customHeadHtml %}{{ theme_config.customHeadHtml|safe }}{% endif %}
+  {% if theme_config.customCSS %}<style>{{ theme_config.customCSS|safe }}</style>{% endif %}
+
+  {# ---------- 主题运行时配置（供 main.js 读取） ---------- #}
+  <script type="application/json" id="simplecho-config">{
+    "themePalette": "{{ theme_config.themePalette|default:"gray" }}",
+    "themeAutoDark": {% if theme_config.themeAutoDark %}true{% else %}false{% endif %},
+    "themeUserToggle": {% if theme_config.themeUserToggle %}true{% else %}false{% endif %},
+    "showReadingProgress": {% if theme_config.showReadingProgress %}true{% else %}false{% endif %},
+    "showBackToTop": {% if theme_config.showBackToTop %}true{% else %}false{% endif %},
+    "showCodeCopy": {% if theme_config.showCodeCopy %}true{% else %}false{% endif %},
+    "showLazyLoad": {% if theme_config.showLazyLoad %}true{% else %}false{% endif %},
+    "showSearch": {% if theme_config.showSearch %}true{% else %}false{% endif %}
+  }</script>
+</head>
+<body>
+  {# ---------- SVG icon library（社交 + UI） ---------- #}
+  {% include "partials/icons.html" %}
+
+  {# ---------- 阅读进度条 ---------- #}
+  {% if theme_config.showReadingProgress %}<div class="sc-reading-progress" id="sc-reading-progress"></div>{% endif %}
+
+  <div class="sc-main">
+    <div class="sc-main-content">
+      {# ---------- Header ---------- #}
+      {% include "partials/header.html" %}
+
+      {# ---------- 主体 ---------- #}
+      <main class="sc-body">
+        {% block content %}{% endblock %}
+      </main>
+
+      {# ---------- Footer ---------- #}
+      {% include "partials/footer.html" %}
+    </div>
+  </div>
+
+  {# ---------- 回顶按钮 ---------- #}
+  {% if theme_config.showBackToTop %}
+    <button id="sc-back-to-top" class="sc-back-to-top" type="button" aria-label="返回顶部">
+      <svg viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  {% endif %}
+
+  {# ---------- 不蒜子（按开关） ---------- #}
+  {% if theme_config.viewsScript == "busuanzi" %}
+    <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  {% endif %}
+
+  {# ---------- 主题 JS ---------- #}
+  <script src="/scripts/main.js" defer></script>
+
+  {# ---------- 自定义 body 末尾 HTML ---------- #}
+  {% if theme_config.customBodyEndHtml %}{{ theme_config.customBodyEndHtml|safe }}{% endif %}
+  {% if theme_config.footerExtra %}{{ theme_config.footerExtra|safe }}{% endif %}
+</body>
+</html>

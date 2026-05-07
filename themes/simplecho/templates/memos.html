@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}闪念 · {{ config.siteName }}{% endblock %}
+{% block og_title %}闪念 · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="sc-post-container">
+  <article class="sc-post-detail">
+    <h2 class="sc-post-title-detail">闪念</h2>
+    <p style="text-align:center;color:var(--sc-text-2);font-size:13px;margin-top:-12px">一闪而过的念头，记下来</p>
+
+    {% if memos and memos|length > 0 %}
+      <div class="sc-memos-list">
+        {% for memo in memos %}
+          <article class="sc-memo">
+            <div class="sc-memo-content">{{ memo.content|safe }}</div>
+            <div class="sc-memo-meta">
+              <time datetime="{{ memo.createdAtISO or memo.date }}">{{ memo.createdAt or memo.dateFormat }}</time>
+              {% if memo.tags and memo.tags|length > 0 %}
+                {% for t in memo.tags %}<span class="sc-memo-tag"># {{ t }}</span>{% endfor %}
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="sc-empty"><p>还没有闪念。</p></div>
+    {% endif %}
+  </article>
+</div>
+{% endblock %}

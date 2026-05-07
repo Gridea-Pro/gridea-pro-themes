@@ -1,0 +1,12 @@
+{% if post.prevPost or post.nextPost %}
+<nav class="sc-next-post" aria-label="上下篇导航">
+  {% if post.nextPost %}
+    <div class="sc-next-label">下一篇</div>
+    <a href="{{ post.nextPost.link }}" class="sc-next-title">{{ post.nextPost.title|default:"无标题文章" }}</a>
+  {% endif %}
+  {% if post.prevPost %}
+    <div class="sc-prev-label" style="margin-top:18px">上一篇</div>
+    <a href="{{ post.prevPost.link }}" class="sc-next-title">{{ post.prevPost.title|default:"无标题文章" }}</a>
+  {% endif %}
+</nav>
+{% endif %}

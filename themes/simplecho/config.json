@@ -1,0 +1,310 @@
+{
+  "name": "simplecho",
+  "version": "1.0.0",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "author": "Eric (port) / XiaoXi (original Simplecho)",
+  "description": "Simplecho — Simple + Echo = 💖。从 Typecho 主题 Simplecho（作者 XiaoXi，https://github.com/yanranxiaoxi/Simplecho）移植到 Gridea Pro 的极简卡片博客主题。1000px 居中容器 + 左文右图卡片 + 4 套招牌配色（银光灰 / 简约白 / 墨草绿 / 暗夜黑），保留原作的「STAY VIBRANT」气质，并补全 Gridea Pro 全套页面（搜索 / 分页 / 上下篇 / 闪念 / 友链 / 归档 / 标签 / 分类 / 评论挂载）和自动深色。",
+  "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
+  "preview": "/media/preview.png",
+  "customConfig": [
+    {
+      "name": "siteSubTitle",
+      "label": "副标题",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "在 title 标签后展示的一句话副标题（留空则不显示）"
+    },
+    {
+      "name": "avatar",
+      "label": "顶栏头像",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "顶栏圆形小头像 URL，留空则使用 config.avatar / 默认头像"
+    },
+    {
+      "name": "favicon",
+      "label": "站点 Favicon",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "网站标签页小图标地址"
+    },
+    {
+      "name": "themePalette",
+      "label": "主题配色",
+      "group": "外观",
+      "type": "select",
+      "value": "gray",
+      "options": [
+        {"value": "gray",  "label": "银光灰（默认）"},
+        {"value": "white", "label": "简约白（粉色强调）"},
+        {"value": "green", "label": "墨草绿"},
+        {"value": "black", "label": "暗夜黑"}
+      ],
+      "note": "Simplecho 原版四套招牌配色"
+    },
+    {
+      "name": "themeAutoDark",
+      "label": "跟随浏览器深色",
+      "group": "外观",
+      "type": "toggle",
+      "value": true,
+      "note": "若浏览器为深色模式则自动切换到「暗夜黑」配色（覆盖上方默认配色）"
+    },
+    {
+      "name": "themeUserToggle",
+      "label": "顶栏配色切换器",
+      "group": "外观",
+      "type": "toggle",
+      "value": true,
+      "note": "在顶栏右上角显示读者可切换的配色按钮"
+    },
+    {
+      "name": "containerWidth",
+      "label": "容器最大宽度",
+      "group": "外观",
+      "type": "input",
+      "value": "1000",
+      "note": "PC 端正文最大宽度（像素，原版 1000）"
+    },
+    {
+      "name": "fontFamily",
+      "label": "自定义字体栈",
+      "group": "外观",
+      "type": "input",
+      "value": "\"PingFang SC\", -apple-system, BlinkMacSystemFont, opensans, Optima, \"Microsoft YaHei\", sans-serif",
+      "note": "全站字体（CSS font-family 字符串）。原版招牌的 PingFang SC + Optima"
+    },
+    {
+      "name": "indexShowFeature",
+      "label": "首页文章卡显示封面",
+      "group": "首页",
+      "type": "toggle",
+      "value": true,
+      "note": "首页文章列表卡片右侧是否展示文章特色图（200×100 缩略图）"
+    },
+    {
+      "name": "stickyHTML",
+      "label": "首页置顶 HTML",
+      "group": "首页",
+      "type": "textarea",
+      "value": "",
+      "note": "首页第一页顶部展示的自定义置顶 HTML（原版 sticky 配置项）。可放置最重要的链接 / 公告"
+    },
+    {
+      "name": "showReadingProgress",
+      "label": "阅读进度条",
+      "group": "文章",
+      "type": "toggle",
+      "value": true,
+      "note": "文章页顶部 2px 阅读进度条"
+    },
+    {
+      "name": "showBackToTop",
+      "label": "返回顶部按钮",
+      "group": "文章",
+      "type": "toggle",
+      "value": true,
+      "note": "页面右下角浮动返回顶部按钮"
+    },
+    {
+      "name": "showCodeCopy",
+      "label": "代码复制按钮",
+      "group": "文章",
+      "type": "toggle",
+      "value": true,
+      "note": "文章正文 <pre> 代码块右上角的复制按钮"
+    },
+    {
+      "name": "showLazyLoad",
+      "label": "图片懒加载",
+      "group": "文章",
+      "type": "toggle",
+      "value": true,
+      "note": "原生 IntersectionObserver 实现，对 <img loading=\"lazy\"> 的兜底"
+    },
+    {
+      "name": "underPostContent",
+      "label": "文章末尾自定义 HTML",
+      "group": "文章",
+      "type": "textarea",
+      "value": "",
+      "note": "在文章正文末尾追加的自定义内容（版权声明 / 推广 / 二维码等）"
+    },
+    {
+      "name": "socialHomepage",
+      "label": "页底：个人主页",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "个人主页地址"
+    },
+    {
+      "name": "socialMastodon",
+      "label": "页底：Mastodon",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "Mastodon 用户页地址"
+    },
+    {
+      "name": "socialTwitter",
+      "label": "页底：X (Twitter)",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "X / Twitter 用户页地址"
+    },
+    {
+      "name": "socialFacebook",
+      "label": "页底：Facebook",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "Facebook 用户页地址"
+    },
+    {
+      "name": "socialWeibo",
+      "label": "页底：新浪微博",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "新浪微博用户页地址"
+    },
+    {
+      "name": "socialBilibili",
+      "label": "页底：哔哩哔哩",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "B 站用户页地址"
+    },
+    {
+      "name": "socialYouTube",
+      "label": "页底：YouTube",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "YouTube 频道页地址"
+    },
+    {
+      "name": "socialGitHub",
+      "label": "页底：GitHub",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "GitHub 用户页地址"
+    },
+    {
+      "name": "socialGitLab",
+      "label": "页底：GitLab",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "GitLab 用户页地址"
+    },
+    {
+      "name": "socialLinkedIn",
+      "label": "页底：LinkedIn",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "LinkedIn 用户页地址"
+    },
+    {
+      "name": "socialCoffee",
+      "label": "页底：Buy Me A Coffee",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "Buy Me A Coffee / 爱发电 等地址"
+    },
+    {
+      "name": "socialEMailTo",
+      "label": "页底：Email",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "如：mailto:hello@example.com"
+    },
+    {
+      "name": "footerSlogan",
+      "label": "页脚标语",
+      "group": "页脚",
+      "type": "input",
+      "value": "STAY VIBRANT",
+      "note": "页脚最上方居中标语（原版招牌「STAY VIBRANT」）"
+    },
+    {
+      "name": "footerICP",
+      "label": "ICP 备案号",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "如：京ICP备2024000000号；填写后会自动链接到工信部备案查询"
+    },
+    {
+      "name": "footerShowPower",
+      "label": "显示 Powered by",
+      "group": "页脚",
+      "type": "toggle",
+      "value": true,
+      "note": "页脚显示「Theme by Simplecho · Powered by Gridea Pro」"
+    },
+    {
+      "name": "footerExtra",
+      "label": "页脚附加 HTML",
+      "group": "页脚",
+      "type": "textarea",
+      "value": "",
+      "note": "支持 HTML，可注入统计代码 / 弹幕脚本等"
+    },
+    {
+      "name": "viewsScript",
+      "label": "浏览数脚本",
+      "group": "增强",
+      "type": "select",
+      "value": "none",
+      "options": [
+        {"value": "none",     "label": "不显示"},
+        {"value": "busuanzi", "label": "不蒜子"}
+      ],
+      "note": "页面浏览数统计（不蒜子需保持开启）"
+    },
+    {
+      "name": "showSearch",
+      "label": "顶栏搜索",
+      "group": "增强",
+      "type": "toggle",
+      "value": true,
+      "note": "顶栏右侧搜索框（基于 /api/search.json）"
+    },
+    {
+      "name": "customCSS",
+      "label": "自定义 CSS",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到所有页面 <head>，优先级最高"
+    },
+    {
+      "name": "customHeadHtml",
+      "label": "自定义 head HTML",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "注入到 <head> 末尾"
+    },
+    {
+      "name": "customBodyEndHtml",
+      "label": "自定义 body 末尾 HTML",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "注入到 </body> 之前"
+    }
+  ]
+}

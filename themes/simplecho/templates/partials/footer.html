@@ -1,0 +1,60 @@
+<footer class="sc-footer" role="contentinfo">
+  {% if theme_config.footerSlogan %}
+    <div class="sc-slogan">{{ theme_config.footerSlogan }}</div>
+  {% endif %}
+
+  <div class="sc-social">
+    {% if theme_config.socialHomepage %}
+      <a href="{{ theme_config.socialHomepage }}" target="_blank" rel="noopener" aria-label="个人主页"><svg><use xlink:href="#sc-icon-home"/></svg></a>
+    {% endif %}
+    {% if theme_config.socialMastodon %}
+      <a rel="me noopener" href="{{ theme_config.socialMastodon }}" target="_blank" aria-label="Mastodon"><svg><use xlink:href="#sc-icon-mastodon"/></svg></a>
+    {% endif %}
+    {% if theme_config.socialTwitter %}
+      <a href="{{ theme_config.socialTwitter }}" target="_blank" rel="noopener" aria-label="X / Twitter"><svg><use xlink:href="#sc-icon-twitter"/></svg></a>
+    {% endif %}
+    {% if theme_config.socialFacebook %}
+      <a href="{{ theme_config.socialFacebook }}" target="_blank" rel="noopener" aria-label="Facebook"><svg><use xlink:href="#sc-icon-facebook"/></svg></a>
+    {% endif %}
+    {% if theme_config.socialWeibo %}
+      <a href="{{ theme_config.socialWeibo }}" target="_blank" rel="noopener" aria-label="新浪微博"><svg><use xlink:href="#sc-icon-weibo"/></svg></a>
+    {% endif %}
+    {% if theme_config.socialBilibili %}
+      <a href="{{ theme_config.socialBilibili }}" target="_blank" rel="noopener" aria-label="哔哩哔哩"><svg><use xlink:href="#sc-icon-bilibili"/></svg></a>
+    {% endif %}
+    {% if theme_config.socialYouTube %}
+      <a href="{{ theme_config.socialYouTube }}" target="_blank" rel="noopener" aria-label="YouTube"><svg><use xlink:href="#sc-icon-youtube"/></svg></a>
+    {% endif %}
+    {% if theme_config.socialGitHub %}
+      <a href="{{ theme_config.socialGitHub }}" target="_blank" rel="noopener" aria-label="GitHub"><svg><use xlink:href="#sc-icon-github"/></svg></a>
+    {% endif %}
+    {% if theme_config.socialGitLab %}
+      <a href="{{ theme_config.socialGitLab }}" target="_blank" rel="noopener" aria-label="GitLab"><svg><use xlink:href="#sc-icon-gitlab"/></svg></a>
+    {% endif %}
+    {% if theme_config.socialLinkedIn %}
+      <a href="{{ theme_config.socialLinkedIn }}" target="_blank" rel="noopener" aria-label="LinkedIn"><svg><use xlink:href="#sc-icon-linkedin"/></svg></a>
+    {% endif %}
+    {% if theme_config.socialCoffee %}
+      <a href="{{ theme_config.socialCoffee }}" target="_blank" rel="noopener" aria-label="Buy Me A Coffee"><svg><use xlink:href="#sc-icon-coffee"/></svg></a>
+    {% endif %}
+    {% if theme_config.socialEMailTo %}
+      <a href="{{ theme_config.socialEMailTo }}" rel="noopener" aria-label="Email"><svg><use xlink:href="#sc-icon-mail"/></svg></a>
+    {% endif %}
+    <a href="/atom.xml" target="_blank" rel="noopener" aria-label="RSS"><svg><use xlink:href="#sc-icon-rss"/></svg></a>
+  </div>
+
+  <div class="sc-footer-info">
+    {% if theme_config.footerICP %}
+      <p><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener nofollow">{{ theme_config.footerICP }}</a></p>
+    {% endif %}
+    <p>&copy; {{ now|date:"2006" }} {{ config.siteName|default:"Simplecho" }}{% if config.author %} · {{ config.author }}{% endif %}</p>
+  </div>
+
+  {% if theme_config.footerShowPower %}
+    <div class="sc-footer-power">
+      Theme by <a href="https://github.com/Gridea-Pro/gridea-pro-themes" target="_blank" rel="noopener">Simplecho</a>
+      &nbsp;|&nbsp;
+      Powered by <a href="https://gridea.pro/" target="_blank" rel="noopener">Gridea Pro</a>
+    </div>
+  {% endif %}
+</footer>
