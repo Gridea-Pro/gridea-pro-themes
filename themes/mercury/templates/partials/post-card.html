@@ -1,0 +1,14 @@
+<article class="post-card">
+  <h2 class="post-card-title">
+    <a href="{{ post.link }}">
+      {% if post.isTop %}<span class="post-card-badge">置顶</span>{% endif %}
+      {{ post.title }}
+    </a>
+  </h2>
+  <div class="post-card-meta">
+    <time class="post-card-date">{{ post.dateFormat }}</time>
+  </div>
+  {% if post.content %}
+    <p class="post-card-excerpt">{{ post.content|striptags|truncatechars:200 }}</p>
+  {% endif %}
+</article>

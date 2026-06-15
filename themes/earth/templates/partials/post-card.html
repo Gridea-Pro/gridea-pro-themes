@@ -1,0 +1,28 @@
+<article class="post-card post-card-{% if theme_config.postCardLayout %}{{ theme_config.postCardLayout }}{% else %}list{% endif %}">
+  {% if post.feature %}
+    <a href="{{ post.link }}" class="post-card-image-link">
+      <img src="{{ post.feature }}" alt="{{ post.title }}" class="post-card-image" loading="lazy">
+    </a>
+  {% endif %}
+  <div class="post-card-body">
+    {% if post.isTop %}
+      <span class="post-card-badge">置顶</span>
+    {% endif %}
+    <h2 class="post-card-title">
+      <a href="{{ post.link }}">{{ post.title }}</a>
+    </h2>
+    <div class="post-card-meta">
+      <time class="post-card-date">{{ post.dateFormat }}</time>
+      {% if post.tags %}
+        <span class="post-card-tags">
+          {% for tag in post.tags %}
+            <a href="{{ tag.link }}" class="post-card-tag">{{ tag.name }}</a>
+          {% endfor %}
+        </span>
+      {% endif %}
+    </div>
+    {% if post.content %}
+      <p class="post-card-excerpt">{{ post.content|striptags|truncatechars:200 }}</p>
+    {% endif %}
+  </div>
+</article>

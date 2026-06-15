@@ -1,0 +1,14 @@
+<link rel="canonical" href="{{ config.domain }}">
+<meta property="og:title" content="{{ config.siteName }}">
+<meta property="og:description" content="{{ config.siteDescription }}">
+<meta property="og:url" content="{{ config.domain }}">
+<meta property="og:type" content="website">
+<meta name="generator" content="Gridea Pro">
+<link rel="stylesheet" href="{{ config.domain }}/styles/style.css">
+<style>[data-theme="light"]{--color-primary:{{ theme_config.primaryColor }};}[data-theme="dark"]{--color-primary:{{ theme_config.primaryColor }};}</style>
+{% if theme_config.customCSS %}
+<style>{{ theme_config.customCSS|safe }}</style>
+{% endif %}
+<script>
+(function(){var t=null;try{t=localStorage.getItem('mercury-theme')}catch(e){}if(!t){t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t)})();
+</script>

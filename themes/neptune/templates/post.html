@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} | {{ config.siteName }}{% endblock %}
+
+{% block reading_progress %}
+{% if theme_config.showReadingProgress %}
+<div class="reading-progress-bar" id="reading-progress-bar"></div>
+<script>
+(function(){
+  var bar = document.getElementById('reading-progress-bar');
+  if(!bar) return;
+  function update(){
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    var progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    bar.style.width = progress + '%';
+  }
+  window.addEventListener('scroll', update);
+  window.addEventListener('resize', update);
+})();
+</script>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<article class="post">
+  <header class="post-header">
+    {% if post.isTop %}<span class="post-badge">置顶</span>{% endif %}
+    <h1 class="post-title">{{ post.title }}</h1>
+    <div class="post-meta">
+      <time class="post-date">{{ post.dateFormat }}</time>
+      {% if theme_config.showEstimatedReadingTime %}
+        <span class="post-reading-time">阅读本文约需一段时间</span>
+      {% endif %}
+    </div>
+  </header>
+  <div class="post-content">
+    {{ post.content|safe }}
+  </div>
+  {% if theme_config.showTagsInPost and post.tags %}
+  <footer class="post-footer">
+    <div class="post-tags">
+      {% for tag in post.tags %}
+        <a href="{{ tag.link }}" class="post-tag">{{ tag.name }}</a>
+      {% endfor %}
+    </div>
+  </footer>
+  {% endif %}
+  {% if theme_config.showPostNav and (pagination.prev or pagination.next) %}
+  <nav class="post-nav">
+    {% if pagination.prev %}
+      <a href="{{ pagination.prev }}" class="post-nav-link post-nav-prev">&larr; 上一篇</a>
+    {% endif %}
+    {% if pagination.next %}
+      <a href="{{ pagination.next }}" class="post-nav-link post-nav-next">下一篇 &rarr;</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+</article>
+{% endblock %}

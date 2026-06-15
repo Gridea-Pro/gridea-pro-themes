@@ -1,0 +1,28 @@
+<header class="header">
+  <div class="container header-inner">
+    <div class="header-brand">
+      <a href="/" class="header-logo">
+        {% if config.logo %}
+          <img src="{{ config.logo }}" alt="{{ config.siteName }}" class="header-logo-img">
+        {% else %}
+          {{ config.siteName }}
+        {% endif %}
+      </a>
+    </div>
+    <nav class="header-nav" id="header-nav">
+      {% for menu in menus %}
+        <a href="{{ menu.link }}" class="header-nav-link">{{ menu.name }}</a>
+      {% endfor %}
+    </nav>
+    <div class="header-actions">
+      {% if theme_config.showDarkModeToggle %}
+        <button class="theme-toggle" id="theme-toggle" aria-label="切换暗色模式">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
+      {% endif %}
+    </div>
+    <button class="menu-toggle" id="menu-toggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>

@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}{{ config.siteName }}{% if config.siteDescription %} | {{ config.siteDescription }}{% endif %}{% endblock %}
+
+{% block content %}
+  {% if posts %}
+    <div class="post-list">
+    {% for post in posts %}
+      {% include "partials/post-card.html" %}
+    {% endfor %}
+    </div>
+    {% include "partials/pagination.html" %}
+  {% else %}
+    <div class="empty-state">
+      <h2>暂无文章</h2>
+      <p>还没有发布任何文章，请前往后台创建第一篇。</p>
+    </div>
+  {% endif %}
+{% endblock %}

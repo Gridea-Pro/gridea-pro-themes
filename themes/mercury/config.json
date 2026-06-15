@@ -1,0 +1,83 @@
+{
+  "name": "Mercury",
+  "version": "1.0.0",
+  "author": "seolcho0827",
+  "description": "极简内容优先的博客主题 · 太阳系行星系列首作",
+  "templateEngine": "jinja2",
+  "customConfig": [
+    {
+      "name": "primaryColor",
+      "label": "主题色",
+      "group": "外观设置",
+      "type": "input",
+      "value": "#3b82f6",
+      "note": "链接、按钮等主要元素的颜色，输入十六进制色值"
+    },
+    {
+      "name": "showDarkModeToggle",
+      "label": "显示暗色模式切换",
+      "group": "外观设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "showSearch",
+      "label": "显示搜索按钮",
+      "group": "功能设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "postsPerPage",
+      "label": "每页文章数",
+      "group": "文章设置",
+      "type": "input",
+      "value": "10",
+      "note": "首页和博客列表每页显示的文章数量"
+    },
+    {
+      "name": "showTagsInPost",
+      "label": "文章底部显示标签",
+      "group": "文章设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "showPostNav",
+      "label": "显示上下篇导航",
+      "group": "文章设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "socialGithub",
+      "label": "GitHub 用户名",
+      "group": "社交设置",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "socialTwitter",
+      "label": "Twitter 用户名",
+      "group": "社交设置",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "footerText",
+      "label": "页脚自定义文字",
+      "group": "基础设置",
+      "type": "input",
+      "value": "",
+      "note": "留空则自动显示 © 年份 站点名"
+    },
+    {
+      "name": "customCSS",
+      "label": "自定义 CSS",
+      "group": "高级设置",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到主样式后面的自定义 CSS"
+    }
+  ]
+}
