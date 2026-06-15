@@ -1,0 +1,11 @@
+<footer class="footer">
+  <div class="container footer-inner">
+    <p class="footer-text">
+      {% if theme_config.footerText %}
+        {{ theme_config.footerText }}
+      {% else %}
+        &copy; {{ now|date:"2006" }} {{ config.siteName }}. Powered by Gridea Pro.
+      {% endif %}
+    </p>
+  </div>
+</footer>

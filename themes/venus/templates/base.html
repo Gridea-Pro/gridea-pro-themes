@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html data-theme="light" lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="{{ config.siteDescription }}">
+<title>{% block title %}{{ config.siteName }}{% endblock %}</title>
+{% block head %}
+  {% include "partials/head.html" %}
+{% endblock %}
+</head>
+<body>
+  {% block header %}
+    {% include "partials/header.html" %}
+  {% endblock %}
+
+  {% block hero %}
+  {% endblock %}
+
+  {% block main %}
+  <main class="main">
+    <div class="container layout-{{ theme_config.sidebarPosition }}-sidebar">
+      <div class="content">
+        {% block content %}{% endblock %}
+      </div>
+      {% if theme_config.showSidebar %}
+        <aside class="sidebar">
+          {% block sidebar %}
+            {% include "partials/sidebar.html" %}
+          {% endblock %}
+        </aside>
+      {% endif %}
+    </div>
+  </main>
+  {% endblock %}
+
+  {% block footer %}
+    {% include "partials/footer.html" %}
+  {% endblock %}
+
+  <script>
+  (function() {
+    var toggle = document.getElementById('theme-toggle');
+    if (toggle) {
+      toggle.addEventListener('click', function() {
+        var html = document.documentElement;
+        var current = html.getAttribute('data-theme');
+        var next = current === 'dark' ? 'light' : 'dark';
+        html.setAttribute('data-theme', next);
+        try { localStorage.setItem('venus-theme', next); } catch(e) {}
+      });
+    }
+    var menuToggle = document.getElementById('menu-toggle');
+    var headerNav = document.getElementById('header-nav');
+    if (menuToggle && headerNav) {
+      menuToggle.addEventListener('click', function() {
+        headerNav.classList.toggle('is-open');
+      });
+    }
+  })();
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}{{ config.siteName }}{% if config.siteDescription %} | {{ config.siteDescription }}{% endif %}{% endblock %}
+
+{% block hero %}
+{% if theme_config.showHero %}
+<section class="hero"{% if theme_config.heroImage %} style="background-image:url('{{ theme_config.heroImage }}')"{% endif %}>
+  <div class="container hero-inner">
+    <h1 class="hero-title">{{ theme_config.heroTitle | default:config.siteName }}</h1>
+    {% if theme_config.heroSubtitle %}
+      <p class="hero-subtitle">{{ theme_config.heroSubtitle }}</p>
+    {% endif %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+  {% if theme_config.showFeaturedPosts and posts %}
+    <section class="featured-posts">
+      <h2 class="section-title">精选文章</h2>
+      <div class="featured-grid">
+      {% for post in posts %}
+        <article class="featured-card">
+          {% if post.feature %}
+            <a href="{{ post.link }}" class="featured-card-image-link">
+              <img src="{{ post.feature }}" alt="{{ post.title }}" class="featured-card-image" loading="lazy">
+            </a>
+          {% endif %}
+          <div class="featured-card-body">
+            <h3 class="featured-card-title"><a href="{{ post.link }}">{{ post.title }}</a></h3>
+            <div class="featured-card-meta">
+              <time>{{ post.dateFormat }}</time>
+              {% if post.tags %}
+                <span class="featured-card-tags">
+                    {% for tag in post.tags %}
+                    <a href="{{ tag.link }}" class="featured-card-tag">{{ tag.name }}</a>
+      {% endfor %}
+                </span>
+              {% endif %}
+            </div>
+          </div>
+        </article>
+      {% endfor %}
+      </div>
+    </section>
+  {% endif %}
+
+  {% if posts %}
+    <section class="latest-posts">
+      <h2 class="section-title">最新文章</h2>
+      <div class="post-list">
+      {% for post in posts %}
+        {% include "partials/post-card.html" %}
+      {% endfor %}
+      </div>
+    </section>
+    {% include "partials/pagination.html" %}
+  {% else %}
+    <div class="empty-state">
+      <h2>暂无文章</h2>
+      <p>还没有发布任何文章，请前往后台创建第一篇。</p>
+    </div>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,28 @@
+<div class="sidebar-widget sidebar-about">
+  <h3 class="sidebar-widget-title">$ about</h3>
+  {% if config.avatar %}
+    <img src="{{ config.avatar }}" alt="{{ config.siteName }}" class="sidebar-avatar" loading="lazy">
+  {% endif %}
+  <p>{{ config.siteDescription }}</p>
+</div>
+{% if tags %}
+<div class="sidebar-widget sidebar-tags">
+  <h3 class="sidebar-widget-title">$ tags</h3>
+  <div class="sidebar-tags-list">
+    {% for tag in tags %}
+      <a href="{{ tag.link }}" class="sidebar-tag">[{{ tag.name }}]</a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+<div class="sidebar-widget sidebar-social">
+  <h3 class="sidebar-widget-title">$ social</h3>
+  <div class="sidebar-social-links">
+    {% if theme_config.socialGithub %}
+      <a href="https://github.com/{{ theme_config.socialGithub }}" target="_blank" rel="noopener noreferrer" class="sidebar-social-link">gh:{{ theme_config.socialGithub }}</a>
+    {% endif %}
+    {% if theme_config.socialTwitter %}
+      <a href="https://twitter.com/{{ theme_config.socialTwitter }}" target="_blank" rel="noopener noreferrer" class="sidebar-social-link">tw:{{ theme_config.socialTwitter }}</a>
+    {% endif %}
+  </div>
+</div>

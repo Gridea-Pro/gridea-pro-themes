@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}归档 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">归档</h1>
+  {% if posts %}
+    <div class="archives-list">
+    {% for post in posts %}
+      <article class="archive-item">
+        <time class="archive-date">{{ post.dateFormat }}</time>
+        <h2 class="archive-title"><a href="{{ post.link }}">{{ post.title }}</a></h2>
+      </article>
+    {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <p>暂无文章</p>
+    </div>
+  {% endif %}
+{% endblock %}

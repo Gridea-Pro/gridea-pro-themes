@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}标签 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+  <h1 class="page-title">所有标签</h1>
+  {% if tags %}
+    <div class="tags-cloud">
+    {% for tag in tags %}
+      <a href="{{ tag.link }}" class="tag-cloud-item">{{ tag.name }} <span class="tag-count">{{ tag.count }}</span></a>
+    {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state">
+      <p>暂无标签</p>
+    </div>
+  {% endif %}
+{% endblock %}

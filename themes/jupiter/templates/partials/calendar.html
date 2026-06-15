@@ -1,0 +1,64 @@
+<div class="calendar-widget">
+  <div class="calendar-header">
+    <button class="calendar-prev" type="button" aria-label="上月">&larr;</button>
+    <span class="calendar-month-year" id="calendar-label">2026年 6月</span>
+    <button class="calendar-next" type="button" aria-label="下月">&rarr;</button>
+  </div>
+  <table class="calendar-table">
+    <thead>
+      <tr>
+        <th>日</th><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th>
+      </tr>
+    </thead>
+    <tbody id="calendar-body">
+    </tbody>
+  </table>
+</div>
+<script>
+(function(){
+  var today = new Date();
+  var year = today.getFullYear();
+  var month = today.getMonth();
+  function renderCalendar(y,m){
+    var label = document.getElementById('calendar-label');
+    if(!label) return;
+    var months = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+    label.textContent = y + '年 ' + months[m];
+    var first = new Date(y,m,1).getDay();
+    var days = new Date(y,m+1,0).getDate();
+    var tbody = document.getElementById('calendar-body');
+    if(!tbody) return;
+    tbody.innerHTML = '';
+    var row = document.createElement('tr');
+    for(var i=0;i<first;i++){
+      row.appendChild(document.createElement('td'));
+    }
+    for(var d=1;d<=days;d++){
+      var cell = document.createElement('td');
+      cell.textContent = d;
+      if(d===today.getDate() && y===today.getFullYear() && m===today.getMonth()){
+        cell.className = 'calendar-today';
+      }
+      row.appendChild(cell);
+      if((first+d)%7===0 && d<days){
+        tbody.appendChild(row);
+        row = document.createElement('tr');
+      }
+    }
+    tbody.appendChild(row);
+  }
+  renderCalendar(year,month);
+  var prevBtn = document.querySelector('.calendar-prev');
+  var nextBtn = document.querySelector('.calendar-next');
+  if(prevBtn) prevBtn.addEventListener('click',function(){
+    month--;
+    if(month<0){month=11;year--;}
+    renderCalendar(year,month);
+  });
+  if(nextBtn) nextBtn.addEventListener('click',function(){
+    month++;
+    if(month>11){month=0;year++;}
+    renderCalendar(year,month);
+  });
+})();
+</script>
