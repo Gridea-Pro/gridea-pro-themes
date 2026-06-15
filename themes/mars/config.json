@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "author": "seolcho0827",
   "description": "硬核暗色优先的技术博客主题 · 默认暗色模式、等宽字体点缀、开发者风格",
+  "engine": "jinja2",
   "templateEngine": "jinja2",
   "customConfig": [
     {

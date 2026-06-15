@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "author": "seolcho0827",
   "description": "沉浸式深度阅读博客主题 · 窄栏大字号、专注排版、长文舒适度优先",
+  "engine": "jinja2",
   "templateEngine": "jinja2",
   "customConfig": [
     {
