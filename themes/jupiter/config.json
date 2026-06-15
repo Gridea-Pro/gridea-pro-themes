@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "author": "seolcho0827",
   "description": "功能丰富的重型博客主题 · 多侧边栏组件、日历天气、门户式网格布局",
+  "engine": "jinja2",
   "templateEngine": "jinja2",
   "customConfig": [
     {
