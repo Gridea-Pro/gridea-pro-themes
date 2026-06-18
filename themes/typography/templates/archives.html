@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    {% include "partials/head.html" %}
+    <title>Archive · {{ config.siteName }}</title>
+    <meta name="description" content="Archive - {{ config.siteName }}">
+</head>
+<body>
+    <div id="stage" class="container">
+        <div class="row">
+            {% include "partials/sidebar.html" %}
+            <div id="main-container" class="col-sm-9 col-xs-12 main-container invisible">
+                <div class="autopagerize_page_element">
+                    <div class="content">
+                        <p class="post-title">Archive {{ pagination.totalPosts }} Posts</p>
+                        <div class="archive animated fadeInDown">
+                            <ul class="list-with-title">
+                                {% for item in posts %}
+                                <li class="listing-item">
+                                    <div class="listing-post">
+                                        <span class="ar-date">{{ item.dateFormat }}</span>
+                                        <p class="post-title">
+                                            <a href="{{ item.link }}" title="{{ item.title }}">{{ item.title }}</a>
+                                        </p>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% include "partials/pagination.html" %}
+                    </div>
+                </div>
+                
+                <div class="visible-xs site-bottom-footer">
+                    {% include "partials/footer.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/scripts/jquery-3.1.0.min.js"></script>
+    <script src="/scripts/bootstrap.min.js"></script>
+    <script src="/scripts/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/scripts/jquery.appear.js"></script>
+    <script src="/scripts/typography.js"></script>
+</body>
+</html>

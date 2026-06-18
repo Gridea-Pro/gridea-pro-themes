@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    {% include "partials/head.html" %}
+    <title>{{ "Tags" }} · {{ config.siteName }}</title>
+    <meta name="description" content="{{ "Tags" }} - {{ config.siteName }}">
+</head>
+<body>
+    <div id="stage" class="container">
+        <div class="row">
+            {% include "partials/sidebar.html" %}
+            <div id="main-container" class="col-sm-9 col-xs-12 main-container invisible">
+                <div class="autopagerize_page_element">
+                    <div class="content">
+                        <div class="archive animated fadeInDown">
+                            <p class="post-title">{{ "Tags" }}</p>
+                            <ul class="listing">
+                                {% for tag in tags %}
+                                <li class="listing-item">
+                                    <div class="listing-post">
+                                        <p class="post-title">
+                                            <a href="{{ tag.link }}" title="{{ tag.name }}">{{ tag.name }}</a>
+                                        </p>
+                                        <span class="date meta-item">{{ tag.count }} {{ "TagCount" }}</span>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="visible-xs site-bottom-footer">
+                    {% include "partials/footer.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/scripts/jquery-3.1.0.min.js"></script>
+    <script src="/scripts/bootstrap.min.js"></script>
+    <script src="/scripts/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/scripts/jquery.appear.js"></script>
+    <script src="/scripts/typography.js"></script>
+</body>
+</html>

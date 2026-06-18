@@ -1,0 +1,162 @@
+{
+  "name": "typography",
+  "version": "1.1.0",
+  "author": "Makito (Ported to Gridea Pro)",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "repository": "https://github.com/SumiMakito/hexo-theme-typography",
+  "description": "Rediscover the beauty of typography. A minimal, typography-focused theme.",
+  "customConfig": [
+    {
+      "name": "title_primary",
+      "label": "主标题 (大)",
+      "group": "基础设置",
+      "value": "活版印字",
+      "type": "input",
+      "note": "显示在侧边栏的大标题"
+    },
+    {
+      "name": "title_secondary",
+      "label": "副标题 (小)",
+      "group": "基础设置",
+      "value": "Typography",
+      "type": "input",
+      "note": "显示在侧边栏的小标题"
+    },
+    {
+      "name": "siteKeywords",
+      "label": "站点关键词",
+      "group": "基础设置",
+      "value": "",
+      "type": "input",
+      "note": "SEO关键词，用逗号分隔"
+    },
+    {
+      "name": "customCopyrightNameEnabled",
+      "label": "启用自定义版权名称",
+      "group": "基础设置",
+      "value": false,
+      "type": "toggle",
+      "note": "开启后可自定义版权区域显示的名称，替代站点名称"
+    },
+    {
+      "name": "customCopyrightName",
+      "label": "自定义版权名称",
+      "group": "基础设置",
+      "value": "",
+      "type": "input",
+      "note": "版权链接处显示的文字（需先开启上方开关）"
+    },
+    {
+      "name": "themeStyle",
+      "label": "配色方案",
+      "group": "外观设置",
+      "value": "light",
+      "type": "select",
+      "options": [
+        { "label": "浅色", "value": "light" },
+        { "label": "深色", "value": "dark" }
+      ]
+    },
+    {
+      "name": "showPageCount",
+      "label": "显示页码计数",
+      "group": "外观设置",
+      "value": true,
+      "type": "toggle"
+    },
+    {
+      "name": "showCategories",
+      "label": "显示文章分类",
+      "group": "外观设置",
+      "value": true,
+      "type": "toggle"
+    },
+    {
+      "name": "showTags",
+      "label": "显示文章标签",
+      "group": "外观设置",
+      "value": true,
+      "type": "toggle"
+    },
+    {
+      "name": "showComments",
+      "label": "显示评论入口",
+      "group": "外观设置",
+      "value": true,
+      "type": "toggle"
+    },
+    {
+      "name": "socialGithub",
+      "label": "GitHub 账号",
+      "group": "社交链接",
+      "value": "",
+      "type": "input"
+    },
+    {
+      "name": "socialTwitter",
+      "label": "Twitter 账号",
+      "group": "社交链接",
+      "value": "",
+      "type": "input"
+    },
+    {
+      "name": "socialInstagram",
+      "label": "Instagram 账号",
+      "group": "社交链接",
+      "value": "",
+      "type": "input"
+    },
+    {
+      "name": "socialWeibo",
+      "label": "微博 UID",
+      "group": "社交链接",
+      "value": "",
+      "type": "input"
+    },
+    {
+      "name": "rssEnabled",
+      "label": "启用 RSS",
+      "group": "社交链接",
+      "value": true,
+      "type": "toggle"
+    },
+    {
+      "name": "analyticsProvider",
+      "label": "统计工具",
+      "group": "统计与追踪",
+      "value": "none",
+      "type": "select",
+      "options": [
+        { "label": "不启用", "value": "none" },
+        { "label": "Google Analytics", "value": "google" },
+        { "label": "Umami Analytics", "value": "umami" }
+      ],
+      "note": "选择网站统计工具"
+    },
+    {
+      "name": "googleAnalyticsId",
+      "label": "Google Analytics 测量 ID",
+      "group": "统计与追踪",
+      "value": "",
+      "type": "input",
+      "note": "格式如 G-XXXXXXXXXX，选择 Google Analytics 时必填"
+    },
+    {
+      "name": "umamiScriptUrl",
+      "label": "Umami 脚本地址",
+      "group": "统计与追踪",
+      "value": "",
+      "type": "input",
+      "note": "如 https://umami.example.com/script.js，选择 Umami 时必填"
+    },
+    {
+      "name": "umamiWebsiteId",
+      "label": "Umami 网站 ID",
+      "group": "统计与追踪",
+      "value": "",
+      "type": "input",
+      "note": "选择 Umami 时必填"
+    }
+  ]
+}

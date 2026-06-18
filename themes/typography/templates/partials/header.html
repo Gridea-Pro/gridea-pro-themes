@@ -1,0 +1,70 @@
+<div id="site-nav" class="site-title-links">
+    <ul>
+        {% if menus and menus|length > 0 %}
+        {% for menu in menus %}
+        <li>
+            {% if current_page == menu.name|lower %}
+            <a class="current" href="{{ menu.link }}">{{ menu.name }}</a>
+            {% else %}
+            <a href="{{ menu.link }}">{{ menu.name }}</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+        {% else %}
+        {# 默认导航（未配置菜单时的回退） #}
+        <li>
+            {% if current_page == "index" %}
+            <a class="current" href="/">Home</a>
+            {% else %}
+            <a href="/">Home</a>
+            {% endif %}
+        </li>
+        <li>
+            {% if current_page == "archives" %}
+            <a class="current" href="/archives/">Archive</a>
+            {% else %}
+            <a href="/archives/">Archive</a>
+            {% endif %}
+        </li>
+        <li>
+            {% if current_page == "tags" %}
+            <a class="current" href="/tags/">Tags</a>
+            {% else %}
+            <a href="/tags/">Tags</a>
+            {% endif %}
+        </li>
+        {% endif %}
+
+        <li class="soc">
+            {% if theme_config.socialGithub %}
+            <a href="https://github.com/{{ theme_config.socialGithub }}" target="_blank" rel="noopener noreferrer" aria-label="Github">
+                <i class="fa fa-github"></i>&nbsp;
+            </a>
+            {% endif %}
+            {% if theme_config.socialTwitter %}
+            <a href="https://twitter.com/{{ theme_config.socialTwitter }}" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                <i class="fa fa-twitter"></i>&nbsp;
+            </a>
+            {% endif %}
+            {% if theme_config.socialInstagram %}
+            <a href="https://www.instagram.com/{{ theme_config.socialInstagram }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <i class="fa fa-instagram"></i>&nbsp;
+            </a>
+            {% endif %}
+            {% if theme_config.socialWeibo %}
+            <a href="http://weibo.com/u/{{ theme_config.socialWeibo }}" target="_blank" rel="noopener noreferrer" aria-label="Sina Weibo">
+                <i class="fa fa-weibo"></i>&nbsp;
+            </a>
+            {% endif %}
+            {% if theme_config.rssEnabled %}
+            <a href="/feed.xml" target="_blank" rel="noopener noreferrer" aria-label="RSS">
+                <i class="fa fa-rss"></i>&nbsp;
+            </a>
+            {% endif %}
+        </li>
+    </ul>
+    <div class="visible-lg visible-md visible-sm site-nav-footer">
+        <br class="site-nav-footer-br">
+        {% include "partials/footer.html" %}
+    </div>
+</div>

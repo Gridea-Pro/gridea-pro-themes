@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    {% include "partials/head.html" %}
+    <title>Memos · {{ config.siteName }}</title>
+    <meta name="description" content="Memos - {{ config.siteName }}">
+    <style>
+    /* 热力图样式 */
+    .heatmap-wrap {
+      margin-bottom: 2em;
+      overflow-x: auto;
+    }
+    .heatmap-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 6px;
+      font-size: 12px;
+      color: var(--post-info-color, #999);
+    }
+    .heatmap-legend {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .heatmap-legend-cell {
+      width: 10px;
+      height: 10px;
+      border-radius: 2px;
+    }
+    /* 闪念列表 */
+    .memo-item {
+      margin-bottom: 1em;
+    }
+    .memo-content {
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 0.3em;
+    }
+    .memo-content p {
+      margin: 0.3em 0;
+    }
+    .memo-meta {
+      font-size: 13px;
+      color: #999;
+    }
+    .memo-meta .ar-date {
+      color: #999;
+    }
+    .memo-tags {
+      margin-left: 0.5em;
+    }
+    .memo-tag {
+      color: #2e405b;
+      opacity: 0.7;
+      font-size: 13px;
+    }
+    .memo-tag:hover {
+      opacity: 1;
+    }
+    </style>
+</head>
+<body>
+    <div id="stage" class="container">
+        <div class="row">
+            {% include "partials/sidebar.html" %}
+            <div id="main-container" class="col-sm-9 col-xs-12 main-container invisible">
+                <div class="autopagerize_page_element">
+                    <div class="content">
+                        <p class="post-title">Memos</p>
+                        <div class="memos-container">
+                            {% if memos and memos|length > 0 %}
+
+                            {# 热力图 #}
+                            <div class="heatmap-wrap">
+                              <div id="heatmap-root"></div>
+                              <div class="heatmap-footer">
+                                <span id="heatmap-total"></span>
+                                <div class="heatmap-legend" id="heatmap-legend">
+                                  <span>少</span>
+                                  <span class="heatmap-legend-cell" data-level="0"></span>
+                                  <span class="heatmap-legend-cell" data-level="1"></span>
+                                  <span class="heatmap-legend-cell" data-level="2"></span>
+                                  <span class="heatmap-legend-cell" data-level="3"></span>
+                                  <span class="heatmap-legend-cell" data-level="4"></span>
+                                  <span>多</span>
+                                </div>
+                              </div>
+                            </div>
+
+                            {# 闪念列表 #}
+                            <ul class="listing">
+                                {% for memo in memos %}
+                                <li class="listing-item memo-item" data-created="{{ memo.createdAtISO }}">
+                                    <div class="listing-post">
+                                        <div class="memo-content">{{ memo.content|safe }}</div>
+                                        <div class="memo-meta">
+                                            <span class="ar-date">{{ memo.createdAt }}</span>
+                                            {% if memo.tags and memo.tags|length > 0 %}
+                                            <span class="memo-tags">
+                                                {% for tag in memo.tags %}
+                                                <span class="memo-tag">#{{ tag }}</span>
+                                                {% endfor %}
+                                            </span>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% else %}
+                            <p>No memos yet.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="visible-xs site-bottom-footer">
+                    {% include "partials/footer.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/scripts/jquery-3.1.0.min.js"></script>
+    <script src="/scripts/bootstrap.min.js"></script>
+    <script src="/scripts/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/scripts/jquery.appear.js"></script>
+    <script src="/scripts/typography.js"></script>
+    
+    <!-- Mermaid 图表支持已移除 - memos 页面暂不需要 -->
+    <script>
+    (function() {
+      var items = document.querySelectorAll('.memo-item');
+      if (items.length === 0) return;
+
+      // 热力图数据统计
+      var heatmapData = {};
+      items.forEach(function(item) {
+        var d = item.getAttribute('data-created');
+        if (d) {
+          var dateStr = d.substring(0, 10);
+          heatmapData[dateStr] = (heatmapData[dateStr] || 0) + 1;
+        }
+      });
+
+      // 主题背景色 #2e405b 的五种明暗深度
+      var COLORS = ['#e8ecf1', '#b3c2d4', '#7d96b7', '#4a6a9a', '#2e405b'];
+      var MONTHS = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+      var DAYS = ['日','一','二','三','四','五','六'];
+
+      var today = new Date(); today.setHours(0,0,0,0);
+      var WEEKS_TO_SHOW = 53;
+      var totalDays = WEEKS_TO_SHOW * 7;
+      var startDate = new Date(today);
+      startDate.setDate(startDate.getDate() - totalDays + 1);
+      startDate.setDate(startDate.getDate() - startDate.getDay());
+
+      var weeks = [];
+      for (var w = 0; w < WEEKS_TO_SHOW; w++) {
+        var week = [];
+        for (var d = 0; d < 7; d++) {
+          var cellDate = new Date(startDate);
+          cellDate.setDate(cellDate.getDate() + w * 7 + d);
+          var key = cellDate.getFullYear() + '-' + String(cellDate.getMonth() + 1).padStart(2, '0') + '-' + String(cellDate.getDate()).padStart(2, '0');
+          var count = heatmapData[key] || 0;
+          var level = count === 0 ? 0 : count === 1 ? 1 : count <= 3 ? 2 : count <= 5 ? 3 : 4;
+          var future = cellDate > today;
+          week.push({date: cellDate, key: key, count: count, level: level, future: future, month: cellDate.getMonth()});
+        }
+        weeks.push(week);
+      }
+
+      // 月份标签
+      var monthLabels = [];
+      var lastMonth = -1;
+      for (var w = 0; w < weeks.length; w++) {
+        var firstDay = weeks[w][0];
+        if (firstDay.month !== lastMonth) {
+          monthLabels.push({weekIndex: w, label: MONTHS[firstDay.month]});
+          lastMonth = firstDay.month;
+        }
+      }
+
+      // 渲染热力图
+      var cellGap = 3;
+      var labelWidth = 24;
+
+      // 月份标签行
+      var monthHtml = '<div style="display:flex; gap:' + cellGap + 'px; margin-bottom:' + cellGap + 'px;">';
+      monthHtml += '<div style="width:' + labelWidth + 'px; flex-shrink:0;"></div>';
+      var mci = 0;
+      for (var w = 0; w < WEEKS_TO_SHOW; w++) {
+        if (mci < monthLabels.length && monthLabels[mci].weekIndex === w) {
+          var ni = mci + 1 < monthLabels.length ? monthLabels[mci + 1].weekIndex : WEEKS_TO_SHOW;
+          var span = ni - w;
+          monthHtml += '<div style="flex:' + span + '; font-size:10px; color:#999; text-align:center; height:14px; line-height:14px;">' + monthLabels[mci].label + '</div>';
+          w += span - 1;
+          mci++;
+        } else {
+          monthHtml += '<div style="flex:1;"></div>';
+        }
+      }
+      monthHtml += '</div>';
+
+      // 星期行 + 格子
+      var weeksHtml = '';
+      for (var d = 0; d < 7; d++) {
+        weeksHtml += '<div style="display:flex; gap:' + cellGap + 'px; margin-bottom:' + cellGap + 'px;">';
+        weeksHtml += '<div style="width:' + labelWidth + 'px; flex-shrink:0; font-size:10px; color:#999; text-align:right; padding-right:4px; height:10px; line-height:10px;">' + DAYS[d] + '</div>';
+        for (var w = 0; w < WEEKS_TO_SHOW; w++) {
+          var c = weeks[w][d];
+          var bg = c.future ? 'transparent' : COLORS[c.level];
+          var title = c.future ? '' : (' title="' + c.key + ': ' + c.count + ' 条闪念"');
+          weeksHtml += '<div style="flex:1; aspect-ratio:1; background:' + bg + '; border-radius:2px;' + (c.future ? '' : ' cursor:pointer;') + '"' + title + '></div>';
+        }
+        weeksHtml += '</div>';
+      }
+
+      document.getElementById('heatmap-root').innerHTML = monthHtml + weeksHtml;
+      document.getElementById('heatmap-total').textContent = '过去一年共 ' + items.length + ' 条闪念';
+
+      // 图例颜色
+      document.querySelectorAll('.heatmap-legend-cell').forEach(function(cell) {
+        var level = parseInt(cell.getAttribute('data-level'));
+        cell.style.background = COLORS[level];
+      });
+    })();
+    </script>
+</body>
+</html>

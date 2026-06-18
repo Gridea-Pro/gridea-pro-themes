@@ -1,0 +1,26 @@
+{% if post.prevPost or post.nextPost %}
+<div class="pagination">
+    <p class="clearfix">
+        {% if post.prevPost %}
+        <span class="pre pagbuttons">
+            <a role="navigation" href="{{ post.prevPost.link }}" title="{{ post.prevPost.title }}">
+                <i class="fa fa-angle-double-left"></i>
+                &nbsp;
+                {{ "prev_post" }}: {{ post.prevPost.title }}
+            </a>
+        </span>
+        {% endif %}
+        
+        {% if post.nextPost %}
+        <span>&nbsp;</span>
+        <span class="next pagbuttons">
+            <a role="navigation" href="{{ post.nextPost.link }}" title="{{ post.nextPost.title }}">
+                {{ "next_post" }}: {{ post.nextPost.title }}
+                &nbsp;
+                <i class="fa fa-angle-double-right"></i>
+            </a>
+        </span>
+        {% endif %}
+    </p>
+</div>
+{% endif %}

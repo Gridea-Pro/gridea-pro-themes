@@ -1,0 +1,28 @@
+<div id="side-bar" class="col-sm-3 col-xs-12 side-container invisible">
+    <div class="vertical-text site-title">
+        <h3 class="site-title-small" tabindex="-1">
+            <a class="a-title" href="/">
+                {% if theme_config.title_secondary %}
+                    {{ theme_config.title_secondary }}
+                {% elif site.customConfig.title_secondary %}
+                    {{ site.customConfig.title_secondary }}
+                {% else %}
+                    {{ config.siteName }}
+                {% endif %}
+            </a>
+        </h3>
+        <h1 class="site-title-large" tabindex="-1">
+            <a class="a-title" href="/">
+                {% if theme_config.title_primary %}
+                    {{ theme_config.title_primary }}
+                {% elif site.customConfig.title_primary %}
+                    {{ site.customConfig.title_primary }}
+                {% else %}
+                    {{ config.siteName }}
+                {% endif %}
+            </a>
+        </h1>
+    </div>
+    <br class="visible-lg visible-md visible-sm">
+    {% include "partials/header.html" %}
+</div>

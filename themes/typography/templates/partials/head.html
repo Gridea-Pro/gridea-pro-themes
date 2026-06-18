@@ -1,0 +1,47 @@
+<meta charset="utf-8">
+<meta name="X-UA-Compatible" content="IE=edge">
+<meta name="author" content="{{ config.author }}">
+<title>{% block site_title %}{{ config.siteName }}{% endblock %}</title>
+{% block description %}
+<meta name="description" content="{{ config.siteDescription or 'A Blog Powered By Gridea Pro' }}">
+{% endblock %}
+
+{% if post and post.tagsString %}
+<meta name="keywords" content="{{ post.tagsString }}">
+{% else %}
+<meta name="keywords" content="{{ theme_config.siteKeywords or '' }}">
+{% endif %}
+
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="telephone=no" name="format-detection">
+<meta name="renderer" content="webkit">
+
+<link rel="shortcut icon" href="/media/images/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/styles/bootstrap.min.css">
+<link rel="stylesheet" href="/styles/font-awesome.min.css">
+
+{% if theme_config.themeStyle == "dark" %}
+<link rel="stylesheet" href="/styles/style-dark.css">
+{% else %}
+<link rel="stylesheet" href="/styles/style.css">
+{% endif %}
+
+<link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/feed.xml">
+
+{% if theme_config.analyticsProvider == "google" and theme_config.googleAnalyticsId %}
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ theme_config.googleAnalyticsId }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ theme_config.googleAnalyticsId }}');
+</script>
+{% endif %}
+
+{% if theme_config.analyticsProvider == "umami" and theme_config.umamiScriptUrl and theme_config.umamiWebsiteId %}
+<!-- Umami Analytics -->
+<script defer src="{{ theme_config.umamiScriptUrl }}" data-website-id="{{ theme_config.umamiWebsiteId }}"></script>
+{% endif %}

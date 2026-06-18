@@ -1,0 +1,20 @@
+<footer>
+    {% set currYear = now|date:"2006" %}
+    <p>&copy;&nbsp;{{ currYear }}&nbsp;
+        <a target="_blank" href="{{ config.domain }}" rel="noopener noreferrer">
+            {% if site.customConfig.customCopyrightNameEnabled and site.customConfig.customCopyrightName %}
+                {{ site.customConfig.customCopyrightName }}
+            {% else %}
+                {{ config.siteName }}
+            {% endif %}
+        </a>
+    </p>
+    <p>Theme&nbsp;
+        <a target="_blank" href="https://github.com/SumiMakito/hexo-theme-typography" rel="noopener noreferrer">Typography</a>
+        &nbsp;by&nbsp;
+        <a target="_blank" href="https://www.keep.moe" rel="noopener noreferrer">Makito</a>
+    </p>
+    <p>Proudly published with&nbsp;
+        <a target="_blank" href="https://gridea.pro" rel="noopener noreferrer">Gridea Pro</a>
+    </p>
+</footer>

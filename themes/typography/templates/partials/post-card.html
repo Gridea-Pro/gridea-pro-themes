@@ -1,0 +1,54 @@
+<div class="post-container">
+    <p class="post-title">
+        {% if is_detail %}
+        <a>{{ post.title }}</a>
+        {% else %}
+        <a href="{{ post.link }}">{{ post.title }}</a>
+        {% endif %}
+    </p>
+    <p class="post-meta">
+        <span class="date meta-item">{{ "posted_at" }}&nbsp;{{ post.dateFormat }}</span>
+        
+        {% if theme_config.showComments %}
+        <span class="meta-item">
+            <i class="fa fa-comment-o"></i>
+            <span>&nbsp;</span>
+            <a href="{{ post.link }}#comments">{{ "Comments" }}</a>
+        </span>
+        {% endif %}
+        
+        {% if theme_config.showCategories and post.categories and post.categories|length > 0 %}
+        <span class="meta-item">
+            <i class="fa fa-folder"></i>
+            <span>&nbsp;</span>
+            {% for cat in post.categories %}
+            <a class="a-tag" href="{{ cat.link }}" title="{{ cat.name }}">{{ cat.name }}</a>
+            <span>&nbsp;</span>
+            {% endfor %}
+        </span>
+        {% endif %}
+        
+        {% if theme_config.showTags and post.tags and post.tags|length > 0 %}
+        <span class="meta-item">
+            <i class="fa fa-tag"></i>
+            <span>&nbsp;</span>
+            {% for tag in post.tags %}
+            <a class="a-tag" href="{{ tag.link }}" title="{{ tag.name }}">{{ tag.name }}</a>
+            <span>&nbsp;</span>
+            {% endfor %}
+        </span>
+        {% endif %}
+    </p>
+    
+    {% if is_detail %}
+    <div class="post-content" v-pre>{{ post.content|safe }}</div>
+    {% else %}
+    <p class="post-abstract">
+        {% if post.abstract %}
+        {{ post.abstract|safe }}
+        {% else %}
+        {{ post.description }}
+        {% endif %}
+    </p>
+    {% endif %}
+</div>

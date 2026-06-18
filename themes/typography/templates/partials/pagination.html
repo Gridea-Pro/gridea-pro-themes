@@ -1,0 +1,28 @@
+<div class="pagination no-margin-bottom">
+    <p class="clearfix">
+        {% if theme_config.showPageCount %}
+        <p>
+            {{ "PageNumber" }} {{ pagination.currentPage }} / {{ "PageCount" }} {{ pagination.totalPages }}
+            &nbsp;
+        </p>
+        {% endif %}
+        <p>
+            {% if pagination.hasPrev %}
+            <span class="pre pagbuttons">
+                <i class="fa fa-angle-double-left"></i>
+                &nbsp;
+                <a role="navigation" href="{{ pagination.prevURL }}" aria-label="{{ "prev" }}">{{ "prev" }}</a>
+            </span>
+            {% endif %}
+            
+            {% if pagination.hasNext %}
+            <span>&nbsp;</span>
+            <span class="next pagbuttons">
+                <a role="navigation" href="{{ pagination.nextURL }}" aria-label="{{ "next" }}">{{ "next" }}</a>
+                &nbsp;
+                <i class="fa fa-angle-double-right"></i>
+            </span>
+            {% endif %}
+        </p>
+    </p>
+</div>

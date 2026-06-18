@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    {% include "partials/head.html" %}
+    <title>{{ page.title }} · {{ config.siteName }}</title>
+    <meta name="description" content="{{ page.description or config.siteDescription }}">
+</head>
+<body>
+    <div id="stage" class="container">
+        <div class="row">
+            {% include "partials/sidebar.html" %}
+            <div id="main-container" class="col-sm-9 col-xs-12 main-container invisible">
+                <div class="autopagerize_page_element">
+                    <div class="content">
+                        <div class="post-page">
+                            <div class="post-container">
+                                <p class="post-title">
+                                    <a>{{ page.title }}</a>
+                                </p>
+                                <div class="post-content">{{ page.content|safe }}</div>
+                            </div>
+                            {% include "partials/comments.html" %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="visible-xs site-bottom-footer">
+                    {% include "partials/footer.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/scripts/jquery-3.1.0.min.js"></script>
+    <script src="/scripts/bootstrap.min.js"></script>
+    <script src="/scripts/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/scripts/jquery.appear.js"></script>
+    <script src="/scripts/typography.js"></script>
+    
+    <script>
+    (function(){
+      var mermaidCodes = document.querySelectorAll('code.language-mermaid');
+      if (mermaidCodes.length === 0) return;
+
+      var MERMAID_CODE_CLASS = 'language-mermaid';
+
+      function findMermaidBlocks() {
+        var codeBlocks = document.querySelectorAll('code.' + MERMAID_CODE_CLASS);
+        var blocks = [];
+        codeBlocks.forEach(function(code) {
+          var pre = code.parentElement;
+          if (pre && pre.tagName === 'PRE') {
+            blocks.push({ pre: pre, code: code });
+          }
+        });
+        return blocks;
+      }
+
+      function prepareBlocks() {
+        var blocks = findMermaidBlocks();
+        blocks.forEach(function(block) {
+          var source = block.code.textContent || block.code.innerText || '';
+          if (!source.trim()) return;
+
+          var container = document.createElement('div');
+          container.className = 'mermaid';
+          container.textContent = source;
+          container.setAttribute('data-original-code', source);
+
+          block.pre.parentNode.replaceChild(container, block.pre);
+        });
+      }
+
+      function detectCurrentTheme() {
+        var saved = localStorage.getItem('user-color-scheme');
+        if (saved && saved !== 'auto') return saved;
+        var def = document.documentElement.getAttribute('data-theme');
+        if (def && def !== 'auto') return def;
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      prepareBlocks();
+
+      var currentTheme = detectCurrentTheme();
+
+      var s = document.createElement('script');
+      s.type = 'module';
+      s.textContent = [
+        'import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";',
+        '',
+        'var mermaidTheme = "' + currentTheme + '";',
+        '',
+        'async function renderMermaid(theme) {',
+        '  var t = (theme === "dark") ? "dark" : "default";',
+        '  mermaid.initialize({ startOnLoad: false, theme: t, securityLevel: "loose" });',
+        '  var nodes = document.querySelectorAll(".mermaid");',
+        '  if (nodes.length > 0) {',
+        '    await mermaid.run({ nodes: nodes });',
+        '  }',
+        '}',
+        '',
+        'async function resetAndRender(theme) {',
+        '  var nodes = document.querySelectorAll(".mermaid");',
+        '  nodes.forEach(function(node) {',
+        '    var original = node.getAttribute("data-original-code");',
+        '    if (original !== null) {',
+        '      node.removeAttribute("data-processed");',
+        '      node.innerHTML = "";',
+        '      node.textContent = original;',
+        '    }',
+        '  });',
+        '  await renderMermaid(theme);',
+        '}',
+        '',
+        'await renderMermaid(mermaidTheme);',
+        '',
+        'document.body.addEventListener("dark-theme-set", function() { resetAndRender("dark"); });',
+        'document.body.addEventListener("light-theme-set", function() { resetAndRender("default"); });',
+      ].join('\n');
+      document.body.appendChild(s);
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    {% include "partials/head.html" %}
+    <title>Links · {{ config.siteName }}</title>
+    <meta name="description" content="Friends Links - {{ config.siteName }}">
+</head>
+<body>
+    <div id="stage" class="container">
+        <div class="row">
+            {% include "partials/sidebar.html" %}
+            <div id="main-container" class="col-sm-9 col-xs-12 main-container invisible">
+                <div class="autopagerize_page_element">
+                    <div class="content">
+                        <p class="post-title">Links</p>
+                        <div class="links-container" style="overflow: hidden;">
+                            {% if links and links|length > 0 %}
+                            <ul class="listing" style="padding-left: 0; list-style: none; margin: 0;">
+                                {% for link in links %}
+                                <li class="listing-item">
+                                    <div class="listing-post">
+                                        <a class="flink" href="{{ link.siteLink }}" target="_blank" rel="noopener">
+                                            {% if link.avatar %}
+                                            <img src="{{ link.avatar }}" alt="{{ link.siteName }}" width="40" height="40" style="border-radius: 50%; margin-right: 10px; vertical-align: middle;">
+                                            {% endif %}
+                                            <span style="font-weight: bold;">{{ link.siteName }}</span>
+                                            {% if link.description %}
+                                            <span style="color: #666; margin-left: 10px;">- {{ link.description }}</span>
+                                            {% endif %}
+                                        </a>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                            {% else %}
+                            <p>No links yet.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="visible-xs site-bottom-footer">
+                    {% include "partials/footer.html" %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/scripts/jquery-3.1.0.min.js"></script>
+    <script src="/scripts/bootstrap.min.js"></script>
+    <script src="/scripts/jquery-migrate-1.2.1.min.js"></script>
+    <script src="/scripts/jquery.appear.js"></script>
+    <script src="/scripts/typography.js"></script>
+</body>
+</html>
