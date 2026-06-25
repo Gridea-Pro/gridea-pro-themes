@@ -1,0 +1,39 @@
+<div class="panel-content">
+  <section class="panel-section">
+    <h2 class="panel-section-title" data-i18n="panel.recent">RECENTLY UPDATED</h2>
+    <div class="aside-list" data-recent-list>
+      {% if site and site.posts and site.posts|length > 0 %}
+        {% for post in site.posts %}
+          {% if loop.index <= 5 %}
+          <a class="aside-item" href="{{ post.link }}">
+            <span class="aside-item-text">{{ post.title }}</span>
+          </a>
+          {% endif %}
+        {% endfor %}
+      {% elif posts and posts|length > 0 %}
+        {% for post in posts %}
+          {% if loop.index <= 5 %}
+          <a class="aside-item" href="{{ post.link }}">
+            <span class="aside-item-text">{{ post.title }}</span>
+          </a>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        <div class="aside-empty" data-i18n="panel.noRecent">暂无文章</div>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="panel-section">
+    <h2 class="panel-section-title" data-i18n="panel.tags">TAGS</h2>
+    <div class="panel-tags">
+      {% if tags %}
+        {% for tag in tags %}
+          {% if loop.index <= 12 %}
+          <a class="tag-pill" href="{{ tag.link }}">#{{ tag.name }}</a>
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  </section>
+</div>

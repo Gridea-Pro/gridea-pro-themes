@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}归档 - {{ config.siteName }}{% endblock %}
+{% block breadcrumb %}<a href="/" data-i18n="nav.home">Home</a><span class="separator">/</span><span class="crumb-current" data-i18n="nav.archives">Archives</span>{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <h1 data-i18n="nav.archives">Archives</h1>
+  <p><span data-i18n="archives.countPrefix">站点共有</span> {{ posts|length }} <span data-i18n="archives.countSuffix">篇文章</span></p>
+</section>
+
+<div class="content archive-content">
+  <div id="archives" class="archive-listing">
+    {% if posts %}
+    <ul class="archive-source-list">
+      {% for post in posts %}
+      <li data-date-format="{{ post.dateFormat }}">
+        <a href="{{ post.link }}">{{ post.title }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+    {% else %}
+    <p class="archive-empty" data-i18n="blog.empty">这里还没有内容。</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var archiveRoot = document.getElementById('archives');
+  if (!archiveRoot) return;
+
+  var sourceItems = archiveRoot.querySelectorAll('.archive-source-list li[data-date-format]');
+  if (!sourceItems.length) return;
+
+  var monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+  function parseDate(raw) {
+    var parsed = new Date(raw);
+    if (!isNaN(parsed.getTime())) {
+      return {
+        year: String(parsed.getFullYear()),
+        month: monthNames[parsed.getMonth()],
+        day: String(parsed.getDate()).padStart(2, '0'),
+        time: parsed.getTime()
+      };
+    }
+
+    var match = raw.match(/(\d{4}).?(\d{1,2}).?(\d{1,2})/);
+    if (match) {
+      var monthIndex = Math.max(0, Math.min(11, Number(match[2]) - 1));
+      var fallbackDate = new Date(Number(match[1]), monthIndex, Number(match[3]));
+      return {
+        year: match[1],
+        month: monthNames[monthIndex],
+        day: String(match[3]).padStart(2, '0'),
+        time: fallbackDate.getTime()
+      };
+    }
+
+    return { year: '', month: '', day: raw, time: 0 };
+  }
+
+  function escapeHtml(text) {
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  var groups = {};
+  var years = [];
+  for (var i = 0; i < sourceItems.length; i++) {
+    var item = sourceItems[i];
+    var raw = item.getAttribute('data-date-format') || '';
+    var linkNode = item.querySelector('a');
+    if (!linkNode) continue;
+
+    var dateInfo = parseDate(raw);
+    var yearKey = dateInfo.year || 'Archives';
+    if (!groups[yearKey]) {
+      groups[yearKey] = [];
+      years.push(yearKey);
+    }
+
+    groups[yearKey].push({
+      href: linkNode.getAttribute('href') || '#',
+      title: linkNode.textContent || '',
+      day: dateInfo.day || raw,
+      month: dateInfo.month || '',
+      time: dateInfo.time || 0
+    });
+  }
+
+  if (!years.length) return;
+
+  years.sort(function (a, b) {
+    return Number(b) - Number(a);
+  });
+
+  var html = '';
+  for (var y = 0; y < years.length; y++) {
+    var year = years[y];
+    html += '<section class="archive-year-group">';
+    html += '<time class="year lead d-block">' + escapeHtml(year) + '</time>';
+    html += '<ul class="list-unstyled archive-year-list">';
+
+    var yearItems = groups[year].slice().sort(function (a, b) {
+      return (b.time || 0) - (a.time || 0);
+    });
+    for (var j = 0; j < yearItems.length; j++) {
+      var row = yearItems[j];
+      html += '<li>';
+      html += '<span class="date day">' + escapeHtml(row.day) + '</span>';
+      html += '<span class="date month small text-muted ms-1">' + escapeHtml(row.month) + '</span>';
+      html += '<a href="' + escapeHtml(row.href) + '">' + escapeHtml(row.title) + '</a>';
+      html += '</li>';
+    }
+
+    html += '</ul>';
+    html += '</section>';
+  }
+
+  archiveRoot.innerHTML = html;
+});
+</script>
+{% endblock %}

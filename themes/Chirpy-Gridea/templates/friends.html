@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}友链 - {{ config.siteName }}{% endblock %}
+{% block breadcrumb %}<a href="/" data-i18n="nav.home">Home</a><span class="separator">/</span><span class="crumb-current" data-i18n="nav.friends">Friends</span>{% endblock %}
+{% block content %}
+{% set _links = theme_config.links %}
+{% if not _links %}{% set _links = links %}{% endif %}
+<section class="custom-page custom-page-friends">
+  <header class="page-heading">
+    <h1 data-i18n="friends.title">Friends</h1>
+    <p data-i18n="friends.description">欢迎交换友链，也可以把常逛的网站集中放在这里。</p>
+  </header>
+
+  {% if _links and _links|length > 0 %}
+  <div class="friends-grid">
+    {% for link in _links %}
+    {% set _name = link.siteName %}
+    {% if not _name %}{% set _name = link.name %}{% endif %}
+    {% if not _name %}{% set _name = link.title %}{% endif %}
+
+    {% set _href = link.siteLink %}
+    {% if not _href %}{% set _href = link.url %}{% endif %}
+    {% if not _href %}{% set _href = link.link %}{% endif %}
+
+    {% set _desc = link.description %}
+    {% if not _desc %}{% set _desc = link.desc %}{% endif %}
+
+    {% set _avatar = link.avatar %}
+    {% if not _avatar %}{% set _avatar = link.icon %}{% endif %}
+    {% if not _avatar %}{% set _avatar = "/media/default-avatar.svg" %}{% endif %}
+
+    <a class="friend-card friend-card-link" href="{{ _href }}" target="_blank" rel="noopener">
+      <span class="friend-card-avatar-wrap is-loading">
+        <img class="friend-card-avatar is-loading" src="{{ _avatar }}" alt="{{ _name }}">
+      </span>
+      <div class="friend-card-content">
+        <h2 class="friend-card-title">{{ _name }}</h2>
+        {% if _desc %}
+        <p class="friend-card-description">{{ _desc }}</p>
+        {% endif %}
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% elif theme_config.friendsHtml %}
+  <div class="custom-page-body prose">
+    {{ theme_config.friendsHtml | safe }}
+  </div>
+  {% else %}
+  <div class="friends-grid">
+    <article class="friend-card">
+      <h2 class="friend-card-title" data-i18n="friends.placeholderTitle">你的站点名</h2>
+      <p class="friend-card-description" data-i18n="friends.placeholderDesc">这里可以放站点简介、擅长领域或一句自我介绍。</p>
+      <p class="friend-card-meta" data-i18n="friends.placeholderMeta">在主题设置里填写“友链页面 HTML”后可完全自定义此页。</p>
+    </article>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

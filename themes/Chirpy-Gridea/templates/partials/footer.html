@@ -1,0 +1,26 @@
+<div class="footer-inner">
+  <div class="footer-left">
+    {% if theme_config.footerLeftText %}
+      {{ theme_config.footerLeftText }}
+    {% elif theme_config.footerText %}
+      {{ theme_config.footerText }}
+    {% else %}
+      © <time id="footer-year"></time>
+      <a href="/" class="footer-author">{{ config.siteName }}</a>.
+      <span data-i18n="footer.rights">All rights reserved.</span>
+    {% endif %}
+  </div>
+  
+  <div class="footer-right">
+    {% if theme_config.footerRightText %}
+      {{ theme_config.footerRightText }}
+    {% else %}
+      {% if theme_config.showPowerBy %}
+        <span data-i18n="footer.poweredBy">Powered by</span>
+        <a href="{% if theme_config.poweredByUrl %}{{ theme_config.poweredByUrl }}{% else %}https://www.gridea.pro/{% endif %}" target="_blank" rel="noopener">{% if theme_config.poweredByName %}{{ theme_config.poweredByName }}{% else %}Gridea Pro{% endif %}</a>.
+      {% endif %}
+      <span data-i18n="footer.theme">Theme</span>
+      <a href="{% if theme_config.footerThemeUrl %}{{ theme_config.footerThemeUrl }}{% else %}https://github.com/Sunhaha520/Chirpy-Gridea{% endif %}" target="_blank" rel="noopener">{% if theme_config.footerThemeName %}{{ theme_config.footerThemeName }}{% else %}Chirpy-Gridea{% endif %}</a>
+    {% endif %}
+  </div>
+</div>
