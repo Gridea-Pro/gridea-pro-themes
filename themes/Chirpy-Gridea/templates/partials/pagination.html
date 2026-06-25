@@ -1,0 +1,33 @@
+{% if pagination %}
+{% if pagination.prev or pagination.next %}
+<nav class="pagination" aria-label="分页" data-i18n-aria="pagination.page" data-current-page="{% if pagination.currentPage %}{{ pagination.currentPage }}{% endif %}">
+  {% if pagination.prev %}
+  <a class="pagination-link pagination-link-prev" href="{{ pagination.prev }}" rel="prev">
+    <svg class="pagination-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+    <span data-i18n="pagination.previous">Previous</span>
+  </a>
+  {% else %}
+  <span class="pagination-link pagination-link-prev is-disabled">
+    <svg class="pagination-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+    <span data-i18n="pagination.previous">Previous</span>
+  </span>
+  {% endif %}
+
+  <div class="pagination-pages" data-pagination-pages>
+    <span class="pagination-page is-current">{% if pagination.currentPage %}{{ pagination.currentPage }}{% endif %}</span>
+  </div>
+
+  {% if pagination.next %}
+  <a class="pagination-link pagination-link-next" href="{{ pagination.next }}" rel="next">
+    <span data-i18n="pagination.next">Next page</span>
+    <svg class="pagination-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+  </a>
+  {% else %}
+  <span class="pagination-link pagination-link-next is-disabled">
+    <span data-i18n="pagination.next">Next page</span>
+    <svg class="pagination-arrow" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+  </span>
+  {% endif %}
+</nav>
+{% endif %}
+{% endif %}

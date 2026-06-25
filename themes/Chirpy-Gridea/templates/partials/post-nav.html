@@ -1,0 +1,33 @@
+{% if theme_config.showPostNav %}
+{% if post.prevPost or post.nextPost %}
+<nav class="post-nav" aria-label="Post navigation">
+  {% if post.prevPost %}
+  <a class="post-nav-card post-nav-prev" href="{{ post.prevPost.link }}" rel="prev">
+    <div class="post-nav-body">
+      <p class="post-nav-label">
+        <svg class="post-nav-arrow post-nav-arrow-prev" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+        <span data-i18n="post.previous">上一篇</span>
+      </p>
+      <p class="post-nav-title">{{ post.prevPost.title }}</p>
+    </div>
+  </a>
+  {% else %}
+  <span class="post-nav-placeholder" aria-hidden="true"></span>
+  {% endif %}
+
+  {% if post.nextPost %}
+  <a class="post-nav-card post-nav-next" href="{{ post.nextPost.link }}" rel="next">
+    <div class="post-nav-body">
+      <p class="post-nav-label">
+        <span data-i18n="post.next">下一篇</span>
+        <svg class="post-nav-arrow post-nav-arrow-next" xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+      </p>
+      <p class="post-nav-title">{{ post.nextPost.title }}</p>
+    </div>
+  </a>
+  {% else %}
+  <span class="post-nav-placeholder" aria-hidden="true"></span>
+  {% endif %}
+</nav>
+{% endif %}
+{% endif %}

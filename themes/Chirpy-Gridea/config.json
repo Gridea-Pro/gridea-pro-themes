@@ -1,0 +1,286 @@
+{
+  "name": "chirpy-gridea",
+  "version": "1.0.0",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "author": "Derek Sun",
+  "description": "Theme inspired by Chirpy (Jekyll).",
+  "repository": "https://github.com/Sunhaha520/Chirpy-Gridea",
+  "preview": "/media/preview.png",
+  "customConfig": [
+    {
+      "name": "sidebarTitle",
+      "label": "侧栏标题",
+      "group": "站点",
+      "type": "input",
+      "value": "",
+      "note": "留空时使用站点名称"
+    },
+    {
+      "name": "sidebarBio",
+      "label": "侧栏简介",
+      "group": "站点",
+      "type": "input",
+      "value": "",
+      "note": "留空时使用站点描述"
+    },
+    {
+      "name": "sidebarAvatar",
+      "label": "侧栏头像 URL",
+      "group": "站点",
+      "type": "input",
+      "value": "",
+      "note": "留空时使用站点头像或主题默认头像"
+    },
+    {
+      "name": "navHomeLabel",
+      "label": "首页菜单名",
+      "group": "导航",
+      "type": "input",
+      "value": "Home"
+    },
+    {
+      "name": "navArchivesLabel",
+      "label": "归档菜单名",
+      "group": "导航",
+      "type": "input",
+      "value": "Archives"
+    },
+    {
+      "name": "navTagsLabel",
+      "label": "标签菜单名",
+      "group": "导航",
+      "type": "input",
+      "value": "Tags"
+    },
+    {
+      "name": "showFeatureImage",
+      "label": "列表显示封面图",
+      "group": "首页",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "showBreadcrumbs",
+      "label": "显示面包屑",
+      "group": "首页",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "showReadingTime",
+      "label": "显示阅读时间",
+      "group": "文章",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "showPostNav",
+      "label": "显示上一篇/下一篇",
+      "group": "文章",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "enableTwikoo",
+      "label": "启用 Twikoo 评论",
+      "group": "文章",
+      "type": "toggle",
+      "value": false
+    },
+    {
+      "name": "twikooEnvId",
+      "label": "Twikoo 服务地址 / envId",
+      "group": "文章",
+      "type": "input",
+      "value": "",
+      "note": "填写 Twikoo 服务地址，例如 https://twikoo.example.com/ 或云开发 envId"
+    },
+    {
+      "name": "twikooLang",
+      "label": "Twikoo 语言",
+      "group": "文章",
+      "type": "input",
+      "value": "zh-CN",
+      "note": "默认 zh-CN，可改为 en 或其他 Twikoo 支持的语言"
+    },
+    {
+      "name": "notesHtml",
+      "label": "闪念页面 HTML",
+      "group": "页面",
+      "type": "textarea",
+      "value": "",
+      "note": "对应 /notes 页面，可直接填写 HTML 片段"
+    },
+    {
+      "name": "friendsHtml",
+      "label": "友链页面 HTML",
+      "group": "页面",
+      "type": "textarea",
+      "value": "",
+      "note": "对应 /friends 页面，可直接填写 HTML 片段"
+    },
+    {
+      "name": "showHeatmap",
+      "label": "闪念热力图",
+      "group": "页面",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "showThemeToggle",
+      "label": "显示深浅切换按钮",
+      "group": "外观",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "themeMode",
+      "label": "默认主题模式",
+      "group": "外观",
+      "type": "select",
+      "value": "auto",
+      "options": [
+        {
+          "value": "auto",
+          "label": "跟随系统"
+        },
+        {
+          "value": "light",
+          "label": "始终亮色"
+        },
+        {
+          "value": "dark",
+          "label": "始终暗色"
+        },
+        {
+          "value": "user",
+          "label": "由访客切换"
+        }
+      ]
+    },
+    {
+      "name": "primaryColor",
+      "label": "主色",
+      "group": "外观",
+      "type": "color",
+      "value": "#2a408e"
+    },
+    {
+      "name": "sidebarWidth",
+      "label": "侧栏宽度",
+      "group": "外观",
+      "type": "input",
+      "value": "280",
+      "note": "单位像素，不带 px"
+    },
+    {
+      "name": "contentMaxWidth",
+      "label": "内容区最大宽度",
+      "group": "外观",
+      "type": "input",
+      "value": "1250",
+      "note": "单位像素，不带 px"
+    },
+    {
+      "name": "footerText",
+      "label": "页脚附加文案",
+      "group": "页脚",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "footerLeftText",
+      "label": "页脚左侧文案",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "留空时使用默认版权文案"
+    },
+    {
+      "name": "footerRightText",
+      "label": "页脚右侧文案",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "留空时显示 Powered by 和主题链接"
+    },
+    {
+      "name": "showPowerBy",
+      "label": "显示 Powered by",
+      "group": "页脚",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "poweredByName",
+      "label": "Powered by 名称",
+      "group": "页脚",
+      "type": "input",
+      "value": "Gridea Pro"
+    },
+    {
+      "name": "poweredByUrl",
+      "label": "Powered by 链接",
+      "group": "页脚",
+      "type": "input",
+      "value": "https://www.gridea.pro/"
+    },
+    {
+      "name": "footerThemeName",
+      "label": "主题名称",
+      "group": "页脚",
+      "type": "input",
+      "value": "Chirpy-Gridea"
+    },
+    {
+      "name": "footerThemeUrl",
+      "label": "主题链接",
+      "group": "页脚",
+      "type": "input",
+      "value": "https://github.com/Sunhaha520/Chirpy-Gridea"
+    },
+    {
+      "name": "githubUrl",
+      "label": "GitHub 链接",
+      "group": "社交",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "twitterUrl",
+      "label": "Twitter/X 链接",
+      "group": "社交",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "email",
+      "label": "邮箱地址",
+      "group": "社交",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "customHeadHtml",
+      "label": "自定义 Head HTML",
+      "group": "高级",
+      "type": "textarea",
+      "value": ""
+    },
+    {
+      "name": "customCSS",
+      "label": "自定义 CSS",
+      "group": "高级",
+      "type": "textarea",
+      "value": ""
+    },
+    {
+      "name": "customBodyEndHtml",
+      "label": "自定义 Body 末尾 HTML",
+      "group": "高级",
+      "type": "textarea",
+      "value": ""
+    }
+  ]
+}

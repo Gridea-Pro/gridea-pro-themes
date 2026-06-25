@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/styles/base16/atelier-forest-light.min.css">
+<meta name="theme-color" content="{% if theme_config.primaryColor %}{{ theme_config.primaryColor }}{% else %}#2a408e{% endif %}">
+<title>{% block title %}{{ config.siteName }}{% endblock %}</title>
+<meta name="description" content="{% block meta_description %}{{ config.siteDescription }}{% endblock %}">
+<meta name="generator" content="Gridea Pro">
+<meta property="og:site_name" content="{{ config.siteName }}">
+<meta property="og:type" content="{% block og_type %}website{% endblock %}">
+<meta property="og:title" content="{% block og_title %}{{ config.siteName }}{% endblock %}">
+<meta property="og:description" content="{% block og_description %}{{ config.siteDescription }}{% endblock %}">
+{% block og_extra %}{% endblock %}
+{% if config.favicon %}
+<link rel="shortcut icon" href="{{ config.favicon }}">
+{% endif %}
+<link rel="alternate" type="application/rss+xml" title="{{ config.siteName }} - Feed" href="/feed.xml">
+<script>
+  (function () {
+    try {
+      // Mark <html> as i18n-pending BEFORE first paint. CSS hides all
+      // [data-i18n] nodes (visibility:hidden, layout preserved) until
+      // i18n-boot.js finishes translating them, eliminating the language
+      // "flash/jump" on load. Removed by i18n-boot.js after translation.
+      document.documentElement.classList.add('i18n-pending');
+      // Safety net: if i18n-boot.js fails to load/run, reveal content after 3s
+      // so the page is never permanently blank.
+      setTimeout(function () {
+        document.documentElement.classList.remove('i18n-pending');
+      }, 3000);
+
+      // Theme init only. Language defaulting + early i18n translation are now
+      // handled by i18n-boot.js (loaded at end of <body>, before main.js), which
+      // runs synchronously and translates static [data-i18n] nodes before paint.
+      var storageKey = 'chirping-gridea-theme';
+      var theme = localStorage.getItem(storageKey);
+      var mode = '{% if theme_config.themeMode %}{{ theme_config.themeMode }}{% else %}auto{% endif %}';
+      var resolvedTheme = 'light';
+
+      if (theme === 'dark' || theme === 'light') {
+        resolvedTheme = theme;
+      } else if (mode === 'dark') {
+        resolvedTheme = 'dark';
+      } else if (mode === 'light') {
+        resolvedTheme = 'light';
+      } else if (
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+      ) {
+        resolvedTheme = 'dark';
+      }
+
+      document.documentElement.setAttribute('data-theme', resolvedTheme);
+    } catch (e) {}
+  })();
+</script>
+{% block extra_head %}{% endblock %}
+{% if theme_config.customCSS %}
+<style type="text/css">
+  {{ theme_config.customCSS | safe }}
+</style>
+{% endif %}
+{% if theme_config.customHeadHtml %}
+{{ theme_config.customHeadHtml|safe }}
+{% endif %}
+</head>
+<body
+  data-theme-mode="{% if theme_config.themeMode %}{{ theme_config.themeMode }}{% else %}auto{% endif %}"
+  style="--primary:{% if theme_config.primaryColor %}{{ theme_config.primaryColor }}{% else %}#2a408e{% endif %};--sidebar-width:{% if theme_config.sidebarWidth %}{{ theme_config.sidebarWidth }}px{% else %}280px{% endif %};--content-max-width:{% if theme_config.contentMaxWidth %}{{ theme_config.contentMaxWidth }}px{% else %}1250px{% endif %};"
+>
+<a class="skip-link" href="#main" data-i18n="ui.skip">跳到正文</a>
+<aside class="sidebar" id="sidebar">
+{% include "partials/sidebar.html" %}
+</aside>
+
+<button class="sidebar-mask" id="sidebar-mask" type="button" aria-label="关闭侧栏" data-i18n-aria="ui.closeSidebar"></button>
+
+<div class="main-wrapper">
+  <div class="shell">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="mobile-nav-toggle" id="sidebar-toggle" type="button" aria-label="Toggle Sidebar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+        </button>
+        <a class="topbar-site-title" href="/">{{ config.siteName }}</a>
+        <div class="breadcrumbs">
+          {% block breadcrumb %}
+          <span class="crumb-current">{{ config.siteName }}</span>
+          {% endblock %}
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <button class="topbar-search" id="header-search-trigger" type="button" aria-label="Search" data-i18n-aria="ui.search">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <span data-i18n="search.placeholder">搜索站内内容</span>
+          <kbd>/</kbd>
+        </button>
+        <button class="header-action-btn" id="header-lang-btn" type="button" aria-label="Language" data-i18n-aria="ui.language">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+        </button>
+      </div>
+    </header>
+
+    {% block banner %}{% endblock %}
+
+    <div class="main-container">
+      <div class="main-column">
+        <main id="main" class="content-area">
+          {% block content %}{% endblock %}
+        </main>
+        <footer class="site-footer">
+          {% include "partials/footer.html" %}
+        </footer>
+      </div>
+
+      <aside class="panel-rail" id="panel-rail">
+        {% block aside %}
+          {% include "partials/panel.html" %}
+        {% endblock %}
+      </aside>
+    </div>
+  </div>
+</div>
+
+<button class="back-to-top" id="back-to-top" type="button" aria-label="返回顶部" data-i18n-aria="ui.backToTop">↑</button>
+
+<!-- Search Modal -->
+<div class="search-modal" id="search-modal">
+  <div class="search-modal-content">
+    <div class="search-modal-header">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input type="text" id="search-input" placeholder="搜索站内内容..." aria-label="搜索">
+      <button class="search-modal-close" id="search-close" type="button">Esc</button>
+    </div>
+    <div class="search-modal-results" id="search-results">
+      <div class="search-no-results">输入关键词开始搜索...</div>
+    </div>
+    <div class="search-modal-footer">
+      <div class="search-hints">
+        <span><kbd>↵</kbd> 选择</span>
+        <span><kbd>↑↓</kbd> 切换</span>
+        <span><kbd>Esc</kbd> 关闭</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="search-source" hidden>
+  {% if posts %}
+    {% for post in posts %}
+    <article
+      class="search-source-item"
+      data-link="{{ post.link }}"
+      data-date="{{ post.dateFormat }}"
+    >
+      <h3 class="search-source-title">{{ post.title }}</h3>
+      <p class="search-source-abstract">
+        {% if post.abstract %}
+          {{ post.abstract | striptags | truncatechars: 100 }}
+        {% else %}
+          {{ post.content | striptags | truncatechars: 100 }}
+        {% endif %}
+      </p>
+    </article>
+    {% endfor %}
+  {% endif %}
+</div>
+
+<script src="/scripts/i18n-boot.js"></script>
+<script src="/scripts/main.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/highlight.js@11.11.1/lib/highlight.min.js" defer></script>
+
+<!-- KaTeX math rendering removed to match cactus rendering behavior -->
+
+{% if theme_config.customBodyEndHtml %}
+{{ theme_config.customBodyEndHtml|safe }}
+{% endif %}
+{% block extra_scripts %}{% endblock %}
+</body>
+</html>
+

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}标签 - {{ config.siteName }}{% endblock %}
+{% block breadcrumb %}<a href="/" data-i18n="nav.home">Home</a><span class="separator">/</span><span class="crumb-current" data-i18n="nav.tags">Tags</span>{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <h1 data-i18n="nav.tags">Tags</h1>
+  <p><span data-i18n="tags.countPrefix">站点共有</span> {{ tags|length }} <span data-i18n="tags.countSuffix">个标签</span></p>
+</section>
+
+<section class="taxonomy-cloud">
+  {% if tags and tags|length > 0 %}
+  {% for tag in tags %}
+  <a class="taxonomy-link" href="{{ tag.link }}">
+    <span>{{ tag.name }}</span>
+    <span class="taxonomy-count">{{ tag.count }}</span>
+  </a>
+  {% endfor %}
+  {% else %}
+  <div class="empty-state">
+    <p data-i18n="tags.empty">还没有标签。</p>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}
