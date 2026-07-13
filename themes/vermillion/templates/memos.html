@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-memos{% endblock %}
+
+{% block title %}闪念 · {{ config.siteName|default:"Vermillion" }}{% endblock %}
+
+{% block content %}
+
+{# Custom masthead — stats live in mh-meta corner (top-right) #}
+<header class="masthead fade-in" style="animation-delay:0.05s">
+  <div>
+    <h1>
+      <span class="mh-en">Memos</span>
+      <span class="mh-zh">闪念</span>
+    </h1>
+    <div class="masthead-tagline">Tiny presences. Not articles, just shimmer.</div>
+  </div>
+  <div class="mh-meta">
+    {% if theme_config.volumeNumber %}{{ theme_config.volumeNumber }}<br>{% endif %}
+    <span class="vermillion">{{ now|date:"2006 · 01 · 02" }}</span><br>
+    {% if memos %}<strong style="color:var(--vermillion); font-family:var(--serif); font-style:italic; font-size:22px; letter-spacing:0;">{{ memos|length }}</strong> 条 · 活跃 <span data-heatmap-active>0</span> 天{% endif %}
+  </div>
+</header>
+
+{# ---- HEATMAP — full-width, grid only ---- #}
+{% if theme_config.memosShowHeatmap and memos and memos|length > 0 %}
+<div class="memo-heatmap fade-in" style="animation-delay:0.2s" data-heatmap data-dates="{% for m in memos %}{{ m.createdAtISO }}{% if not loop.last %},{% endif %}{% endfor %}">
+  <div class="memo-heatmap-grid"></div>
+</div>
+{% endif %}
+
+<div class="divider fade-in" style="animation-delay:0.3s">
+  <span class="glyph">i</span>
+  <span>近思 · Recent shimmer</span>
+  <span class="glyph">i</span>
+</div>
+
+{# ---- LIST ---- #}
+{% if memos and memos|length > 0 %}
+<div class="memo-list">
+  {% for memo in memos %}
+    <article class="memo-item fade-in" style="animation-delay:0.{{ loop.index }}s">
+      <div class="memo-item-time">
+        {% if memo.createdAt %}{{ memo.createdAt }}{% else %}{{ memo.createdAtISO }}{% endif %}
+        {% if memo.tags and memo.tags|length > 0 %}
+          <span style="color:var(--ink-ghost)">·</span>
+          {% for t in memo.tags %}
+            <span>#{{ t }}</span>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <div class="memo-item-body">
+        {{ memo.content|safe }}
+      </div>
+    </article>
+  {% endfor %}
+</div>
+{% else %}
+<div class="empty">— 还没有闪念。打开 Gridea Pro 的闪念面板，写一条试试？</div>
+{% endif %}
+
+{% set folio = "p. vii" %}
+{% endblock %}

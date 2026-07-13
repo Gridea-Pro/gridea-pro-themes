@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-archives{% endblock %}
+
+{% block title %}归档 · {{ config.siteName|default:"Vermillion" }}{% endblock %}
+
+{% block content %}
+
+{% set mh_en = "Archives" %}
+{% set mh_zh = "归档" %}
+{% set mh_tagline = "All entries, by year. A long quiet shelf." %}
+{% include "partials/masthead.html" %}
+
+<div class="divider fade-in" style="animation-delay:0.2s">
+  <span class="glyph">i</span>
+  <span>逐年 · By year · 共 {% if posts %}{{ posts|length }}{% else %}0{% endif %} 篇</span>
+  <span class="glyph">i</span>
+</div>
+
+{% if posts and posts|length > 0 %}
+  {% for group in posts|group_by:"year" %}
+    <section class="archive-year fade-in" style="animation-delay:0.{{ loop.index }}s">
+      <div class="archive-year-num">
+        {{ group.key }}
+        <span class="count">{{ group.items|length }} entries</span>
+      </div>
+      <div class="archive-list">
+        {% for post in group.items %}
+          <a class="archive-item" href="{{ post.link }}">
+            <time class="archive-item-date" datetime="{{ post.date }}">{% if post.dateFormat %}{{ post.dateFormat }}{% else %}{{ post.date }}{% endif %}</time>
+            <span class="archive-item-title">{{ post.title }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </section>
+  {% endfor %}
+{% else %}
+  <div class="empty">— 纸面还很白净，尚未有归档。</div>
+{% endif %}
+
+{% include "partials/pagination.html" %}
+
+{% set folio = "p. iv" %}
+{% endblock %}

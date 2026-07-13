@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-category{% endblock %}
+
+{% block title %}{{ category.name }} · 分类 · {{ config.siteName|default:"Vermillion" }}{% endblock %}
+
+{% block content %}
+
+{% set mh_en = "Category" %}
+{% set mh_zh = category.name %}
+{% set mh_tagline = "All entries filed under this folder." %}
+{% include "partials/masthead.html" %}
+
+<div class="divider fade-in" style="animation-delay:0.2s">
+  <span class="glyph">i</span>
+  <span>此 · 分类 · {{ category.count }} 篇</span>
+  <span class="glyph">i</span>
+</div>
+
+{% if posts and posts|length > 0 %}
+<section class="grid-earlier" style="margin-top:36px;">
+  {% for post in posts %}
+    {% if not post.hideInList %}
+      {% include "partials/post-card.html" %}
+    {% endif %}
+  {% endfor %}
+</section>
+{% else %}
+<div class="empty">— 这个分类下还没有文章。</div>
+{% endif %}
+
+{% include "partials/pagination.html" %}
+
+{% set folio = "p. vi" %}
+{% endblock %}

@@ -1,0 +1,323 @@
+{
+  "name": "vermillion",
+  "version": "1.0.0",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "author": "Gridea Pro Theme",
+  "description": "Vermillion 朱砂 — 一抹朱砂落在宣纸上，中式编辑美学博客主题，含纸张纹理、卷首综述、闪念热力图与朱印章。",
+  "repository": "",
+  "customConfig": [
+
+    {
+      "name": "brandEn",
+      "label": "品牌英文名",
+      "group": "基础",
+      "type": "input",
+      "value": "Vermillion",
+      "note": "侧栏顶端的英文品牌字（衬线斜体）。留空则回退为站点名"
+    },
+    {
+      "name": "brandSuffix",
+      "label": "品牌后缀",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "品牌名后的等宽小字，例如 ·札 / ·X / ·NOTES（建议 1–6 字符）"
+    },
+    {
+      "name": "brandSubtitle",
+      "label": "品牌副标题",
+      "group": "基础",
+      "type": "input",
+      "value": "纸面札记 · Paper Journal",
+      "note": "侧栏品牌下方的大写小字（字距加宽）"
+    },
+    {
+      "name": "siteSubTitle",
+      "label": "站点副标题",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "首页 masthead 副标题（在大字下方、tagline 上方）。留空不显示"
+    },
+    {
+      "name": "siteTagline",
+      "label": "首页副标语",
+      "group": "基础",
+      "type": "input",
+      "value": "A periodical of small presences — kept on paper, returned to slowly.",
+      "note": "出现在 masthead 标题下的斜体英文标语"
+    },
+    {
+      "name": "volumeNumber",
+      "label": "卷号 / 期号",
+      "group": "基础",
+      "type": "input",
+      "value": "Vol. I · No. 1",
+      "note": "显示在 masthead 右上角的刊号（仿杂志期号）"
+    },
+
+    {
+      "name": "sealChar1",
+      "label": "印章字 ①（左上）",
+      "group": "印章",
+      "type": "input",
+      "value": "朱",
+      "note": "朱砂印章左上角的汉字（单字）"
+    },
+    {
+      "name": "sealChar2",
+      "label": "印章字 ②（右上）",
+      "group": "印章",
+      "type": "input",
+      "value": "砂",
+      "note": "朱砂印章右上角的汉字（单字）"
+    },
+    {
+      "name": "sealChar3",
+      "label": "印章字 ③（左下）",
+      "group": "印章",
+      "type": "input",
+      "value": "落",
+      "note": "朱砂印章左下角的汉字（单字）"
+    },
+    {
+      "name": "sealChar4",
+      "label": "印章字 ④（右下）",
+      "group": "印章",
+      "type": "input",
+      "value": "纸",
+      "note": "朱砂印章右下角的汉字（单字）"
+    },
+
+    {
+      "name": "heroEyebrow",
+      "label": "卷首眉标",
+      "group": "首页",
+      "type": "input",
+      "value": "Editorial · 卷首",
+      "note": "Hero 区域上方的小字眉标"
+    },
+    {
+      "name": "heroDate",
+      "label": "卷首副眉",
+      "group": "首页",
+      "type": "input",
+      "value": "今日 · 综述",
+      "note": "Hero 区域眉标右侧的副信息"
+    },
+    {
+      "name": "heroProse",
+      "label": "首页卷首语",
+      "group": "首页",
+      "type": "textarea",
+      "value": "笔耕不辍，纸自留香。把每一次小小的回响都写下来——多年后再翻，那一页都还在原处。或许慢就是最稳的姿态：<em>让事情自己长成它该有的样子</em>。",
+      "note": "Hero 主体文字。支持的 HTML 标签：<em>（朱砂高亮）、<strong>、<br>、<span>"
+    },
+    {
+      "name": "indexFeaturedCount",
+      "label": "首页「今日」条数",
+      "group": "首页",
+      "type": "input",
+      "value": "5",
+      "note": "Today 区显示的卡片数量（首张作为 feature 大卡）。建议 3–7"
+    },
+    {
+      "name": "indexEarlierCount",
+      "label": "首页「更早」条数",
+      "group": "首页",
+      "type": "input",
+      "value": "9",
+      "note": "Earlier 区显示的卡片数量。建议 6–12"
+    },
+    {
+      "name": "showFeatureImage",
+      "label": "列表显示封面图",
+      "group": "首页",
+      "type": "toggle",
+      "value": true,
+      "note": "首页与列表页卡片是否显示文章特色图"
+    },
+
+    {
+      "name": "showToc",
+      "label": "显示文章目录",
+      "group": "文章",
+      "type": "toggle",
+      "value": true,
+      "note": "文章详情页右侧自动从 h2/h3 抽取目录并滚动联动"
+    },
+    {
+      "name": "showReadingProgress",
+      "label": "显示阅读进度条",
+      "group": "文章",
+      "type": "toggle",
+      "value": true,
+      "note": "文章详情页顶部朱砂色进度条"
+    },
+    {
+      "name": "showBackToTop",
+      "label": "显示回到顶部",
+      "group": "文章",
+      "type": "toggle",
+      "value": true,
+      "note": "滚动后右下角浮出一个朱印按钮"
+    },
+    {
+      "name": "showCodeCopy",
+      "label": "代码块「复制」按钮",
+      "group": "文章",
+      "type": "toggle",
+      "value": true,
+      "note": "正文代码块右上角浮现复制按钮"
+    },
+
+    {
+      "name": "memosShowHeatmap",
+      "label": "闪念页热力图",
+      "group": "闪念",
+      "type": "toggle",
+      "value": true,
+      "note": "闪念页顶部显示 26 周朱砂热力图（按创建日期聚合）"
+    },
+
+    {
+      "name": "defaultMode",
+      "label": "默认主题模式",
+      "group": "外观",
+      "type": "select",
+      "value": "auto",
+      "options": [
+        { "label": "跟随系统（prefers-color-scheme）", "value": "auto" },
+        { "label": "默认浅色（纸）", "value": "light" },
+        { "label": "默认深色（墨）", "value": "dark" }
+      ],
+      "note": "首次访问时的默认主题；用户手动切换后会用 localStorage 记住偏好"
+    },
+    {
+      "name": "enableDarkToggle",
+      "label": "显示明暗切换按钮",
+      "group": "外观",
+      "type": "toggle",
+      "value": true,
+      "note": "在页面右上角浮动工具栏显示一个 ☼/☾ 按钮，可手动切换 paper / ink 模式"
+    },
+    {
+      "name": "enableGrain",
+      "label": "显示纸面颗粒",
+      "group": "外观",
+      "type": "toggle",
+      "value": true,
+      "note": "全屏 SVG 颗粒噪声叠加。关闭后纸面更干净，性能更好"
+    },
+    {
+      "name": "enableSearch",
+      "label": "启用全站搜索",
+      "group": "外观",
+      "type": "toggle",
+      "value": true,
+      "note": "在页面右上角浮动工具栏显示放大镜按钮（⌘K / Ctrl+K 唤起），数据源 /api/search.json"
+    },
+
+    {
+      "name": "socialGithub",
+      "label": "GitHub",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "GitHub 主页完整 URL，例如 https://github.com/yourname"
+    },
+    {
+      "name": "socialTwitter",
+      "label": "Twitter / X",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "Twitter 或 X 主页完整 URL"
+    },
+    {
+      "name": "socialMail",
+      "label": "电子邮箱",
+      "group": "社交",
+      "type": "input",
+      "value": "",
+      "note": "联系邮箱（自动渲染为 mailto: 链接）"
+    },
+    {
+      "name": "showRssLink",
+      "label": "显示 RSS 链接",
+      "group": "社交",
+      "type": "toggle",
+      "value": true,
+      "note": "在侧栏「联络 / Connect」区显示 RSS 图标，指向 /atom.xml"
+    },
+
+    {
+      "name": "footerSlogan",
+      "label": "页脚标语",
+      "group": "页脚",
+      "type": "input",
+      "value": "Vermillion · 朱砂落纸",
+      "note": "侧栏底部的脚注（大写字距加宽）"
+    },
+    {
+      "name": "footerICP",
+      "label": "ICP 备案号",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "中国大陆站点的 ICP 备案号，例如「沪 ICP 备 XXXXXXXX 号」。留空则不显示"
+    },
+    {
+      "name": "footerShowPower",
+      "label": "显示「Powered by Gridea」",
+      "group": "页脚",
+      "type": "toggle",
+      "value": true,
+      "note": "侧栏底部显示一行致谢 Gridea Pro 的小字"
+    },
+
+    {
+      "name": "aboutContent",
+      "label": "关于页备用文案",
+      "group": "关于",
+      "type": "textarea",
+      "value": "",
+      "note": "优先使用 Gridea「页面」中名为「关于（about）」的正文；只有该页缺失时才用这里。双换行分段"
+    },
+
+    {
+      "name": "viewsScript",
+      "label": "浏览统计脚本",
+      "group": "增强",
+      "type": "textarea",
+      "value": "",
+      "note": "不蒜子 / 51la / Plausible 等统计代码片段，注入到 </body> 之前"
+    },
+
+    {
+      "name": "customCSS",
+      "label": "自定义 CSS",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到主题样式末尾，可覆盖任意默认 CSS 变量或类"
+    },
+    {
+      "name": "headerScript",
+      "label": "头部注入代码",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "在 </head> 之前注入，适合放分析统计、字体预加载等"
+    },
+    {
+      "name": "footerScript",
+      "label": "底部注入代码",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "在 </body> 之前注入，适合放评论 / 客服 / 第三方组件"
+    }
+  ]
+}

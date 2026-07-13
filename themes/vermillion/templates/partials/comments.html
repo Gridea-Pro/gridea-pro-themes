@@ -1,0 +1,21 @@
+{# Comments — wraps Gridea Pro's standard comment platform hooks #}
+<section class="comments" id="comments">
+  <h3 class="comments-title">评 · Letters back</h3>
+
+  {% if commentSetting and commentSetting.platform %}
+    <div class="comments-host" data-comment-platform="{{ commentSetting.platform }}">
+      {# Gitalk / Valine / Twikoo / Waline / Giscus — mount points covered by the
+         common Gridea ecosystem. Real wiring is performed by Gridea Pro's
+         injected snippet from the global comment setting; the divs below
+         provide the standard mount IDs each library expects. #}
+      <div id="gitalk-container"></div>
+      <div id="valine"></div>
+      <div id="tcomment"></div>
+      <div id="waline"></div>
+      <div id="giscus"></div>
+      <div id="comment-host"></div>
+    </div>
+  {% else %}
+    <p class="comments-disabled">— 评论尚未开启。请在 Gridea Pro 评论设置中接入平台后此处会自动显示。</p>
+  {% endif %}
+</section>

@@ -1,0 +1,13 @@
+{# Global search overlay — opened via [data-search-open] in rail or by Cmd/Ctrl+K #}
+{% if theme_config.enableSearch %}
+<div class="search-overlay" aria-hidden="true" role="dialog" aria-label="全站搜索">
+  <div class="search-modal" role="document">
+    <input class="search-input" type="search" placeholder="此刻 · 此地 · 你在找什么字眼？" aria-label="搜索关键词" autocomplete="off">
+    <div class="search-meta">
+      <span>Search · {{ config.siteName|default:"Vermillion" }}</span>
+      <span class="search-meta-count"></span>
+    </div>
+    <div class="search-results" aria-live="polite"></div>
+  </div>
+</div>
+{% endif %}
