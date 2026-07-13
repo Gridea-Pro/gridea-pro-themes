@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-404{% endblock %}
+
+{% block title %}页面不见了 · 404 · {{ config.siteName|default:"Vermillion" }}{% endblock %}
+
+{% block content %}
+
+{% set mh_en = "Lost" %}
+{% set mh_zh = "页面不见了" %}
+{% set mh_tagline = "Some pages drift off the desk. Try the index." %}
+{% include "partials/masthead.html" %}
+
+<section class="not-found fade-in" style="animation-delay:0.2s">
+  <div class="num">404</div>
+  <div class="msg">这页可能被风吹走了 — 或者从未在这本册子上出现过。</div>
+  <a class="back" href="/">← 回到纸面 · Home</a>
+</section>
+
+{% set folio = "p. x" %}
+{% endblock %}

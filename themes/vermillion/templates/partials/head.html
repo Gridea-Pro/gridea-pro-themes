@@ -1,0 +1,36 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#c2331c">
+<title>{% block title %}{{ config.siteName|default:"Vermillion" }}{% endblock %}</title>
+<meta name="description" content="{% block description %}{{ config.siteDescription|default:"" }}{% endblock %}">
+
+{% if config.favicon %}<link rel="icon" href="{{ config.favicon }}">{% endif %}
+
+{# Open Graph #}
+<meta property="og:site_name" content="{{ config.siteName|default:"Vermillion" }}">
+<meta property="og:title" content="{% block og_title %}{{ config.siteName|default:"Vermillion" }}{% endblock %}">
+<meta property="og:description" content="{% block og_description %}{{ config.siteDescription|default:"" }}{% endblock %}">
+<meta property="og:type" content="{% block og_type %}website{% endblock %}">
+{% if config.domain %}<meta property="og:url" content="{{ config.domain }}{% block og_url %}/{% endblock %}">{% endif %}
+{% block og_extra %}{% endblock %}
+
+{# Fonts #}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Noto+Serif+SC:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/styles/main.css">
+
+{# RSS #}
+<link rel="alternate" type="application/rss+xml" title="{{ config.siteName|default:"Vermillion" }} · RSS" href="/feed.xml">
+<link rel="alternate" type="application/atom+xml" title="{{ config.siteName|default:"Vermillion" }} · Atom" href="/atom.xml">
+
+{# Theme custom CSS injection #}
+{% if theme_config.customCSS %}
+<style>{{ theme_config.customCSS|safe }}</style>
+{% endif %}
+
+{# Theme custom head script injection #}
+{% if theme_config.headerScript %}
+{{ theme_config.headerScript|safe }}
+{% endif %}

@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-tag{% endblock %}
+
+{% block title %}{% if tag.name %}{{ tag.name }}{% else %}{{ current_tag.name }}{% endif %} · 主题 · {{ config.siteName|default:"Vermillion" }}{% endblock %}
+
+{% block content %}
+
+{% if tag.name %}{% set _tname = tag.name %}{% else %}{% set _tname = current_tag.name %}{% endif %}
+
+{% set mh_en = "Theme" %}
+{% set mh_zh = _tname %}
+{% set mh_tagline = "All your returns to this single thread." %}
+{% include "partials/masthead.html" %}
+
+<div class="divider fade-in" style="animation-delay:0.2s">
+  <span class="glyph">i</span>
+  <span>归此主题 · Under this thread</span>
+  <span class="glyph">i</span>
+</div>
+
+{% if posts and posts|length > 0 %}
+<section class="grid-earlier" style="margin-top:36px;">
+  {% for post in posts %}
+    {% if not post.hideInList %}
+      {% include "partials/post-card.html" %}
+    {% endif %}
+  {% endfor %}
+</section>
+{% else %}
+<div class="empty">— 这个主题下还没有文章。</div>
+{% endif %}
+
+{% include "partials/pagination.html" %}
+
+{% set folio = "p. v" %}
+{% endblock %}

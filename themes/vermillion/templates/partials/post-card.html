@@ -1,0 +1,49 @@
+{# Post card — small editorial card used in list / archive grids. #}
+{# Expected context: post (Post object), card_eye (str, optional badge), card_emoji (str, optional emoji), animation_delay (str, optional) #}
+{% set _animation_delay = animation_delay|default:"" %}
+<a class="card" href="{{ post.link }}"{% if _animation_delay %} style="animation-delay:{{ _animation_delay }}"{% endif %}>
+  {% if theme_config.showFeatureImage and post.feature %}
+    <div class="card-cover">
+      <img src="{{ post.feature }}" alt="{{ post.title }}" loading="lazy">
+    </div>
+  {% endif %}
+
+  <div class="card-eye">
+    <span class="ribbon"></span>
+    {% if card_eye %}{{ card_eye }}{% else %}Article · 文{% endif %}
+  </div>
+
+  <div class="card-time">
+    <span class="author">{% if post.isTop %}置顶 · {% endif %}札</span>
+    <span class="sep">/</span>
+    <span>{% if post.dateFormat %}{{ post.dateFormat }}{% else %}{{ post.date }}{% endif %}</span>
+    {% if post.categories and post.categories|length > 0 %}
+      <span class="sep">·</span>
+      <span>{{ post.categories.0.name }}</span>
+    {% endif %}
+  </div>
+
+  {% if card_emoji %}<span class="card-emoji">{{ card_emoji }}</span>{% endif %}
+
+  <div class="card-title">{{ post.title }}</div>
+
+  {% if post.abstract %}
+    <div class="card-excerpt">{{ post.abstract|striptags|truncatechars:120 }}</div>
+  {% elif post.description %}
+    <div class="card-excerpt">{{ post.description|truncatechars:120 }}</div>
+  {% else %}
+    <div class="card-excerpt">{{ post.content|striptags|truncatechars:120 }}</div>
+  {% endif %}
+
+  <div class="card-foot">
+    {% if post.stats %}
+      <span class="heart">♡ {{ post.stats.minutes }} min</span>
+      {% if post.stats.words %}<span class="pin">⌖ {{ post.stats.words }} 字</span>{% endif %}
+    {% else %}
+      <span class="heart">♡</span>
+    {% endif %}
+    {% if post.tags and post.tags|length > 0 %}
+      <span class="woven">— {{ post.tags.0.name }}</span>
+    {% endif %}
+  </div>
+</a>

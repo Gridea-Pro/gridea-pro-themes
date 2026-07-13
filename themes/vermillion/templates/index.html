@@ -1,0 +1,224 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-index{% endblock %}
+
+{% block title %}{{ config.siteName|default:"Vermillion" }}{% if config.siteDescription %} · {{ config.siteDescription }}{% endif %}{% endblock %}
+
+{% block content %}
+
+{# ============ MASTHEAD ============ #}
+{% if config.siteName %}{% set mh_en = config.siteName %}{% elif theme_config.brandEn %}{% set mh_en = theme_config.brandEn %}{% else %}{% set mh_en = "Vermillion" %}{% endif %}
+{% if theme_config.brandEn and theme_config.brandEn != mh_en %}{% set mh_zh = theme_config.brandEn %}{% endif %}
+{% set mh_subtitle = theme_config.siteSubTitle %}
+{% set mh_tagline = theme_config.siteTagline %}
+{% set mh_vol = theme_config.volumeNumber %}
+{% set mh_date = now|date:"2006 · 01 · 02" %}
+{% set mh_time = now|date:"15:04" %}
+{% include "partials/masthead.html" %}
+
+{# ============ FEATURED / EARLIER COUNTS ============ #}
+{% if theme_config.indexFeaturedCount %}{% set _fc = theme_config.indexFeaturedCount %}{% else %}{% set _fc = 5 %}{% endif %}
+{% if theme_config.indexEarlierCount %}{% set _ec = theme_config.indexEarlierCount %}{% else %}{% set _ec = 9 %}{% endif %}
+
+{# ============ HERO BILL ============ #}
+<article class="hero-bill fade-in" style="animation-delay:0.2s">
+  <div>
+    {% if theme_config.heroEyebrow or theme_config.heroDate %}
+    <div class="hero-eyebrow">
+      {% if theme_config.heroEyebrow %}<span>{{ theme_config.heroEyebrow }}</span>{% endif %}
+      {% if theme_config.heroDate %}<span class="sub">{{ theme_config.heroDate }}</span>{% endif %}
+    </div>
+    {% endif %}
+
+    {% if theme_config.heroProse %}
+    <div class="hero-prose">
+      {{ theme_config.heroProse|safe }}
+    </div>
+    {% else %}
+    <div class="hero-prose">
+      <span class="dropcap">你</span>在这里写下、读到、归档下来的每一条小事——回头读时，都还是那一年某个雨夜的你。<br>
+      不是迟缓，是 <em>让事情自己长成它该有的样子</em>。
+    </div>
+    {% endif %}
+
+    {% if tags and tags|length > 0 %}
+    <div class="hero-tags">
+      {% for tag in tags %}
+        {% if loop.index <= 3 %}
+          <a class="wtag" href="{{ tag.link }}">{{ tag.name }}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+
+  <div>
+    {% include "partials/seal.html" %}
+    <div class="seal-cap">Editorial · 卷</div>
+    <div class="margin-note">
+      A periodical of small presences — kept on paper, returned to slowly.
+      <span class="zh">所有小小的当下，都被纸记住。</span>
+    </div>
+  </div>
+</article>
+
+{# ============ DIVIDER — Today ============ #}
+<div class="divider fade-in" style="animation-delay:0.4s">
+  <span class="glyph">i</span>
+  <span>今日 · Today</span>
+  <span class="glyph">i</span>
+</div>
+
+{# ============ TODAY GRID (featured + 4) ============ #}
+{% set today_posts = posts %}
+{% if today_posts and today_posts|length > 0 %}
+<section class="grid-today">
+  {% for post in today_posts %}
+    {% if loop.index == 1 %}
+      {# featured #}
+      <a class="card card--feature fade-in" href="{{ post.link }}" style="--sender-color:var(--sender-now); animation-delay:0.5s">
+        <div class="card-eye"><span class="ribbon"></span>Featured · 卷首</div>
+        <div class="card-time">
+          <span class="author">{{ config.siteName|default:"你" }}</span><span class="sep">/</span><span>{% if post.dateFormat %}{{ post.dateFormat }}{% else %}{{ post.date }}{% endif %}</span>
+          {% if post.categories and post.categories|length > 0 %}<span class="sep">·</span><span>{{ post.categories.0.name }}</span>{% endif %}
+        </div>
+        {% if theme_config.showFeatureImage and post.feature %}
+          <div class="card-cover" style="margin:-36px -34px 22px;">
+            <img src="{{ post.feature }}" alt="{{ post.title }}" loading="lazy">
+          </div>
+        {% else %}
+          <span class="card-emoji">📖</span>
+        {% endif %}
+        <div class="card-title">{{ post.title }}</div>
+        {% if post.abstract %}
+          <div class="card-body">{{ post.abstract|striptags|truncatechars:180 }}</div>
+        {% elif post.description %}
+          <div class="card-body">{{ post.description|truncatechars:180 }}</div>
+        {% else %}
+          <div class="card-body">{{ post.content|striptags|truncatechars:180 }}</div>
+        {% endif %}
+        <div class="card-foot">
+          {% if post.stats %}<span class="heart on">♥ {{ post.stats.minutes }} min</span>{% else %}<span class="heart on">♥</span>{% endif %}
+          {% if post.stats and post.stats.words %}<span class="pin">⌖ {{ post.stats.words }} 字</span>{% endif %}
+          {% if post.tags and post.tags|length > 0 %}<span class="woven">— {{ post.tags.0.name }}</span>{% endif %}
+        </div>
+      </a>
+    {% elif loop.index <= _fc %}
+      <a class="card fade-in" href="{{ post.link }}" style="--sender-color:var(--sender-now); animation-delay:0.{{ loop.index }}s">
+        <div class="card-eye"><span class="ribbon"></span>札 · Note</div>
+        <div class="card-time">
+          <span class="author">{{ config.siteName|default:"你" }}</span><span class="sep">/</span><span>{% if post.dateFormat %}{{ post.dateFormat }}{% else %}{{ post.date }}{% endif %}</span>
+        </div>
+        {% if theme_config.showFeatureImage and post.feature %}
+          <div class="card-cover">
+            <img src="{{ post.feature }}" alt="{{ post.title }}" loading="lazy">
+          </div>
+        {% else %}
+          <span class="card-emoji">{% if loop.index == 2 %}🎵{% elif loop.index == 3 %}💡{% elif loop.index == 4 %}☕{% else %}🌅{% endif %}</span>
+        {% endif %}
+        <div class="card-title">{{ post.title }}</div>
+        {% if post.abstract %}
+          <div class="card-body">{{ post.abstract|striptags|truncatechars:80 }}</div>
+        {% elif post.description %}
+          <div class="card-body">{{ post.description|truncatechars:80 }}</div>
+        {% else %}
+          <div class="card-body">{{ post.content|striptags|truncatechars:80 }}</div>
+        {% endif %}
+        <div class="card-foot">
+          {% if post.stats %}<span class="heart">♡ {{ post.stats.minutes }} min</span>{% else %}<span class="heart">♡</span>{% endif %}
+          {% if post.tags and post.tags|length > 0 %}<span class="pin">⌖ {{ post.tags.0.name }}</span>{% endif %}
+        </div>
+      </a>
+    {% endif %}
+  {% endfor %}
+</section>
+
+{# ============ DIVIDER — Earlier ============ #}
+{% if today_posts|length > _fc %}
+<div class="divider fade-in" style="animation-delay:1.0s">
+  <span class="glyph">ii</span>
+  <span>更早 · Earlier selves</span>
+  <span class="glyph">ii</span>
+</div>
+
+<section class="grid-earlier">
+  {% for post in today_posts %}
+    {% if loop.index > _fc and loop.index <= _fc + _ec %}
+      {% set _i = loop.index %}
+      {% set _sender = "var(--sender-week)" %}
+      {% if _i > 8 %}{% set _sender = "var(--sender-month)" %}{% endif %}
+      {% if _i > 11 %}{% set _sender = "var(--sender-quarter)" %}{% endif %}
+      <a class="card{% if _i > 10 %} faded{% endif %} fade-in" href="{{ post.link }}" style="--sender-color:{{ _sender }}; animation-delay:1.{{ _i }}s">
+        <div class="card-eye"><span class="ribbon"></span>Earlier · 更早</div>
+        <div class="card-time">
+          <span class="author">{{ config.siteName|default:"你" }}</span><span class="sep">/</span><span>{% if post.dateFormat %}{{ post.dateFormat }}{% else %}{{ post.date }}{% endif %}</span>
+        </div>
+        {% if theme_config.showFeatureImage and post.feature %}
+          <div class="card-cover">
+            <img src="{{ post.feature }}" alt="{{ post.title }}" loading="lazy">
+          </div>
+        {% endif %}
+        <div class="card-title">{{ post.title }}</div>
+        {% if post.abstract %}
+          <div class="card-body">{{ post.abstract|striptags|truncatechars:80 }}</div>
+        {% elif post.description %}
+          <div class="card-body">{{ post.description|truncatechars:80 }}</div>
+        {% else %}
+          <div class="card-body">{{ post.content|striptags|truncatechars:80 }}</div>
+        {% endif %}
+        <div class="card-foot">
+          <span class="heart">♡</span>
+          {% if post.tags and post.tags|length > 0 %}<span class="pin">⌖ {{ post.tags.0.name }}</span>{% endif %}
+        </div>
+      </a>
+    {% endif %}
+  {% endfor %}
+</section>
+{% endif %}
+
+{% else %}
+<div class="empty">— 这里还没有写下任何札记。从一条小回响开始吧。</div>
+{% endif %}
+
+{# ============ DIVIDER — Compose ============ #}
+<div class="divider fade-in" style="animation-delay:1.5s">
+  <span class="glyph">iii</span>
+  <span>写下 · Now write</span>
+  <span class="glyph">iii</span>
+</div>
+
+{# ============ COMPOSER (inkwell) ============ #}
+<footer class="composer fade-in" style="animation-delay:1.55s">
+  <div class="composer-eye">
+    新一条回响
+    <span class="en">A small presence to leave behind</span>
+  </div>
+  <div class="sparks">
+    <span class="spark"><span class="em">📖</span>沉浸阅读中…</span>
+    <span class="spark"><span class="em">🎬</span>在看一部好电影…</span>
+    <span class="spark"><span class="em">🎵</span>分享一段旋律…</span>
+    <span class="spark"><span class="em">💃</span>跟着节奏起舞…</span>
+    <span class="spark"><span class="em">💻</span>专注敲击键盘…</span>
+    <span class="spark"><span class="em">🍽️</span>在享用美食…</span>
+    <span class="spark"><span class="em">💡</span>灵光一现想到了你</span>
+    <span class="spark"><span class="em">🫂</span>想给你一个大大的拥抱</span>
+    <span class="spark"><span class="em">🍺</span>想和你一起喝一杯</span>
+    <span class="spark"><span class="em">💭</span>我在静静听你说…</span>
+    <span class="spark"><span class="em">❤️</span>感受到你的心意</span>
+  </div>
+  <input class="composer-input" placeholder="此刻 · 此时 · 此地…" aria-label="此刻寄出的话">
+  <div class="composer-foot">
+    <span>🎙 voice</span>
+    <span>📷 image</span>
+    <span>· 默认归档至 · 此刻</span>
+    <button type="button" class="send">寄出 →</button>
+  </div>
+</footer>
+
+{# ============ FOLIO ============ #}
+{% set folio = "p. i" %}
+
+{# ============ PAGINATION ============ #}
+{% include "partials/pagination.html" %}
+
+{% endblock %}
