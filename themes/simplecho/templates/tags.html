@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}标签 · {{ config.siteName }}{% endblock %}
+{% block og_title %}标签 · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="sc-post-container">
+  <article class="sc-post-detail">
+    <h2 class="sc-post-title-detail">标签</h2>
+
+    <div class="sc-tags-cloud">
+      {% if tags and tags|length > 0 %}
+        {% for tag in tags %}
+          <a class="sc-tag" href="{{ tag.link }}" title="{{ tag.count }} 篇文章">
+            {{ tag.name }}<span class="sc-tag-count"> ({{ tag.count }})</span>
+          </a>
+        {% endfor %}
+      {% else %}
+        <div class="sc-empty"><p>还没有标签。</p></div>
+      {% endif %}
+    </div>
+  </article>
+</div>
+{% endblock %}
