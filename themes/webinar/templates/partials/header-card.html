@@ -7,7 +7,7 @@
 <header class="site__header"{% if headerBg %} style="background-image: url({{ headerBg }});"{% endif %}>
   <div class="header__content">
     <div class="header__logo">
-      <img src="{{ theme_config.headerAvatar or config.avatar or config.siteAvatar }}" alt="{{ config.siteName }}" />
+      <img src="{% if theme_config.headerAvatar %}{{ theme_config.headerAvatar }}{% else %}{{ config.avatar }}{% endif %}" alt="{{ config.siteName }}" />
     </div>
     <div class="header__title">
       <span>{{ config.siteName }}</span>

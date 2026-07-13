@@ -19,17 +19,17 @@
 <div class="post__detail">
   <div class="post__item" style="padding-bottom: 28px;">
     <div class="post__sidebar">
-      <a class="post__avatar" href="{{ config.siteUrl }}" title="{{ config.siteName }}">
-        <img src="{{ theme_config.headerAvatar or config.avatar or 'https://cdn.v2ex.com/gravatar/000?s=96' }}" alt="{{ config.siteName }}" loading="lazy">
+      <a class="post__avatar" href="/" title="{{ config.siteName }}">
+        <img src="{% if theme_config.headerAvatar %}{{ theme_config.headerAvatar }}{% elif config.avatar %}{{ config.avatar }}{% else %}https://cdn.v2ex.com/gravatar/000?s=96{% endif %}" alt="{{ config.siteName }}" loading="lazy">
       </a>
     </div>
     <div class="post__main">
       <div class="post__meta">
         <span class="meta__name">{{ config.siteName }}</span>
-        <a class="meta__date" href="{{ post.link }}" datetime="{{ post.date }}">{{ post.date }}</a>
+        <a class="meta__date" href="{{ post.link }}" datetime="{{ post.date }}">{{ post.dateFormat }}</a>
       </div>
       <div class="post__content">
-        {{ post.content }}
+        {{ post.content|safe }}
       </div>
     </div>
   </div>
@@ -56,6 +56,6 @@
 </div>
 {% endif %}
 
-{% include "partials/comments.html" %}
+{# 评论：Gridea Pro 走全局评论平台（commentSetting），待接入；原内置评论 UI 无数据源已停用 #}
 
 {% endblock %}

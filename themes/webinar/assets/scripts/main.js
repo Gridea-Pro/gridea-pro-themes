@@ -337,3 +337,13 @@
   }
 
 })();
+
+/* 侧边栏统计：文章数取自引擎生成的全站索引 */
+(function () {
+  var el = document.getElementById('stat-post-count');
+  if (!el) return;
+  fetch('/api/search.json')
+    .then(function (r) { return r.ok ? r.json() : []; })
+    .then(function (entries) { el.textContent = String((entries || []).length); })
+    .catch(function () { el.textContent = '0'; });
+})();

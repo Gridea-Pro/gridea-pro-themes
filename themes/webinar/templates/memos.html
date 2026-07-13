@@ -28,11 +28,11 @@
     {% for memo in memos %}
     <div class="memo-item">
       <div class="memo-item__avatar">
-        <img src="{{ theme_config.headerAvatar or config.avatar or 'https://cdn.v2ex.com/gravatar/000?s=96' }}" alt="avatar" loading="lazy">
+        <img src="{% if theme_config.headerAvatar %}{{ theme_config.headerAvatar }}{% elif config.avatar %}{{ config.avatar }}{% else %}https://cdn.v2ex.com/gravatar/000?s=96{% endif %}" alt="avatar" loading="lazy">
       </div>
       <div class="memo-item__content">
-        <div class="memo-item__text">{{ memo.content }}</div>
-        <div class="memo-item__time">{{ memo.date }}</div>
+        <div class="memo-item__text">{{ memo.content|safe }}</div>
+        <div class="memo-item__time">{{ memo.createdAt }}</div>
       </div>
     </div>
     {% endfor %}

@@ -21,9 +21,18 @@
       "type": "select",
       "value": "v2ex",
       "options": [
-        { "label": "v2ex", "value": "v2ex" },
-        { "label": "loli", "value": "loli" },
-        { "label": "gravatar", "value": "gravatar" }
+        {
+          "label": "v2ex",
+          "value": "v2ex"
+        },
+        {
+          "label": "loli",
+          "value": "loli"
+        },
+        {
+          "label": "gravatar",
+          "value": "gravatar"
+        }
       ],
       "note": "评论头像使用的 Gravatar 镜像源"
     },
@@ -34,8 +43,14 @@
       "type": "select",
       "value": "color",
       "options": [
-        { "label": "图片模式", "value": "image" },
-        { "label": "纯色模式", "value": "color" }
+        {
+          "label": "图片模式",
+          "value": "image"
+        },
+        {
+          "label": "纯色模式",
+          "value": "color"
+        }
       ],
       "note": "切换背景显示模式"
     },
@@ -78,9 +93,18 @@
       "type": "select",
       "value": "male",
       "options": [
-        { "label": "男", "value": "male" },
-        { "label": "女", "value": "female" },
-        { "label": "不显示", "value": "none" }
+        {
+          "label": "男",
+          "value": "male"
+        },
+        {
+          "label": "女",
+          "value": "female"
+        },
+        {
+          "label": "不显示",
+          "value": "none"
+        }
       ]
     },
     {
@@ -90,27 +114,6 @@
       "type": "toggle",
       "value": true,
       "note": "在侧边栏显示文章/标签/分类统计"
-    },
-    {
-      "name": "showRecentComments",
-      "label": "最近评论",
-      "group": "侧边栏设置",
-      "type": "toggle",
-      "value": true,
-      "note": "在侧边栏显示最近评论"
-    },
-    {
-      "name": "recentCommentsCount",
-      "label": "最近评论数量",
-      "group": "侧边栏设置",
-      "type": "select",
-      "value": "5",
-      "options": [
-        { "label": "3 条", "value": "3" },
-        { "label": "5 条", "value": "5" },
-        { "label": "8 条", "value": "8" },
-        { "label": "10 条", "value": "10" }
-      ]
     },
     {
       "name": "showSearch",
@@ -135,8 +138,14 @@
       "type": "select",
       "value": "light",
       "options": [
-        { "label": "浅色", "value": "light" },
-        { "label": "深色", "value": "dark" }
+        {
+          "label": "浅色",
+          "value": "light"
+        },
+        {
+          "label": "深色",
+          "value": "dark"
+        }
       ],
       "note": "首次访问时的默认主题"
     },

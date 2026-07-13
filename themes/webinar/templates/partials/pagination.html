@@ -1,13 +1,11 @@
-{% if pagination and (pagination.hasNext or pagination.hasPrev) %}
+{% if pagination and pagination.totalPages > 1 %}
 <div class="pagination">
   {% if pagination.hasPrev %}
-  <a href="{{ pagination.prevPageLink }}" class="pagination__item pagination__item--prev">← 上一页</a>
+  <a href="{{ pagination.prevURL }}" class="pagination__item pagination__item--prev">← 上一页</a>
   {% endif %}
-  {% for page in pagination.pages %}
-  <a href="{{ page.link }}" class="pagination__item{% if page.isCurrent %} active{% endif %}">{{ page.num }}</a>
-  {% endfor %}
+  <span class="pagination__item active">{{ pagination.currentPage }} / {{ pagination.totalPages }}</span>
   {% if pagination.hasNext %}
-  <a href="{{ pagination.nextPageLink }}" class="pagination__item pagination__item--next">下一页 →</a>
+  <a href="{{ pagination.nextURL }}" class="pagination__item pagination__item--next">下一页 →</a>
   {% endif %}
 </div>
 {% endif %}

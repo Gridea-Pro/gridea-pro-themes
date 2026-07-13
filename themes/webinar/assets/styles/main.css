@@ -1875,3 +1875,11 @@ input, textarea {
     flex: 0 0 270px;
   }
 }
+
+/* 列表卡片内的文章标题（原 post.excerpt 修复时补充） */
+.post__item-title {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 16px;
+  font-weight: 600;
+}

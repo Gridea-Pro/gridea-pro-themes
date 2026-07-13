@@ -8,35 +8,23 @@
   {% for post in posts %}
   <div class="post__item">
     <div class="post__sidebar">
-      <a class="post__avatar" href="{{ config.siteUrl }}" title="{{ config.siteName }}">
-        <img src="{{ theme_config.headerAvatar or config.avatar or 'https://cdn.v2ex.com/gravatar/000?s=96' }}" alt="{{ config.siteName }}" loading="lazy">
+      <a class="post__avatar" href="/" title="{{ config.siteName }}">
+        <img src="{% if theme_config.headerAvatar %}{{ theme_config.headerAvatar }}{% elif config.avatar %}{{ config.avatar }}{% else %}https://cdn.v2ex.com/gravatar/000?s=96{% endif %}" alt="{{ config.siteName }}" loading="lazy">
       </a>
     </div>
     <div class="post__main">
       <div class="post__meta">
         <span class="meta__name">{{ config.siteName }}</span>
-        <a class="meta__date" href="{{ post.link }}" datetime="{{ post.date }}">{{ post.date }}</a>
+        <a class="meta__date" href="{{ post.link }}" datetime="{{ post.date }}">{{ post.dateFormat }}</a>
       </div>
       <div class="post__content">
-        <a href="{{ post.link }}">{{ post.excerpt }}</a>
+        <a href="{{ post.link }}"><strong class="post__item-title">{{ post.title }}</strong>{% if post.description %}{{ post.description|truncatechars:200 }}{% else %}{{ post.content|excerpt:200|strip_html|safe }}{% endif %}</a>
       </div>
     </div>
   </div>
   {% endfor %}
 </div>
 
-{% if pagination.hasNext or pagination.hasPrev %}
-<div class="pagination">
-  {% if pagination.hasPrev %}
-  <a href="{{ pagination.prevPageLink }}" class="pagination__item pagination__item--prev">← 上一页</a>
-  {% endif %}
-  {% for page in pagination.pages %}
-  <a href="{{ page.link }}" class="pagination__item{% if page.isCurrent %} active{% endif %}">{{ page.num }}</a>
-  {% endfor %}
-  {% if pagination.hasNext %}
-  <a href="{{ pagination.nextPageLink }}" class="pagination__item pagination__item--next">下一页 →</a>
-  {% endif %}
-</div>
-{% endif %}
+{% include "partials/pagination.html" %}
 
 {% endblock %}

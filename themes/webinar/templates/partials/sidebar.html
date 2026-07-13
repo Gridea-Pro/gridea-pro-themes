@@ -2,20 +2,12 @@
   {% if theme_config.showStat %}
   <div class="stat-list">
     <div class="stat-item">
-      <div class="stat-item__value">{{ stats.postCount }}</div>
+      <div class="stat-item__value" id="stat-post-count">-</div>
       <div class="stat-item__label">文章</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-item__value">{{ stats.commentCount|default:0 }}</div>
-      <div class="stat-item__label">评论</div>
     </div>
     <div class="stat-item">
       <div class="stat-item__value">{{ tags|length }}</div>
       <div class="stat-item__label">标签</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-item__value">{{ categories|length }}</div>
-      <div class="stat-item__label">分类</div>
     </div>
   </div>
   {% endif %}
@@ -39,22 +31,4 @@
     {% endif %}
   </div>
 
-  {% if theme_config.showRecentComments and recentComments|length > 0 %}
-  <div class="recent-comments">
-    <h3 class="recent-comments__title">最近评论</h3>
-    <div class="recent-comments__list">
-      {% set maxCount = theme_config.recentCommentsCount|default:5|to_int %}
-      {% for comment in recentComments %}
-      {% if loop.index0 < maxCount %}
-      <div class="recent-comments__item">
-        <img class="recent-comments__avatar"
-          src="{{ comment.avatar }}"
-          alt="{{ comment.author }}" loading="lazy">
-        <a href="{{ comment.link }}" class="recent-comments__content">{{ comment.content }}</a>
-      </div>
-      {% endif %}
-      {% endfor %}
-    </div>
-  </div>
-  {% endif %}
 </aside>
