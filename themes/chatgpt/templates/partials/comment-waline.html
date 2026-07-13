@@ -1,0 +1,11 @@
+<div id="waline"></div>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css">
+<script type="module">
+  import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+  init({
+    el: '#waline',
+    serverURL: '{{ commentSetting.serverURLs }}',
+    dark: 'html[data-theme="dark"]',
+    locale: { placeholder: '继续这场对话…' }
+  });
+</script>

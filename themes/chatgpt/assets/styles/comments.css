@@ -1,0 +1,112 @@
+/* ============================================================
+   chatgpt theme — comments.css
+   评论区容器 + 各平台深浅模式适配
+   ============================================================ */
+
+.comment-section {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.comment-section__head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-2);
+  margin-bottom: 1.25rem;
+}
+.comment-section__head svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Twikoo：用 CSS 变量做深浅适配 ── */
+#tcomment .tk-comments,
+#tcomment .tk-submit,
+#tcomment .tk-comment {
+  color: var(--text);
+}
+#tcomment .el-input__inner,
+#tcomment .el-textarea__inner {
+  background: var(--bubble) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+#tcomment .tk-meta,
+#tcomment .tk-time,
+#tcomment .tk-extras {
+  color: var(--text-3) !important;
+}
+
+/* ── Valine 深色适配 ── */
+html[data-theme="dark"] #vcomments .vwrap {
+  background: var(--bg-elevated);
+  border-color: var(--border);
+}
+html[data-theme="dark"] #vcomments .vwrap .veditor,
+html[data-theme="dark"] #vcomments .vwrap input {
+  background: transparent;
+  color: var(--text);
+}
+html[data-theme="dark"] #vcomments .vcard .vcontent,
+html[data-theme="dark"] #vcomments .vcard .vhead .vnick {
+  color: var(--text);
+}
+html[data-theme="dark"] #vcomments .vcard .vfooter,
+html[data-theme="dark"] #vcomments .vcount,
+html[data-theme="dark"] #vcomments .vcard .vmeta {
+  color: var(--text-3);
+}
+html[data-theme="dark"] #vcomments .vbtn {
+  background: var(--bubble);
+  color: var(--text);
+  border-color: var(--border);
+}
+
+/* ── Gitalk 深色适配 ── */
+html[data-theme="dark"] .gt-container .gt-header-textarea,
+html[data-theme="dark"] .gt-container .gt-comment-content {
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+html[data-theme="dark"] .gt-container .gt-comment-body,
+html[data-theme="dark"] .gt-container .gt-header-controls-tip {
+  color: var(--text-2) !important;
+}
+html[data-theme="dark"] .gt-container .gt-svg svg {
+  fill: var(--text-2);
+}
+html[data-theme="dark"] .gt-container .gt-btn {
+  background: var(--bubble);
+  border-color: var(--border);
+  color: var(--text);
+}
+html[data-theme="dark"] .gt-container .gt-btn-preview {
+  background: transparent;
+}
+html[data-theme="dark"] .gt-container .gt-comment-username,
+html[data-theme="dark"] .gt-container .gt-comment-date {
+  color: var(--text-3);
+}
+
+/* ── 平台容器统一留白 ── */
+#waline,
+#tcomment,
+#vcomments,
+#gitalk-container,
+#disqus_thread,
+#cusdis_thread,
+#giscus-container {
+  margin-top: 0.5rem;
+}
+
+/* ── Waline 跟随主题变量 ── */
+#waline {
+  --waline-bg-color: transparent;
+  --waline-border: var(--border);
+  --waline-theme-color: var(--accent);
+  --waline-active-color: var(--accent);
+}

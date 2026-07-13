@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}闪念 - {{ config.siteName }}{% endblock %}
+
+{% block head %}
+<meta name="description" content="{{ config.siteName }} 的闪念与随想">
+{% endblock %}
+
+{% block content %}
+
+<div class="msg msg--user">
+  <div class="msg__bubble" data-ask="{{ theme_config.askMemos }}" data-scene="askMemos">那些一闪而过的念头，你都抓住了吗？</div>
+</div>
+
+<div class="msg msg--assistant">
+  <div class="msg__head">
+    {% if theme_config.showAvatar and config.avatar %}<img class="msg__avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">{% endif %}
+    {% if memos|length > 0 %}
+    <p class="msg__intro" data-reply="{{ theme_config.replyMemos }}" data-scene="replyMemos" data-count="{{ memos|length }}">抓住了一些，像把萤火虫装进玻璃瓶——{{ memos|length }} 个还亮着。</p>
+    {% else %}
+    <p class="msg__intro">脑子暂时一片清净，还没有闪念。</p>
+    {% endif %}
+  </div>
+  <div class="msg__body">
+
+    {% if memos|length > 0 %}
+
+    {% if theme_config.showHeatmap %}
+    <div class="heatmap-wrap">
+      <div class="heatmap-months" id="heatmap-months" aria-hidden="true"></div>
+      <div class="heatmap-grid" id="heatmap-grid"></div>
+      <div class="heatmap-footer">
+        <span id="heatmap-total"></span>
+        <span class="heatmap-legend">
+          <span>少</span>
+          <span class="heatmap-legend-cell" data-level="0"></span>
+          <span class="heatmap-legend-cell" data-level="1"></span>
+          <span class="heatmap-legend-cell" data-level="2"></span>
+          <span class="heatmap-legend-cell" data-level="3"></span>
+          <span class="heatmap-legend-cell" data-level="4"></span>
+          <span>多</span>
+        </span>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="memo-flow">
+      {% for memo in memos %}
+      <article class="memo-card" data-created="{{ memo.createdAtISO }}">
+        <div class="memo-card__spark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7c.6.5 1 1.4 1 2.3h6c0-.9.4-1.8 1-2.3A7 7 0 0 0 12 2z"/></svg>
+        </div>
+        <div class="memo-card__content article-content">{{ memo.content|safe }}</div>
+        <footer class="memo-card__foot">
+          <time class="memo-card__time">{{ memo.createdAt }}</time>
+          {% if memo.tags|length > 0 %}
+          <span class="memo-card__tags">{% for t in memo.tags %}<span class="memo-card__tag">#{{ t }}</span>{% endfor %}</span>
+          {% endif %}
+        </footer>
+      </article>
+      {% endfor %}
+    </div>
+
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{% if theme_config.showHeatmap and memos|length > 0 %}
+<script>
+  // 闪念热力图：CSS Grid 自适应宽度版（无需横向滚动）
+  // 周数按容器实际宽度计算（窄屏显示最近 N 周），轨道用 minmax(0,1fr)
+  // ——1fr 的最小轨道宽是 auto，月份标签会把轨道撑开导致整页横向溢出
+  (function () {
+    var items = document.querySelectorAll('.memo-card');
+    if (!items.length) return;
+
+    var counts = {};
+    items.forEach(function (item) {
+      var d = item.getAttribute('data-created');
+      if (d) {
+        var key = d.substring(0, 10);
+        counts[key] = (counts[key] || 0) + 1;
+      }
+    });
+
+    var grid = document.getElementById('heatmap-grid');
+    var monthsRow = document.getElementById('heatmap-months');
+    var MONTHS = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+    var GAP = 3;
+    var CELL_MIN = 7; // 格子最小可读宽度 px
+
+    function render() {
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      // 容器能放下几周就显示最近几周，上限一年
+      var avail = grid.clientWidth || 0;
+      var fitWeeks = Math.floor((avail + GAP) / (CELL_MIN + GAP));
+      var totalWeeks = Math.max(4, Math.min(53, fitWeeks));
+      var totalDays = (totalWeeks - 1) * 7 + today.getDay() + 1;
+      var startDate = new Date(today);
+      startDate.setDate(startDate.getDate() - totalDays + 1);
+      startDate.setDate(startDate.getDate() - startDate.getDay());
+
+      grid.style.gridTemplateColumns = 'repeat(' + totalWeeks + ', minmax(0, 1fr))';
+      monthsRow.style.gridTemplateColumns = 'repeat(' + totalWeeks + ', minmax(0, 1fr))';
+
+      var gridHtml = '';
+      var monthHtml = '';
+      var lastMonth = -1;
+      var visibleCount = 0;
+
+      for (var w = 0; w < totalWeeks; w++) {
+        var colHtml = '';
+        var firstOfWeek = new Date(startDate);
+        firstOfWeek.setDate(firstOfWeek.getDate() + w * 7);
+        if (firstOfWeek <= today && firstOfWeek.getMonth() !== lastMonth) {
+          monthHtml += '<span class="heatmap-month">' + MONTHS[firstOfWeek.getMonth()] + '</span>';
+          lastMonth = firstOfWeek.getMonth();
+        } else {
+          monthHtml += '<span></span>';
+        }
+        for (var d = 0; d < 7; d++) {
+          var cellDate = new Date(startDate);
+          cellDate.setDate(cellDate.getDate() + w * 7 + d);
+          var key = cellDate.getFullYear() + '-' + String(cellDate.getMonth() + 1).padStart(2, '0') + '-' + String(cellDate.getDate()).padStart(2, '0');
+          var count = counts[key] || 0;
+          var level = count === 0 ? 0 : count === 1 ? 1 : count <= 3 ? 2 : count <= 5 ? 3 : 4;
+          if (cellDate > today) {
+            colHtml += '<i class="heatmap-cell" data-level="-1"></i>';
+          } else {
+            visibleCount += count;
+            colHtml += '<i class="heatmap-cell" data-level="' + level + '" title="' + key + '：' + count + ' 条闪念"></i>';
+          }
+        }
+        gridHtml += '<span class="heatmap-week">' + colHtml + '</span>';
+      }
+
+      grid.innerHTML = gridHtml;
+      monthsRow.innerHTML = monthHtml;
+      document.getElementById('heatmap-total').textContent =
+        totalWeeks >= 52 ? '过去一年共 ' + visibleCount + ' 条闪念' : '近 ' + totalWeeks + ' 周共 ' + visibleCount + ' 条闪念';
+    }
+
+    render();
+
+    var resizeTimer;
+    window.addEventListener('resize', function () {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(render, 150);
+    });
+  })();
+</script>
+{% endif %}
+{% endblock %}

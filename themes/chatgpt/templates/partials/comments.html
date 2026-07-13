@@ -1,0 +1,25 @@
+{# ── 评论区分发器：按 Gridea Pro 全局评论设置挂载对应平台 ── #}
+{% if commentSetting and commentSetting.showComment %}
+<section class="comment-section" id="comments">
+  <div class="comment-section__head">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    <span>继续对话</span>
+  </div>
+
+  {% if commentSetting.commentPlatform == "Valine" %}
+    {% include "partials/comment-valine.html" %}
+  {% elif commentSetting.commentPlatform == "Waline" %}
+    {% include "partials/comment-waline.html" %}
+  {% elif commentSetting.commentPlatform == "Twikoo" %}
+    {% include "partials/comment-twikoo.html" %}
+  {% elif commentSetting.commentPlatform == "Gitalk" %}
+    {% include "partials/comment-gitalk.html" %}
+  {% elif commentSetting.commentPlatform == "Giscus" %}
+    {% include "partials/comment-giscus.html" %}
+  {% elif commentSetting.commentPlatform == "Disqus" %}
+    {% include "partials/comment-disqus.html" %}
+  {% elif commentSetting.commentPlatform == "Cusdis" %}
+    {% include "partials/comment-cusdis.html" %}
+  {% endif %}
+</section>
+{% endif %}

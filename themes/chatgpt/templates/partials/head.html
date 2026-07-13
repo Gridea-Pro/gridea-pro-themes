@@ -1,0 +1,60 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="generator" content="Gridea Pro">
+
+{# ── 样式 ── #}
+<link rel="stylesheet" href="/styles/main.css">
+<link rel="stylesheet" href="/styles/layout.css">
+<link rel="stylesheet" href="/styles/components.css">
+<link rel="stylesheet" href="/styles/article.css">
+<link rel="stylesheet" href="/styles/comments.css">
+
+{# ── Favicon：优先站点头像 ── #}
+{% if config.avatar %}
+<link rel="icon" href="{{ config.avatar }}">
+{% else %}
+<link rel="icon" href="/favicon.ico">
+{% endif %}
+
+{# ── RSS ── #}
+{% if theme_config.feedEnabled %}
+<link rel="alternate" type="application/rss+xml" title="{{ config.siteName }}" href="/feed.xml">
+<link rel="alternate" type="application/atom+xml" title="{{ config.siteName }}" href="/atom.xml">
+{% endif %}
+
+{# ── 强调色 / 内容宽度注入 ── #}
+<style>:root { --accent: {{ theme_config.accentColor|default:"#10a37f" }}; --content-w: {{ theme_config.contentWidth|default:"56" }}rem; }</style>
+
+{# ── 深浅模式 + 侧栏收起状态初始化：先本地存储，再站长默认值，避免闪屏 ── #}
+<script>
+  (function () {
+    try {
+      var saved = localStorage.getItem('chatgpt-theme');
+      var mode = saved || '{{ theme_config.defaultTheme|default:"auto" }}';
+      if (mode === 'auto') {
+        mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      document.documentElement.setAttribute('data-theme', mode);
+      if (localStorage.getItem('chatgpt-sidebar') === 'collapsed') {
+        document.documentElement.classList.add('sidebar-collapsed');
+      }
+    } catch (e) {
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+  })();
+</script>
+
+{# ── 代码高亮（可选，跟随深浅模式的样式切换在 app.js 中处理） ── #}
+{% if theme_config.codeHighlight %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/styles/github.min.css" id="hljs-theme-light">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/styles/github-dark.min.css" id="hljs-theme-dark" disabled>
+<script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/highlight.min.js" defer></script>
+{% endif %}
+
+{# ── 站长自定义 ── #}
+{% if theme_config.customCss %}
+<style>{{ theme_config.customCss|safe }}</style>
+{% endif %}
+{% if theme_config.headerScript %}
+{{ theme_config.headerScript|safe }}
+{% endif %}

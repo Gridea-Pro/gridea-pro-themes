@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ tag.name }} - {{ config.siteName }}{% endblock %}
+
+{% block head %}
+<meta name="description" content="标签「{{ tag.name }}」下的全部文章 - {{ config.siteName }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="msg msg--user">
+  <div class="msg__bubble" data-ask="{{ theme_config.askTag }}" data-scene="askTag" data-name="{{ tag.name }}">「{{ tag.name }}」——关于它，你写过什么？</div>
+</div>
+
+<div class="msg msg--assistant">
+  <div class="msg__head">
+    {% if theme_config.showAvatar and config.avatar %}<img class="msg__avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">{% endif %}
+    {% if posts|length > 0 %}
+    <p class="msg__intro" data-reply="{{ theme_config.replyTag }}" data-scene="replyTag" data-name="{{ tag.name }}" data-count="{{ tag.count }}">关于「{{ tag.name }}」，我留下过 {{ tag.count }} 篇思考：</p>
+    {% else %}
+    <p class="msg__intro">这个标签下暂时没有文章。</p>
+    {% endif %}
+  </div>
+  <div class="msg__body">
+    {% if posts|length > 0 %}
+    <div class="post-cards">
+      {% for post in posts %}
+      {% include "partials/post-card.html" %}
+      {% endfor %}
+    </div>
+    {% include "partials/pagination.html" %}
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
