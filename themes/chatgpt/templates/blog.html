@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}博客 - {{ config.siteName }}{% endblock %}
+
+{% block head %}
+<meta name="description" content="{{ config.siteName }} 的全部文章">
+{% endblock %}
+
+{% block content %}
+
+{% set currentPage = pagination.currentPage|default:1 %}
+{% set totalPosts = pagination.totalPosts|default:0 %}
+
+<div class="msg msg--user">
+  <div class="msg__bubble" {% if currentPage == 1 %}data-ask="{{ theme_config.askBlog }}" data-scene="askBlog"{% endif %}>{% if currentPage == 1 %}那些写下的字，都还在吗？{% else %}继续，第 {{ currentPage }} 页{% endif %}</div>
+</div>
+
+<div class="msg msg--assistant">
+  <div class="msg__head">
+    {% if theme_config.showAvatar and config.avatar %}<img class="msg__avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">{% endif %}
+    {% if posts|length > 0 %}
+    <p class="msg__intro" {% if currentPage == 1 %}data-reply="{{ theme_config.replyBlog }}" data-scene="replyBlog" data-count="{{ totalPosts }}"{% endif %}>{% if currentPage == 1 %}都在这里了——{{ totalPosts }} 篇，每一篇都是某个时刻的我。{% else %}接着看：{% endif %}</p>
+    {% else %}
+    <p class="msg__intro">还没有文章，敬请期待。</p>
+    {% endif %}
+  </div>
+  <div class="msg__body">
+    {% if posts|length > 0 %}
+    <div class="post-cards">
+      {% for post in posts %}
+      {% include "partials/post-card.html" %}
+      {% endfor %}
+    </div>
+    {% include "partials/pagination.html" %}
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

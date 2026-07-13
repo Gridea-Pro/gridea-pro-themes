@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - {{ config.siteName }}{% endblock %}
+
+{% block head %}
+{# description/keywords/OG/Twitter/canonical 与 BlogPosting/Breadcrumb JSON-LD
+   由 Gridea Pro 的 HtmlPostProcessor 统一注入（比主题手写的更全），不重复输出。 #}
+{% endblock %}
+
+{% block content %}
+
+{# ══ 提问：文章标题 ══ #}
+<div class="msg msg--user">
+  <h1 class="msg__bubble msg__bubble--title">{{ post.title }}</h1>
+</div>
+
+{# ══ 回答：文章正文（头像与元信息同行，正文全宽） ══ #}
+<div class="msg msg--assistant">
+  <div class="msg__head">
+    {% if theme_config.showAvatar and config.avatar %}<img class="msg__avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">{% endif %}
+    <div class="post-meta">
+      <time datetime="{{ post.date }}">{{ post.dateFormat }}</time>
+      <span class="dot" aria-hidden="true">·</span>
+      <span>{{ post.stats.words }} 字</span>
+      <span class="dot" aria-hidden="true">·</span>
+      <span>约 {{ post.stats.minutes }} 分钟</span>
+      {% if post.categories|length > 0 %}
+      <span class="dot" aria-hidden="true">·</span>
+      <span class="post-meta__cats">{% for cat in post.categories %}<a href="{{ cat.link }}">{{ cat.name }}</a>{% if not loop.last %} / {% endif %}{% endfor %}</span>
+      {% endif %}
+    </div>
+  </div>
+  <div class="msg__body">
+
+    {% if post.feature %}
+    <figure class="post-feature">
+      <img src="{{ post.feature }}" alt="{{ post.title }}">
+    </figure>
+    {% endif %}
+
+    {% if post.toc %}
+    <details class="post-toc">
+      <summary>本文大纲</summary>
+      <nav class="post-toc__body">{{ post.toc|safe }}</nav>
+    </details>
+    {% endif %}
+
+    <article class="article-content" id="article-content">
+      {{ post.content|safe }}
+    </article>
+
+    {# ── 作者署名（E-E-A-T：可见作者名；有关于页时附 rel=author 链接） ── #}
+    <p class="post-byline">本文由 <span class="post-byline__name">{{ config.siteName }}</span> 亲笔撰写{% for menu in menus %}{% if "about" in menu.link %} · <a href="{{ menu.link }}" rel="author">关于作者</a>{% endif %}{% endfor %}</p>
+
+    {% if post.updatedAtFormat and post.updatedAtFormat != post.dateFormat %}
+    <p class="post-updated">最后更新于 <time datetime="{{ post.updatedAt }}">{{ post.updatedAtFormat }}</time></p>
+    {% endif %}
+
+    {% if post.tags|length > 0 %}
+    <div class="post-tags">
+      {% for tag in post.tags %}
+      <a class="chip" href="{{ tag.link }}">#{{ tag.name }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {# ── 仿 ChatGPT 回复下方的操作按钮 ── #}
+    <div class="msg-actions">
+      <button class="msg-action" id="copy-link" type="button" data-link="{{ config.domain }}{{ post.link }}" aria-label="复制链接" title="复制链接">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      </button>
+      <button class="msg-action" id="copy-text" type="button" aria-label="复制全文" title="复制全文">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+      </button>
+      <button class="msg-action" id="back-top" type="button" aria-label="回到顶部" title="回到顶部">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+      </button>
+    </div>
+
+    {# ── 上下篇：Gridea 的 prevPost 是更新的一篇、nextPost 是更早的一篇 ── #}
+    {% if post.nextPost or post.prevPost %}
+    <nav class="post-nav" aria-label="相邻文章">
+      {% if post.nextPost %}
+      <a class="post-nav__card" href="{{ post.nextPost.link }}" rel="prev">
+        <span class="post-nav__label">← 上一篇</span>
+        <span class="post-nav__title">{{ post.nextPost.title }}</span>
+      </a>
+      {% else %}
+      <span class="post-nav__card post-nav__card--empty" aria-hidden="true"></span>
+      {% endif %}
+      {% if post.prevPost %}
+      <a class="post-nav__card post-nav__card--next" href="{{ post.prevPost.link }}" rel="next">
+        <span class="post-nav__label">下一篇 →</span>
+        <span class="post-nav__title">{{ post.prevPost.title }}</span>
+      </a>
+      {% endif %}
+    </nav>
+    {% endif %}
+
+    {% include "partials/comments.html" %}
+
+  </div>
+</div>
+
+{% endblock %}

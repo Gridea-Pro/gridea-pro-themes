@@ -1,0 +1,402 @@
+{
+  "name": "chatgpt",
+  "version": "1.2.0",
+  "author": "Eliauk",
+  "description": "ChatGPT 界面风格的对话式博客主题：左侧会话边栏 + 右侧对话流，整个博客就是一场与站长的对话。支持深浅双模式、弹窗与对话式双搜索、闪念热力图与七大评论平台。",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "customConfig": [
+    {
+      "name": "recentCount",
+      "label": "首页最近更新条数",
+      "group": "基础设置",
+      "type": "select",
+      "value": "8",
+      "options": [
+        {
+          "label": "5 条",
+          "value": "5"
+        },
+        {
+          "label": "8 条",
+          "value": "8"
+        },
+        {
+          "label": "10 条",
+          "value": "10"
+        }
+      ]
+    },
+    {
+      "name": "sidebarRecentCount",
+      "label": "侧边栏「最近」条数",
+      "group": "基础设置",
+      "type": "select",
+      "value": "20",
+      "options": [
+        {
+          "label": "10 条",
+          "value": "10"
+        },
+        {
+          "label": "20 条",
+          "value": "20"
+        },
+        {
+          "label": "30 条",
+          "value": "30"
+        }
+      ]
+    },
+    {
+      "name": "footerNote",
+      "label": "输入框下方小字",
+      "group": "基础设置",
+      "type": "input",
+      "value": "",
+      "note": "留空则显示「{站点名} 由博主亲笔撰写，重要信息可放心引用。」"
+    },
+    {
+      "name": "defaultTheme",
+      "label": "默认外观",
+      "group": "外观设置",
+      "type": "select",
+      "value": "auto",
+      "options": [
+        {
+          "label": "跟随系统",
+          "value": "auto"
+        },
+        {
+          "label": "浅色",
+          "value": "light"
+        },
+        {
+          "label": "深色",
+          "value": "dark"
+        }
+      ],
+      "note": "访客首次访问时的外观；之后记住访客自己的切换选择"
+    },
+    {
+      "name": "accentColor",
+      "label": "强调色",
+      "group": "外观设置",
+      "type": "input",
+      "value": "#10a37f",
+      "note": "HEX 颜色，如 #10a37f。用于链接、发送按钮、热力图等"
+    },
+    {
+      "name": "contentWidth",
+      "label": "内容区宽度",
+      "group": "外观设置",
+      "type": "select",
+      "value": "56",
+      "options": [
+        {
+          "label": "紧凑 (768px)",
+          "value": "48"
+        },
+        {
+          "label": "舒适 (896px)",
+          "value": "56"
+        },
+        {
+          "label": "开阔 (1024px)",
+          "value": "64"
+        }
+      ]
+    },
+    {
+      "name": "showAvatar",
+      "label": "回复前显示头像",
+      "group": "外观设置",
+      "type": "toggle",
+      "value": true,
+      "note": "在「AI 回复」的开头行显示站点头像"
+    },
+    {
+      "name": "askIndex",
+      "label": "首页 · 提问",
+      "group": "对话文案 · 提问",
+      "type": "textarea",
+      "value": "推开这扇门，会遇见什么？\n在无边的互联网里，这里是谁的角落？\n你好呀，带我逛逛这里吧？",
+      "note": "每行一条，访客每次到访随机展示其中一条。以下同"
+    },
+    {
+      "name": "askBlog",
+      "label": "博客 · 提问",
+      "group": "对话文案 · 提问",
+      "type": "textarea",
+      "value": "那些写下的字，都还在吗？\n从第一篇到最新一篇，你都写了些什么？\n把你的文章都拿给我看看吧？"
+    },
+    {
+      "name": "askArchives",
+      "label": "归档 · 提问",
+      "group": "对话文案 · 提问",
+      "type": "textarea",
+      "value": "时间都去哪儿了？\n帮我把时光按年份叠好，可以吗？\n回头看看，这些年留下了什么足迹？"
+    },
+    {
+      "name": "askMemos",
+      "label": "闪念 · 提问",
+      "group": "对话文案 · 提问",
+      "type": "textarea",
+      "value": "那些一闪而过的念头，你都抓住了吗？\n夜深人静的时候，你在想些什么？\n灵感来敲门的时候，你在家吗？"
+    },
+    {
+      "name": "askTags",
+      "label": "标签页 · 提问",
+      "group": "对话文案 · 提问",
+      "type": "textarea",
+      "value": "如果给你的文字贴上标签，会有哪些？\n这些文字，都围绕着什么打转？"
+    },
+    {
+      "name": "askTag",
+      "label": "标签详情 · 提问",
+      "group": "对话文案 · 提问",
+      "type": "textarea",
+      "value": "「{name}」——关于它，你写过什么？\n聊聊「{name}」吧，我想听。",
+      "note": "{name} 会替换为标签名"
+    },
+    {
+      "name": "askCategory",
+      "label": "分类详情 · 提问",
+      "group": "对话文案 · 提问",
+      "type": "textarea",
+      "value": "「{name}」这个抽屉里，收着什么？\n打开「{name}」，让我看看里面。",
+      "note": "{name} 会替换为分类名"
+    },
+    {
+      "name": "askLinks",
+      "label": "友链 · 提问",
+      "group": "对话文案 · 提问",
+      "type": "textarea",
+      "value": "在互联网的茫茫人海里，你和谁相遇过？\n介绍几个你的朋友给我认识吧？"
+    },
+    {
+      "name": "askAbout",
+      "label": "关于 · 提问",
+      "group": "对话文案 · 提问",
+      "type": "textarea",
+      "value": "屏幕背后的你，是个怎样的人？\n说说你自己吧，我想认识你。"
+    },
+    {
+      "name": "askHomeMemos",
+      "label": "首页闪念 · 提问",
+      "group": "对话文案 · 提问",
+      "type": "textarea",
+      "value": "最近在想些什么？\n除了长文，还有什么碎碎念？\n此刻脑子里飘过什么念头？"
+    },
+    {
+      "name": "ask404",
+      "label": "404 · 提问",
+      "group": "对话文案 · 提问",
+      "type": "textarea",
+      "value": "咦，这条路好像走不通了？\n我是不是迷路了？"
+    },
+    {
+      "name": "replyIndex",
+      "label": "首页 · 回答",
+      "group": "对话文案 · 回答",
+      "type": "textarea",
+      "value": "",
+      "note": "每行一条随机展示；留空则用「你好！这里是 {站点名}。{站点描述}」"
+    },
+    {
+      "name": "replyBlog",
+      "label": "博客 · 回答",
+      "group": "对话文案 · 回答",
+      "type": "textarea",
+      "value": "都在这里了——{count} 篇，每一篇都是某个时刻的我。\n一共 {count} 篇。字会记得写下它们的人。",
+      "note": "{count} 会替换为文章总数"
+    },
+    {
+      "name": "replyArchives",
+      "label": "归档 · 回答",
+      "group": "对话文案 · 回答",
+      "type": "textarea",
+      "value": "我把 {count} 篇文字按年份叠好了，沿着时间往回走吧。\n好的，{count} 篇，从此刻一路向过去铺展。",
+      "note": "{count} 会替换为文章总数"
+    },
+    {
+      "name": "replyMemos",
+      "label": "闪念 · 回答",
+      "group": "对话文案 · 回答",
+      "type": "textarea",
+      "value": "抓住了一些，像把萤火虫装进玻璃瓶——{count} 个还亮着。\n都在这儿了，{count} 条碎碎念，未经打磨，恰好真实。",
+      "note": "{count} 会替换为闪念条数"
+    },
+    {
+      "name": "replyTags",
+      "label": "标签页 · 回答",
+      "group": "对话文案 · 回答",
+      "type": "textarea",
+      "value": "大概是这 {count} 个词，圈住了我反复思考的事：\n数了数，{count} 个话题，深浅不一，都是真心：",
+      "note": "{count} 会替换为标签总数"
+    },
+    {
+      "name": "replyTag",
+      "label": "标签详情 · 回答",
+      "group": "对话文案 · 回答",
+      "type": "textarea",
+      "value": "关于「{name}」，我留下过 {count} 篇思考：\n「{name}」啊——写过 {count} 篇，每篇都认真："
+    },
+    {
+      "name": "replyCategory",
+      "label": "分类详情 · 回答",
+      "group": "对话文案 · 回答",
+      "type": "textarea",
+      "value": "「{name}」这个抽屉里收着 {count} 篇：\n打开「{name}」，里面是 {count} 篇文字："
+    },
+    {
+      "name": "replyLinks",
+      "label": "友链 · 回答",
+      "group": "对话文案 · 回答",
+      "type": "textarea",
+      "value": "这些是散落在网络各处的朋友们，每一个都值得专程拜访：\n互联网很大，能相遇是缘分。这是我的朋友们："
+    },
+    {
+      "name": "replyHomeMemos",
+      "label": "首页闪念 · 回答",
+      "group": "对话文案 · 回答",
+      "type": "textarea",
+      "value": "几条新鲜的闪念，未经打磨，恰好真实：\n刚抓住的几只萤火虫，拿给你看看："
+    },
+    {
+      "name": "reply404",
+      "label": "404 · 回答",
+      "group": "对话文案 · 回答",
+      "type": "textarea",
+      "value": "抱歉，这个页面像一封寄丢的信。不过没关系，我们可以回到起点重新出发。\n这里什么都没有——也许它搬家了，也许它从未存在过。回首页看看吧。"
+    },
+    {
+      "name": "showSuggestions",
+      "label": "首页建议卡片",
+      "group": "功能开关",
+      "type": "toggle",
+      "value": false,
+      "note": "在首页开场回答下方展示由导航菜单生成的建议卡片；仅宽屏显示，手机端始终隐藏"
+    },
+    {
+      "name": "showMobileChips",
+      "label": "手机端导航胶囊",
+      "group": "功能开关",
+      "type": "toggle",
+      "value": true,
+      "note": "手机端在首页开场回答下方显示一行可横向滑动的导航胶囊（宽屏不显示，与建议卡片互补）"
+    },
+    {
+      "name": "showExcerpt",
+      "label": "首页列表摘要",
+      "group": "功能开关",
+      "type": "toggle",
+      "value": true,
+      "note": "「最近更新」每篇标题下显示一行摘要（优先文章描述，否则取正文开头）"
+    },
+    {
+      "name": "showFeatured",
+      "label": "首篇精选卡",
+      "group": "功能开关",
+      "type": "toggle",
+      "value": true,
+      "note": "首页第一篇文章升级为精选卡片：封面图（如有）+ 标题 + 摘要"
+    },
+    {
+      "name": "showHomeMemos",
+      "label": "首页闪念动态",
+      "group": "功能开关",
+      "type": "toggle",
+      "value": true,
+      "note": "首页底部追加一组对话，展示最新 3 条闪念（需导航菜单中有闪念页）"
+    },
+    {
+      "name": "typewriter",
+      "label": "开场打字机效果",
+      "group": "功能开关",
+      "type": "toggle",
+      "value": true,
+      "note": "每页开场回答逐字打出（系统开启“减弱动态效果”时自动降级为直接显示）"
+    },
+    {
+      "name": "showComposer",
+      "label": "底部搜索输入框",
+      "group": "功能开关",
+      "type": "toggle",
+      "value": true,
+      "note": "页面底部的 ChatGPT 式输入框，提交后以对话形式展示站内搜索结果"
+    },
+    {
+      "name": "showHeatmap",
+      "label": "闪念热力图",
+      "group": "功能开关",
+      "type": "toggle",
+      "value": true,
+      "note": "在闪念页顶部显示过去一年的发布频次热力图"
+    },
+    {
+      "name": "codeHighlight",
+      "label": "代码语法高亮",
+      "group": "功能开关",
+      "type": "toggle",
+      "value": true,
+      "note": "使用 highlight.js（CDN）高亮文章代码块，自动跟随深浅模式"
+    },
+    {
+      "name": "feedEnabled",
+      "label": "RSS 订阅",
+      "group": "功能开关",
+      "type": "toggle",
+      "value": true,
+      "note": "生成 RSS / Atom 订阅源并在用户菜单中展示入口"
+    },
+    {
+      "name": "githubUrl",
+      "label": "GitHub",
+      "group": "社交链接",
+      "type": "input",
+      "value": "",
+      "note": "完整链接，展示在侧边栏用户菜单和关于页"
+    },
+    {
+      "name": "twitterUrl",
+      "label": "Twitter / X",
+      "group": "社交链接",
+      "type": "input",
+      "value": "",
+      "note": "完整链接，展示在侧边栏用户菜单和关于页"
+    },
+    {
+      "name": "emailAddress",
+      "label": "邮箱",
+      "group": "社交链接",
+      "type": "input",
+      "value": "",
+      "note": "展示在侧边栏用户菜单和关于页"
+    },
+    {
+      "name": "headerScript",
+      "label": "头部注入代码",
+      "group": "高级设置",
+      "type": "textarea",
+      "value": "",
+      "note": "在 </head> 前注入，可放统计代码、验证 meta 等"
+    },
+    {
+      "name": "customCss",
+      "label": "自定义 CSS",
+      "group": "高级设置",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到主题样式之后，可覆盖默认样式"
+    },
+    {
+      "name": "customJs",
+      "label": "自定义 JavaScript",
+      "group": "高级设置",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到页面底部执行"
+    }
+  ]
+}

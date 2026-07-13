@@ -1,0 +1,537 @@
+/* ============================================================
+   chatgpt theme — layout.css
+   侧边栏 / 主区 / 顶栏 / 输入框布局 + 收起态 + 响应式
+   ============================================================ */
+
+/* ══════════ 侧边栏 ══════════ */
+.sidebar {
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: var(--sidebar-w);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-sidebar);
+  z-index: 40;
+  padding: 0.625rem 0.625rem 0.625rem;
+  transition: transform 0.28s ease;
+}
+
+.sidebar__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.125rem 0.25rem 0.625rem;
+}
+
+.sidebar__brand {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.sidebar__brand-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.sidebar__brand-logo--fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text);
+  background: var(--hover);
+}
+.sidebar__brand-logo--fallback svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* 搜索入口 */
+.sidebar__search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.4375rem 0.625rem;
+  border-radius: 8px;
+  color: var(--text-3);
+  background: var(--hover);
+  font-size: 0.8125rem;
+  text-align: left;
+  transition: background-color 0.15s ease;
+  margin-bottom: 0.625rem;
+}
+.sidebar__search:hover {
+  background: var(--active);
+  color: var(--text-2);
+}
+.sidebar__search svg {
+  width: 14px;
+  height: 14px;
+  flex: none;
+}
+.sidebar__search span {
+  flex: 1;
+}
+.sidebar__search-kbd {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  color: var(--text-3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0 0.25rem;
+  line-height: 1.5;
+}
+
+/* 导航 */
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.sidebar__nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 0.625rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: var(--text);
+  transition: background-color 0.15s ease;
+}
+.sidebar__nav-item:hover {
+  background: var(--hover);
+}
+.sidebar__nav-item.is-active {
+  background: var(--active);
+  font-weight: 600;
+}
+.sidebar__nav-icon {
+  display: inline-flex;
+  color: var(--text-2);
+  flex: none;
+}
+.sidebar__nav-icon svg {
+  width: 16px;
+  height: 16px;
+}
+.sidebar__nav-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
+/* 最近文章（JS 填充；滚动条隐藏） */
+.sidebar__recent {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  margin-top: 0.875rem;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none;
+}
+.sidebar__recent::-webkit-scrollbar {
+  display: none;
+}
+
+.sidebar__recent-title {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-3);
+  padding: 0 0.625rem;
+  margin-bottom: 0.25rem;
+  letter-spacing: 0.03em;
+}
+
+.sidebar__recent-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.sidebar__recent-list a {
+  display: block;
+  padding: 0.375rem 0.625rem;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: background-color 0.15s ease;
+}
+.sidebar__recent-list a:hover {
+  background: var(--hover);
+}
+.sidebar__recent-list a.is-active {
+  background: var(--active);
+  font-weight: 600;
+}
+
+/* 底部用户卡片 + 弹出菜单 */
+.sidebar__foot {
+  position: relative;
+  margin-top: 0.25rem;
+}
+
+.sidebar__user {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.625rem;
+  border-radius: 10px;
+  text-align: left;
+  transition: background-color 0.15s ease;
+}
+.sidebar__user:hover {
+  background: var(--hover);
+}
+.sidebar__user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: none;
+}
+.sidebar__user-avatar--fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--active);
+  color: var(--text-2);
+}
+.sidebar__user-avatar--fallback svg {
+  width: 15px;
+  height: 15px;
+}
+.sidebar__user-meta {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.35;
+  flex: 1;
+}
+.sidebar__user-name {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sidebar__user-desc {
+  font-size: 0.6875rem;
+  color: var(--text-3);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.sidebar__user-chevron {
+  width: 14px;
+  height: 14px;
+  color: var(--text-3);
+  flex: none;
+  transition: transform 0.2s ease;
+}
+.sidebar__user[aria-expanded="true"] .sidebar__user-chevron {
+  transform: rotate(180deg);
+}
+
+/* 用户弹出菜单 */
+.user-menu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(100% + 6px);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  padding: 0.375rem;
+  z-index: 50;
+}
+.user-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  width: 100%;
+  padding: 0.4375rem 0.625rem;
+  border-radius: 8px;
+  font-size: 0.8125rem;
+  color: var(--text);
+  text-align: left;
+  transition: background-color 0.15s ease;
+}
+.user-menu__item:hover {
+  background: var(--hover);
+}
+.user-menu__item svg {
+  width: 15px;
+  height: 15px;
+  color: var(--text-2);
+  flex: none;
+}
+.user-menu__sep {
+  height: 1px;
+  background: var(--border);
+  margin: 0.25rem 0.375rem;
+}
+
+/* 遮罩（移动端抽屉） */
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 39;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+body.sidebar-open .sidebar-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ══════════ 桌面端收起态 ══════════ */
+html.sidebar-collapsed .sidebar {
+  transform: translateX(-100%);
+}
+html.sidebar-collapsed .main {
+  margin-left: 0;
+}
+
+/* ══════════ 主区 ══════════ */
+.main {
+  margin-left: var(--sidebar-w);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.28s ease;
+}
+
+/* ── 顶栏 ── */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.topbar__left,
+.topbar__right {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* 展开按钮：桌面端仅收起后显示；移动端始终显示 */
+.topbar__menu {
+  display: none;
+}
+html.sidebar-collapsed .topbar__menu {
+  display: inline-flex;
+}
+
+.topbar__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.375rem 0.75rem;
+  border-radius: 10px;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  transition: background-color 0.15s ease;
+}
+.topbar__title:hover {
+  background: var(--hover);
+}
+.topbar__chevron {
+  width: 15px;
+  height: 15px;
+  color: var(--text-3);
+}
+
+/* 主题切换按钮：按当前模式只显示其一（深色显示太阳，浅色显示月亮） */
+#theme-toggle .icon-sun,
+.user-menu .icon-sun {
+  display: none;
+}
+#theme-toggle .icon-moon,
+.user-menu .icon-moon {
+  display: block;
+}
+html[data-theme="dark"] #theme-toggle .icon-sun,
+html[data-theme="dark"] .user-menu .icon-sun {
+  display: block;
+}
+html[data-theme="dark"] #theme-toggle .icon-moon,
+html[data-theme="dark"] .user-menu .icon-moon {
+  display: none;
+}
+
+/* ── 内容区（对话流） ── */
+.content {
+  flex: 1;
+  width: 100%;
+}
+
+.chat-thread {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 1.5rem 1.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ── 底部输入框区域 ── */
+.composer-wrap {
+  position: sticky;
+  bottom: 0;
+  z-index: 30;
+  padding: 0.5rem 1.5rem 0;
+  background: linear-gradient(to top, var(--bg) 78%, transparent);
+}
+
+.composer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 0.5rem 0.625rem;
+  background: var(--composer-bg);
+  border: 1px solid var(--border);
+  border-radius: 1.75rem;
+  box-shadow: var(--composer-shadow);
+}
+html[data-theme="dark"] .composer {
+  border-color: transparent;
+}
+
+.composer__plus {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  color: var(--text-2);
+  flex: none;
+  cursor: default;
+}
+.composer__plus svg {
+  width: 18px;
+  height: 18px;
+}
+
+.composer__input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 0.375rem 0;
+}
+.composer__input::placeholder {
+  color: var(--text-3);
+}
+
+.composer__send {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--bg);
+  flex: none;
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.composer__send:hover {
+  opacity: 0.85;
+}
+.composer__send:active {
+  transform: scale(0.92);
+}
+.composer__send svg {
+  width: 16px;
+  height: 16px;
+}
+
+.composer__note {
+  max-width: var(--content-w);
+  margin: 0 auto;
+  padding: 0.4375rem 0 0.625rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-3);
+}
+
+.composer-wrap--empty {
+  padding-top: 0;
+}
+
+/* ══════════ 响应式：≤920px 抽屉化 ══════════ */
+@media (max-width: 920px) {
+  .sidebar {
+    transform: translateX(-100%);
+    width: min(78vw, 320px);
+    box-shadow: none;
+  }
+  body.sidebar-open .sidebar {
+    transform: translateX(0);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.25);
+  }
+  /* 移动端不受桌面收起态影响 */
+  html.sidebar-collapsed .sidebar {
+    transform: translateX(-100%);
+  }
+  html.sidebar-collapsed body.sidebar-open .sidebar,
+  body.sidebar-open .sidebar {
+    transform: translateX(0);
+  }
+
+  /* 移动端侧栏内的收起按钮改为关闭抽屉 */
+  .main {
+    margin-left: 0;
+  }
+
+  .topbar {
+    padding: 0.375rem 0.625rem;
+  }
+  .topbar__menu {
+    display: inline-flex;
+  }
+
+  .chat-thread {
+    padding: 1rem 1rem 2rem;
+    gap: 1.5rem;
+  }
+
+  .composer-wrap {
+    padding: 0.375rem 0.75rem 0;
+  }
+  .composer__note {
+    padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+  }
+}

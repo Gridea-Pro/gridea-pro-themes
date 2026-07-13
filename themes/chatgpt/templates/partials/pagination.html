@@ -1,0 +1,34 @@
+{# 分页 —— 仿 ChatGPT 的轻量胶囊按钮。用 prev/next（URL 为空即无该方向）做判断，兼容最简数据 #}
+{% if pagination %}
+{% set pgPrev = pagination.prev|default:"" %}
+{% set pgNext = pagination.next|default:"" %}
+{% if pgPrev or pgNext %}
+<nav class="pagination" aria-label="分页导航">
+  {% if pgPrev %}
+  <a class="pagination__btn" href="{{ pgPrev }}" rel="prev">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    <span>上一页</span>
+  </a>
+  {% else %}
+  <span class="pagination__btn pagination__btn--disabled" aria-disabled="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+    <span>上一页</span>
+  </span>
+  {% endif %}
+
+  <span class="pagination__info">{{ pagination.currentPage|default:1 }} / {{ pagination.totalPages|default:1 }}</span>
+
+  {% if pgNext %}
+  <a class="pagination__btn" href="{{ pgNext }}" rel="next">
+    <span>下一页</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </a>
+  {% else %}
+  <span class="pagination__btn pagination__btn--disabled" aria-disabled="true">
+    <span>下一页</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </span>
+  {% endif %}
+</nav>
+{% endif %}
+{% endif %}

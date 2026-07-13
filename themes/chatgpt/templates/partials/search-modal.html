@@ -1,0 +1,14 @@
+{# ── 弹窗搜索：⌘K / 点击侧栏搜索打开 ── #}
+<div class="search-overlay" id="search-overlay" hidden>
+  <div class="search-modal" role="dialog" aria-modal="true" aria-label="站内搜索">
+    <div class="search-modal__head">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.2" y2="16.2"/></svg>
+      <input class="search-modal__input" id="search-modal-input" type="text" placeholder="搜索文章…" autocomplete="off">
+      <kbd class="search-modal__kbd">Esc</kbd>
+      <button class="icon-btn search-modal__close" id="search-modal-close" type="button" aria-label="关闭搜索">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="search-modal__results" id="search-modal-results" role="listbox"></div>
+  </div>
+</div>

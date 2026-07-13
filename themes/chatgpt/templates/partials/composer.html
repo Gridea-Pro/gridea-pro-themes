@@ -1,0 +1,22 @@
+{% if theme_config.showComposer %}
+<div class="composer-wrap">
+  <form class="composer" id="composer" action="javascript:void(0)" autocomplete="off">
+    <button class="composer__plus" type="button" tabindex="-1" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </button>
+    <input class="composer__input" id="composer-input" type="text" name="q" placeholder="有问题，尽管搜…" aria-label="站内搜索" enterkeyhint="search">
+    <button class="composer__send" id="composer-send" type="submit" aria-label="搜索">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+    </button>
+  </form>
+  <p class="composer__note">
+    {% if theme_config.footerNote %}{{ theme_config.footerNote }}{% else %}{{ config.siteName }} 由博主亲笔撰写，重要信息可放心引用。{% endif %}
+  </p>
+</div>
+{% else %}
+<div class="composer-wrap composer-wrap--empty">
+  <p class="composer__note">
+    {% if theme_config.footerNote %}{{ theme_config.footerNote }}{% else %}© {{ now|date:"2006" }} {{ config.siteName }}{% endif %}
+  </p>
+</div>
+{% endif %}

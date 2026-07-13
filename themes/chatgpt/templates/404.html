@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}404 - {{ config.siteName }}{% endblock %}
+
+{% block content %}
+
+<div class="msg msg--user">
+  <div class="msg__bubble" data-ask="{{ theme_config.ask404 }}" data-scene="ask404">咦，这条路好像走不通了？</div>
+</div>
+
+<div class="msg msg--assistant">
+  <div class="msg__head">
+    {% if theme_config.showAvatar and config.avatar %}<img class="msg__avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">{% endif %}
+    <p class="msg__intro" data-reply="{{ theme_config.reply404 }}" data-scene="reply404">抱歉，这个页面像一封寄丢的信。不过没关系，我们可以回到起点重新出发。</p>
+  </div>
+  <div class="msg__body">
+    <div class="suggestions">
+      <a class="suggestion-card" href="/">
+        <span class="suggestion-card__name">回到首页</span>
+        <span class="suggestion-card__hint">从头开始一场新对话</span>
+      </a>
+      <a class="suggestion-card" href="/archives/">
+        <span class="suggestion-card__name">查看归档</span>
+        <span class="suggestion-card__hint">沿时间线找回它</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

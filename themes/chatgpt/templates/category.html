@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category.name }} - {{ config.siteName }}{% endblock %}
+
+{% block head %}
+<meta name="description" content="分类「{{ category.name }}」下的全部文章 - {{ config.siteName }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="msg msg--user">
+  <div class="msg__bubble" data-ask="{{ theme_config.askCategory }}" data-scene="askCategory" data-name="{{ category.name }}">「{{ category.name }}」这个抽屉里，收着什么？</div>
+</div>
+
+<div class="msg msg--assistant">
+  <div class="msg__head">
+    {% if theme_config.showAvatar and config.avatar %}<img class="msg__avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">{% endif %}
+    {% if posts|length > 0 %}
+    <p class="msg__intro" data-reply="{{ theme_config.replyCategory }}" data-scene="replyCategory" data-name="{{ category.name }}" data-count="{{ category.count }}">「{{ category.name }}」这个抽屉里收着 {{ category.count }} 篇：</p>
+    {% else %}
+    <p class="msg__intro">这个分类下暂时没有文章。</p>
+    {% endif %}
+  </div>
+  <div class="msg__body">
+    {% if posts|length > 0 %}
+    <div class="post-cards">
+      {% for post in posts %}
+      {% include "partials/post-card.html" %}
+      {% endfor %}
+    </div>
+    {% include "partials/pagination.html" %}
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

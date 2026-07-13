@@ -1,0 +1,278 @@
+/* ============================================================
+   chatgpt theme — article.css
+   Markdown 渲染内容排版（“AI 回复”式正文）
+   ============================================================ */
+
+.article-content {
+  font-size: 1rem;
+  line-height: 1.9;
+  letter-spacing: 0.01em;
+  overflow-wrap: break-word;
+}
+
+/* ── 段落与标题：参照 ChatGPT 的呼吸感排版 ── */
+.article-content p {
+  margin: 0 0 1.25em;
+}
+
+.article-content h1,
+.article-content h2,
+.article-content h3,
+.article-content h4,
+.article-content h5,
+.article-content h6 {
+  font-weight: 700;
+  line-height: 1.45;
+  margin: 2.25rem 0 1rem;
+}
+.article-content > h1:first-child,
+.article-content > h2:first-child,
+.article-content > h3:first-child {
+  margin-top: 0.25rem;
+}
+.article-content h1 {
+  font-size: 1.5rem;
+}
+.article-content h2 {
+  font-size: 1.3125rem;
+}
+.article-content h3 {
+  font-size: 1.125rem;
+}
+.article-content h4,
+.article-content h5,
+.article-content h6 {
+  font-size: 1rem;
+}
+
+/* ── 链接 ── */
+.article-content a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.15s ease;
+}
+.article-content a:hover {
+  text-decoration-color: var(--accent);
+}
+
+/* ── 列表 ── */
+.article-content ul,
+.article-content ol {
+  margin: 0 0 1.25em;
+  padding-left: 1.625rem;
+}
+.article-content li {
+  margin: 0.4375em 0;
+}
+.article-content li > ul,
+.article-content li > ol {
+  margin-bottom: 0;
+}
+.article-content li::marker {
+  color: var(--text-3);
+}
+
+/* 任务列表 */
+.article-content input[type="checkbox"] {
+  margin-right: 0.375rem;
+  accent-color: var(--accent);
+}
+
+/* ── 引用 ── */
+.article-content blockquote {
+  margin: 1.25em 0;
+  padding: 0.25rem 1.25rem;
+  border-left: 3px solid var(--border-strong);
+  color: var(--text-2);
+}
+.article-content blockquote p {
+  margin: 0.625em 0;
+}
+
+/* ── 分隔线 ── */
+.article-content hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1.75rem 0;
+}
+
+/* ── 行内代码 ── */
+.article-content code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--code-inline-bg);
+  border-radius: 5px;
+  padding: 0.125em 0.375em;
+}
+
+/* ── 代码块：仿 ChatGPT 圆角深底 + 顶部条 ── */
+.article-content pre {
+  position: relative;
+  margin: 1.125rem 0;
+  padding: 2.5rem 1.125rem 1rem;
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  overflow-x: auto;
+  line-height: 1.6;
+}
+.article-content pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.8438rem;
+  display: block;
+}
+
+/* 代码块语言标签 + 复制按钮（app.js 注入） */
+.codeblock-lang {
+  position: absolute;
+  top: 0.625rem;
+  left: 1.125rem;
+  font-size: 0.75rem;
+  color: var(--text-3);
+  font-family: var(--font-sans);
+  user-select: none;
+}
+.codeblock-copy {
+  position: absolute;
+  top: 0.4375rem;
+  right: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  font-family: var(--font-sans);
+  color: var(--text-3);
+  padding: 0.1875rem 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+.codeblock-copy:hover {
+  background: var(--hover);
+  color: var(--text);
+}
+.codeblock-copy svg {
+  width: 13px;
+  height: 13px;
+}
+
+/* highlight.js 背景交给主题控制 */
+.article-content pre code.hljs {
+  background: transparent;
+  padding: 0;
+}
+
+/* ── 图片：圆角卡片式 ── */
+.article-content img {
+  display: block;
+  max-width: 100%;
+  border-radius: var(--radius-card);
+  margin: 1.125rem auto;
+}
+.article-content figure {
+  margin: 1.125rem 0;
+}
+.article-content figcaption {
+  text-align: center;
+  font-size: 0.8125rem;
+  color: var(--text-3);
+  margin-top: 0.5rem;
+}
+
+/* ── 表格：横向滚动 + 细边框 ── */
+.article-content table {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  border-collapse: collapse;
+  margin: 1.125rem 0;
+  font-size: 0.9063rem;
+}
+.article-content th,
+.article-content td {
+  border: 1px solid var(--border);
+  padding: 0.5rem 0.875rem;
+  text-align: left;
+  white-space: nowrap;
+}
+.article-content th {
+  background: var(--hover);
+  font-weight: 600;
+}
+
+/* ── 脚注 ── */
+.article-content sup a {
+  text-decoration: none;
+  font-size: 0.75em;
+}
+
+/* ══════════ 文章页附属元素 ══════════ */
+
+/* 特色图 */
+.post-feature {
+  margin: 0 0 1.25rem;
+}
+.post-feature img {
+  width: 100%;
+  border-radius: var(--radius-card);
+  display: block;
+}
+
+/* 大纲折叠框 */
+.post-toc {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 0.75rem 1.125rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.9063rem;
+}
+.post-toc summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-2);
+  user-select: none;
+}
+.post-toc summary:hover {
+  color: var(--text);
+}
+.post-toc__body {
+  margin-top: 0.5rem;
+}
+.post-toc__body ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+.post-toc__body a {
+  color: var(--text-2);
+  text-decoration: none;
+}
+.post-toc__body a:hover {
+  color: var(--accent);
+}
+
+/* 最后更新时间 */
+.post-byline {
+  font-size: 0.8125rem;
+  color: var(--text-3);
+  margin: 1.25rem 0 0;
+}
+.post-byline__name {
+  font-weight: 600;
+}
+.post-byline a {
+  color: var(--text-2);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.post-byline a:hover {
+  color: var(--text);
+}
+
+.post-updated {
+  font-size: 0.8125rem;
+  color: var(--text-3);
+  margin: 0.25rem 0 0;
+}
