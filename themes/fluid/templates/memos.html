@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}闪念 · {{ config.siteName }}{% endblock %}
+{% block body_class %}memos page{% endblock %}
+{% block banner_title %}闪念{% endblock %}
+
+{% block content %}
+  {% include "partials/heatmap.html" %}
+
+  {% if memos and memos|length > 0 %}
+    {% for memo in memos %}
+      <div class="memo-item" data-date="{{ memo.createdAtISO }}">
+        <div class="memo-date" data-iso="{{ memo.createdAtISO }}">
+          <span class="memo-date-day"></span>
+          <span class="memo-date-month"></span>
+        </div>
+        <div class="memo-body">
+          <p>{{ memo.content|striptags|truncatechars:600 }}</p>
+          <div class="memo-meta">
+            <span>{{ memo.createdAt }}</span>
+            {% if memo.tags and memo.tags|length > 0 %}
+              {% for tag in memo.tags %}<span>#{{ tag }}</span>{% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="empty-state"><p>还没有闪念 ~</p></div>
+  {% endif %}
+{% endblock %}

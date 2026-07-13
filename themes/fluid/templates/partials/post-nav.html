@@ -1,0 +1,23 @@
+{# Post detail prev/next navigation.
+   Note: Gridea Pro's prevPost = newer (array i-1), nextPost = older. We use
+   neutral labels「较新 / 较早」to avoid direction confusion. #}
+{% if post.prevPost or post.nextPost %}
+  <nav class="post-nav" aria-label="文章导航">
+    {% if post.prevPost %}
+      <a class="post-nav-item" href="{{ post.prevPost.link }}" rel="prev">
+        <span class="label">较新</span>
+        <span class="title">{{ post.prevPost.title }}</span>
+      </a>
+    {% else %}
+      <div></div>
+    {% endif %}
+    {% if post.nextPost %}
+      <a class="post-nav-item is-next" href="{{ post.nextPost.link }}" rel="next">
+        <span class="label">较早</span>
+        <span class="title">{{ post.nextPost.title }}</span>
+      </a>
+    {% else %}
+      <div></div>
+    {% endif %}
+  </nav>
+{% endif %}

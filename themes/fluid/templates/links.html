@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}友情链接 · {{ config.siteName }}{% endblock %}
+{% block body_class %}links page{% endblock %}
+{% block banner_title %}友情链接{% endblock %}
+
+{% block content %}
+  {% if links and links|length > 0 %}
+    <div class="links-grid">
+      {% for link in links %}
+        <a class="link-card" href="{{ link.siteLink }}" target="_blank" rel="noopener noreferrer">
+          <div class="avatar" {% if link.avatar %}style="background-image:url('{{ link.avatar }}')"{% endif %}></div>
+          <div class="meta">
+            <h4>{{ link.siteName }}</h4>
+            {% if link.description %}<p>{{ link.description }}</p>{% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="empty-state"><p>暂无友链 ~</p></div>
+  {% endif %}
+{% endblock %}

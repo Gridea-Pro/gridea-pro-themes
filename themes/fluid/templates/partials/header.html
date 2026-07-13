@@ -1,0 +1,78 @@
+{# Fixed-top navbar — transparent over banner, opaque after scroll. Replicates Fluid's scrolling-navbar. #}
+<nav id="navbar" class="navbar scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="{{ config.domain }}/">
+      <strong>{% if theme_config.navbarTitle %}{{ theme_config.navbarTitle }}{% else %}{{ config.siteName }}{% endif %}</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <ul class="navbar-nav">
+      {% if menus and menus|length > 0 %}
+        {% for menu in menus %}
+          <li class="nav-item">
+            <a class="nav-link" href="{{ menu.link }}">{{ menu.name }}</a>
+          </li>
+        {% endfor %}
+      {% endif %}
+      {% if theme_config.showSearch %}
+        <li class="nav-item">
+          <button type="button" class="nav-link" data-action="open-search" aria-label="Search">
+            <svg class="icon"><use xlink:href="#icon-search"/></svg>
+          </button>
+        </li>
+      {% endif %}
+      {% if theme_config.themeMode == "user" or theme_config.themeMode == "auto" %}
+        <li class="nav-item">
+          <button type="button" class="nav-link" data-action="toggle-theme" aria-label="切换深浅模式">
+            <svg class="icon icon-theme"><use xlink:href="#icon-moon"/></svg>
+          </button>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+
+{# Mobile grid overlay — appears when navbar-toggler-btn is clicked on mobile #}
+<div id="mobile-grid-menu">
+  <div class="mobile-grid-menu-inner">
+    <div class="container">
+      <div class="row">
+        {% if menus and menus|length > 0 %}
+          {% for menu in menus %}
+            <div class="mobile-grid-cell">
+              <a href="{{ menu.link }}">
+                <div class="mobile-grid-item">
+                  <svg class="icon"><use xlink:href="#icon-link"/></svg>
+                  <span>{{ menu.name }}</span>
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        {% endif %}
+        {% if theme_config.showSearch %}
+          <div class="mobile-grid-cell">
+            <a href="javascript:;" data-action="open-search" aria-label="Search">
+              <div class="mobile-grid-item">
+                <svg class="icon"><use xlink:href="#icon-search"/></svg>
+                <span>搜索</span>
+              </div>
+            </a>
+          </div>
+        {% endif %}
+        {% if theme_config.themeMode == "user" or theme_config.themeMode == "auto" %}
+          <div class="mobile-grid-cell">
+            <a href="javascript:;" data-action="toggle-theme" aria-label="主题切换">
+              <div class="mobile-grid-item">
+                <svg class="icon icon-theme"><use xlink:href="#icon-moon"/></svg>
+                <span>主题</span>
+              </div>
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

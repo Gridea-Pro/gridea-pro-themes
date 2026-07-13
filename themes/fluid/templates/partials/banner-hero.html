@@ -1,0 +1,30 @@
+{# Hero banner — full-viewport-height, used on index.html
+   • Background image (with random list support)
+   • Black mask overlay (mask alpha configurable)
+   • Centered title (typed.js style)
+   • Bottom scroll-down arrow #}
+<div class="header-inner" style="height: {{ theme_config.bannerHeightVH|default:"100" }}vh;">
+  <div id="banner" class="banner"
+       {% if theme_config.bannerImageList %}data-random-banner="{{ theme_config.bannerImageList }}"{% endif %}
+       style="background-image: url('{{ theme_config.bannerImage|default:"https://hexo.fluid-dev.com/img/default.png" }}');">
+    <div class="full-bg-img">
+      <div class="mask">
+        <div class="banner-text text-center fade-in-up">
+          <div class="h2">
+            {% if theme_config.enableTyped %}
+              <span id="subtitle" data-typed-text="{% if theme_config.siteSubTitle %}{{ theme_config.siteSubTitle }}{% else %}{{ config.siteName }}{% endif %}"></span>
+            {% else %}
+              <span id="subtitle">{% if theme_config.siteSubTitle %}{{ theme_config.siteSubTitle }}{% else %}{{ config.siteName }}{% endif %}</span>
+            {% endif %}
+          </div>
+        </div>
+
+        {% if theme_config.scrollDownArrow %}
+          <div class="scroll-down-bar">
+            <svg class="icon icon-arrow-down" style="width:2rem;height:2rem;"><use xlink:href="#icon-arrow-down"/></svg>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
