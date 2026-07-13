@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}标签 & 分类 · {{ config.siteName }}{% endblock %}
+{% block body_class %}tags page{% endblock %}
+
+{% block content %}
+  <div class="post-box-txt">
+    <h3 class="latest_post">标签 & 分类</h3>
+  </div>
+
+  {# All tags #}
+  <div class="taxonomy-section">
+    <div id="tags" class="mod-archive-name">标签</div>
+    {% if tags and tags|length > 0 %}
+      <ul class="mod-archive-list">
+        {% for tag in tags %}
+          <li class="li-inline">
+            <a href="{{ tag.link }}" rel="tag" title="{{ tag.name }}">
+              {{ tag.name }}<span>({{ tag.count }})</span>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p class="empty-state">暂无标签</p>
+    {% endif %}
+  </div>
+
+  {# Categories — aggregated client-side from a JSON catalog rendered server-side #}
+  <div class="taxonomy-section">
+    <div id="category" class="mod-archive-name">分类</div>
+    <ul class="mod-archive-list" id="meaword-tags-cats-list"></ul>
+  </div>
+
+  {# Server-rendered hidden datalist of every post's categories. Engine doesn't
+     expose a global "categories" array, so we aggregate from posts client-side.
+     We deliberately don't iterate `posts` here (this template doesn't receive
+     posts), so we point the search index instead. #}
+  <script>
+    (function () {
+      // Build category cloud by fetching the search index produced by Gridea Pro,
+      // then deduplicating categories from each entry's `categories` array.
+      // Search index doesn't contain categories directly — fall back to /atom.xml.
+      var ul = document.getElementById('meaword-tags-cats-list');
+      if (!ul) return;
+      fetch('/atom.xml').then(function (r) { return r.ok ? r.text() : ''; }).then(function (xml) {
+        if (!xml) { ul.parentElement.style.display = 'none'; return; }
+        var doc;
+        try { doc = new DOMParser().parseFromString(xml, 'application/xml'); }
+        catch (e) { ul.parentElement.style.display = 'none'; return; }
+        var catCount = {};
+        doc.querySelectorAll('entry').forEach(function (entry) {
+          entry.querySelectorAll('category').forEach(function (c) {
+            var term = c.getAttribute('term');
+            if (!term) return;
+            catCount[term] = (catCount[term] || 0) + 1;
+          });
+        });
+        var keys = Object.keys(catCount);
+        if (keys.length === 0) {
+          ul.parentElement.style.display = 'none';
+          return;
+        }
+        ul.innerHTML = keys.sort().map(function (k) {
+          var slug = encodeURIComponent(k.toLowerCase().replace(/\s+/g, '-'));
+          return '<li class="li-inline"><a href="/category/' + slug + '/" rel="category">'
+            + k + '<span>(' + catCount[k] + ')</span></a></li>';
+        }).join('');
+      }).catch(function () {
+        ul.parentElement.style.display = 'none';
+      });
+    })();
+  </script>
+{% endblock %}

@@ -1,0 +1,25 @@
+{# Post detail prev / next navigation with giant beici watermark numbers.
+   Note: Gridea Pro's prevPost = newer (array i-1), nextPost = older (array i+1).
+   We display them with neutral labels so the direction is honest. #}
+{% if post.prevPost or post.nextPost %}
+  <nav class="post-next-prev" aria-label="文章导航">
+    {% if post.prevPost %}
+      <div class="post-prev">
+        <span class="next_prev_beici" aria-hidden="true">«</span>
+        <span class="label">较新</span>
+        <a href="{{ post.prevPost.link }}" rel="prev" title="{{ post.prevPost.title }}">{{ post.prevPost.title }}</a>
+      </div>
+    {% else %}
+      <div></div>
+    {% endif %}
+    {% if post.nextPost %}
+      <div class="post-next">
+        <span class="next_prev_beici" aria-hidden="true">»</span>
+        <span class="label">较早</span>
+        <a href="{{ post.nextPost.link }}" rel="next" title="{{ post.nextPost.title }}">{{ post.nextPost.title }}</a>
+      </div>
+    {% else %}
+      <div></div>
+    {% endif %}
+  </nav>
+{% endif %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}404 · 页面未找到 · {{ config.siteName }}{% endblock %}
+{% block body_class %}page error-page-body{% endblock %}
+
+{% block content %}
+  <div class="error-page">
+    <h2>404 — 页面没找到</h2>
+    <p>你想查看的页面已被转移或删除了，要不要搜索看看？</p>
+    {% if theme_config.showSearch %}
+      <form action="javascript:void(0);" onsubmit="return false;">
+        <input type="text" id="error-search-input" autofocus placeholder="输入关键词搜索…" />
+        <button type="button" data-action="open-search-modal">搜索</button>
+      </form>
+      <script>
+        (function () {
+          var inp = document.getElementById('error-search-input');
+          if (!inp) return;
+          inp.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+              e.preventDefault();
+              var modalInput = document.getElementById('search-modal-input');
+              if (modalInput) modalInput.value = inp.value;
+              var openBtn = document.querySelector('[data-action="open-search-modal"]');
+              if (openBtn) openBtn.click();
+            }
+          });
+        })();
+      </script>
+    {% endif %}
+    <p style="margin-top:60px;"><a href="/" style="color:var(--bs-main); border-bottom:1px solid currentColor;">← 返回首页</a></p>
+  </div>
+{% endblock %}

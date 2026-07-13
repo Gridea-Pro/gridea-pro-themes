@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block title %}友情链接 · {{ config.siteName }}{% endblock %}
+{% block body_class %}links page{% endblock %}
+
+{% block content %}
+  <div class="post-box-txt">
+    <h3 class="latest_post">友情链接</h3>
+  </div>
+
+  <div class="link_box">
+    {% if links and links|length > 0 %}
+      {% for link in links %}
+        <div class="link-row">
+          <a class="link-avatar"
+             href="{{ link.siteLink }}"
+             target="_blank" rel="noopener noreferrer"
+             style="{% if link.avatar %}background-image:url('{{ link.avatar }}'){% endif %}"
+             aria-label="{{ link.siteName }}"></a>
+          <div class="link-meta">
+            <h2><a href="{{ link.siteLink }}" target="_blank" rel="noopener noreferrer">{{ link.siteName }}</a></h2>
+            {% if link.description %}<p>{{ link.description }}</p>{% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty-state"><p>暂无友链 ~</p></div>
+    {% endif %}
+  </div>
+{% endblock %}

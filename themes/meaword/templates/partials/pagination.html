@@ -1,0 +1,20 @@
+{# Pagination — replicates original page-navigator markup #}
+{% if pagination and (pagination.hasPrev or pagination.hasNext) %}
+  <ul class="page-navigator">
+    {% if pagination.hasPrev %}
+      <li><a href="{{ pagination.prevURL }}" rel="prev" aria-label="上一页">&lt;</a></li>
+    {% else %}
+      <li class="is-disabled"><span>&lt;</span></li>
+    {% endif %}
+
+    {% if pagination.totalPages %}
+      <li class="is-info"><span>{{ pagination.currentPage }} / {{ pagination.totalPages }}</span></li>
+    {% endif %}
+
+    {% if pagination.hasNext %}
+      <li><a href="{{ pagination.nextURL }}" rel="next" aria-label="下一页">&gt;</a></li>
+    {% else %}
+      <li class="is-disabled"><span>&gt;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}

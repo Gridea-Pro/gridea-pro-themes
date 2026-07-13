@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}闪念 · {{ config.siteName }}{% endblock %}
+{% block body_class %}memos page{% endblock %}
+
+{% block content %}
+  <div class="post-box-txt">
+    <h3 class="latest_post">闪念</h3>
+  </div>
+
+  {% include "partials/heatmap.html" %}
+
+  <div class="post_loop">
+    {% if memos and memos|length > 0 %}
+      {% for memo in memos %}
+        <div class="post_list post_list_shuoshuo memo" data-date="{{ memo.createdAtISO }}">
+          <div class="post-date" data-iso="{{ memo.createdAtISO }}">
+            <span class="post-date-day"></span>
+            <span class="post-date-month"></span>
+          </div>
+          <p>{{ memo.content|striptags|truncatechars:600 }}</p>
+          <div class="post_loop_info">
+            <span>{{ memo.createdAt }}</span>
+            {% if memo.tags and memo.tags|length > 0 %}
+              {% for tag in memo.tags %}<span>#{{ tag }}</span>{% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <div class="empty-state"><p>还没有闪念 ~</p></div>
+    {% endif %}
+  </div>
+
+  {# Format memo .post-date elements: split YYYY-MM-DD into day + month abbreviation #}
+  <script>
+    (function () {
+      var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      document.querySelectorAll('.memo .post-date[data-iso]').forEach(function (el) {
+        var iso = el.getAttribute('data-iso') || '';
+        var parts = iso.split('-');
+        if (parts.length < 3) return;
+        var day = parts[2];
+        var monthIdx = parseInt(parts[1], 10) - 1;
+        var dayEl = el.querySelector('.post-date-day');
+        var monthEl = el.querySelector('.post-date-month');
+        if (dayEl) dayEl.textContent = day;
+        if (monthEl && monthIdx >= 0 && monthIdx < 12) monthEl.textContent = months[monthIdx];
+      });
+    })();
+  </script>
+{% endblock %}

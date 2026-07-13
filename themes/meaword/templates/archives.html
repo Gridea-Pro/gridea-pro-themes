@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}归档 · {{ config.siteName }}{% endblock %}
+{% block body_class %}archives page{% endblock %}
+
+{% block content %}
+  <div class="post-box-txt">
+    <h3 class="latest_post">归档</h3>
+  </div>
+
+  {# Tag cloud #}
+  {% if tags and tags|length > 0 %}
+    <div class="taxonomy-section">
+      <div id="tags" class="mod-archive-name">标签</div>
+      <ul class="mod-archive-list">
+        {% for tag in tags %}
+          <li class="li-inline">
+            <a href="{{ tag.link }}" rel="tag" title="{{ tag.name }}">
+              {{ tag.name }}<span>({{ tag.count }})</span>
+            </a>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  {# Categories — aggregated from all posts (engine doesn't expose a global categories array) #}
+  {% set seenCats = "" %}
+  {% if archives and archives|length > 0 %}
+    {# Collect categories by walking archives #}
+  {% endif %}
+  <div class="taxonomy-section">
+    <div id="category" class="mod-archive-name">分类</div>
+    <ul class="mod-archive-list" id="meaword-categories-list">
+      {# Populated by JS — collected from .post[data-cat-slug] below #}
+    </ul>
+  </div>
+  <script>
+    (function () {
+      var seen = {};
+      // Walk the embedded archive entries and collect (slug -> {name, link, count}).
+      document.querySelectorAll('[data-archive-cat]').forEach(function (el) {
+        try {
+          var raw = el.getAttribute('data-archive-cat');
+          if (!raw) return;
+          var entries = JSON.parse(raw);
+          entries.forEach(function (c) {
+            if (!c || !c.slug) return;
+            if (!seen[c.slug]) seen[c.slug] = { name: c.name, link: c.link, count: 0 };
+            seen[c.slug].count += 1;
+          });
+        } catch (e) {}
+      });
+      var ul = document.getElementById('meaword-categories-list');
+      var keys = Object.keys(seen);
+      if (!ul) return;
+      if (keys.length === 0) {
+        ul.parentElement.style.display = 'none';
+        return;
+      }
+      ul.innerHTML = keys.map(function (k) {
+        var c = seen[k];
+        return '<li class="li-inline"><a href="' + c.link + '" rel="category" title="' + c.name + '">'
+          + c.name + '<span>(' + c.count + ')</span></a></li>';
+      }).join('');
+    })();
+  </script>
+
+  {# Year-grouped archive list #}
+  {% if archives and archives|length > 0 %}
+    {% for year in archives %}
+      <div id="year-{{ year.year }}" class="mod-archive-name">{{ year.year }}</div>
+      <ul class="mod-archive-list">
+        {% for post in year.posts %}
+          <li id="post-{{ post.id }}"
+              data-archive-cat='{% if post.categories and post.categories|length > 0 %}[{% for cat in post.categories %}{"slug":"{{ cat.slug }}","name":"{{ cat.name }}","link":"{{ cat.link }}"}{% if not loop.last %},{% endif %}{% endfor %}]{% else %}[]{% endif %}'>
+            <time class="text-nowrap" datetime="{{ post.date }}">{{ post.date|date:"01-02" }}</time>
+            <a href="{{ post.link }}" title="{{ post.title }}">{{ post.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endfor %}
+  {% else %}
+    <div class="empty-state"><p>归档为空 ~</p></div>
+  {% endif %}
+{% endblock %}
