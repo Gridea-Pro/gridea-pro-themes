@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-about{% endblock %}
+
+{% block title %}关于 · {{ config.siteName|default:"Vermillion" }}{% endblock %}
+
+{% block content %}
+
+{% set mh_en = "Colophon" %}
+{% set mh_zh = "关于" %}
+{% set mh_tagline = "Who keeps this paper, and why." %}
+{% include "partials/masthead.html" %}
+
+<section class="about-page fade-in" style="animation-delay:0.2s">
+  <div class="about-seal">
+    {% include "partials/seal.html" %}
+    <div class="seal-cap">编 · 验</div>
+    {% if config.avatar %}
+      <div class="about-avatar"><img src="{{ config.avatar }}" alt="{{ config.siteName }}"></div>
+    {% endif %}
+  </div>
+  <div class="about-prose">
+    {# 优先级：Gridea 自带 About 页正文（post）→ 主题 aboutContent → 站点描述 #}
+    {% if post and post.content %}
+      <div class="prose">{{ post.content|safe }}</div>
+    {% elif theme_config.aboutContent %}
+      {{ theme_config.aboutContent|linebreaks|safe }}
+    {% else %}
+      <p>{{ config.siteDescription|default:"这是一方由纸、墨、朱砂与时间共同摊开的小桌面。在 Gridea Pro 的「页面」里编辑「关于」，正文会出现在这里。" }}</p>
+    {% endif %}
+
+    <p style="font-family:var(--mono); font-size:11px; letter-spacing:0.22em; color:var(--ink-faded); text-transform:uppercase; margin-top:48px; padding-top:24px; border-top:1px solid var(--hairline);">
+      {{ theme_config.brandSubtitle|default:"纸面札记 · Paper Journal" }}<br>
+      {% if theme_config.socialMail %}<a href="mailto:{{ theme_config.socialMail }}" style="color:var(--vermillion);">{{ theme_config.socialMail }}</a> · {% endif %}
+      {% if theme_config.socialGithub %}<a href="{{ theme_config.socialGithub }}" target="_blank" rel="noopener" style="color:var(--vermillion);">GitHub</a> · {% endif %}
+      {% if theme_config.socialTwitter %}<a href="{{ theme_config.socialTwitter }}" target="_blank" rel="noopener" style="color:var(--vermillion);">Twitter</a> · {% endif %}
+      {% if theme_config.footerShowPower %}Powered by Gridea Pro{% endif %}
+    </p>
+  </div>
+</section>
+
+{% set folio = "p. ix" %}
+{% endblock %}

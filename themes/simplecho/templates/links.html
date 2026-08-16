@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}友链 · {{ config.siteName }}{% endblock %}
+{% block og_title %}友链 · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="sc-post-container">
+  <article class="sc-post-detail">
+    <h2 class="sc-post-title-detail">友情链接</h2>
+
+    {% if links and links|length > 0 %}
+      <div class="sc-friends-grid">
+        {% for link in links %}
+          <a class="sc-friend-box" href="{{ link.siteLink or link.url }}" target="_blank" rel="noopener noreferrer">
+            {% if link.avatar %}
+              <img class="sc-friend-avatar" src="{{ link.avatar }}" alt="{{ link.siteName or link.name }}" loading="lazy">
+            {% else %}
+              <span class="sc-friend-avatar" aria-hidden="true"
+                    style="display:flex;align-items:center;justify-content:center;font-size:24px;background:var(--sc-accent-1);color:var(--sc-bg-1)">
+                {{ (link.siteName or link.name)|first|upper }}
+              </span>
+            {% endif %}
+            <div class="sc-friend-info">
+              <span>{{ link.siteName or link.name }}</span>
+              {% if link.description %}<div class="sc-friend-desc">{{ link.description }}</div>{% endif %}
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="sc-empty"><p>还没有友链。</p></div>
+    {% endif %}
+  </article>
+</div>
+{% endblock %}

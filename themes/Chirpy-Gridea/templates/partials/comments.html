@@ -1,0 +1,43 @@
+{% if theme_config.enableTwikoo and theme_config.twikooEnvId %}
+<section
+  class="comments-wrap"
+  data-twikoo-root
+  data-env-id="{{ theme_config.twikooEnvId }}"
+  data-lang="{% if theme_config.twikooLang %}{{ theme_config.twikooLang }}{% else %}zh-CN{% endif %}"
+>
+  <h2 class="comments-title" data-i18n="post.comments">Comments</h2>
+  <div id="tcomment"></div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var twikooRoot = document.querySelector('[data-twikoo-root]');
+  if (!twikooRoot) return;
+
+  var envId = twikooRoot.getAttribute('data-env-id') || '';
+  var lang = twikooRoot.getAttribute('data-lang') || 'zh-CN';
+  if (!envId) return;
+
+  function initTwikoo() {
+    if (!window.twikoo) return;
+    window.twikoo.init({
+      envId: envId,
+      el: '#tcomment',
+      lang: lang,
+      path: window.location.pathname
+    });
+  }
+
+  if (window.twikoo) {
+    initTwikoo();
+    return;
+  }
+
+  var script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/twikoo@1.6.39/dist/twikoo.all.min.js';
+  script.async = true;
+  script.onload = initTwikoo;
+  document.body.appendChild(script);
+});
+</script>
+{% endif %}

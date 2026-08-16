@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block body_class %}page-post post-detail{% endblock %}
+
+{% block title %}{{ post.title }} · {{ config.siteName|default:"Vermillion" }}{% endblock %}
+{% block description %}{% if post.description %}{{ post.description }}{% else %}{{ post.title }}{% endif %}{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{% if post.description %}{{ post.description }}{% else %}{{ post.title }}{% endif %}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_url %}{{ post.link }}{% endblock %}
+{% block og_extra %}
+{% if post.feature %}<meta property="og:image" content="{% if config.domain %}{{ config.domain }}{% endif %}{{ post.feature }}">{% endif %}
+<meta property="article:published_time" content="{{ post.date }}">
+{% if post.updatedAt %}<meta property="article:modified_time" content="{{ post.updatedAt }}">{% endif %}
+{% if post.tags %}{% for tag in post.tags %}<meta property="article:tag" content="{{ tag.name }}">
+{% endfor %}{% endif %}
+{% endblock %}
+
+{% block content %}
+
+{# Masthead for article — quieter, mono labels #}
+<header class="masthead fade-in" style="animation-delay:0.05s">
+  <div>
+    <h1>
+      <span class="mh-en">Article</span>
+      <span class="mh-zh">文 · 札</span>
+    </h1>
+    <div class="masthead-tagline">A single piece, by you, kept by paper.</div>
+  </div>
+  <div class="mh-meta">
+    {{ theme_config.volumeNumber|default:"Vol. I" }}<br>
+    <span class="vermillion">{% if post.dateFormat %}{{ post.dateFormat }}{% else %}{{ post.date }}{% endif %}</span><br>
+    {% if post.stats %}约 {{ post.stats.minutes }} min · {% if post.stats.words %}{{ post.stats.words }}{% else %}0{% endif %} 字{% endif %}
+  </div>
+</header>
+
+{% if theme_config.showReadingProgress %}
+<div class="reading-progress" data-reading-progress>
+  <div class="reading-progress-bar"></div>
+</div>
+{% endif %}
+
+<article class="post-article{% if not theme_config.showToc %} post-article--solo{% endif %}">
+
+  <div>
+    {% if post.feature %}
+    <div class="post-feature-img">
+      <img src="{{ post.feature }}" alt="{{ post.title }}">
+    </div>
+    {% endif %}
+
+    <div class="post-meta-row">
+      <span class="vermillion">{% if post.dateFormat %}{{ post.dateFormat }}{% else %}{{ post.date }}{% endif %}</span>
+      {% if post.categories and post.categories|length > 0 %}
+        <span>·</span>
+        {% for cat in post.categories %}
+          <a href="{{ cat.link }}">{{ cat.name }}</a>{% if not loop.last %}<span>·</span>{% endif %}
+        {% endfor %}
+      {% endif %}
+      {% if post.stats %}<span>· 约 {{ post.stats.minutes }} 分钟</span>{% endif %}
+      {% if post.updatedAtFormat and post.updatedAtFormat != post.dateFormat %}
+        <span>· 修订 {{ post.updatedAtFormat }}</span>
+      {% endif %}
+    </div>
+
+    <h1 class="post-title-main">{{ post.title }}</h1>
+
+    {% if post.description %}
+    <div class="post-subtitle">{{ post.description }}</div>
+    {% endif %}
+
+    {% if post.tags and post.tags|length > 0 %}
+    <div class="hero-tags" style="margin-top:0; margin-bottom:32px;">
+      {% for tag in post.tags %}
+        <a class="wtag" href="{{ tag.link }}">{{ tag.name }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="prose post-content"{% if theme_config.showToc %} data-toc{% endif %}{% if theme_config.showCodeCopy %} data-code-copy{% endif %}>
+      {{ post.content|safe }}
+    </div>
+
+    {# Prev / Next nav — note Gridea Pro convention: prevPost is the newer one #}
+    {% if post.prevPost or post.nextPost %}
+    <nav class="post-nav">
+      {% if post.nextPost %}
+        <a class="post-nav-link prev" href="{{ post.nextPost.link }}" rel="prev">
+          <span class="label">← 更早 · Older</span>
+          <span class="t">{{ post.nextPost.title }}</span>
+        </a>
+      {% else %}
+        <span></span>
+      {% endif %}
+      {% if post.prevPost %}
+        <a class="post-nav-link next" href="{{ post.prevPost.link }}" rel="next">
+          <span class="label">更新 · Newer →</span>
+          <span class="t">{{ post.prevPost.title }}</span>
+        </a>
+      {% else %}
+        <span></span>
+      {% endif %}
+    </nav>
+    {% endif %}
+
+    {% include "partials/comments.html" %}
+  </div>
+
+  {% if theme_config.showToc %}
+  {# Right rail: TOC (auto-generated from h2/h3 by JS) #}
+  <aside class="post-toc" aria-label="目录">
+    <div class="post-toc-title">目录 · Index</div>
+    <div class="post-toc-list"></div>
+  </aside>
+  {% endif %}
+
+</article>
+
+{% if theme_config.showBackToTop %}
+<button class="back-to-top" type="button" data-back-to-top aria-label="回到顶部" title="回到顶部">▲</button>
+{% endif %}
+
+{% set folio = "p. iii" %}
+{% endblock %}

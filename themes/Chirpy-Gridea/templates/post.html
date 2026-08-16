@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - {{ config.siteName }}{% endblock %}
+
+{% block breadcrumb %}<a href="/" data-i18n="nav.home">Home</a><span class="separator">/</span><span class="crumb-current">{{ post.title }}</span>{% endblock %}
+
+{% block aside %}
+<div class="toc-container" id="toc-container">
+  <h2 class="toc-title" data-i18n="toc.title">Table of Contents</h2>
+  <nav class="toc-list" id="toc-list"></nav>
+</div>
+{% endblock %}
+
+{% block content %}
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title">{{ post.title }}</h1>
+    {% if post.abstract %}
+    <p class="post-summary" data-decode-entities="true">{{ post.abstract|striptags }}</p>
+    {% endif %}
+    <div class="post-meta">
+      <span class="post-meta-item">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>
+        <time datetime="{{ post.dateFormat }}">{{ post.dateFormat }}</time>
+      </span>
+      {% if post.lastMod %}
+        <span class="post-meta-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          <span data-i18n="post.updatedOn">Updated on</span> {{ post.lastMod }}
+        </span>
+      {% endif %}
+      {% if theme_config.showReadingTime and post.stats and post.stats.minutes %}
+        <span class="post-meta-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>{{ post.stats.minutes }} <span data-i18n="post.readingTime">min read</span></span>
+        </span>
+      {% endif %}
+      {% if post.tags and post.tags|length > 0 %}
+        {% for tag in post.tags %}
+          <a class="post-meta-item taxon-meta-item taxon-meta-item--tag" href="{{ tag.link }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3H4a1 1 0 0 0-1 1v5.59A2 2 0 0 0 3.83 11l9.58 9.59a2 2 0 0 0 2.83 0l4.35-4.35a2 2 0 0 0 0-2.83Z"/><path d="M7 7h.01"/></svg>
+            <span>{{ tag.name }}</span>
+          </a>
+        {% endfor %}
+      {% endif %}
+      {% if post.categories and post.categories|length > 0 %}
+        {% for category in post.categories %}
+          <a class="post-meta-item taxon-meta-item taxon-meta-item--category" href="{{ category.link }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>
+            <span>{{ category.name }}</span>
+          </a>
+        {% endfor %}
+      {% endif %}
+      {% if post.isTop or post.pinned %}
+        <span class="post-meta-item pin-icon" title="Pinned">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="17" x2="12" y2="22"/><path d="M9 2h6"/><path d="M12 2v8"/><path d="M5 10h14l-1 7H6l-1-7Z"/></svg>
+        </span>
+      {% endif %}
+    </div>
+  </header>
+
+  {% if post.feature %}
+  <figure class="post-hero">
+    <img class="is-loading" src="{{ post.feature }}" alt="{{ post.title }}">
+  </figure>
+  {% endif %}
+
+  <div class="post-content prose" id="post-content">
+    {{ post.content|safe }}
+  </div>
+
+  {% if post.tags and post.tags|length > 0 %}
+  <footer class="post-footer">
+    <div class="post-taxonomy-group">
+      <span class="post-tags-label" data-i18n="nav.tags">Tags</span>
+      <div class="post-tags">
+        {% for tag in post.tags %}
+          <a class="taxon-chip taxon-chip--tag" href="{{ tag.link }}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41 11 3.83A2 2 0 0 0 9.59 3H4a1 1 0 0 0-1 1v5.59A2 2 0 0 0 3.83 11l9.58 9.59a2 2 0 0 0 2.83 0l4.35-4.35a2 2 0 0 0 0-2.83Z"/><path d="M7 7h.01"/></svg>
+            <span>{{ tag.name }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </footer>
+  {% endif %}
+
+  {% include "partials/post-nav.html" %}
+  {% include "partials/comments.html" %}
+</article>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const content = document.getElementById('post-content');
+  const tocList = document.getElementById('toc-list');
+  if (!content || !tocList) return;
+  const headings = content.querySelectorAll('h2, h3');
+  
+  if (headings.length === 0) {
+    document.getElementById('toc-container').style.display = 'none';
+    return;
+  }
+
+  headings.forEach((heading, index) => {
+    const id = 'heading-' + index;
+    heading.setAttribute('id', id);
+    
+    const link = document.createElement('a');
+    link.href = '#' + id;
+    link.className = 'toc-link';
+    if (heading.tagName === 'H3') link.style.paddingLeft = '16px';
+    link.textContent = heading.textContent;
+    
+    tocList.appendChild(link);
+  });
+
+  // Simple scroll spy
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+        const activeLink = document.querySelector(`.toc-link[href="#${entry.target.id}"]`);
+        if (activeLink) activeLink.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-100px 0px -66%' });
+
+  headings.forEach(h => observer.observe(h));
+});
+</script>
+{% endblock %}

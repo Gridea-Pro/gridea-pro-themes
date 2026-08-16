@@ -1,0 +1,29 @@
+{# Masthead — newspaper-style page header.
+   Variables expected (all optional, with sensible defaults):
+     mh_en       : English big-display title (defaults to brandEn / "Vermillion")
+     mh_zh       : Chinese subtitle to the right of mh_en
+     mh_subtitle : Plain subtitle line (below the title, above the tagline)
+     mh_tagline  : Italic English tagline below the title
+     mh_vol      : Volume / no. (top-right, mono)
+     mh_date     : ISO-style date string (top-right, vermillion)
+     mh_time     : Time of day (top-right, third row)
+#}
+<header class="masthead fade-in" style="animation-delay:0.05s">
+  <div>
+    <h1>
+      <span class="mh-en">{% if mh_en %}{{ mh_en }}{% else %}{{ theme_config.brandEn|default:"Vermillion" }}{% endif %}</span>
+      {% if mh_zh %}<span class="mh-zh">{{ mh_zh }}</span>{% endif %}
+    </h1>
+    {% if mh_subtitle %}
+      <div class="masthead-subtitle">{{ mh_subtitle }}</div>
+    {% endif %}
+    {% if mh_tagline %}
+      <div class="masthead-tagline">{{ mh_tagline }}</div>
+    {% endif %}
+  </div>
+  <div class="mh-meta">
+    {% if mh_vol %}{{ mh_vol }}{% else %}{{ theme_config.volumeNumber|default:"" }}{% endif %}<br>
+    {% if mh_date %}<span class="vermillion">{{ mh_date }}</span>{% else %}<span class="vermillion">{{ now|date:"2006 · 01 · 02" }}</span>{% endif %}
+    {% if mh_time %}<br>{{ mh_time }}{% endif %}
+  </div>
+</header>

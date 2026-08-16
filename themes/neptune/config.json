@@ -1,0 +1,111 @@
+{
+  "name": "Neptune",
+  "version": "1.0.0",
+  "author": "seolcho0827",
+  "description": "沉浸式深度阅读博客主题 · 窄栏大字号、专注排版、长文舒适度优先",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "customConfig": [
+    {
+      "name": "accentColor",
+      "label": "强调色",
+      "group": "外观设置",
+      "type": "input",
+      "value": "#4a90d9",
+      "note": "链接等元素的强调颜色"
+    },
+    {
+      "name": "showDarkModeToggle",
+      "label": "显示暗色模式切换",
+      "group": "外观设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "contentWidth",
+      "label": "内容宽度",
+      "group": "外观设置",
+      "type": "select",
+      "value": "narrow",
+      "options": [
+        { "label": "窄版（最佳阅读宽度）", "value": "narrow" },
+        { "label": "中等宽度", "value": "medium" }
+      ]
+    },
+    {
+      "name": "fontSize",
+      "label": "正文字号",
+      "group": "外观设置",
+      "type": "select",
+      "value": "large",
+      "options": [
+        { "label": "标准", "value": "normal" },
+        { "label": "大号", "value": "large" },
+        { "label": "超大号", "value": "x-large" }
+      ]
+    },
+    {
+      "name": "showReadingProgress",
+      "label": "显示阅读进度条",
+      "group": "功能设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "showEstimatedReadingTime",
+      "label": "显示预估阅读时间",
+      "group": "功能设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "showSearch",
+      "label": "显示搜索",
+      "group": "功能设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "showTagsInPost",
+      "label": "文章底部显示标签",
+      "group": "文章设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "showPostNav",
+      "label": "显示上下篇导航",
+      "group": "文章设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "socialGithub",
+      "label": "GitHub 用户名",
+      "group": "社交设置",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "socialTwitter",
+      "label": "Twitter 用户名",
+      "group": "社交设置",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "footerText",
+      "label": "页脚自定义文字",
+      "group": "基础设置",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "customCSS",
+      "label": "自定义 CSS",
+      "group": "高级设置",
+      "type": "textarea",
+      "value": ""
+    }
+  ]
+}

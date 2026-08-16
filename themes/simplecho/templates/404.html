@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}404 · {{ config.siteName }}{% endblock %}
+{% block og_title %}404 · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="sc-404">
+  <div class="sc-404-num">4 0 4</div>
+  <p class="sc-404-text">Page Not Found ——这一页找不到了</p>
+  <a class="sc-404-btn" href="/">
+    <svg aria-hidden="true"><use xlink:href="#sc-icon-arrow-back"/></svg>
+    回到首页
+  </a>
+</div>
+{% endblock %}

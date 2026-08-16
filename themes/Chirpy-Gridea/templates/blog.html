@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}文章 - {{ config.siteName }}{% endblock %}
+{% block breadcrumb %}<a href="/" data-i18n="nav.home">Home</a><span class="separator">/</span><span class="crumb-current" data-i18n="blog.title">Posts</span>{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <h1 data-i18n="blog.title">Posts</h1>
+  <p data-i18n="blog.description">全部文章列表</p>
+</section>
+
+<section class="posts-list">
+  {% if posts and posts|length > 0 %}
+  {% for post in posts %}
+  {% if not post.hideInList %}
+  {% include "partials/post-card.html" %}
+  {% endif %}
+  {% endfor %}
+  {% else %}
+  <div class="empty-state">
+    <p data-i18n="blog.empty">这里还没有内容。</p>
+  </div>
+  {% endif %}
+</section>
+
+{% include "partials/pagination.html" %}
+{% endblock %}

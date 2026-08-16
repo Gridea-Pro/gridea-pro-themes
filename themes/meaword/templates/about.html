@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}关于 · {{ config.siteName }}{% endblock %}
+{% block body_class %}about page{% endblock %}
+
+{% block content %}
+  <div class="about-page">
+    {% if config.avatar %}
+      <img class="avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">
+    {% endif %}
+    <h1>关于</h1>
+    <p style="text-align:center;">{% if theme_config.siteSubTitle %}{{ theme_config.siteSubTitle }}{% else %}{{ config.siteDescription }}{% endif %}</p>
+    {% if config.siteDescription %}
+      <article class="meapost" style="margin-top:60px;">
+        <p>{{ config.siteDescription }}</p>
+      </article>
+    {% endif %}
+  </div>
+{% endblock %}

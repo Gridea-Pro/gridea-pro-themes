@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}友链 - {{ config.siteName }}{% endblock %}
+
+{% block head %}
+<meta name="description" content="{{ config.siteName }} 的友情链接">
+{% endblock %}
+
+{% block content %}
+
+<div class="msg msg--user">
+  <div class="msg__bubble" data-ask="{{ theme_config.askLinks }}" data-scene="askLinks">在互联网的茫茫人海里，你和谁相遇过？</div>
+</div>
+
+<div class="msg msg--assistant">
+  <div class="msg__head">
+    {% if theme_config.showAvatar and config.avatar %}<img class="msg__avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">{% endif %}
+    {% if links and links|length > 0 %}
+    <p class="msg__intro" data-reply="{{ theme_config.replyLinks }}" data-scene="replyLinks">这些是散落在网络各处的朋友们，每一个都值得专程拜访：</p>
+    {% else %}
+    <p class="msg__intro">还没有添加友情链接。</p>
+    {% endif %}
+  </div>
+  <div class="msg__body">
+    {% if links and links|length > 0 %}
+    {# 仿 ChatGPT「来源引用」列表：无边框行式 + hover 浮起 #}
+    <div class="link-list">
+      {% for link in links %}
+      <a class="link-row" href="{{ link.siteLink }}" target="_blank" rel="noopener">
+        {% if link.avatar %}
+        <img class="link-row__avatar" src="{{ link.avatar }}" alt="{{ link.siteName }}" loading="lazy">
+        {% else %}
+        <span class="link-row__avatar link-row__avatar--fallback" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="3" y1="12" x2="21" y2="12"/><path d="M12 3a13.5 13.5 0 0 1 3.5 9 13.5 13.5 0 0 1-3.5 9 13.5 13.5 0 0 1-3.5-9A13.5 13.5 0 0 1 12 3z"/></svg>
+        </span>
+        {% endif %}
+        <span class="link-row__meta">
+          <span class="link-row__name">{{ link.siteName }}</span>
+          {% if link.description %}
+          <span class="link-row__desc">{{ link.description }}</span>
+          {% endif %}
+        </span>
+        <svg class="link-row__arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8 7 17 7 17 16"/></svg>
+      </a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+{% block title %}闪念 - {{ config.siteName }}{% endblock %}
+{% block breadcrumb %}<a href="/" data-i18n="nav.home">Home</a><span class="separator">/</span><span class="crumb-current" data-i18n="nav.notes">Notes</span>{% endblock %}
+{% block content %}
+<section class="custom-page custom-page-notes">
+  <header class="page-heading">
+    <h1 data-i18n="notes.title">Notes</h1>
+    <p data-i18n="notes.description">记录灵感、片段和不想单独发成长文的小想法。</p>
+  </header>
+
+  {% if memos and memos|length > 0 %}
+    {% if theme_config.showHeatmap %}
+    <section class="memo-heatmap-wrap">
+      <div class="memo-heatmap" id="memo-heatmap-root"></div>
+      <div class="memo-heatmap-footer">
+        <span class="memo-heatmap-total" id="memo-heatmap-total"></span>
+        <div class="memo-heatmap-legend">
+          <span data-i18n="notes.heatmapLess">少</span>
+          <span class="memo-heatmap-legend-cell" data-level="0"></span>
+          <span class="memo-heatmap-legend-cell" data-level="1"></span>
+          <span class="memo-heatmap-legend-cell" data-level="2"></span>
+          <span class="memo-heatmap-legend-cell" data-level="3"></span>
+          <span class="memo-heatmap-legend-cell" data-level="4"></span>
+          <span data-i18n="notes.heatmapMore">多</span>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    <div class="notes-feed memo-timeline">
+      {% for memo in memos %}
+      <article class="note-card memo-card" data-created="{{ memo.createdAtISO }}">
+        <div class="memo-card-content prose">{{ memo.content | safe }}</div>
+        <time class="memo-card-date">{{ memo.dateFormat }}</time>
+      </article>
+      {% endfor %}
+    </div>
+    {% if memos|length > 5 %}
+    <div class="memo-load-more-wrap">
+      <button class="memo-load-more-btn" id="memo-load-more" type="button" data-i18n="notes.loadMore">更多</button>
+    </div>
+    {% endif %}
+  {% elif theme_config.notesHtml %}
+  <div class="custom-page-body prose">
+    {{ theme_config.notesHtml | safe }}
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <p data-i18n="notes.empty">暂无闪念</p>
+    <p class="meta-text" data-i18n="notes.emptyHint">灵感尚未降临……</p>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+  {% if memos and memos|length > 0 %}
+  <script>
+    (function () {
+      var root = document.getElementById('memo-heatmap-root');
+      var totalEl = document.getElementById('memo-heatmap-total');
+      var feed = document.querySelector('.memo-timeline');
+      var loadMoreBtn = document.getElementById('memo-load-more');
+      var items = Array.prototype.slice.call(document.querySelectorAll('.memo-card[data-created]'));
+      if (!items.length) return;
+
+      function getLanguage() {
+        try { return localStorage.getItem('chirping-gridea-language') || 'zh'; } catch (e) { return 'zh'; }
+      }
+
+      function escapeHtml(text) {
+        return String(text)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function decorateMemoTags() {
+        var contents = document.querySelectorAll('.memo-card-content');
+        var tagPattern = /(^|[\s\u3000(（\[【])(#([\p{L}\p{N}_-]+))/gu;
+
+        contents.forEach(function (content) {
+          var walker = document.createTreeWalker(content, NodeFilter.SHOW_TEXT, {
+            acceptNode: function (node) {
+              if (!node.nodeValue || node.nodeValue.indexOf('#') === -1) return NodeFilter.FILTER_REJECT;
+              var parent = node.parentElement;
+              if (!parent) return NodeFilter.FILTER_REJECT;
+              if (/^(A|CODE|PRE|SCRIPT|STYLE|TEXTAREA)$/i.test(parent.tagName)) return NodeFilter.FILTER_REJECT;
+              return NodeFilter.FILTER_ACCEPT;
+            }
+          });
+
+          var textNodes = [];
+          while (walker.nextNode()) {
+            textNodes.push(walker.currentNode);
+          }
+
+          textNodes.forEach(function (node) {
+            tagPattern.lastIndex = 0;
+            if (!tagPattern.test(node.nodeValue)) return;
+            tagPattern.lastIndex = 0;
+
+            var wrapper = document.createElement('span');
+            wrapper.innerHTML = node.nodeValue.replace(tagPattern, function (_, prefix, tagText) {
+              return prefix + '<span class="memo-inline-tag">' + escapeHtml(tagText) + '</span>';
+            });
+            node.parentNode.replaceChild(wrapper, node);
+          });
+        });
+      }
+
+      function setupLoadMore() {
+        if (!feed) return;
+
+        var batchSize = 5;
+        items.sort(function (a, b) {
+          return new Date(b.getAttribute('data-created') || 0).getTime() - new Date(a.getAttribute('data-created') || 0).getTime();
+        });
+        items.forEach(function (item) {
+          feed.appendChild(item);
+        });
+
+        var visibleCount = Math.min(batchSize, items.length);
+        var lang = getLanguage();
+
+        function updateButtonText() {
+          if (!loadMoreBtn) return;
+          var remaining = Math.max(0, items.length - visibleCount);
+          if (remaining <= 0) {
+            loadMoreBtn.hidden = true;
+            return;
+          }
+          loadMoreBtn.hidden = false;
+          // i18n: static label only. The remaining-count hint was removed per
+          // user request — keep it clean: just "更多" / "More".
+          var dict = window.ChirpyI18n && window.ChirpyI18n.messages
+            ? (window.ChirpyI18n.messages[lang] || window.ChirpyI18n.messages.zh)
+            : {};
+          loadMoreBtn.textContent = dict['notes.loadMore'] || (lang === 'en' ? 'More' : '更多');
+        }
+
+        function renderVisibleItems() {
+          items.forEach(function (item, index) {
+            item.hidden = index >= visibleCount;
+          });
+          updateButtonText();
+        }
+
+        renderVisibleItems();
+
+        if (loadMoreBtn) {
+          loadMoreBtn.addEventListener('click', function () {
+            visibleCount = Math.min(items.length, visibleCount + batchSize);
+            renderVisibleItems();
+          });
+        }
+      }
+
+      decorateMemoTags();
+      setupLoadMore();
+
+      if (!root) return;
+
+      var data = {};
+      items.forEach(function (item) {
+        var created = item.getAttribute('data-created');
+        if (!created) return;
+        var key = created.substring(0, 10);
+        data[key] = (data[key] || 0) + 1;
+      });
+
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
+      var endDay = today.getDay();
+      var totalDays = 52 * 7 + endDay + 1;
+      var start = new Date(today);
+      start.setDate(start.getDate() - totalDays + 1);
+      start.setDate(start.getDate() - start.getDay());
+
+      var weeks = [];
+      var totalWeeks = Math.ceil(totalDays / 7);
+      for (var w = 0; w < totalWeeks; w++) {
+        var week = [];
+        for (var d = 0; d < 7; d++) {
+          var cellDate = new Date(start);
+          cellDate.setDate(cellDate.getDate() + w * 7 + d);
+          var key = cellDate.getFullYear() + '-' + String(cellDate.getMonth() + 1).padStart(2, '0') + '-' + String(cellDate.getDate()).padStart(2, '0');
+          var count = data[key] || 0;
+          var level = count === 0 ? 0 : count === 1 ? 1 : count <= 3 ? 2 : count <= 5 ? 3 : 4;
+          var future = cellDate > today;
+          week.push({ key: key, count: count, level: future ? 0 : level, future: future, month: cellDate.getMonth() });
+        }
+        weeks.push(week);
+      }
+
+      var monthsZh = ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'];
+      var monthsEn = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      var daysZh = ['日', '一', '二', '三', '四', '五', '六'];
+      var daysEn = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+      var lang = getLanguage();
+      var monthLabelsText = lang === 'en' ? monthsEn : monthsZh;
+      var dayLabelsText = lang === 'en' ? daysEn : daysZh;
+
+      function buildLabels(weekList) {
+        var labels = [];
+        var lastMonth = -1;
+        for (var i = 0; i < weekList.length; i++) {
+          var first = weekList[i][0];
+          if (first.month !== lastMonth) {
+            labels.push({ index: i, label: monthLabelsText[first.month] });
+            lastMonth = first.month;
+          }
+        }
+        return labels;
+      }
+
+      function renderHeatmap() {
+        var wrap = root.closest('.memo-heatmap-wrap');
+        var isMobile = window.matchMedia('(max-width: 768px)').matches;
+        var minCellSize = isMobile ? 7 : 8;
+        var maxCellSize = isMobile ? 10 : 12;
+        var cellGap = isMobile ? 2 : 3;
+        var rowGap = isMobile ? 4 : cellGap;
+        var dayLabelWidth = isMobile ? 16 : 20;
+        var leadingGap = isMobile ? 6 : 8;
+        var monthTailSpace = isMobile ? 12 : 18;
+        var wrapStyle = wrap ? window.getComputedStyle(wrap) : null;
+        var wrapWidth = (wrap ? wrap.clientWidth : root.clientWidth) || 0;
+        var horizontalPadding = wrapStyle
+          ? (parseFloat(wrapStyle.paddingLeft || '0') + parseFloat(wrapStyle.paddingRight || '0'))
+          : 0;
+        var contentWidth = Math.max(0, wrapWidth - horizontalPadding);
+        var availableWidth = Math.max(0, contentWidth - dayLabelWidth - leadingGap - monthTailSpace);
+        var maxWeeksFit = Math.floor((availableWidth + cellGap) / (minCellSize + cellGap));
+        var visibleWeeks = Math.max(8, Math.min(weeks.length, maxWeeksFit || 8));
+        var cellSize = Math.floor((availableWidth - Math.max(0, visibleWeeks - 1) * cellGap) / Math.max(1, visibleWeeks));
+
+        while (visibleWeeks > 8 && cellSize < minCellSize) {
+          visibleWeeks -= 1;
+          cellSize = Math.floor((availableWidth - Math.max(0, visibleWeeks - 1) * cellGap) / Math.max(1, visibleWeeks));
+        }
+
+        cellSize = Math.max(minCellSize, Math.min(maxCellSize, cellSize));
+
+        var visibleWeekList = weeks.slice(-visibleWeeks);
+        var gridWidth = visibleWeekList.length * cellSize + Math.max(0, visibleWeekList.length - 1) * cellGap;
+        var labels = buildLabels(visibleWeekList);
+        var labelHtml = '<div class="memo-heatmap-months" style="--memo-weeks:' + visibleWeekList.length + '; --memo-cell-size:' + cellSize + 'px; --memo-cell-gap:' + cellGap + 'px; --memo-row-gap:' + rowGap + 'px; --memo-day-width:' + dayLabelWidth + 'px; --memo-grid-width:' + gridWidth + 'px; --memo-tail-space:' + monthTailSpace + 'px;">';
+
+        for (var l = 0; l < labels.length; l++) {
+          labelHtml += '<span class="memo-heatmap-month-label" style="grid-column:' + (labels[l].index + 1) + ';">' + labels[l].label + '</span>';
+        }
+        labelHtml += '</div>';
+
+        var bodyHtml = '<div class="memo-heatmap-body" style="--memo-weeks:' + visibleWeekList.length + '; --memo-cell-size:' + cellSize + 'px; --memo-cell-gap:' + cellGap + 'px; --memo-row-gap:' + rowGap + 'px; --memo-day-width:' + dayLabelWidth + 'px; --memo-grid-width:' + gridWidth + 'px; --memo-tail-space:' + monthTailSpace + 'px;">';
+        bodyHtml += '<div class="memo-heatmap-days">';
+        for (var row = 0; row < 7; row++) {
+          bodyHtml += '<span class="memo-heatmap-day-label">' + dayLabelsText[row] + '</span>';
+        }
+        bodyHtml += '</div>';
+        bodyHtml += '<div class="memo-heatmap-weeks">';
+        for (var c = 0; c < visibleWeekList.length; c++) {
+          for (var rowIndex = 0; rowIndex < 7; rowIndex++) {
+            var cell = visibleWeekList[c][rowIndex];
+            var title = cell.key + ' · ' + cell.count;
+            bodyHtml += '<span class="memo-heatmap-cell' + (cell.future ? ' is-future' : '') + '" data-level="' + cell.level + '" title="' + title + '"></span>';
+          }
+        }
+        bodyHtml += '</div></div>';
+
+        root.innerHTML = '<div class="memo-heatmap-shell">' + labelHtml + bodyHtml + '</div>';
+      }
+
+      renderHeatmap();
+
+      var resizeTimer = null;
+      window.addEventListener('resize', function () {
+        window.clearTimeout(resizeTimer);
+        resizeTimer = window.setTimeout(renderHeatmap, 120);
+      });
+
+      if (totalEl) {
+        totalEl.textContent = lang === 'en'
+          ? items.length + ' memos in the past year'
+          : '过去一年共 ' + items.length + ' 条闪念';
+      }
+    })();
+  </script>
+  {% endif %}
+{% endblock %}

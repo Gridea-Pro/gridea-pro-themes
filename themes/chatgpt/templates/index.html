@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+
+{% block title %}{{ config.siteName }}{% endblock %}
+
+{% block head %}
+{# description/OG/Twitter/canonical/keywords/WebSite JSON-LD 由 Gridea Pro 的
+   HtmlPostProcessor 统一注入，主题不重复输出。
+   这里补充引擎没有的 Blog 结构化数据：极简对话式首页可见文本少，
+   用 blogPost 列表把当页文章的标题/摘要/日期喂给搜索引擎。 #}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": {{ config.siteName|to_json|safe }},
+  "description": {{ config.siteDescription|to_json|safe }},
+  "url": "{{ config.domain }}/",
+  "blogPost": [
+    {% for post in posts %}
+    {% if loop.index <= 10 %}
+    {% if loop.index > 1 %},{% endif %}
+    {
+      "@type": "BlogPosting",
+      "headline": {{ post.title|to_json|safe }},
+      "url": "{{ config.domain }}{{ post.link }}",
+      "datePublished": "{{ post.date }}",
+      "description": {% if post.description %}{{ post.description|truncatechars:160|to_json|safe }}{% else %}{{ post.content|excerpt:160|strip_html|to_json|safe }}{% endif %},
+      "author": { "@type": "Person", "name": {{ config.siteName|to_json|safe }} }
+    }
+    {% endif %}
+    {% endfor %}
+  ]
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+{# 视觉上隐藏的 h1：对话式首页没有可视大标题，给搜索引擎一个页面主题声明 #}
+<h1 class="sr-only">{{ config.siteName }} - {{ config.siteDescription }}</h1>
+
+{% set currentPage = pagination.currentPage|default:1 %}
+{% set totalPages = pagination.totalPages|default:1 %}
+
+{% if currentPage == 1 %}
+{# ══ 开场对话 ══ #}
+<div class="msg msg--user">
+  <div class="msg__bubble" data-ask="{{ theme_config.askIndex }}" data-scene="askIndex">推开这扇门，会遇见什么？</div>
+</div>
+
+<div class="msg msg--assistant">
+  <div class="msg__head">
+    {% if theme_config.showAvatar and config.avatar %}<img class="msg__avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">{% endif %}
+    <p class="msg__intro" data-reply="{{ theme_config.replyIndex }}" data-scene="replyIndex">你好！这里是 <strong>{{ config.siteName }}</strong>。{{ config.siteDescription }}</p>
+  </div>
+  <div class="msg__body">
+
+    {# ── 建议卡片：由导航菜单生成（仅宽屏；手机端见下方 chips） ── #}
+    {% if theme_config.showSuggestions and menus|length > 1 %}
+    <div class="suggestions suggestions--home">
+      {% for menu in menus %}
+      {% if menu.link != "/" %}
+      <a class="suggestion-card" href="{{ menu.link }}">
+        <span class="suggestion-card__name">{{ menu.name }}</span>
+        <span class="suggestion-card__hint">
+          {% if "blog" in menu.link %}看看所有文章{% elif "archive" in menu.link %}沿时间线回溯{% elif "memo" in menu.link %}一闪而过的念头{% elif "tag" in menu.link %}按话题漫游{% elif "categor" in menu.link %}按分类翻阅{% elif "link" in menu.link or "friend" in menu.link %}网络另一端的朋友{% elif "about" in menu.link %}认识屏幕后的人{% else %}点击看看{% endif %}
+        </span>
+      </a>
+      {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {# ── 手机端导航胶囊：横向滑动，一行高度，不占首屏 ── #}
+    {% if theme_config.showMobileChips and menus|length > 1 %}
+    <div class="suggestion-chips">
+      {% for menu in menus %}
+      {% if menu.link != "/" %}
+      <a class="suggestion-chip" href="{{ menu.link }}">{{ menu.name }}</a>
+      {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {# ── 最近更新 ── #}
+    {% if posts|length > 0 %}
+    <div class="section-label" id="recent">最近更新</div>
+
+    {# 首篇精选卡：封面图 + 摘要；无封面则纯文字卡 #}
+    {% if theme_config.showFeatured %}
+    {% for post in posts %}
+    {% if loop.index == 1 %}
+    <a class="featured-card" href="{{ post.link }}">
+      {% if post.feature %}
+      <div class="featured-card__cover">
+        <img src="{{ post.feature }}" alt="{{ post.title }}" loading="lazy">
+      </div>
+      {% endif %}
+      <div class="featured-card__body">
+        <h3 class="featured-card__title">
+          {% if post.isTop %}<span class="post-item__pin" title="置顶">📌</span>{% endif %}
+          {{ post.title }}
+        </h3>
+        {% if post.description %}
+        <p class="featured-card__excerpt">{{ post.description|truncatechars:120 }}</p>
+        {% else %}
+        <p class="featured-card__excerpt">{{ post.content|excerpt:120|strip_html }}</p>
+        {% endif %}
+        <time class="featured-card__time" datetime="{{ post.date }}">{{ post.date|relative }}</time>
+      </div>
+    </a>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+    <div class="post-list">
+      {% for post in posts %}
+      {% if loop.index <= theme_config.recentCount|default:8|to_int %}
+      {% if theme_config.showFeatured and loop.index == 1 %}
+      {# 首篇已作为精选卡展示 #}
+      {% else %}
+      <a class="post-item" href="{{ post.link }}">
+        <span class="post-item__main">
+          <span class="post-item__title">
+            {% if post.isTop %}<span class="post-item__pin" title="置顶">📌</span>{% endif %}
+            {{ post.title }}
+          </span>
+          {% if theme_config.showExcerpt %}
+          {% if post.description %}
+          <span class="post-item__excerpt">{{ post.description|truncatechars:80 }}</span>
+          {% else %}
+          <span class="post-item__excerpt">{{ post.content|excerpt:80|strip_html }}</span>
+          {% endif %}
+          {% endif %}
+        </span>
+        <time class="post-item__time" datetime="{{ post.date }}">{{ post.date|relative }}</time>
+      </a>
+      {% endif %}
+      {% endif %}
+      {% endfor %}
+    </div>
+    {% include "partials/pagination.html" %}
+    {% else %}
+    <div class="msg__text"><p>这里还没有文章。博主可能正在酝酿第一篇大作，稍后再来看看吧。</p></div>
+    {% endif %}
+  </div>
+</div>
+
+{# ── 闪念动态：客户端从闪念页抓最新几条，无闪念菜单或抓取失败则整组隐藏 ── #}
+{% if theme_config.showHomeMemos %}
+<div class="home-memos" id="home-memos" hidden>
+  <div class="msg msg--user">
+    <div class="msg__bubble" data-ask="{{ theme_config.askHomeMemos }}" data-scene="askHomeMemos">最近在想些什么？</div>
+  </div>
+  <div class="msg msg--assistant">
+    <div class="msg__head">
+      {% if theme_config.showAvatar and config.avatar %}<img class="msg__avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">{% endif %}
+      <p class="msg__intro" data-reply="{{ theme_config.replyHomeMemos }}" data-scene="replyHomeMemos">几条新鲜的闪念，未经打磨，恰好真实：</p>
+    </div>
+    <div class="msg__body">
+      <div class="home-memos__list" id="home-memos-list"></div>
+      <a class="home-memos__more" id="home-memos-more" href="#">查看全部闪念 →</a>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+{% else %}
+{# ══ 第 2 页起 ══ #}
+<div class="msg msg--user">
+  <div class="msg__bubble">继续看看更早的文章？</div>
+</div>
+
+<div class="msg msg--assistant">
+  <div class="msg__head">
+    {% if theme_config.showAvatar and config.avatar %}<img class="msg__avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">{% endif %}
+    <p class="msg__intro">好的，第 {{ currentPage }} 页，共 {{ totalPages }} 页：</p>
+  </div>
+  <div class="msg__body">
+    <div class="post-list">
+      {% for post in posts %}
+      <a class="post-item" href="{{ post.link }}">
+        <span class="post-item__main">
+          <span class="post-item__title">{{ post.title }}</span>
+          {% if theme_config.showExcerpt %}
+          {% if post.description %}
+          <span class="post-item__excerpt">{{ post.description|truncatechars:80 }}</span>
+          {% else %}
+          <span class="post-item__excerpt">{{ post.content|excerpt:80|strip_html }}</span>
+          {% endif %}
+          {% endif %}
+        </span>
+        <time class="post-item__time" datetime="{{ post.date }}">{{ post.date|relative }}</time>
+      </a>
+      {% endfor %}
+    </div>
+    {% include "partials/pagination.html" %}
+  </div>
+</div>
+{% endif %}
+
+{% endblock %}

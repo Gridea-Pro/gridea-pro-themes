@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<article class="post">
+  <header class="post-header">
+    {% if post.isTop %}<span class="post-badge">置顶</span>{% endif %}
+    <div class="post-header-shape"></div>
+    <h1 class="post-title">{{ post.title }}</h1>
+    <div class="post-meta">
+      <time class="post-date">{{ post.dateFormat }}</time>
+      {% if theme_config.showTagsInPost and post.tags %}
+      <div class="post-tags-header">
+        {% for tag in post.tags %}
+          <a href="{{ tag.link }}" class="post-tag">{{ tag.name }}</a>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </header>
+  {% if post.feature %}
+    <div class="post-feature-image">
+      <img src="{{ post.feature }}" alt="{{ post.title }}" loading="lazy">
+    </div>
+  {% endif %}
+  <div class="post-content">
+    {{ post.content|safe }}
+  </div>
+  {% if theme_config.showPostNav and (pagination.prev or pagination.next) %}
+  <nav class="post-nav">
+    {% if pagination.prev %}
+      <a href="{{ pagination.prev }}" class="post-nav-link post-nav-prev">&larr; 上一篇</a>
+    {% endif %}
+    {% if pagination.next %}
+      <a href="{{ pagination.next }}" class="post-nav-link post-nav-next">下一篇 &rarr;</a>
+    {% endif %}
+  </nav>
+  {% endif %}
+</article>
+{% endblock %}

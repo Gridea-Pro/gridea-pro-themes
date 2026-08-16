@@ -1,0 +1,60 @@
+{% set show_home_link = false %}
+{% set breadcrumb_key = "" %}
+{% set breadcrumb_text = "" %}
+{% if post %}
+  {% set show_home_link = true %}
+  {% set breadcrumb_text = post.title %}
+{% elif tag %}
+  {% set show_home_link = true %}
+  {% set breadcrumb_text = tag.name %}
+{% elif archives %}
+  {% set show_home_link = true %}
+  {% set breadcrumb_key = "nav.archives" %}
+{% elif memos %}
+  {% set show_home_link = true %}
+  {% set breadcrumb_key = "nav.notes" %}
+{% elif links %}
+  {% set show_home_link = true %}
+  {% set breadcrumb_key = "nav.friends" %}
+{% elif tags and not posts %}
+  {% set show_home_link = true %}
+  {% set breadcrumb_key = "nav.tags" %}
+{% elif posts and pagination %}
+  {% set show_home_link = true %}
+  {% set breadcrumb_key = "blog.title" %}
+{% endif %}
+
+<div class="topbar-left">
+  <button class="mobile-nav-toggle" id="sidebar-toggle" type="button" aria-label="Toggle Sidebar">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" x2="21" y1="12" y2="12"/><line x1="3" x2="21" y1="6" y2="6"/><line x1="3" x2="21" y1="18" y2="18"/></svg>
+  </button>
+  <a class="topbar-site-title" href="/">{{ config.siteName }}</a>
+  <div class="breadcrumbs">
+    {% if show_home_link %}
+    <a href="/" data-i18n="nav.home">Home</a>
+    <span class="separator">/</span>
+    <span class="crumb-current">
+      {% if breadcrumb_key %}
+      <span data-i18n="{{ breadcrumb_key }}">
+        {% if breadcrumb_key == "nav.archives" %}Archives{% elif breadcrumb_key == "nav.notes" %}Notes{% elif breadcrumb_key == "nav.friends" %}Friends{% elif breadcrumb_key == "nav.tags" %}Tags{% elif breadcrumb_key == "blog.title" %}Posts{% endif %}
+      </span>
+      {% else %}
+      {{ breadcrumb_text }}
+      {% endif %}
+    </span>
+    {% else %}
+    <span class="crumb-current">{{ config.siteName }}</span>
+    {% endif %}
+  </div>
+</div>
+
+<div class="topbar-right">
+  <button class="topbar-search" id="header-search-trigger" type="button" aria-label="Search" data-i18n-aria="ui.search">
+    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+    <span data-i18n="search.placeholder">Search the site</span>
+    <kbd>/</kbd>
+  </button>
+  <button class="header-action-btn" id="header-lang-btn" type="button" aria-label="Language" data-i18n-aria="ui.language">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 8 6 6"/><path d="m4 14 6-6 2-3"/><path d="M2 5h12"/><path d="M7 2h1"/><path d="m22 22-5-10-5 10"/><path d="M14 18h6"/></svg>
+  </button>
+</div>

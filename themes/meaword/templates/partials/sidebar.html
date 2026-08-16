@@ -1,0 +1,41 @@
+{# Mobile / right-edge offcanvas drawer — categories + pages #}
+<div class="offcanvas-backdrop" id="offcanvas-backdrop" aria-hidden="true"></div>
+<aside class="offcanvas" id="right-canvas" aria-label="侧边导航">
+  <div class="right-slide-header">
+    {% if theme_config.themeMode == "user" or theme_config.themeMode == "auto" %}
+      <button type="button" data-action="toggle-theme" aria-label="切换深浅模式">
+        <svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 1 4 12.7V17H8v-2.3A7 7 0 0 1 12 2z"/></svg>
+      </button>
+    {% endif %}
+    <button type="button" data-action="close-canvas" aria-label="关闭">
+      <svg viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="sidebar_box">
+    {% if menus and menus|length > 0 %}
+      <section class="widget widget_nav_menu">
+        <h3 class="widget-title">导航</h3>
+        <div class="menu-page-container">
+          <ul class="menu">
+            {% for menu in menus %}
+              <li class="menu-item"><a href="{{ menu.link }}">{{ menu.name }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </section>
+    {% endif %}
+
+    {% if tags and tags|length > 0 %}
+      <section class="widget widget_nav_menu">
+        <h3 class="widget-title">标签</h3>
+        <div class="menu-tag-container">
+          <ul class="menu">
+            {% for tag in tags %}
+              <li class="menu-item"><a href="{{ tag.link }}">{{ tag.name }}<span style="opacity:0.6">·{{ tag.count }}</span></a></li>
+            {% endfor %}
+          </ul>
+        </div>
+      </section>
+    {% endif %}
+  </div>
+</aside>

@@ -35,6 +35,11 @@
 | <a href="./themes/mango/"><img src="./themes/mango/assets/media/preview.png" width="240" alt="Mango 预览"></a> | [**mango**](./themes/mango/) | Jinja2 (Pongo2) | 双栏明亮博客主题，推荐位轮播 + 多图九宫格卡片 + 闪念热力图，复刻自 jkjoy/Typecho-Theme-Mango |
 | <a href="./themes/muse/"><img src="./themes/muse/assets/media/preview.png" width="240" alt="Muse 预览"></a> | [**muse**](./themes/muse/) | Jinja2 (Pongo2) | 左侧栏导航 + Splash 全屏开场 + 浮动雪花特效 + 4 列封面卡片瀑布墙，复刻自 Miss/Xc-Three（Typecho） |
 | <a href="./themes/writecho/"><img src="./themes/writecho/assets/media/preview.png" width="240" alt="Writecho 预览"></a> | [**writecho**](./themes/writecho/) | Jinja2 (Pongo2) | 听见笔尖回声。暖纸 #fcf9f3 + 霞鹜文楷 + 单栏 820px 极简手写感主题，复刻自 SkyWT/Writecho（Typecho） |
+| <a href="./themes/chatgpt/"><img src="./themes/chatgpt/assets/media/preview.png" width="240" alt="chatgpt 预览"></a> | [**chatgpt**](./themes/chatgpt/) | Jinja2 (Pongo2) | ChatGPT 界面风格对话式主题：会话边栏 + 对话流 + 可用的对话式搜索，深浅双模式、打字机开场、闪念热力图、七大评论平台 |
+| <a href="./themes/vermillion/"><img src="./themes/vermillion/assets/media/preview.png" width="240" alt="Vermillion 预览"></a> | [**vermillion**](./themes/vermillion/) | Jinja2 (Pongo2) | 朱砂。中式编辑美学纸面期刊主题：宣纸底 + 期刊刊头 + 卷首语 + 可自定四字朱砂印章 + 罗马数字目录 rail |
+| <a href="./themes/meaword/"><img src="./themes/meaword/assets/media/preview.png" width="240" alt="MeaWord 预览"></a> | [**meaword**](./themes/meaword/) | Jinja2 (Pongo2) | 文字美学极简主题，暖陶 #b95d40 + 米色亚麻底纹 + 巨型首字水印 + 粘贴白纸卡片 + macOS 红黄绿小圆点代码块，复刻自 Meayair/Typecho-Theme-MeaWord |
+| <a href="./themes/fluid/"><img src="./themes/fluid/assets/media/preview.png" width="240" alt="Fluid 预览"></a> | [**fluid**](./themes/fluid/) | Jinja2 (Pongo2) | Material Design 风的全屏 hero banner + typed 打字标题 + 透明转白固定顶栏 + jellybean 彩色标签主题，复刻自 fluid-dev/hexo-theme-fluid（Hexo） |
+| <a href="./themes/simplecho/"><img src="./themes/simplecho/assets/media/preview.png" width="240" alt="Simplecho 预览"></a> | [**simplecho**](./themes/simplecho/) | Jinja2 (Pongo2) | Simple + Echo = 💖。1000px 卡片博客 + 4 套招牌配色（银光灰 / 简约白 / 墨草绿 / 暗夜黑）+ STAY VIBRANT 页脚，复刻自 yanranxiaoxi/Simplecho（Typecho） |
 
 > 上方前 7 个为初始入库的种子主题（其中 `flavor` 为 Gridea Pro 官方旗舰），下方按入库顺序排列社区主题。
 

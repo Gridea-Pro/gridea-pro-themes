@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}关于 - {{ config.siteName }}{% endblock %}
+
+{% block head %}
+<meta name="description" content="关于 {{ config.siteName }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="msg msg--user">
+  <div class="msg__bubble" data-ask="{{ theme_config.askAbout }}" data-scene="askAbout">屏幕背后的你，是个怎样的人？</div>
+</div>
+
+<div class="msg msg--assistant">
+  <div class="msg__head">
+    {% if theme_config.showAvatar and config.avatar %}<img class="msg__avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">{% endif %}
+    <p class="msg__intro">好，认真介绍一下我自己——</p>
+  </div>
+  <div class="msg__body">
+
+    {% if post %}
+    <article class="article-content">
+      {{ post.content|safe }}
+    </article>
+    {% else %}
+    <div class="msg__text"><p>你好，我是 <strong>{{ config.siteName }}</strong>。{{ config.siteDescription }}</p></div>
+    {% endif %}
+
+    {# ── 社交链接 ── #}
+    {% if theme_config.githubUrl or theme_config.twitterUrl or theme_config.emailAddress %}
+    <div class="social-row">
+      {% if theme_config.githubUrl %}
+      <a class="social-btn" href="{{ theme_config.githubUrl }}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.11-.74.4-1.25.73-1.54-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11.1 11.1 0 0 1 5.78 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.41-2.69 5.38-5.25 5.67.41.35.78 1.05.78 2.12v3.14c0 .3.21.66.8.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+        <span>GitHub</span>
+      </a>
+      {% endif %}
+      {% if theme_config.twitterUrl %}
+      <a class="social-btn" href="{{ theme_config.twitterUrl }}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        <span>Twitter</span>
+      </a>
+      {% endif %}
+      {% if theme_config.emailAddress %}
+      <a class="social-btn" href="mailto:{{ theme_config.emailAddress }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <span>邮箱</span>
+      </a>
+      {% endif %}
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}

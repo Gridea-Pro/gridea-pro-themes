@@ -1,0 +1,19 @@
+{# Comments mount point. Gridea Pro's global comment widget (Disqus / Gitalk /
+   Waline / etc.) attaches to #gridea-comments. Original MeaWord comment UI
+   colors are preserved by the surrounding .post-comment / .comments-area
+   styles in main.css. #}
+<div class="post-comment">
+  <h3 class="post_about_author">评论</h3>
+  <div class="comments-area">
+    <div id="gridea-comments" class="comments-mount"
+         data-post-id="{{ post.id }}"
+         data-post-title="{{ post.title }}"
+         data-post-link="{{ post.link }}">
+      {% if commentSetting %}
+        {# Gridea Pro will inject the actual comment widget here #}
+      {% else %}
+        <p class="comments-placeholder">评论功能未启用，请前往 Gridea Pro 「评论」设置中开启。</p>
+      {% endif %}
+    </div>
+  </div>
+</div>

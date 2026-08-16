@@ -1,0 +1,61 @@
+<div class="sidebar-widget sidebar-about">
+  <h3 class="sidebar-widget-title">关于本站</h3>
+  {% if config.avatar %}
+    <img src="{{ config.avatar }}" alt="{{ config.siteName }}" class="sidebar-avatar" loading="lazy">
+  {% endif %}
+  <p>{{ config.siteDescription }}</p>
+</div>
+{% if theme_config.showSearch %}
+<div class="sidebar-widget sidebar-search-widget">
+  <h3 class="sidebar-widget-title">搜索</h3>
+  {% include "partials/search.html" %}
+</div>
+{% endif %}
+{% if theme_config.showCalendar %}
+<div class="sidebar-widget sidebar-calendar-widget">
+  <h3 class="sidebar-widget-title">日历</h3>
+  {% include "partials/calendar.html" %}
+</div>
+{% endif %}
+{% if theme_config.showWeather %}
+<div class="sidebar-widget sidebar-weather-widget">
+  <h3 class="sidebar-widget-title">当地天气</h3>
+  {% include "partials/weather.html" %}
+</div>
+{% endif %}
+{% if tags %}
+<div class="sidebar-widget sidebar-tags">
+  <h3 class="sidebar-widget-title">标签云</h3>
+  <div class="sidebar-tags-list">
+    {% for tag in tags %}
+      <a href="{{ tag.link }}" class="sidebar-tag">{{ tag.name }}<span class="tag-count">{{ tag.count }}</span></a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% if theme_config.showRecentPosts and posts %}
+<div class="sidebar-widget sidebar-recent">
+  <h3 class="sidebar-widget-title">近期文章</h3>
+  <ul class="sidebar-recent-list">
+    {% for post in posts %}
+      <li><a href="{{ post.link }}">{{ post.title }}</a></li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
+{% if theme_config.socialGithub or theme_config.socialTwitter or theme_config.socialEmail %}
+<div class="sidebar-widget sidebar-social">
+  <h3 class="sidebar-widget-title">社交</h3>
+  <div class="sidebar-social-links">
+    {% if theme_config.socialGithub %}
+      <a href="https://github.com/{{ theme_config.socialGithub }}" target="_blank" rel="noopener noreferrer" class="sidebar-social-link">GitHub</a>
+    {% endif %}
+    {% if theme_config.socialTwitter %}
+      <a href="https://twitter.com/{{ theme_config.socialTwitter }}" target="_blank" rel="noopener noreferrer" class="sidebar-social-link">Twitter</a>
+    {% endif %}
+    {% if theme_config.socialEmail %}
+      <a href="mailto:{{ theme_config.socialEmail }}" class="sidebar-social-link">Email</a>
+    {% endif %}
+  </div>
+</div>
+{% endif %}

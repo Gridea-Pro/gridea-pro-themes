@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}首页 - {{ config.siteName }}{% endblock %}
+{% block breadcrumb %}<span class="crumb-current" data-i18n="nav.home">Home</span>{% endblock %}
+{% block content %}
+<section class="posts-list">
+  {% if posts and posts|length > 0 %}
+  {% for post in posts %}
+  {% if not post.hideInList %}
+  {% include "partials/post-card.html" %}
+  {% endif %}
+  {% endfor %}
+  {% else %}
+  <div class="empty-state">
+    <p data-i18n="index.empty">还没有文章，先写下第一篇吧。</p>
+  </div>
+  {% endif %}
+</section>
+
+{% include "partials/pagination.html" %}
+{% endblock %}

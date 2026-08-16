@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}标签 - {{ config.siteName }}{% endblock %}
+
+{% block head %}
+<meta name="description" content="{{ config.siteName }} 的全部标签">
+{% endblock %}
+
+{% block content %}
+
+<div class="msg msg--user">
+  <div class="msg__bubble" data-ask="{{ theme_config.askTags }}" data-scene="askTags">如果给你的文字贴上标签，会有哪些？</div>
+</div>
+
+<div class="msg msg--assistant">
+  <div class="msg__head">
+    {% if theme_config.showAvatar and config.avatar %}<img class="msg__avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">{% endif %}
+    {% if tags|length > 0 %}
+    <p class="msg__intro" data-reply="{{ theme_config.replyTags }}" data-scene="replyTags" data-count="{{ tags|length }}">大概是这 {{ tags|length }} 个词，圈住了我反复思考的事：</p>
+    {% else %}
+    <p class="msg__intro">还没有打过任何标签。</p>
+    {% endif %}
+  </div>
+  <div class="msg__body">
+    {% if tags|length > 0 %}
+    <div class="tag-cloud">
+      {% for tag in tags %}
+      <a class="chip chip--lg" href="{{ tag.link }}">#{{ tag.name }}<span class="chip__count">{{ tag.count }}</span></a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

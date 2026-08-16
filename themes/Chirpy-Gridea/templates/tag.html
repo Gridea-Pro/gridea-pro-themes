@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}标签：{{ tag.name }} - {{ config.siteName }}{% endblock %}
+
+{% block breadcrumb %}<a href="/" data-i18n="nav.home">Home</a><span class="separator">/</span><span class="crumb-current">{{ tag.name }}</span>{% endblock %}
+
+{% block content %}
+<section class="page-heading">
+  <h1><span data-i18n="nav.tags">Tag</span>: <em>{{ tag.name }}</em></h1>
+  <p><span data-i18n="tag.countPrefix">该标签下共有</span> {{ tag.count }} <span data-i18n="tag.countSuffix">篇文章</span></p>
+</section>
+
+<div class="post-list">
+  {% if posts and posts|length > 0 %}
+    {% for post in posts %}
+      {% include "partials/post-card.html" %}
+    {% endfor %}
+  {% else %}
+    <div class="empty-state">
+      <p data-i18n="tag.empty">该标签下还没有文章。</p>
+    </div>
+  {% endif %}
+</div>
+
+{% include "partials/pagination.html" %}
+{% endblock %}

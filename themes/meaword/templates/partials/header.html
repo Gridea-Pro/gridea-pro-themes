@@ -1,0 +1,53 @@
+{# Header — sticky top bar with main color background, replicates original head_top #}
+<header class="headbox">
+  <div class="container">
+    <div class="head_top">
+      <a class="logo" href="{{ config.domain }}/" title="{{ config.siteName }}">
+        {% if theme_config.logoImage and theme_config.logoDisplay != "text" %}
+          <img src="{{ theme_config.logoImage }}" alt="{{ config.siteName }}">
+        {% endif %}
+        {% if theme_config.logoDisplay != "image" %}
+          <b>{{ config.siteName }}</b>
+        {% endif %}
+      </a>
+      <div class="top_right">
+        {% if menus and menus|length > 0 %}
+          <nav class="header-menu" aria-label="主导航">
+            <ul class="header-menu-ul">
+              {% for menu in menus %}
+                <li class="menu-item"><a href="{{ menu.link }}">{{ menu.name }}</a></li>
+              {% endfor %}
+            </ul>
+          </nav>
+        {% endif %}
+        <div class="top_icon">
+          {% if theme_config.themeMode == "user" or theme_config.themeMode == "auto" %}
+            <button class="top_icon_btn icon-bulb" type="button" data-action="toggle-theme" aria-label="切换深浅模式">
+              <svg viewBox="0 0 24 24"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 1 4 12.7V17H8v-2.3A7 7 0 0 1 12 2z"/></svg>
+            </button>
+          {% endif %}
+          {% if theme_config.showSearch %}
+            <button class="top_icon_btn" type="button" data-action="open-search" aria-label="搜索">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+            </button>
+          {% endif %}
+          <button class="top_icon_btn menu-toggle" type="button" data-action="open-canvas" aria-label="菜单">
+            <svg viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {# Inline desktop search "filter strip" — opens via search button on desktop #}
+  {% if theme_config.showSearch %}
+    <div class="collapseSearch" id="collapse-search">
+      <form class="searchForm container" onsubmit="return false;">
+        <input id="collapse-search-input" type="text" name="s" autocomplete="off" placeholder="请输入关键词进行搜索…">
+        <button class="searchButton" type="button" data-action="open-search-modal" aria-label="搜索">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+        </button>
+      </form>
+    </div>
+  {% endif %}
+</header>

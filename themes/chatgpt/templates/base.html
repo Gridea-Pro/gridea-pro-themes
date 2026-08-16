@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <title>{% block title %}{{ config.siteName }}{% endblock %}</title>
+  {% include "partials/head.html" %}
+  {% block head %}{% endblock %}
+</head>
+<body data-typewriter="{{ theme_config.typewriter }}">
+
+  {% include "partials/sidebar.html" %}
+
+  <div class="main">
+    {% include "partials/topbar.html" %}
+
+    <main class="content" id="content">
+      <div class="chat-thread" id="chat-thread">
+        {% block content %}{% endblock %}
+      </div>
+    </main>
+
+    {% include "partials/composer.html" %}
+  </div>
+
+  {% include "partials/search-modal.html" %}
+
+  <script src="/scripts/app.js" defer></script>
+  <script src="/scripts/search.js" defer></script>
+  {% if theme_config.customJs %}
+  <script>{{ theme_config.customJs|safe }}</script>
+  {% endif %}
+  {% block scripts %}{% endblock %}
+</body>
+</html>

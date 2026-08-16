@@ -1,0 +1,28 @@
+{# Post-page banner — uses post.feature as background, post.title as text,
+   meta-top (date / category / tag) below the title. #}
+{% set postBanner = post.feature %}
+{% if not postBanner %}{% set postBanner = theme_config.innerBannerImage|default:"https://hexo.fluid-dev.com/img/default.png" %}{% endif %}
+<div class="header-inner is-inner" style="height: {{ theme_config.innerBannerHeightVH|default:"60" }}vh;">
+  <div id="banner" class="banner" style="background-image: url('{{ postBanner }}');">
+    <div class="full-bg-img">
+      <div class="mask">
+        <div class="banner-text text-center fade-in-up">
+          <div class="h2">
+            <span id="subtitle">{{ post.title }}</span>
+          </div>
+          <div class="post-meta-top">
+            <span><svg class="icon"><use xlink:href="#icon-date"/></svg> {{ post.dateFormat }}</span>
+            {% if post.categories and post.categories|length > 0 %}
+              <span><svg class="icon"><use xlink:href="#icon-category"/></svg>
+                {% for cat in post.categories %}<a href="{{ cat.link }}">{{ cat.name }}</a>{% if not loop.last %} / {% endif %}{% endfor %}
+              </span>
+            {% endif %}
+            {% if post.stats %}
+              <span>{% if post.stats.text %}{{ post.stats.text }}{% else %}{{ post.stats.minutes }}{% endif %}{% if post.stats.minutes %} min read{% endif %}</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+<div class="sidebar-widget sidebar-about">
+  <div class="sidebar-widget-ring"></div>
+  <h3 class="sidebar-widget-title">关于</h3>
+  {% if config.avatar %}
+    <img src="{{ config.avatar }}" alt="{{ config.siteName }}" class="sidebar-avatar" loading="lazy">
+  {% endif %}
+  <p>{{ config.siteDescription }}</p>
+</div>
+{% if theme_config.showSearch %}
+<div class="sidebar-widget sidebar-search-widget">
+  <h3 class="sidebar-widget-title">搜索</h3>
+  {% include "partials/search.html" %}
+</div>
+{% endif %}
+{% if theme_config.showCalendar %}
+<div class="sidebar-widget sidebar-calendar-widget">
+  <h3 class="sidebar-widget-title">日历</h3>
+  {% include "partials/calendar.html" %}
+</div>
+{% endif %}
+{% if tags %}
+<div class="sidebar-widget sidebar-tags">
+  <div class="sidebar-widget-ring"></div>
+  <h3 class="sidebar-widget-title">标签环</h3>
+  <div class="sidebar-tags-list">
+    {% for tag in tags %}
+      <a href="{{ tag.link }}" class="sidebar-tag">{{ tag.name }}</a>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+{% if theme_config.socialGithub or theme_config.socialTwitter %}
+<div class="sidebar-widget sidebar-social">
+  <h3 class="sidebar-widget-title">社交</h3>
+  <div class="sidebar-social-links">
+    {% if theme_config.socialGithub %}
+      <a href="https://github.com/{{ theme_config.socialGithub }}" target="_blank" rel="noopener noreferrer" class="sidebar-social-link">GitHub</a>
+    {% endif %}
+    {% if theme_config.socialTwitter %}
+      <a href="https://twitter.com/{{ theme_config.socialTwitter }}" target="_blank" rel="noopener noreferrer" class="sidebar-social-link">Twitter</a>
+    {% endif %}
+  </div>
+</div>
+{% endif %}

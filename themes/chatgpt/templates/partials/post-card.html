@@ -1,0 +1,33 @@
+{# 文章卡片 —— 期望上下文中存在 post 变量（在 for 循环内 include） #}
+<article class="post-card">
+  <a class="post-card__link" href="{{ post.link }}">
+    <div class="post-card__body">
+      <h3 class="post-card__title">
+        {% if post.isTop %}<span class="post-card__pin" title="置顶">📌</span>{% endif %}
+        {{ post.title }}
+      </h3>
+      {% if post.description %}
+      <p class="post-card__excerpt">{{ post.description|truncatechars:120 }}</p>
+      {% else %}
+      <p class="post-card__excerpt">{{ post.content|excerpt:120|strip_html }}</p>
+      {% endif %}
+      {% set postStats = post.stats|default:"" %}
+      <div class="post-card__meta">
+        <time datetime="{{ post.date }}">{{ post.date|relative }}</time>
+        {% if postStats %}
+        <span class="dot" aria-hidden="true">·</span>
+        <span>{{ postStats.minutes }} 分钟</span>
+        {% endif %}
+        {% if post.categories|length > 0 %}
+        <span class="dot" aria-hidden="true">·</span>
+        <span class="post-card__cats">{% for cat in post.categories %}{{ cat.name }}{% if not loop.last %} / {% endif %}{% endfor %}</span>
+        {% endif %}
+      </div>
+    </div>
+    {% if post.feature %}
+    <div class="post-card__thumb">
+      <img src="{{ post.feature }}" alt="{{ post.title }}" loading="lazy">
+    </div>
+    {% endif %}
+  </a>
+</article>

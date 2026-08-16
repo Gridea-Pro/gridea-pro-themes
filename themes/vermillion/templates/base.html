@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-mode="{{ theme_config.defaultMode|default:"auto" }}">
+<head>
+  {% include "partials/head.html" %}
+  {% block head_extra %}{% endblock %}
+</head>
+<body class="{% block body_class %}page-default{% endblock %}">
+<div class="paper">
+  {% if theme_config.enableGrain %}<div class="grain" aria-hidden="true"></div>{% endif %}
+
+  <div class="layout">
+
+    {% include "partials/rail.html" %}
+
+    <main class="page">
+      {% block content %}{% endblock %}
+      {% include "partials/footer.html" %}
+    </main>
+
+  </div>
+</div>
+
+{% include "partials/toolbar.html" %}
+{% include "partials/search-overlay.html" %}
+
+<script src="/scripts/main.js" defer></script>
+
+{% if theme_config.viewsScript %}
+{{ theme_config.viewsScript|safe }}
+{% endif %}
+
+{% if theme_config.footerScript %}
+{{ theme_config.footerScript|safe }}
+{% endif %}
+
+{% block body_end %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,16 @@
+<footer class="footer">
+  <div class="container container-{{ theme_config.contentWidth | default:'narrow' }} footer-inner">
+    {% if theme_config.showSearch %}
+    <div class="footer-search">
+      {% include "partials/search.html" %}
+    </div>
+    {% endif %}
+    <p class="footer-text">
+      {% if theme_config.footerText %}
+        {{ theme_config.footerText }}
+      {% else %}
+        &copy; {{ now|date:"2006" }} {{ config.siteName }}. Powered by Gridea Pro.
+      {% endif %}
+    </p>
+  </div>
+</footer>

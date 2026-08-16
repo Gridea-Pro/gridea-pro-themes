@@ -1,0 +1,127 @@
+{
+  "name": "Jupiter",
+  "version": "1.0.0",
+  "author": "seolcho0827",
+  "description": "功能丰富的重型博客主题 · 多侧边栏组件、日历天气、门户式网格布局",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "customConfig": [
+    {
+      "name": "accentColor",
+      "label": "强调色",
+      "group": "外观设置",
+      "type": "input",
+      "value": "#b8860b",
+      "note": "链接、按钮等元素的强调颜色"
+    },
+    {
+      "name": "showDarkModeToggle",
+      "label": "显示暗色模式切换",
+      "group": "外观设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "postCardLayout",
+      "label": "文章卡片布局",
+      "group": "外观设置",
+      "type": "select",
+      "value": "grid",
+      "options": [
+        { "label": "网格式（门户风格）", "value": "grid" },
+        { "label": "列表式", "value": "list" }
+      ]
+    },
+    {
+      "name": "showSearch",
+      "label": "显示搜索",
+      "group": "功能设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "showCalendar",
+      "label": "侧边栏显示日历",
+      "group": "功能设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "showWeather",
+      "label": "侧边栏显示天气",
+      "group": "功能设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "showSidebar",
+      "label": "显示侧边栏",
+      "group": "布局设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "showRecentPosts",
+      "label": "侧边栏显示近期文章",
+      "group": "文章设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "showTagsInPost",
+      "label": "文章底部显示标签",
+      "group": "文章设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "showPostNav",
+      "label": "显示上下篇导航",
+      "group": "文章设置",
+      "type": "toggle",
+      "value": true
+    },
+    {
+      "name": "postsPerPage",
+      "label": "每页文章数",
+      "group": "文章设置",
+      "type": "input",
+      "value": "10"
+    },
+    {
+      "name": "socialGithub",
+      "label": "GitHub 用户名",
+      "group": "社交设置",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "socialTwitter",
+      "label": "Twitter 用户名",
+      "group": "社交设置",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "socialEmail",
+      "label": "Email 地址",
+      "group": "社交设置",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "footerText",
+      "label": "页脚自定义文字",
+      "group": "基础设置",
+      "type": "input",
+      "value": ""
+    },
+    {
+      "name": "customCSS",
+      "label": "自定义 CSS",
+      "group": "高级设置",
+      "type": "textarea",
+      "value": ""
+    }
+  ]
+}

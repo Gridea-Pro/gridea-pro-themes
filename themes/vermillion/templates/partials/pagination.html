@@ -1,0 +1,20 @@
+{# Pagination — used on index / blog / tag / category / archives #}
+{% if pagination %}
+<nav class="pagination" aria-label="分页导航">
+  {% if pagination.hasPrev %}
+    <a href="{{ pagination.prevURL }}" rel="prev" class="pagination-prev">← 前一页 · prev</a>
+  {% else %}
+    <span class="pagination-prev pagination-disabled">← 前一页 · prev</span>
+  {% endif %}
+
+  <span class="pagination-info">
+    P. {{ pagination.currentPage }} / {{ pagination.totalPages }} · {{ pagination.totalPosts }} 篇
+  </span>
+
+  {% if pagination.hasNext %}
+    <a href="{{ pagination.nextURL }}" rel="next" class="pagination-next">下一页 · next →</a>
+  {% else %}
+    <span class="pagination-next pagination-disabled">下一页 · next →</span>
+  {% endif %}
+</nav>
+{% endif %}

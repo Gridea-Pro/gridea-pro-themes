@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}归档 · {{ config.siteName }}{% endblock %}
+{% block og_title %}归档 · {{ config.siteName }}{% endblock %}
+
+{% block content %}
+<div class="sc-post-container">
+  <article class="sc-post-detail">
+    <h2 class="sc-post-title-detail">归档</h2>
+
+    <div class="sc-archives-container">
+      {% if archives and archives|length > 0 %}
+        {% for year_group in archives %}
+          <h3 class="sc-year">{{ year_group.year }} 年</h3>
+          {% for post in year_group.posts %}
+            <div class="sc-archive-post">
+              <a href="{{ post.link }}">
+                <small><b><span class="sc-archive-date">{{ post.dateFormat }} ·</span></b></small>{{ post.title|default:"无标题文章" }}
+              </a>
+            </div>
+          {% endfor %}
+        {% endfor %}
+      {% else %}
+        <div class="sc-empty"><p>纸面还很白净——尚无归档。</p></div>
+      {% endif %}
+    </div>
+  </article>
+</div>
+{% endblock %}

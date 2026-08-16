@@ -1,0 +1,47 @@
+<nav class="sc-navbar" role="navigation" aria-label="主导航">
+  <a class="sc-navbar-brand" href="/" aria-label="{{ config.siteName }} 首页">
+    {% if theme_config.avatar %}
+      <img class="sc-avatar" src="{{ theme_config.avatar }}" alt="{{ config.siteName }}">
+    {% elif config.avatar %}
+      <img class="sc-avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">
+    {% else %}
+      <span class="sc-avatar" aria-hidden="true" style="display:flex;align-items:center;justify-content:center;font-size:18px;background:var(--sc-accent-1);color:var(--sc-bg-1);font-weight:bold;">
+        {{ config.siteName|first|default:"S"|upper }}
+      </span>
+    {% endif %}
+    <div>
+      <div class="sc-site-name">{{ config.siteName|default:"Simplecho" }}</div>
+      {% if theme_config.siteSubTitle %}<div class="sc-site-sub">{{ theme_config.siteSubTitle }}</div>{% endif %}
+    </div>
+  </a>
+
+  <button class="sc-navbar-toggler" type="button" id="sc-navbar-toggler" aria-controls="sc-navbar-collapse" aria-expanded="false" aria-label="切换导航">
+    <svg aria-hidden="true"><use xlink:href="#sc-icon-bars"/></svg>
+  </button>
+
+  <div class="sc-navbar-collapse" id="sc-navbar-collapse">
+    <ul class="sc-nav">
+      <li class="sc-nav-item"><a href="/">🏠 首页</a></li>
+      {% for menu in menus %}
+        <li class="sc-nav-item"><a href="{{ menu.link }}">{{ menu.name }}</a></li>
+      {% endfor %}
+    </ul>
+
+    {% if theme_config.themeUserToggle %}
+      <div class="sc-palette-switcher" role="group" aria-label="切换配色">
+        <button type="button" class="sc-palette-dot is-gray"  data-sc-set-palette="gray"  aria-label="银光灰" title="银光灰"></button>
+        <button type="button" class="sc-palette-dot is-white" data-sc-set-palette="white" aria-label="简约白" title="简约白"></button>
+        <button type="button" class="sc-palette-dot is-green" data-sc-set-palette="green" aria-label="墨草绿" title="墨草绿"></button>
+        <button type="button" class="sc-palette-dot is-black" data-sc-set-palette="black" aria-label="暗夜黑" title="暗夜黑"></button>
+      </div>
+    {% endif %}
+
+    {% if theme_config.showSearch %}
+      <form class="sc-search-form" id="sc-search-form" role="search" autocomplete="off" onsubmit="return false;">
+        <svg class="sc-search-icon" aria-hidden="true"><use xlink:href="#sc-icon-search"/></svg>
+        <input type="text" id="sc-search-input" class="sc-search-input" name="s" autocomplete="off" placeholder="搜索文章">
+        <div class="sc-search-results" id="sc-search-results" role="listbox"></div>
+      </form>
+    {% endif %}
+  </div>
+</nav>

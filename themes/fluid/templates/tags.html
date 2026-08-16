@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}标签 & 分类 · {{ config.siteName }}{% endblock %}
+{% block body_class %}tags page{% endblock %}
+{% block banner_title %}标签 & 分类{% endblock %}
+
+{% block content %}
+  <section class="taxonomy-section">
+    <h2 class="taxonomy-title">标签</h2>
+    {% if tags and tags|length > 0 %}
+      <div class="tag-cloud">
+        {% for tag in tags %}
+          <a class="tag-cloud-item" href="{{ tag.link }}">
+            #{{ tag.name }}<span class="count">{{ tag.count }}</span>
+          </a>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="empty-state">暂无标签</p>
+    {% endif %}
+  </section>
+
+  <section class="taxonomy-section">
+    <h2 class="taxonomy-title">分类</h2>
+    <div class="category-cloud" id="fluid-cats-list"></div>
+  </section>
+
+  {# Aggregate categories from /atom.xml since engine has no global categories array #}
+  <script>
+    (function () {
+      var box = document.getElementById('fluid-cats-list');
+      if (!box) return;
+      fetch('/atom.xml').then(function (r) { return r.ok ? r.text() : ''; }).then(function (xml) {
+        if (!xml) { box.parentElement.style.display = 'none'; return; }
+        var doc;
+        try { doc = new DOMParser().parseFromString(xml, 'application/xml'); }
+        catch (e) { box.parentElement.style.display = 'none'; return; }
+        var counts = {};
+        doc.querySelectorAll('entry').forEach(function (entry) {
+          entry.querySelectorAll('category').forEach(function (c) {
+            var term = c.getAttribute('term');
+            if (!term) return;
+            counts[term] = (counts[term] || 0) + 1;
+          });
+        });
+        var keys = Object.keys(counts);
+        if (keys.length === 0) { box.parentElement.style.display = 'none'; return; }
+        box.innerHTML = keys.sort().map(function (k) {
+          var slug = encodeURIComponent(k.toLowerCase().replace(/\s+/g, '-'));
+          return '<a class="category-cloud-item" href="/category/' + slug + '/">'
+            + k + '<span class="count">' + counts[k] + '</span></a>';
+        }).join('');
+      }).catch(function () {
+        box.parentElement.style.display = 'none';
+      });
+    })();
+  </script>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}关于 · {{ config.siteName }}{% endblock %}
+{% block body_class %}about page{% endblock %}
+{% block banner_title %}关于{% endblock %}
+
+{% block layout %}
+  <div class="container">
+    {% set avatar = theme_config.aboutAvatar %}
+    {% if not avatar %}{% set avatar = config.avatar %}{% endif %}
+    <div id="board" class="has-avatar">
+      {% if avatar %}
+        <div class="about-avatar">
+          <img src="{{ avatar }}" alt="{{ config.siteName }}">
+        </div>
+      {% endif %}
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-10 m-auto">
+            <h1 class="about-title">{{ config.siteName }}</h1>
+            {% if theme_config.siteSubTitle %}
+              <p class="about-intro">{{ theme_config.siteSubTitle }}</p>
+            {% elif config.siteDescription %}
+              <p class="about-intro">{{ config.siteDescription }}</p>
+            {% endif %}
+            {% if config.siteDescription %}
+              <article class="post">
+                <p>{{ config.siteDescription }}</p>
+              </article>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

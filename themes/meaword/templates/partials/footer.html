@@ -1,0 +1,28 @@
+{# Footer — beige base + copyright + ICP beian + extra HTML #}
+<footer class="footer">
+  <div class="container">
+    <h3>{% if theme_config.siteSubTitle %}{{ theme_config.siteSubTitle }}{% elif config.siteDescription %}{{ config.siteDescription }}{% else %}{{ config.siteName }}{% endif %}</h3>
+    <p>©️
+      {% if theme_config.footerStartYear %}{{ theme_config.footerStartYear }} - {% endif %}
+      {{ now|date:"2006" }}
+      {{ config.siteName }}.
+      Designed by <a href="https://github.com/Meayair" target="_blank" rel="noopener">Meayair</a> · Ported by <a href="https://github.com/Gridea-Pro/gridea-pro-themes" target="_blank" rel="noopener">Gridea Pro</a>
+    </p>
+    {% if theme_config.footerBeian %}
+      <p>
+        <a class="beian" href="https://beian.miit.gov.cn/" target="_blank" rel="external nofollow noopener" title="备案号">
+          <svg viewBox="0 0 24 24"><path d="M12 2 4 6v6c0 5 3.5 9.4 8 10 4.5-.6 8-5 8-10V6l-8-4z"/><path d="m9 12 2 2 4-4"/></svg>
+          {{ theme_config.footerBeian }}
+        </a>
+      </p>
+    {% endif %}
+    {% if theme_config.viewsScript == "busuanzi" %}
+      <p class="footer-extra">
+        <span id="busuanzi_container_site_pv">本站访问量 <span id="busuanzi_value_site_pv"></span></span>
+        ·
+        <span id="busuanzi_container_site_uv">访客数 <span id="busuanzi_value_site_uv"></span></span>
+      </p>
+    {% endif %}
+    {% if theme_config.footerExtra %}<div class="footer-extra">{{ theme_config.footerExtra|safe }}</div>{% endif %}
+  </div>
+</footer>

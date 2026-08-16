@@ -1,0 +1,25 @@
+{# Vermillion 4-char seal stamp. Default reads: 朱砂 / 落纸 #}
+{% if seal_c1 %}{% set _c1 = seal_c1 %}{% elif theme_config.sealChar1 %}{% set _c1 = theme_config.sealChar1 %}{% else %}{% set _c1 = "朱" %}{% endif %}
+{% if seal_c2 %}{% set _c2 = seal_c2 %}{% elif theme_config.sealChar2 %}{% set _c2 = theme_config.sealChar2 %}{% else %}{% set _c2 = "砂" %}{% endif %}
+{% if seal_c3 %}{% set _c3 = seal_c3 %}{% elif theme_config.sealChar3 %}{% set _c3 = theme_config.sealChar3 %}{% else %}{% set _c3 = "落" %}{% endif %}
+{% if seal_c4 %}{% set _c4 = seal_c4 %}{% elif theme_config.sealChar4 %}{% set _c4 = theme_config.sealChar4 %}{% else %}{% set _c4 = "纸" %}{% endif %}
+<div class="seal" aria-label="{{ _c1 }}{{ _c2 }}{{ _c3 }}{{ _c4 }}">
+  <svg viewBox="0 0 132 132" xmlns="http://www.w3.org/2000/svg" role="img">
+    <defs>
+      <filter id="stamp-distress" x="-10%" y="-10%" width="120%" height="120%">
+        <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+        <feDisplacementMap in="SourceGraphic" scale="1.6"/>
+      </filter>
+    </defs>
+    <g filter="url(#stamp-distress)" fill="currentColor" stroke="currentColor">
+      <rect x="8" y="8" width="116" height="116" rx="3" fill="none" stroke-width="3.5"/>
+      <rect x="14" y="14" width="104" height="104" rx="1" fill="none" stroke-width="1"/>
+      <line x1="66" y1="18" x2="66" y2="114" stroke-width="1"/>
+      <line x1="18" y1="66" x2="114" y2="66" stroke-width="1"/>
+      <text x="42" y="56" font-family="'Noto Serif SC', serif" font-size="28" font-weight="700" text-anchor="middle">{{ _c1 }}</text>
+      <text x="90" y="56" font-family="'Noto Serif SC', serif" font-size="28" font-weight="700" text-anchor="middle">{{ _c2 }}</text>
+      <text x="42" y="100" font-family="'Noto Serif SC', serif" font-size="28" font-weight="700" text-anchor="middle">{{ _c3 }}</text>
+      <text x="90" y="100" font-family="'Noto Serif SC', serif" font-size="28" font-weight="700" text-anchor="middle">{{ _c4 }}</text>
+    </g>
+  </svg>
+</div>

@@ -1,0 +1,227 @@
+{
+  "name": "meaword",
+  "version": "1.0.0",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "author": "Eric (port) / Meayair (original MeaWord)",
+  "description": "MeaWord — 体现文字美感的极简主题。从 Typecho 主题 MeaWord（作者 Meayair，https://github.com/Meayair/Typecho-Theme-MeaWord）100% 像素级移植到 Gridea Pro 的 Jinja2 主题。沿用原作的暖陶色 + 米色亚麻底纹 + 巨型首字水印 + 粘贴白纸卡片设计语言，并补全 Gridea Pro 全套页面（搜索 / 分页 / 上下篇 / 闪念热力图 / 友链 / 归档 / 标签 / 分类 / 评论挂载）和深浅双模式。",
+  "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
+  "preview": "/media/preview.png",
+  "customConfig": [
+    {
+      "name": "siteSubTitle",
+      "label": "副标题",
+      "group": "基础",
+      "type": "input",
+      "value": "💖 文字本身就已经很美了",
+      "note": "页脚 description 和 SEO 都会用到的一句话副标题"
+    },
+    {
+      "name": "logoImage",
+      "label": "Logo 图片（可选）",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "顶部 Logo 图片 URL。留空则只显示文字站名"
+    },
+    {
+      "name": "logoDisplay",
+      "label": "Logo 展示方式",
+      "group": "基础",
+      "type": "select",
+      "value": "both",
+      "options": [
+        {"value": "both", "label": "图 + 文字"},
+        {"value": "image", "label": "仅图片"},
+        {"value": "text", "label": "仅文字"}
+      ],
+      "note": "对应原版 logoDisplay。本主题默认两者都显示"
+    },
+    {
+      "name": "favicon",
+      "label": "站点 Favicon",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "网站标签页小图标 URL"
+    },
+    {
+      "name": "themeMode",
+      "label": "深浅模式默认",
+      "group": "外观",
+      "type": "select",
+      "value": "auto",
+      "options": [
+        {"value": "auto", "label": "跟随系统"},
+        {"value": "light", "label": "始终浅色"},
+        {"value": "dark", "label": "始终深色"},
+        {"value": "user", "label": "由读者切换"}
+      ],
+      "note": "右上角灯泡图标可手动切换；选 user 时按用户上次切换记住"
+    },
+    {
+      "name": "mainColor",
+      "label": "主题色",
+      "group": "外观",
+      "type": "color",
+      "value": "#b95d40",
+      "note": "原版招牌的暖陶色 #b95d40，对应 header 背景、按钮、链接 hover"
+    },
+    {
+      "name": "backgroundColor",
+      "label": "背景米色",
+      "group": "外观",
+      "type": "color",
+      "value": "#e6dece",
+      "note": "原版招牌的米色亚麻底色 #e6dece，对应页面外圈背景与页脚"
+    },
+    {
+      "name": "fontFamily",
+      "label": "正文字体",
+      "group": "外观",
+      "type": "input",
+      "value": "",
+      "note": "覆盖默认字体栈，例如 \"PingFang SC, Microsoft YaHei\"。留空使用系统默认"
+    },
+    {
+      "name": "showBanner",
+      "label": "首页轮播 Banner",
+      "group": "首页",
+      "type": "boolean",
+      "value": true,
+      "note": "首页顶部的大型轮播横幅，从最新文章中取"
+    },
+    {
+      "name": "bannerCount",
+      "label": "Banner 取最近文章数",
+      "group": "首页",
+      "type": "number",
+      "value": 3,
+      "note": "首页轮播取最新的 N 篇文章作为 Banner（建议 1-5）"
+    },
+    {
+      "name": "memosCategorySlug",
+      "label": "闪念分类 Slug",
+      "group": "闪念",
+      "type": "input",
+      "value": "memo",
+      "note": "对应原版 shuoshuo 分类。该 slug 的分类下文章在列表中以闪念样式（无标题、大日期）展示"
+    },
+    {
+      "name": "memosShowHeatmap",
+      "label": "闪念页显示热力图",
+      "group": "闪念",
+      "type": "boolean",
+      "value": true,
+      "note": "53 周 × 7 天的发布频率热力图，展示在闪念页顶部"
+    },
+    {
+      "name": "showSearch",
+      "label": "启用全局搜索",
+      "group": "增强",
+      "type": "boolean",
+      "value": true,
+      "note": "顶栏搜索按钮 / 按 / 唤起。基于 Gridea Pro 自动生成的 /api/search.json"
+    },
+    {
+      "name": "showBackToTop",
+      "label": "返回顶部按钮",
+      "group": "增强",
+      "type": "boolean",
+      "value": true,
+      "note": "右下角悬浮回顶按钮"
+    },
+    {
+      "name": "showReadingProgress",
+      "label": "文章阅读进度条",
+      "group": "增强",
+      "type": "boolean",
+      "value": true,
+      "note": "文章详情页顶部细线进度条"
+    },
+    {
+      "name": "showCodeCopy",
+      "label": "代码块复制按钮",
+      "group": "增强",
+      "type": "boolean",
+      "value": true,
+      "note": "文章正文中代码块右上角的「复制」按钮"
+    },
+    {
+      "name": "showPostMeta",
+      "label": "文章卡片显示元信息",
+      "group": "增强",
+      "type": "boolean",
+      "value": true,
+      "note": "列表中文章卡片是否显示作者 / 分类 / 日期"
+    },
+    {
+      "name": "openExternalInNewTab",
+      "label": "正文外链在新标签页打开",
+      "group": "增强",
+      "type": "boolean",
+      "value": true,
+      "note": "文章正文中所有 a 链接自动加 target=\"_blank\""
+    },
+    {
+      "name": "footerStartYear",
+      "label": "建站起始年份",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "对应原版 startYear。填 2018 则页脚显示 © 2018 - 2026。留空则只显示当前年份"
+    },
+    {
+      "name": "footerBeian",
+      "label": "ICP 备案号",
+      "group": "页脚",
+      "type": "input",
+      "value": "",
+      "note": "如「沪 ICP 备 12345678 号」。填写后页脚显示备案号 + 跳转链接"
+    },
+    {
+      "name": "footerExtra",
+      "label": "页脚自定义 HTML",
+      "group": "页脚",
+      "type": "textarea",
+      "value": "",
+      "note": "对应原版 footerExtra。可以放统计代码、版权声明等"
+    },
+    {
+      "name": "viewsScript",
+      "label": "浏览量统计",
+      "group": "页脚",
+      "type": "select",
+      "value": "none",
+      "options": [
+        {"value": "none", "label": "不启用"},
+        {"value": "busuanzi", "label": "不蒜子（busuanzi）"}
+      ],
+      "note": "页脚显示访客数 / 文章页显示阅读量"
+    },
+    {
+      "name": "customCSS",
+      "label": "自定义 CSS",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "追加在主题样式末尾，可覆盖默认配色 / 字号 / 边距"
+    },
+    {
+      "name": "customHeadHtml",
+      "label": "head 末尾注入",
+      "group": "高级",
+      "type": "code",
+      "value": "",
+      "note": "在 </head> 前注入。常用于统计脚本（GA / 百度统计）、字体 CSS、自定义 meta 标签"
+    },
+    {
+      "name": "customBodyEndHtml",
+      "label": "body 末尾注入",
+      "group": "高级",
+      "type": "code",
+      "value": "",
+      "note": "在 </body> 前注入。常用于第三方评论 / 客服悬浮窗 / 自定义脚本"
+    }
+  ]
+}

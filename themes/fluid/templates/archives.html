@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}归档 · {{ config.siteName }}{% endblock %}
+{% block body_class %}archives page{% endblock %}
+{% block banner_title %}归档{% endblock %}
+
+{% block content %}
+  {% if archives and archives|length > 0 %}
+    {% for year in archives %}
+      <h2 class="archive-year">{{ year.year }}</h2>
+      <ul class="archive-list">
+        {% for post in year.posts %}
+          <li class="archive-item">
+            <time datetime="{{ post.date }}">{{ post.date|date:"01-02" }}</time>
+            <a href="{{ post.link }}">{{ post.title }}</a>
+          </li>
+        {% endfor %}
+      </ul>
+    {% endfor %}
+  {% else %}
+    <div class="empty-state"><p>归档为空 ~</p></div>
+  {% endif %}
+{% endblock %}

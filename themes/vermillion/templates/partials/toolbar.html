@@ -1,0 +1,24 @@
+{# Floating top-right toolbar — search + theme toggle.
+   Lives outside the page grid; position: fixed in CSS.        #}
+<div class="page-toolbar" role="toolbar" aria-label="工具栏">
+  {% if theme_config.enableSearch %}
+    <button class="page-toolbar-btn" type="button" data-search-open title="搜索 (⌘K / Ctrl+K)" aria-label="搜索">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </button>
+  {% endif %}
+  {% if theme_config.enableDarkToggle %}
+    <button class="page-toolbar-btn" type="button" data-theme-toggle title="切换明暗" aria-label="切换明暗模式">
+      <svg class="icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+        <path d="M12 1a1 1 0 0 1 1 1v2a1 1 0 0 1-2 0V2a1 1 0 0 1 1-1Z"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M7 12a5 5 0 1 1 10 0 5 5 0 0 1-10 0Zm5-3a3 3 0 1 0 0 6 3 3 0 0 0 0-6Z"/>
+        <path d="M13 20a1 1 0 1 0-2 0v2a1 1 0 0 0 2 0v-2ZM4.22 4.22a1 1 0 0 1 1.41 0L7.05 5.64A1 1 0 0 1 5.63 7.05L4.22 5.64a1 1 0 0 1 0-1.42ZM18.37 16.95a1 1 0 0 0-1.42 1.42l1.41 1.4a1 1 0 0 0 1.42-1.41l-1.41-1.41ZM1 12a1 1 0 0 1 1-1h2a1 1 0 1 1 0 2H2a1 1 0 0 1-1-1ZM20 11a1 1 0 1 0 0 2h2a1 1 0 1 0 0-2h-2ZM7.05 16.95a1 1 0 0 1 0 1.42l-1.41 1.4a1 1 0 1 1-1.42-1.41l1.41-1.41a1 1 0 0 1 1.42 0ZM19.78 5.64a1 1 0 0 0-1.41-1.42l-1.41 1.42a1 1 0 0 0 1.41 1.41l1.41-1.41Z"/>
+      </svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2a10 10 0 1 0 10 10 1 1 0 0 0-1.71-.71A5 5 0 0 1 13 4.71 1 1 0 0 0 12.29 3 9.94 9.94 0 0 0 12 2Zm-4.45 3.35a8 8 0 1 0 11.1 11.1A7 7 0 0 1 7.56 5.35Z"/>
+      </svg>
+    </button>
+  {% endif %}
+</div>

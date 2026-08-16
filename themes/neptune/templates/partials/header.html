@@ -1,0 +1,29 @@
+<header class="header">
+    <div class="container container-{{ theme_config.contentWidth | default:'narrow' }} header-inner">
+    <div class="header-brand">
+      <a href="/" class="header-logo">
+        {{ config.siteName }}
+      </a>
+    </div>
+    <nav class="header-nav" id="header-nav">
+      {% for menu in menus %}
+        <a href="{{ menu.link }}" class="header-nav-link">{{ menu.name }}</a>
+      {% endfor %}
+    </nav>
+    <div class="header-actions">
+      {% if theme_config.showSearch %}
+        <button class="search-toggle" id="search-toggle" aria-label="搜索">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+        </button>
+      {% endif %}
+      {% if theme_config.showDarkModeToggle %}
+        <button class="theme-toggle" id="theme-toggle" aria-label="切换暗色模式">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+        </button>
+      {% endif %}
+    </div>
+    <button class="menu-toggle" id="menu-toggle" aria-label="菜单">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>

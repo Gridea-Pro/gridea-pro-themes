@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}博客 | {{ config.siteName }}{% endblock %}
+
+{% block content %}
+  {% if posts %}
+    <div class="post-list">
+    {% for post in posts %}
+      {% include "partials/post-card.html" %}
+    {% endfor %}
+    </div>
+    {% include "partials/pagination.html" %}
+  {% else %}
+    <div class="empty-state">
+      <p>暂无文章</p>
+    </div>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+<link rel="canonical" href="{{ config.domain }}">
+<meta property="og:title" content="{{ config.siteName }}">
+<meta property="og:description" content="{{ config.siteDescription }}">
+<meta property="og:url" content="{{ config.domain }}">
+<meta property="og:type" content="website">
+<meta name="generator" content="Gridea Pro">
+<link rel="stylesheet" href="{{ config.domain }}/styles/style.css">
+<style>[data-theme="light"]{--accent:{{ theme_config.accentColor }};--color-primary:{{ theme_config.accentColor }};}[data-theme="dark"]{--accent:{{ theme_config.accentColor }};--color-primary:{{ theme_config.accentColor }};}</style>
+{% if theme_config.customCSS %}
+<style>{{ theme_config.customCSS|safe }}</style>
+{% endif %}
+<script>
+(function(){var t=null;try{t=localStorage.getItem('mars-theme')}catch(e){}if(!t){t='{{ theme_config.defaultTheme | default:"dark" }}'}document.documentElement.setAttribute('data-theme',t)})();
+</script>

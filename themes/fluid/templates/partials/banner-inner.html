@@ -1,0 +1,16 @@
+{# Inner-page banner — smaller (60vh by default), shows the page title #}
+{% set innerBg = theme_config.innerBannerImage|default:"https://hexo.fluid-dev.com/img/default.png" %}
+<div class="header-inner is-inner" style="height: {{ theme_config.innerBannerHeightVH|default:"60" }}vh;">
+  <div id="banner" class="banner" style="background-image: url('{{ innerBg }}');">
+    <div class="full-bg-img">
+      <div class="mask">
+        <div class="banner-text text-center fade-in-up">
+          <div class="h2">
+            <span id="subtitle">{% block banner_title %}{{ config.siteName }}{% endblock %}</span>
+          </div>
+          {% block banner_meta %}{% endblock %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

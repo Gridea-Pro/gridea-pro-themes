@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}归档 - {{ config.siteName }}{% endblock %}
+
+{% block head %}
+<meta name="description" content="{{ config.siteName }} 的文章归档">
+{% endblock %}
+
+{% block content %}
+
+<div class="msg msg--user">
+  <div class="msg__bubble" data-ask="{{ theme_config.askArchives }}" data-scene="askArchives">时间都去哪儿了？</div>
+</div>
+
+<div class="msg msg--assistant">
+  <div class="msg__head">
+    {% if theme_config.showAvatar and config.avatar %}<img class="msg__avatar" src="{{ config.avatar }}" alt="{{ config.siteName }}">{% endif %}
+    {% if posts|length > 0 %}
+    <p class="msg__intro" data-reply="{{ theme_config.replyArchives }}" data-scene="replyArchives" data-count="{{ posts|length }}">我把 {{ posts|length }} 篇文字按年份叠好了，沿着时间往回走吧。</p>
+    {% else %}
+    <p class="msg__intro">还没有可以归档的文章。</p>
+    {% endif %}
+  </div>
+  <div class="msg__body">
+
+    {% if posts|length > 0 %}
+    {# ── 分类总览：数据由服务端输出，JS 去重聚合成 chips ── #}
+    <div class="archive-cats" id="archive-cats" hidden>
+      <div class="section-label">分类</div>
+      <div class="archive-cats__chips" id="archive-cats-chips"></div>
+    </div>
+    <div hidden id="archive-cats-data">
+      {% for post in posts %}{% for cat in post.categories %}<span data-name="{{ cat.name }}" data-link="{{ cat.link }}"></span>{% endfor %}{% endfor %}
+    </div>
+
+    {# ── 时间线：按年份分组（引擎注入的 archives，键为大写 Year / Posts） ── #}
+    <div class="timeline">
+      {% for group in archives %}
+      <section class="timeline__year">
+        <div class="timeline__year-label">{{ group.Year }}<span class="timeline__year-count">{{ group.Posts|length }} 篇</span></div>
+        <div class="timeline__items">
+          {% for post in group.Posts %}
+          <a class="timeline__item" href="{{ post.link }}">
+            <time class="timeline__date" datetime="{{ post.date }}">{{ post.date|slice:"5:10" }}</time>
+            <span class="timeline__dot" aria-hidden="true"></span>
+            <span class="timeline__title">{{ post.title }}</span>
+          </a>
+          {% endfor %}
+        </div>
+      </section>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // 从服务端输出的数据节点聚合分类（模板层无法去重，这里用 JS 完成）
+  (function () {
+    var data = document.querySelectorAll('#archive-cats-data span');
+    if (!data.length) return;
+    var map = {};
+    data.forEach(function (el) {
+      var name = el.getAttribute('data-name');
+      if (!map[name]) map[name] = { link: el.getAttribute('data-link'), count: 0 };
+      map[name].count++;
+    });
+    var chips = document.getElementById('archive-cats-chips');
+    Object.keys(map).forEach(function (name) {
+      var a = document.createElement('a');
+      a.className = 'chip';
+      a.href = map[name].link;
+      a.textContent = name + ' (' + map[name].count + ')';
+      chips.appendChild(a);
+    });
+    document.getElementById('archive-cats').hidden = false;
+  })();
+</script>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} · {{ config.siteName }}{% endblock %}
+{% block description %}{% if post.description %}{{ post.description }}{% else %}{{ post.content|striptags|truncatechars:160 }}{% endif %}{% endblock %}
+{% block keywords %}{{ post.tagsString }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{% if post.description %}{{ post.description }}{% else %}{{ post.content|striptags|truncatechars:160 }}{% endif %}{% endblock %}
+{% block og_image %}{% if post.feature %}<meta property="og:image" content="{{ post.feature }}">{% endif %}{% endblock %}
+{% block twitter_title %}{{ post.title }}{% endblock %}
+{% block canonical_path %}{{ post.link }}{% endblock %}
+{% block body_class %}single post-detail{% endblock %}
+
+{% block content %}
+  {# Big-character header (matches the original post_head_title block) #}
+  <div class="post_list post_head_title">
+    {% if post.feature %}
+      <div class="post_cover" style="background-image:url('{{ post.feature }}');"></div>
+    {% else %}
+      <div class="post_beici" aria-hidden="true">{{ post.title|truncatechars:1 }}</div>
+    {% endif %}
+    <h1>{{ post.title }}</h1>
+    {% if theme_config.showPostMeta %}
+      <div class="post_loop_info">
+        {% if config.siteName %}<span>{{ config.siteName }}</span>{% endif %}
+        {% if post.categories and post.categories|length > 0 %}
+          {% for cat in post.categories %}
+            <span><a href="{{ cat.link }}" rel="category tag">{{ cat.name }}</a></span>
+          {% endfor %}
+        {% endif %}
+        <span>{{ post.dateFormat }}</span>
+      </div>
+    {% endif %}
+  </div>
+
+  <article class="meapost">
+    {{ post.content|safe }}
+  </article>
+
+  {% if post.tags and post.tags|length > 0 %}
+    <div class="post_tag">
+      <span class="post_tag-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.5"/></svg>
+      </span>
+      {% for tag in post.tags %}
+        <a href="{{ tag.link }}">{{ tag.name }}</a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="post_tag">
+      <span class="post_tag-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><circle cx="7" cy="7" r="1.5"/></svg>
+      </span>
+      <span>暂无标签</span>
+    </div>
+  {% endif %}
+
+  {% include "partials/post-nav.html" %}
+  {% include "partials/comments.html" %}
+{% endblock %}

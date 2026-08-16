@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}404 - {{ config.siteName }}{% endblock %}
+{% block content %}
+<section class="empty-state not-found">
+  <h1>404</h1>
+  <p data-i18n="error.notFound">你访问的页面飞走了。</p>
+  <p><a class="tag-pill" href="/" data-i18n="error.backHome">返回首页</a></p>
+</section>
+{% endblock %}
