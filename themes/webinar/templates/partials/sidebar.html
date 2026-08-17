@@ -1,0 +1,34 @@
+<aside class="site__sidebar">
+  {% if theme_config.showStat %}
+  <div class="stat-list">
+    <div class="stat-item">
+      <div class="stat-item__value" id="stat-post-count">-</div>
+      <div class="stat-item__label">文章</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-item__value">{{ tags|length }}</div>
+      <div class="stat-item__label">标签</div>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="info-list">
+    {% if config.siteDescription %}
+    <div class="info-item">
+      <span class="info-item__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </span>
+      <span class="info-item__value">{{ config.siteDescription }}</span>
+    </div>
+    {% endif %}
+    {% if config.siteEmail %}
+    <div class="info-item">
+      <span class="info-item__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </span>
+      <a class="info-item__value" href="mailto:{{ config.siteEmail }}">{{ config.siteEmail }}</a>
+    </div>
+    {% endif %}
+  </div>
+
+</aside>

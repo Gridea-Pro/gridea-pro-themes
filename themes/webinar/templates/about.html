@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}关于 - {{ config.siteName }}{% endblock %}
+{% block content %}
+
+<div class="post__header">
+  <div class="post__back">
+    <svg class="back__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <a class="back__link" href="/">返回</a>
+  </div>
+  <h1 class="post__title">关于</h1>
+</div>
+
+<div class="about-page">
+  {# about 页正文在 post 变量（page 在 Gridea Pro 上下文中不存在） #}
+  {% if post %}
+  <div class="about-page__content">
+    {{ post.content|safe }}
+  </div>
+  {% endif %}
+
+  <div class="info-list" style="margin-top: 20px;">
+    {% if config.siteEmail %}
+    <div class="info-item">
+      <span class="info-item__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </span>
+      <span class="info-item__label">邮箱：</span>
+      <a class="info-item__value" href="mailto:{{ config.siteEmail }}">{{ config.siteEmail }}</a>
+    </div>
+    {% endif %}
+    
+    <div class="info-item">
+      <span class="info-item__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </span>
+      <span class="info-item__label">作者：</span>
+      <span class="info-item__value">{{ config.siteName }}</span>
+    </div>
+  </div>
+</div>
+
+{% include "partials/comments.html" %}
+
+{% endblock %}

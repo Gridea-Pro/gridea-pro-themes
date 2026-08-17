@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}归档 - {{ config.siteName }}{% endblock %}
+{% block content %}
+
+<div class="post__header">
+  <div class="post__back">
+    <svg class="back__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <a class="back__link" href="/">返回</a>
+  </div>
+  <h1 class="post__title">文章归档</h1>
+</div>
+
+<div class="archives-page">
+  <h2 class="archives-page__title">归档 · 共 {{ posts|length }} 篇文章</h2>
+
+  {% if posts|length > 0 %}
+    {% set last_year = "" %}
+
+    {% for post in posts %}
+      {% set p_year = post.date[0:4] %}
+
+      {% if p_year != last_year %}
+        {% if loop.index > 1 %}</div>{% endif %}
+        <div class="archive-year">
+          <h3 class="archive-year__title">{{ p_year }}</h3>
+        {% set last_year = p_year %}
+      {% endif %}
+
+      <div class="archive-post">
+        <span class="archive-post__date">{{ post.date[0:10] }}</span>
+        <a href="{{ post.link }}" class="archive-post__title">{{ post.title }}</a>
+      </div>
+
+      {% if loop.last %}</div>{% endif %}
+    {% endfor %}
+  {% else %}
+    <p style="color: var(--color-gray-1); text-align: center; padding: 20px;">暂无文章</p>
+  {% endif %}
+</div>
+
+{% endblock %}

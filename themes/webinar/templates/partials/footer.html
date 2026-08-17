@@ -1,0 +1,7 @@
+<footer class="site__footer">
+  {% if theme_config.footerInfo %}
+  {{ theme_config.footerInfo|safe }}
+  {% else %}
+  <p>Powered by <a href="https://gridea.dev" target="_blank" rel="noopener">Gridea Pro</a></p>
+  {% endif %}
+</footer>

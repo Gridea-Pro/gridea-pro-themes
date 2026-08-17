@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}{{ config.siteName }}{% endblock %}
+{% block content %}
+
+{% include "partials/tabs.html" %}
+
+<div class="post__list">
+  {% for post in posts %}
+  <div class="post__item">
+    <div class="post__sidebar">
+      <a class="post__avatar" href="/" title="{{ config.siteName }}">
+        <img src="{% if theme_config.headerAvatar %}{{ theme_config.headerAvatar }}{% elif config.avatar %}{{ config.avatar }}{% else %}https://cdn.v2ex.com/gravatar/000?s=96{% endif %}" alt="{{ config.siteName }}" loading="lazy">
+      </a>
+    </div>
+    <div class="post__main">
+      <div class="post__meta">
+        <span class="meta__name">{{ config.siteName }}</span>
+        <a class="meta__date" href="{{ post.link }}" datetime="{{ post.date }}">{{ post.dateFormat }}</a>
+      </div>
+      <div class="post__content">
+        <a href="{{ post.link }}"><strong class="post__item-title">{{ post.title }}</strong>{% if post.description %}{{ post.description|truncatechars:200 }}{% else %}{{ post.content|excerpt:200|strip_html|safe }}{% endif %}</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+{% include "partials/pagination.html" %}
+
+{% endblock %}

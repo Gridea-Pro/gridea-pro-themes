@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}闪念 - {{ config.siteName }}{% endblock %}
+{% block content %}
+
+<div class="post__header">
+  <div class="post__back">
+    <svg class="back__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+    <a class="back__link" href="/">返回</a>
+  </div>
+  <h1 class="post__title">闪念</h1>
+</div>
+
+<div class="memos-page">
+  {% if theme_config.showHeatmap %}
+  <div class="heatmap-section">
+    <h3 class="heatmap-section__title">发布热力图</h3>
+    <div class="github-heatmap" id="memos-heatmap">
+      {% if memoStats and memoStats.cells %}
+      {% for cell in memoStats.cells %}
+      <span class="heatmap-cell" data-level="{{ cell.level }}" title="{{ cell.date }}: {{ cell.count }} 条"></span>
+      {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="memo-list">
+    {% for memo in memos %}
+    <div class="memo-item">
+      <div class="memo-item__avatar">
+        <img src="{% if theme_config.headerAvatar %}{{ theme_config.headerAvatar }}{% elif config.avatar %}{{ config.avatar }}{% else %}https://cdn.v2ex.com/gravatar/000?s=96{% endif %}" alt="avatar" loading="lazy">
+      </div>
+      <div class="memo-item__content">
+        <div class="memo-item__text">{{ memo.content|safe }}</div>
+        <div class="memo-item__time">{{ memo.createdAt }}</div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if memos|length == 0 %}
+  <div class="post__item">
+    <div class="post__main" style="width:100%;">
+      <div class="post__content" style="text-align:center;padding:20px;color:var(--color-gray-1);">
+        暂无闪念
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
+
+{% endblock %}

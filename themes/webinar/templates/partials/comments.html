@@ -1,0 +1,87 @@
+<div class="comment__wrapper">
+  {% if post.allowComment %}
+  <div id="respond" class="respond">
+    <form class="comment__form" id="comment-form" method="post">
+      <div class="comment__form__content">
+        <div class="comment__input__list">
+          <div class="comment__input__item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <input type="text" name="author" class="text" placeholder="称呼" required />
+          </div>
+          <div class="comment__input__item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            <input type="email" name="mail" class="text" placeholder="Email" required />
+          </div>
+          <div class="comment__input__item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+            <input type="url" name="url" class="text" placeholder="网站 (选填)" />
+          </div>
+        </div>
+        <div class="comment__textarea__wrapper">
+          <textarea class="comment__textarea" name="text" placeholder="在这里输入您的评论..." required></textarea>
+        </div>
+        <div class="comment__textarea__tip" id="comment-tip"></div>
+      </div>
+      <div class="comment__form__footer">
+        <button class="comment__cancel" id="comment-cancel" type="button" style="display:none">取消回复</button>
+        <button class="comment__submit" type="submit">提交评论</button>
+      </div>
+    </form>
+  </div>
+  {% else %}
+  <p style="color: var(--color-gray-1); font-size: 14px; padding: 8px 0;">评论已关闭</p>
+  {% endif %}
+
+  <h3>{{ post.commentCount }} 条评论</h3>
+
+  {% if post.comments|length > 0 %}
+  <div class="comment__list" id="comment-list">
+    {% for comment in post.comments %}
+    <div class="comment__item{% if comment.parentId %} child{% endif %}" id="comment-{{ comment.id }}">
+      <div class="comment__view">
+        <div class="comment__avatar">
+          <img src="{{ comment.avatar or 'https://cdn.v2ex.com/gravatar/' + comment.mailMd5|default:'000' + '?s=64' }}" alt="{{ comment.author }}" loading="lazy" />
+        </div>
+        <div class="comment__content">
+          <div class="comment__meta">
+            <span class="comment__author">{{ comment.author }}</span>
+            <span class="comment__time">{{ comment.created }}</span>
+          </div>
+          <div class="comment__text">{{ comment.content }}</div>
+          {% if post.allowComment %}
+          <div class="comment__actions">
+            <button class="comment__reply" data-id="{{ comment.id }}" data-author="{{ comment.author }}" type="button">回复</button>
+          </div>
+          {% endif %}
+          {% if comment.children|length > 0 %}
+          <div class="comment__children">
+            {% for child in comment.children %}
+            <div class="comment__item child">
+              <div class="comment__view">
+                <div class="comment__avatar">
+                  <img src="{{ child.avatar or 'https://cdn.v2ex.com/gravatar/' + child.mailMd5|default:'000' + '?s=64' }}" alt="{{ child.author }}" loading="lazy" />
+                </div>
+                <div class="comment__content">
+                  <div class="comment__meta">
+                    <span class="comment__author">{{ child.author }}</span>
+                    <span class="comment__time">{{ child.created }}</span>
+                  </div>
+                  <div class="comment__text">{{ child.content }}</div>
+                  {% if post.allowComment %}
+                  <div class="comment__actions">
+                    <button class="comment__reply" data-id="{{ child.id }}" data-author="{{ child.author }}" type="button">回复</button>
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div>

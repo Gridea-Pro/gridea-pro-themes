@@ -1,0 +1,30 @@
+{% if config.bannerImage or theme_config.headerImage %}
+{% set headerBg = theme_config.headerImage or config.bannerImage %}
+{% else %}
+{% set headerBg = "" %}
+{% endif %}
+
+<header class="site__header"{% if headerBg %} style="background-image: url({{ headerBg }});"{% endif %}>
+  <div class="header__content">
+    <div class="header__logo">
+      <img src="{% if theme_config.headerAvatar %}{{ theme_config.headerAvatar }}{% else %}{{ config.avatar }}{% endif %}" alt="{{ config.siteName }}" />
+    </div>
+    <div class="header__title">
+      <span>{{ config.siteName }}</span>
+      {% if theme_config.headerGender and theme_config.headerGender != 'none' %}
+      <span class="header__gender">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          {% if theme_config.headerGender == 'male' %}
+          <circle cx="10" cy="14" r="5"/><line x1="19" y1="5" x2="13.5" y2="10.5"/><line x1="19" y1="5" x2="14" y2="5"/><line x1="19" y1="5" x2="19" y2="10"/>
+          {% else %}
+          <circle cx="12" cy="9" r="5"/><line x1="12" y1="14" x2="12" y2="22"/><line x1="8" y1="18" x2="16" y2="18"/>
+          {% endif %}
+        </svg>
+      </span>
+      {% endif %}
+    </div>
+    {% if config.siteDescription %}
+    <div class="header__description">{{ config.siteDescription }}</div>
+    {% endif %}
+  </div>
+</header>

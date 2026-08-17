@@ -1,0 +1,29 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+<link rel="stylesheet" href="/styles/main.css">
+
+{% if config.favicon %}
+<link rel="icon" href="{{ config.favicon }}" type="image/x-icon">
+{% endif %}
+
+{% if theme_config.heatmapColor %}
+<style>:root { --heatmap-color: {{ theme_config.heatmapColor }}; }</style>
+{% endif %}
+
+{% if theme_config.primaryColor %}
+<style>:root { --primary-color: {{ theme_config.primaryColor }}; }</style>
+{% endif %}
+
+<script>
+(function() {
+  try {
+    var saved = localStorage.getItem('webinar-theme');
+    var theme = saved || '{{ theme_config.defaultTheme|default:"light" }}';
+    if (theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  } catch(e) {}
+})();
+</script>
