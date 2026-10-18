@@ -1,0 +1,39 @@
+<meta charset="utf-8" />
+<meta name="viewport"
+    content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0, width=device-width" />
+<meta name="renderer" content="webkit">
+<meta name="format-detection" content="telephone=no, email=no, address=no">
+
+{# SEO/社交/JSON-LD 统一由 Gridea Pro 的 HtmlPostProcessor 注入，此处不再重复输出 #}
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#292a2d" media="(prefers-color-scheme: dark)">
+
+{% if theme_config.favicon %}
+<link rel="shortcut icon" href="{{ theme_config.favicon }}">
+{% else %}
+<link rel="shortcut icon" href="/media/images/favicon.ico">
+{% endif %}
+<link rel="stylesheet" href="/styles/icons.css">
+<link rel="stylesheet" href="/styles/main.css">
+
+{% if theme_config.accentColor %}
+<style>:root{--accent-color:{{ theme_config.accentColor }};}</style>
+{% endif %}
+
+{% include "partials/global-seo.html" %}
+{% include "partials/scripts.html" %}
+
+
+{% if theme_config.ga %}
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ theme_config.ga }}"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', '{{ theme_config.ga }}');
+</script>
+{% endif %}
+
+{% if theme_config.customCss %}
+<style>{{ theme_config.customCss|safe }}</style>
+{% endif %}

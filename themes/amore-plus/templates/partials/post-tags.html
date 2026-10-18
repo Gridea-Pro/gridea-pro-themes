@@ -1,0 +1,8 @@
+
+	<div class="mod-post__foot">
+	 文章标签: 
+     {% for tag in post.tags %}
+        <a href="{{ tag.link }}">{{ tag.name }}</a>{% if forloop.Counter0 < post.tags | length - 1 %}, {% endif %}
+     {% endfor %}
+     </br>
+	</div>

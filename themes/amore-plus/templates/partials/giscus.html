@@ -1,0 +1,83 @@
+{% if commentSetting and commentSetting.showComment and commentSetting.commentPlatform == 'Giscus' %}
+{% if commentSetting.repo | default:theme_config.giscusRepo and commentSetting.repoId | default:theme_config.giscusRepoId and commentSetting.categoryId | default:theme_config.giscusCategoryId %}
+<div id="giscus-container">
+<script>
+  (function () {
+    var cfg = '{{ theme_config.giscusTheme | default:"follow" }}';
+    var theme;
+    if (cfg === 'light') {
+      theme = 'light';
+    } else if (cfg === 'dark') {
+      theme = 'dark';
+    } else {
+      theme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
+    }
+    window.__giscusTheme = theme;
+  })();
+</script>
+<script src="https://giscus.app/client.js"
+        id="giscus-script"
+        data-repo="{{ commentSetting.repo | default:theme_config.giscusRepo }}"
+        data-repo-id="{{ commentSetting.repoId | default:theme_config.giscusRepoId }}"
+        data-category="{{ commentSetting.category | default:theme_config.giscusCategory | default:'Announcements' }}"
+        data-category-id="{{ commentSetting.categoryId | default:theme_config.giscusCategoryId }}"
+        data-mapping="{{ theme_config.giscusMapping | default:'pathname' }}"
+        data-strict="0"
+        data-reactions-enabled="{{ theme_config.giscusReactions | default:1 }}"
+        data-emit-metadata="0"
+        data-input-position="{{ theme_config.giscusInputPosition | default:'top' }}"
+        data-theme="light"
+        data-lang="{{ theme_config.giscusLang | default:'zh-CN' }}"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+</div>
+<script>
+  (function () {
+    var s = document.getElementById('giscus-script');
+    if (s && window.__giscusTheme) {
+      s.setAttribute('data-theme', window.__giscusTheme);
+    }
+    var applyGiscusTheme = function () {
+      var cfg = '{{ theme_config.giscusTheme | default:"follow" }}';
+      var theme;
+      if (cfg === 'light') theme = 'light';
+      else if (cfg === 'dark') theme = 'dark';
+      else theme = document.body.classList.contains('dark-theme') ? 'dark' : 'light';
+      var iframe = document.querySelector('iframe.giscus-frame');
+      if (iframe && iframe.contentWindow) {
+        iframe.contentWindow.postMessage({ giscus: { setConfig: { theme: theme } } }, 'https://giscus.app');
+      }
+    };
+    var observer = new MutationObserver(applyGiscusTheme);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  })();
+</script>
+<script>
+  /* JS 防御：监听 #giscus-container 尺寸与 iframe 注入，
+     若 iframe 实际宽度超出容器则强制拉回 100%，并在 console 输出尺寸便于排查。 */
+  (function () {
+    var container = document.getElementById('giscus-container');
+    if (!container || !window.ResizeObserver) return;
+    var fixWidth = function () {
+      var iframe = container.querySelector('iframe.giscus-frame');
+      if (!iframe) return;
+      var cw = container.clientWidth;
+      var iw = iframe.clientWidth;
+      if (iw > cw + 1) {
+        iframe.style.setProperty('width', '100%', 'important');
+        iframe.style.setProperty('max-width', '100%', 'important');
+      }
+      console.log('[amore-plus/giscus] container width:', cw, 'iframe width:', iw);
+    };
+    var ro = new ResizeObserver(fixWidth);
+    ro.observe(container);
+    var mo = new MutationObserver(fixWidth);
+    mo.observe(container, { childList: true, subtree: true });
+  })();
+</script>
+{% else %}
+<!-- Giscus 未配置：请在 Gridea「配置 → 评论」中填写 仓库 / Repo ID / Category ID，或在主题「Giscus 评论」设置中填写 -->
+{% endif %}
+{% endif %}

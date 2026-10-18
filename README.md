@@ -15,6 +15,7 @@
 | <a href="./themes/flavor-theme/"><img src="./themes/flavor-theme/assets/media/preview.png" width="240" alt="flavor 预览"></a> | [**flavor**](./themes/flavor-theme/) | Jinja2 (Pongo2) | 暗色编辑感主题，电影感 hero + 紧凑卡片 + Spectral 衬线，灵感来自现代 newsletter 平台 |
 | <a href="./themes/amore/"><img src="./themes/amore/assets/media/preview.png" width="240" alt="Amore 预览"></a> | [**amore**](./themes/amore/) | EJS | 极简博客主题，聚焦阅读体验，支持明/暗双主题、阅读进度、闪念热力图 |
 | <a href="./themes/amore-jinja2/"><img src="./themes/amore-jinja2/assets/media/preview.png" width="240" alt="Amore Jinja2 预览"></a> | [**amore-jinja2**](./themes/amore-jinja2/) | Jinja2 (Pongo2) | Amore 主题的 Jinja2 版，特性同 amore |
+| <a href="./themes/amore-plus/"><img src="./themes/amore-plus/assets/media/preview.png" width="240" alt="amore-plus 预览"></a> | [**amore-plus**](./themes/amore-plus/) | Jinja2 (Pongo2) | 极简博客主题，文章目录自动跟随、顶部阅读进度细线、Giscus / Gitalk / Valine / Waline / Disqus 五套评论适配 |
 | — | [**fly**](./themes/fly/) | EJS | 现代简洁的博客主题，响应式布局（EryouHao） |
 | <a href="./themes/inotes/"><img src="./themes/inotes/assets/media/preview.png" width="240" alt="iNotes 预览"></a> | [**inotes**](./themes/inotes/) | Go Templates | Notes 主题升级版（Eliauk） |
 | — | [**notes**](./themes/notes/) | EJS | 经典笔记风格主题，Gridea 社区老牌主题，简洁易读 |

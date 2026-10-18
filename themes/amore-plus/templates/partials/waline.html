@@ -1,0 +1,23 @@
+{% if commentSetting and commentSetting.showComment and commentSetting.commentPlatform == 'Waline' %}
+<!-- Gridea-Pro 把评论配置平铺注入 commentSetting 顶层；Waline 必填项为 serverURLs -->
+{% set waline_server_url = commentSetting.serverURLs|default:"" %}
+
+{% if waline_server_url %}
+<div id="comments" class="cf">
+    <div class="comments-header">留言</div>
+    <div id="waline"></div>
+</div>
+
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v3/dist/waline.css" />
+<script type="module">
+    import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
+
+    init({
+        el: '#waline',
+        serverURL: '{{ waline_server_url }}',
+    });
+</script>
+{% else %}
+<!-- Waline 配置不完整（需 serverURLs），已跳过渲染 -->
+{% endif %}
+{% endif %}

@@ -1,0 +1,29 @@
+/*
+ * Minimal Remix Icon subset for Amore theme.
+ * Upstream: https://github.com/Remix-Design/RemixIcon (Apache-2.0)
+ * Only the 6 glyphs actually rendered by templates are included.
+ */
+@font-face {
+  font-family: "remixicon";
+  src: url("lib/remixicon.woff2") format("woff2");
+  font-display: swap;
+}
+
+[class^="ri-"],
+[class*=" ri-"] {
+  font-family: "remixicon" !important;
+  font-style: normal;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-transform: none;
+  vertical-align: middle;
+  line-height: 1;
+}
+
+.ri-rss-line::before      { content: "\f00b"; }
+.ri-github-line::before   { content: "\ed86"; }
+.ri-twitter-line::before  { content: "\f177"; }
+.ri-weibo-line::before    { content: "\f1e8"; }
+.ri-zhihu-line::before    { content: "\f203"; }
+.ri-facebook-line::before { content: "\ec87"; }

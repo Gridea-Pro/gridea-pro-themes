@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    {% include "partials/head.html" %}
+    <title>{% block title %}{{ config.siteName }}{% endblock %}</title>
+
+    {% block head_extra %}{% endblock %}
+</head>
+
+<body class="{% block body_class %}{% endblock %}">
+
+    {% block content %}{% endblock %}
+
+    {% block scripts_extra %}{% endblock %}
+
+    {% if theme_config.customJs %}
+    <script>{{ theme_config.customJs|safe }}</script>
+    {% endif %}
+</body>
+
+</html>
