@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/disqusjs@1.1/dist/disqusjs.css">
+<script src="https://cdn.jsdelivr.net/npm/disqusjs@1.1/dist/disqus.js"></script>
+
+<!-- Gridea-Pro 把评论配置平铺注入 commentSetting 顶层；Disqus 必填项为 shortname -->
+{% set disqus_shortname = commentSetting.shortname|default:"" %}
+
+{% if disqus_shortname %}
+<div id="disqus_thread" class="disqus-thread"></div>
+
+<script>
+  var options = {
+    shortname: '{{ disqus_shortname }}'
+  };
+  {% if commentSetting.apikey %}
+  options.apikey = '{{ commentSetting.apikey }}';
+  {% endif %}
+  {% if commentSetting.api %}
+  options.api = '{{ commentSetting.api }}';
+  {% endif %}
+
+  var dsqjs = new DisqusJS(options);
+</script>
+{% else %}
+<!-- Disqus 配置不完整（需 shortname），已跳过渲染 -->
+{% endif %}

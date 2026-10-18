@@ -1,0 +1,243 @@
+{
+  "name": "amore-plus",
+  "version": "1.0.0",
+  "author": "Amore",
+  "description": "极简博客主题 Gridea-Pro 版，聚焦阅读体验，支持明/暗双主题、文章目录、顶部阅读进度细线、多评论系统（Giscus / Gitalk / Valine / Waline / Disqus）、闪念与热力图等。",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "repository": "https://github.com/cocolight/amore-plus",
+  "customConfig": [
+    {
+      "name": "siteLogo",
+      "label": "站点 Logo",
+      "group": "基础设置",
+      "type": "picture-upload",
+      "value": "",
+      "note": "首页头像/站点 Logo，推荐正方形"
+    },
+    {
+      "name": "favicon",
+      "label": "站点图标 Favicon",
+      "group": "基础设置",
+      "type": "picture-upload",
+      "value": "",
+      "note": "浏览器标签图标，推荐 .ico 或 .png"
+    },
+    {
+      "name": "footerInfo",
+      "label": "页脚信息",
+      "group": "基础设置",
+      "type": "textarea",
+      "value": "",
+      "note": "支持 HTML，显示在页脚"
+    },
+    {
+      "name": "location",
+      "label": "地理位置",
+      "group": "首页信息",
+      "type": "input",
+      "value": "中国 · 深圳",
+      "note": "显示在站点简介下方"
+    },
+    {
+      "name": "quoteText",
+      "label": "格言内容",
+      "group": "首页信息",
+      "type": "textarea",
+      "value": "最顶级的人才喜欢一起工作，而且他们是不能容忍平庸作品的。",
+      "note": ""
+    },
+    {
+      "name": "quoteAuthor",
+      "label": "格言作者",
+      "group": "首页信息",
+      "type": "input",
+      "value": "史蒂夫 · 乔布斯",
+      "note": ""
+    },
+    {
+      "name": "defaultTheme",
+      "label": "默认主题",
+      "group": "外观设置",
+      "type": "select",
+      "value": "dark",
+      "options": [
+        {
+          "label": "深色",
+          "value": "dark"
+        },
+        {
+          "label": "浅色",
+          "value": "light"
+        }
+      ],
+      "note": "访客首次访问时默认显示的主题；之后由访客自行切换并记住其选择"
+    },
+    {
+      "name": "accentColor",
+      "label": "主题强调色",
+      "group": "外观设置",
+      "type": "input",
+      "value": "#28df99",
+      "note": "默认薄荷绿；影响链接、按钮、强调条等"
+    },
+    {
+      "name": "github",
+      "label": "GitHub",
+      "group": "社交链接",
+      "type": "input",
+      "value": "",
+      "note": "完整链接地址"
+    },
+    {
+      "name": "twitter",
+      "label": "Twitter",
+      "group": "社交链接",
+      "type": "input",
+      "value": "",
+      "note": "完整链接地址"
+    },
+    {
+      "name": "weibo",
+      "label": "微博",
+      "group": "社交链接",
+      "type": "input",
+      "value": "",
+      "note": "完整链接地址"
+    },
+    {
+      "name": "zhihu",
+      "label": "知乎",
+      "group": "社交链接",
+      "type": "input",
+      "value": "",
+      "note": "完整链接地址"
+    },
+    {
+      "name": "facebook",
+      "label": "Facebook",
+      "group": "社交链接",
+      "type": "input",
+      "value": "",
+      "note": "完整链接地址"
+    },
+    {
+      "name": "ga",
+      "label": "Google Analytics 跟踪 ID",
+      "group": "统计分析",
+      "type": "input",
+      "value": "",
+      "note": "例如 UA-xxxxxxxxx-x 或 G-XXXXXXXX"
+    },
+    {
+      "name": "customCss",
+      "label": "自定义 CSS",
+      "group": "高级设置",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到 <head> 中，覆盖主题默认样式"
+    },
+    {
+      "name": "customJs",
+      "label": "自定义 JavaScript",
+      "group": "高级设置",
+      "type": "textarea",
+      "value": "",
+      "note": "追加到页面底部"
+    },
+    {
+      "name": "giscusRepo",
+      "label": "Giscus 仓库 (owner/repo)",
+      "group": "Giscus 评论",
+      "type": "input",
+      "value": "",
+      "note": "GitHub 仓库全名，例如 yourname/yourrepo；Giscus 评论所需"
+    },
+    {
+      "name": "giscusRepoId",
+      "label": "Giscus 仓库 ID",
+      "group": "Giscus 评论",
+      "type": "input",
+      "value": "",
+      "note": "在 giscus.app 配置页获取，形如 aBR3xxxx"
+    },
+    {
+      "name": "giscusCategory",
+      "label": "Giscus 分类名称",
+      "group": "Giscus 评论",
+      "type": "input",
+      "value": "Announcements",
+      "note": "GitHub Discussions 中用于承载评论的分类名"
+    },
+    {
+      "name": "giscusCategoryId",
+      "label": "Giscus 分类 ID",
+      "group": "Giscus 评论",
+      "type": "input",
+      "value": "",
+      "note": "在 giscus.app 配置页获取，形如 DIC_xxxx"
+    },
+    {
+      "name": "giscusMapping",
+      "label": "Giscus 映射方式",
+      "group": "Giscus 评论",
+      "type": "select",
+      "value": "pathname",
+      "options": [
+        { "label": "pathname（路径）", "value": "pathname" },
+        { "label": "url（完整 URL）", "value": "url" },
+        { "label": "title（标题）", "value": "title" },
+        { "label": "og:title", "value": "og:title" },
+        { "label": "specific（固定 term）", "value": "specific" }
+      ],
+      "note": "评论与页面的映射键"
+    },
+    {
+      "name": "giscusReactions",
+      "label": "启用正文反应",
+      "group": "Giscus 评论",
+      "type": "select",
+      "value": "1",
+      "options": [
+        { "label": "启用", "value": "1" },
+        { "label": "关闭", "value": "0" }
+      ],
+      "note": "在文章顶部显示反应按钮"
+    },
+    {
+      "name": "giscusInputPosition",
+      "label": "输入框位置",
+      "group": "Giscus 评论",
+      "type": "select",
+      "value": "bottom",
+      "options": [
+        { "label": "底部", "value": "bottom" },
+        { "label": "顶部", "value": "top" }
+      ]
+    },
+    {
+      "name": "giscusLang",
+      "label": "Giscus 语言",
+      "group": "Giscus 评论",
+      "type": "select",
+      "value": "zh-CN",
+      "options": [
+        { "label": "简体中文", "value": "zh-CN" },
+        { "label": "English", "value": "en" }
+      ]
+    },
+    {
+      "name": "giscusTheme",
+      "label": "Giscus 主题",
+      "group": "Giscus 评论",
+      "type": "select",
+      "value": "follow",
+      "options": [
+        { "label": "跟随站点主题", "value": "follow" },
+        { "label": "浅色", "value": "light" },
+        { "label": "深色", "value": "dark" }
+      ],
+      "note": "选「跟随站点主题」时评论区随明/暗切换自动变化"
+    }
+  ]
+}
