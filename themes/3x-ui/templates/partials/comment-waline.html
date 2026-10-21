@@ -1,0 +1,16 @@
+<div id="waline"></div>
+<script>
+  SiteComments.whenVisible(function () {
+    SiteComments.css('https://unpkg.com/@waline/client@v3/dist/waline.css');
+    import('https://unpkg.com/@waline/client@v3/dist/waline.js').then(function (m) {
+      m.init({
+        el: '#waline',
+        serverURL: '{{ commentSetting.serverURLs|escapejs }}',
+        path: SiteComments.path(),
+        dark: 'html[data-theme="dark"]',
+        lang: 'zh-CN',
+        locale: { placeholder: '写点什么吧……支持 Markdown' }
+      });
+    }).catch(SiteComments.fail);
+  });
+</script>

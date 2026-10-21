@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}文章{% if pagination and pagination.currentPage > 1 %} · 第 {{ pagination.currentPage }} 页{% endif %} · {{ config.siteName }}{% endblock %}
+{% block body_class %}page-blog{% endblock %}
+
+{% block main %}
+<main id="main" class="site-main">
+  <div class="xxd-prose page-head">
+    <h1>文章</h1>
+    <p>{% if pagination and pagination.totalPosts %}共 {{ pagination.totalPosts }} 篇，{% endif %}按发布时间倒序。按 <kbd class="xxd-kbd" data-kbd-mod>⌘K</kbd> 可以搜索全站。</p>
+  </div>
+  {% include "partials/post-list.html" %}
+  {% include "partials/pagination.html" %}
+  {% include "partials/footer.html" %}
+</main>
+<aside class="site-toc" aria-label="按分类">
+  {% if categories and categories|length > 0 %}
+  <h2>按分类</h2>
+  <ul>{% for cat in categories %}<li><a href="{{ cat.link }}">{{ cat.name }}<span class="site-toc__n">{{ cat.count }}</span></a></li>{% endfor %}</ul>
+  {% endif %}
+</aside>
+{% endblock %}

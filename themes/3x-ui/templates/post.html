@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} · {{ config.siteName }}{% endblock %}
+{% block description %}{% if post.description %}{{ post.description }}{% else %}{{ post.content|striptags|truncatechars:150 }}{% endif %}{% endblock %}
+{% block keywords %}{{ post.tagsString }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_title %}{{ post.title }}{% endblock %}
+{% block og_description %}{% if post.description %}{{ post.description }}{% else %}{{ post.content|striptags|truncatechars:150 }}{% endif %}{% endblock %}
+{% block og_image %}{% if post.feature %}<meta property="og:image" content="{% if post.feature|slice:":4" == "http" %}{{ post.feature }}{% else %}{{ config.domain }}{{ post.feature }}{% endif %}">{% endif %}{% endblock %}
+{% block body_class %}page-post{% endblock %}
+
+{% block main %}
+<main id="main" class="site-main">
+  <header class="step-head">
+    <div class="step-head__eyebrow">
+      <span>{% if post.categories|length > 0 %}{% for cat in post.categories %}<a href="{{ cat.link }}">{{ cat.name }}</a>{% if not loop.last %} · {% endif %}{% endfor %}{% else %}文章{% endif %}<span class="dot" aria-hidden="true">·</span><time datetime="{{ post.date }}">{{ post.dateFormat }}</time></span>
+      <span>{% if post.stats.minutes %}约 {{ post.stats.minutes }} 分钟{% endif %}</span>
+    </div>
+    {% if theme_config.showReadingProgress %}<progress class="xxd-progress" value="0" max="100" aria-label="阅读进度" data-reading-progress></progress>{% endif %}
+    <h1>{{ post.title }}</h1>
+    <div class="step-head__meta">
+      {% if post.isTop %}<span class="xxd-badge" data-variant="solid">置顶</span>{% endif %}
+      {% if post.stats.words %}<span class="xxd-badge">{{ post.stats.words }} 字</span>{% endif %}
+      {% if post.updatedAtFormat and post.updatedAtFormat != post.dateFormat %}<span class="xxd-badge">更新于 {{ post.updatedAtFormat }}</span>{% endif %}
+      {% for t in post.tags %}<a class="xxd-badge" href="{{ t.link }}">#{{ t.name }}</a>{% endfor %}
+    </div>
+  </header>
+
+  {% if post.feature %}<figure class="shot shot--cover"><img src="{{ post.feature }}" alt="{{ post.title }}" onerror="this.parentNode.remove()"></figure>{% endif %}
+
+  <article class="xxd-prose post-body" id="post-body"{% if theme_config.showCopyButton %} data-copy-code{% endif %}>
+    {{ post.content|safe }}
+  </article>
+
+  {% if theme_config.showFeedback %}
+  <aside class="feedback"><i data-xxd-icon="MessageCircle" data-size="16"></i><span>{{ theme_config.feedbackText|default:"这一篇有没看懂、或者发现写错的地方？" }}</span>{% if theme_config.feedbackLink and theme_config.feedbackLinkText %}<a href="{{ theme_config.feedbackLink }}">{{ theme_config.feedbackLinkText }}</a>{% endif %}</aside>
+  {% endif %}
+
+  {% include "partials/post-nav.html" %}
+  {% include "partials/comments.html" %}
+  {% include "partials/footer.html" %}
+</main>
+<aside class="site-toc" aria-label="本页目录"{% if theme_config.showToc %} data-auto-toc{% endif %}>
+  {% if theme_config.showToc and post.toc %}
+  <h2>本页</h2>
+  <div class="site-toc__list" data-toc>{{ post.toc|safe }}</div>
+  {% endif %}
+</aside>
+{% endblock %}

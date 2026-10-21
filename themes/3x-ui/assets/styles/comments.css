@@ -1,0 +1,191 @@
+/* 3x-ui 主题 · 评论区统一样式
+   七个评论系统（Valine / Waline / Twikoo / Gitalk / Giscus / Disqus / Cusdis）共用一个外壳，
+   并把各自的输入框、按钮、评论卡片统一到 xxd 令牌：直角、细线、墨色主按钮、暖白 / 暖黑底。
+   注意：第三方评论库的样式都不在 @layer 里，这份文件也必须不分层，否则优先级压不过它们。 */
+
+.comments {
+  --cm-radius: var(--r-sm);
+  max-width: var(--read-width);
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--line);
+  color: var(--ink);
+  font-size: var(--text-sm);
+}
+.comments__title {
+  display: flex; align-items: center; gap: 8px;
+  margin: 0 0 var(--space-4);
+  font: var(--weight-strong) var(--text-lg) / var(--leading-md) var(--font-title);
+}
+.comments__title .ui-icon { color: var(--muted); }
+.comments__state {
+  margin: var(--space-3) 0 0; padding: var(--space-3) var(--space-4);
+  background: var(--wash); color: var(--muted); font-size: var(--text-xs); line-height: 20px;
+}
+.comments iframe { color-scheme: normal; }
+
+/* ── 通用：输入框 / 按钮 ─────────────────────────────── */
+.comments :is(input[type="text"], input[type="email"], input[type="url"], input:not([type]), textarea) {
+  font-family: var(--font-body);
+}
+
+/* ===================== Waline（v3，CSS 变量驱动） ===================== */
+.comments [data-waline],
+.comments #waline {
+  --waline-font-size: var(--text-sm);
+  --waline-white: var(--on-action);
+  --waline-light-grey: var(--muted-2);
+  --waline-dark-grey: var(--muted);
+  --waline-theme-color: var(--action-fill);
+  --waline-active-color: var(--action-fill-hover);
+  --waline-color: var(--ink);
+  --waline-bg-color: var(--bg);
+  --waline-bg-color-light: var(--wash);
+  --waline-bg-color-hover: var(--wash-strong);
+  --waline-border-color: var(--line);
+  --waline-disable-bg-color: var(--disabled-bg);
+  --waline-disable-color: var(--disabled-ink);
+  --waline-code-bg-color: var(--wash);
+  --waline-bq-color: var(--wash-strong);
+  --waline-avatar-size: 2.5rem;
+  --waline-m-avatar-size: 2rem;
+  --waline-badge-color: var(--ink);
+  --waline-info-bg-color: var(--wash);
+  --waline-info-color: var(--muted);
+  --waline-info-font-size: var(--text-2xs);
+  --waline-border: 1px solid var(--line);
+  --waline-avatar-radius: 50%;
+  --waline-box-shadow: none;
+}
+.comments .wl-panel { margin: 0 0 var(--space-4); border: 1px solid var(--line-strong); border-radius: var(--cm-radius); background: var(--bg); box-shadow: none; }
+.comments .wl-header { border-bottom: 1px solid var(--line); }
+.comments .wl-header-item:not(:last-child) { border-right: 1px solid var(--line); }
+.comments .wl-header label { color: var(--muted); font-size: var(--text-xs); }
+.comments .wl-input, .comments .wl-editor { color: var(--ink); font-size: var(--text-sm); }
+.comments .wl-editor { min-height: 96px; }
+.comments .wl-btn { border-radius: var(--cm-radius); font-size: var(--text-xs); }
+.comments .wl-btn.primary { border-color: var(--action-fill); background: var(--action-fill); color: var(--on-action); }
+.comments .wl-btn.primary:hover { border-color: var(--action-fill-hover); background: var(--action-fill-hover); }
+.comments .wl-card { border-bottom: 1px solid var(--line); }
+.comments .wl-card .wl-nick { color: var(--ink); font-weight: var(--weight-strong); }
+.comments .wl-card .wl-badge { border-radius: var(--cm-radius); }
+.comments .wl-meta-head, .comments .wl-count { color: var(--muted); font-size: var(--text-xs); }
+.comments .wl-power { color: var(--muted-2); font-size: var(--text-2xs); }
+.comments .wl-sort li.active { color: var(--ink); }
+
+/* ===================== Valine ===================== */
+.comments .v[data-class="v"] { color: var(--ink); }
+.comments .v[data-class="v"] .vwrap {
+  margin-bottom: var(--space-4) !important; padding: 0 !important;
+  border: 1px solid var(--line-strong) !important; border-radius: var(--cm-radius) !important; background: var(--bg) !important;
+}
+.comments .v[data-class="v"] .vwrap .vheader { display: flex; border-bottom: 1px solid var(--line); }
+.comments .v[data-class="v"] .vwrap .vheader .vinput {
+  flex: 1; width: auto !important; padding: 10px 12px !important; border: 0 !important; border-radius: 0 !important;
+  background: transparent !important; color: var(--ink) !important; font-size: var(--text-sm) !important;
+}
+.comments .v[data-class="v"] .vwrap .vheader .vinput + .vinput { border-left: 1px solid var(--line) !important; }
+.comments .v[data-class="v"] .vwrap .vheader .vinput:focus { background: var(--wash) !important; }
+.comments .v[data-class="v"] .vwrap .vedit { padding: 12px !important; }
+.comments .v[data-class="v"] .vwrap .vedit textarea.veditor {
+  min-height: 96px !important; background: transparent !important; color: var(--ink) !important; font-size: var(--text-sm) !important; line-height: 22px;
+}
+.comments .v[data-class="v"] .vwrap .vrow { padding: 0 12px 12px !important; }
+.comments .v[data-class="v"] .vbtn {
+  height: var(--control-h-sm) !important; padding: 0 var(--control-pad-x-sm) !important; line-height: calc(var(--control-h-sm) - 2px) !important;
+  border: 1px solid var(--line-strong) !important; border-radius: var(--cm-radius) !important;
+  background: var(--paper) !important; color: var(--ink) !important; font-size: var(--text-xs) !important;
+}
+.comments .v[data-class="v"] .vbtn:hover { background: var(--wash) !important; color: var(--ink) !important; }
+.comments .v[data-class="v"] .vsubmit.vbtn { border-color: var(--action-fill) !important; background: var(--action-fill) !important; color: var(--on-action) !important; }
+.comments .v[data-class="v"] .vsubmit.vbtn:hover { background: var(--action-fill-hover) !important; }
+.comments .v[data-class="v"] .vcount { color: var(--muted) !important; font-size: var(--text-xs) !important; }
+.comments .v[data-class="v"] .vcount .vnum { color: var(--ink) !important; font-size: var(--text-base) !important; }
+.comments .v[data-class="v"] .vcards .vcard { padding-top: var(--space-3); }
+.comments .v[data-class="v"] .vcards .vcard .vimg {
+  width: 2.25em !important; height: 2.25em !important; border: 1px solid var(--line) !important; border-radius: 50% !important; background: var(--wash) !important;
+}
+.comments .v[data-class="v"] .vcards .vcard .vh { padding-bottom: var(--space-3) !important; border-bottom: 1px solid var(--line) !important; }
+.comments .v[data-class="v"] .vcards .vcard:last-child .vh { border-bottom: 0 !important; }
+.comments .v[data-class="v"] .vcards .vcard .vh .vhead .vnick { color: var(--ink) !important; font-weight: var(--weight-strong) !important; font-size: var(--text-sm) !important; }
+.comments .v[data-class="v"] .vcards .vcard .vh .vhead .vsys {
+  border-radius: var(--cm-radius) !important; background: var(--wash) !important; color: var(--muted) !important; font-size: var(--text-2xs) !important;
+}
+.comments .v[data-class="v"] .vcards .vcard .vh .vmeta .vtime { color: var(--muted) !important; font-size: var(--text-xs) !important; }
+.comments .v[data-class="v"] .vcards .vcard .vh .vmeta .vat { color: var(--muted) !important; font-size: var(--text-xs) !important; }
+.comments .v[data-class="v"] .vcards .vcard .vh .vmeta .vat:hover { color: var(--ink) !important; }
+.comments .v[data-class="v"] .vcards .vcard .vcontent { color: color-mix(in srgb, var(--ink) 88%, var(--muted)) !important; font-size: var(--text-sm) !important; line-height: 22px; }
+.comments .v[data-class="v"] .vcards .vcard .vcontent a, .comments .v[data-class="v"] a { color: var(--action-text) !important; }
+.comments .v[data-class="v"] .vcards .vcard .vquote { border-left: 1px solid var(--line) !important; }
+.comments .v[data-class="v"] code, .comments .v[data-class="v"] pre { background: var(--wash) !important; color: var(--ink) !important; border-radius: var(--cm-radius) !important; }
+.comments .v[data-class="v"] .vempty { color: var(--muted) !important; font-size: var(--text-xs) !important; }
+.comments .v[data-class="v"] .vpower, .comments .v[data-class="v"] .vicon { color: var(--muted-2) !important; fill: var(--muted) !important; }
+.comments .v[data-class="v"] .vemojis, .comments .v[data-class="v"] .vinput.vpreview { background: var(--paper-raised) !important; border-color: var(--line) !important; }
+
+/* ===================== Twikoo ===================== */
+.comments .twikoo { color: var(--ink); font-size: var(--text-sm); }
+.comments .tk-submit { margin-bottom: var(--space-4); padding: 0; border: 1px solid var(--line-strong); border-radius: var(--cm-radius); background: var(--bg); }
+.comments .tk-submit .tk-row { padding: 12px; }
+.comments .tk-meta-input { gap: 0; margin: 0 !important; border-bottom: 1px solid var(--line); }
+.comments .tk-meta-input .el-input + .el-input { margin-left: 0 !important; border-left: 1px solid var(--line); }
+.comments .tk-meta-input .el-input-group__prepend { border: 0; border-radius: 0; background: transparent; color: var(--muted); font-size: var(--text-xs); }
+.comments .el-input__inner, .comments .el-textarea__inner {
+  border: 0 !important; border-radius: 0 !important; background: transparent !important; color: var(--ink) !important; font-size: var(--text-sm) !important; box-shadow: none !important;
+}
+.comments .tk-submit .el-textarea__inner { min-height: 96px !important; padding: 12px !important; }
+.comments .el-button { height: var(--control-h-sm); padding: 0 var(--control-pad-x-sm); border: 1px solid var(--line-strong); border-radius: var(--cm-radius); background: var(--paper); color: var(--ink); font-size: var(--text-xs); }
+.comments .el-button:hover { background: var(--wash); color: var(--ink); border-color: var(--line-strong); }
+.comments .el-button--primary { border-color: var(--action-fill) !important; background: var(--action-fill) !important; color: var(--on-action) !important; }
+.comments .el-button--primary:hover { background: var(--action-fill-hover) !important; }
+.comments .el-button.is-disabled { border-color: var(--disabled-line) !important; background: var(--disabled-bg) !important; color: var(--disabled-ink) !important; }
+.comments .tk-comments-title { color: var(--muted); font-size: var(--text-xs); }
+.comments .tk-comment { margin-top: var(--space-4); }
+.comments .tk-avatar { border-radius: 50%; border: 1px solid var(--line); }
+.comments .tk-nick { color: var(--ink); font-weight: var(--weight-strong); }
+.comments .tk-time, .comments .tk-extras, .comments .tk-action-link { color: var(--muted); font-size: var(--text-xs); }
+.comments .tk-content { color: color-mix(in srgb, var(--ink) 88%, var(--muted)); line-height: 22px; }
+.comments .tk-tag { border-radius: var(--cm-radius); }
+.comments .tk-replies { border-left: 1px solid var(--line); }
+.comments .tk-footer { color: var(--muted-2); font-size: var(--text-2xs); }
+
+/* ===================== Gitalk ===================== */
+.comments .gt-container { color: var(--ink); font-size: var(--text-sm); }
+.comments .gt-container .gt-header-textarea {
+  min-height: 96px; padding: 12px; border: 1px solid var(--line-strong); border-radius: var(--cm-radius); background: var(--bg); color: var(--ink);
+}
+.comments .gt-container .gt-header-textarea:hover, .comments .gt-container .gt-header-textarea:focus { border-color: var(--line-control); background: var(--bg); }
+.comments .gt-container .gt-header-preview { border-color: var(--line); border-radius: var(--cm-radius); background: var(--wash); }
+.comments .gt-container .gt-btn { border-color: var(--action-fill); border-radius: var(--cm-radius); background: var(--action-fill); color: var(--on-action); font-size: var(--text-xs); }
+.comments .gt-container .gt-btn:hover { border-color: var(--action-fill-hover); background: var(--action-fill-hover); }
+.comments .gt-container .gt-btn-preview { border-color: var(--line-strong); background: var(--paper); color: var(--ink); }
+.comments .gt-container .gt-btn-preview:hover { border-color: var(--line-strong); background: var(--wash); }
+.comments .gt-container .gt-meta { border-bottom: 1px solid var(--line); }
+.comments .gt-container .gt-counts, .comments .gt-container .gt-user-name { color: var(--muted); }
+.comments .gt-container .gt-link, .comments .gt-container a { color: var(--action-text); border-bottom: 0; }
+.comments .gt-container .gt-comment-content { border-radius: var(--cm-radius); background: var(--wash); }
+.comments .gt-container .gt-comment-content:hover { box-shadow: none; }
+.comments .gt-container .gt-comment-admin .gt-comment-content { background: var(--wash-strong); }
+.comments .gt-container .gt-comment-body { color: color-mix(in srgb, var(--ink) 88%, var(--muted)) !important; }
+.comments .gt-container .gt-comment-date, .comments .gt-container .gt-comment-text { color: var(--muted); }
+.comments .gt-container .gt-avatar img { border-radius: 50%; }
+.comments .gt-container .gt-svg svg { fill: var(--muted); }
+.comments .gt-container .gt-popup { border-color: var(--line); background: var(--paper-raised); box-shadow: var(--shadow-popover); }
+
+/* ===================== Giscus / Disqus / Cusdis（iframe 型） ===================== */
+.comments #giscus-container, .comments #disqus_thread, .comments #cusdis_thread { min-height: 120px; }
+.comments .giscus, .comments .giscus-frame { width: 100%; }
+.comments #disqus_thread a { color: var(--action-text); }
+
+/* ===================== 暗色补丁 ===================== */
+[data-theme="dark"] .comments .v[data-class="v"] .vwrap .vheader .vinput::placeholder,
+[data-theme="dark"] .comments .v[data-class="v"] .veditor::placeholder,
+[data-theme="dark"] .comments .el-input__inner::placeholder,
+[data-theme="dark"] .comments .el-textarea__inner::placeholder { color: var(--muted-2) !important; }
+[data-theme="dark"] .comments .gt-container .gt-svg svg { fill: var(--muted); }
+
+@media (max-width: 560px) {
+  .comments .v[data-class="v"] .vwrap .vheader { flex-direction: column; }
+  .comments .v[data-class="v"] .vwrap .vheader .vinput + .vinput { border-left: 0 !important; border-top: 1px solid var(--line) !important; }
+  .comments .tk-meta-input { flex-direction: column; }
+  .comments .tk-meta-input .el-input + .el-input { border-left: 0; border-top: 1px solid var(--line); }
+}

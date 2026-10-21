@@ -1,0 +1,16 @@
+{# 文章列表（博客 / 标签 / 分类页共用）：沿用原站 Wiki 页的可点击列表行 #}
+{% if posts and posts|length > 0 %}
+<ul class="xxd-list post-list" data-interactive>
+  {% for post in posts %}{% if not post.hideInList %}
+  <li class="xxd-list__item">
+    <a class="xxd-list__main list-link" href="{{ post.link }}">
+      <span class="xxd-list__title">{% if post.isTop %}<span class="xxd-badge" data-variant="solid">置顶</span>{% endif %}{{ post.title }}</span>
+      <span class="xxd-list__meta">{% if post.description %}{{ post.description|truncatechars:110 }}{% else %}{{ post.content|striptags|truncatechars:110 }}{% endif %}</span>
+      <span class="post-list__foot"><time datetime="{{ post.date }}">{{ post.dateFormat }}</time>{% for cat in post.categories %}<span class="dot" aria-hidden="true">·</span>{{ cat.name }}{% endfor %}{% if post.stats.minutes %}<span class="dot" aria-hidden="true">·</span>约 {{ post.stats.minutes }} 分钟{% endif %}</span>
+    </a>
+  </li>
+  {% endif %}{% endfor %}
+</ul>
+{% else %}
+<div class="empty-state"><i data-xxd-icon="FileText" data-size="20"></i><p>这里还没有文章。</p></div>
+{% endif %}

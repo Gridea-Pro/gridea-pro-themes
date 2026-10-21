@@ -1,0 +1,8 @@
+<div id="tcomment"></div>
+<script>
+  SiteComments.whenVisible(function () {
+    SiteComments.js('https://cdn.jsdelivr.net/npm/twikoo@1/dist/twikoo.all.min.js', function () {
+      twikoo.init({ envId: '{{ commentSetting.envId|escapejs }}', el: '#tcomment', path: SiteComments.path(), lang: 'zh-CN' });
+    });
+  });
+</script>

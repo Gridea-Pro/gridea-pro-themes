@@ -1,0 +1,44 @@
+{# 左侧目录：导航菜单 / 分类（带序号与篇数）/ 标签（可折叠）。当前页由 site.js 按路径标记 aria-current #}
+<nav class="site-nav" id="site-nav" aria-label="网站目录">
+  {% if menus and menus|length > 0 %}
+  <section class="site-nav__group">
+    <h2>开始</h2>
+    <ul>
+      {% for menu in menus %}
+      <li>
+        <a href="{{ menu.link }}"{% if menu.openType == "External" %} target="_blank" rel="noopener"{% endif %}><span class="site-nav__label">{{ menu.name }}</span>{% if menu.openType == "External" %}<i class="site-nav__ext" data-xxd-icon="ArrowUpRight" data-size="12"></i>{% endif %}</a>
+        {% if menu.children and menu.children|length > 0 %}
+        <ul class="site-nav__sub">
+          {% for child in menu.children %}
+          <li><a href="{{ child.link }}"{% if child.openType == "External" %} target="_blank" rel="noopener"{% endif %}><span class="site-nav__label">{{ child.name }}</span></a></li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if categories and categories|length > 0 %}
+  <section class="site-nav__group">
+    <h2>分类</h2>
+    <ul>
+      {% for cat in categories %}
+      <li><a href="{{ cat.link }}"><span class="site-nav__num">{{ loop.index0 }}</span><span class="site-nav__label">{{ cat.name }}</span><span class="site-nav__tag">{{ cat.count }}</span></a></li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% endif %}
+
+  {% if tags and tags|length > 0 %}
+  <details class="site-nav__more">
+    <summary>标签（{{ tags|length }}）</summary>
+    <ul>
+      {% for t in tags %}
+      <li><a href="{{ t.link }}"><span class="site-nav__label">{{ t.name }}</span><span class="site-nav__tag">{{ t.count }}</span></a></li>
+      {% endfor %}
+    </ul>
+  </details>
+  {% endif %}
+</nav>

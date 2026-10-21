@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}归档 · {{ config.siteName }}{% endblock %}
+{% block body_class %}page-archives{% endblock %}
+
+{% block main %}
+<main id="main" class="site-main">
+  <div class="xxd-prose page-head">
+    <h1>归档</h1>
+    <p>{% if pagination and pagination.totalPosts %}一共写了 {{ pagination.totalPosts }} 篇，{% endif %}按年份排列。</p>
+  </div>
+  {% if archives and archives|length > 0 %}
+  {% for group in archives %}
+  <section class="archive-year" aria-labelledby="y-{{ group.Year }}">
+    <h2 class="archive-year__title" id="y-{{ group.Year }}">{{ group.Year }}<span>{{ group.Posts|length }} 篇</span></h2>
+    <ol class="roadmap roadmap--dated">
+      {% for post in group.Posts %}
+      <li>
+        <span class="roadmap__n">{{ post.date|slice:"5:10" }}</span>
+        <span>
+          <span class="roadmap__title"><a href="{{ post.link }}">{{ post.title }}</a></span>
+          {% if post.categories|length > 0 or post.tags|length > 0 %}<span class="roadmap__sum">{% for cat in post.categories %}{{ cat.name }}{% if not loop.last %} / {% endif %}{% endfor %}{% if post.categories|length > 0 and post.tags|length > 0 %} · {% endif %}{% for t in post.tags %}#{{ t.name }}{% if not loop.last %} {% endif %}{% endfor %}</span>{% endif %}
+        </span>
+        <span class="roadmap__time">{% if post.stats.minutes %}{{ post.stats.minutes }} 分钟{% endif %}</span>
+      </li>
+      {% endfor %}
+    </ol>
+  </section>
+  {% endfor %}
+  {% else %}
+  <div class="empty-state"><i data-xxd-icon="Archive" data-size="20"></i><p>还没有可归档的文章。</p></div>
+  {% endif %}
+  {% include "partials/pagination.html" %}
+  {% include "partials/footer.html" %}
+</main>
+<aside class="site-toc" aria-label="本页目录">
+  {% if archives and archives|length > 0 %}
+  <h2>本页</h2>
+  <ul>{% for group in archives %}<li><a href="#y-{{ group.Year }}">{{ group.Year }}<span class="site-toc__n">{{ group.Posts|length }}</span></a></li>{% endfor %}</ul>
+  {% endif %}
+</aside>
+{% endblock %}

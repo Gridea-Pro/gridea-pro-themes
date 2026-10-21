@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ config.siteName }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{{ config.siteDescription|default:"" }}{% endblock %}">
+  <meta name="keywords" content="{% block keywords %}{% endblock %}">
+  <meta property="og:site_name" content="{{ config.siteName }}">
+  <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+  <meta property="og:title" content="{% block og_title %}{{ config.siteName }}{% endblock %}">
+  <meta property="og:description" content="{% block og_description %}{{ config.siteDescription|default:"" }}{% endblock %}">
+  {% block og_image %}{% endblock %}
+  <meta name="twitter:card" content="summary_large_image">
+  {% if theme_config.favicon %}<link rel="icon" href="{{ theme_config.favicon }}">{% else %}<link rel="icon" href="/media/images/favicon.svg" type="image/svg+xml">{% endif %}
+  <link rel="alternate" type="application/rss+xml" title="{{ config.siteName }}" href="/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="{{ config.siteName }}" href="/atom.xml">
+
+  {# 级联层顺序与原站一致：xxd 组件在下，站点布局在上 #}
+  <style>@layer base, xxd, components, site;</style>
+  {# boot.js 在首帧前写入 data-theme / data-corners / 强调色，避免闪屏 #}
+  <script src="/xxd/boot.js" data-key="gridea-3x-ui" data-default-theme="{{ theme_config.xuiAppearance|default:"system" }}" data-default-corners="{{ theme_config.xuiCorners|default:"square" }}"{% if theme_config.xuiAccentColor %} data-default-accent="{{ theme_config.xuiAccentColor }}"{% endif %}></script>
+  <link rel="stylesheet" href="/xxd/xxd.css">
+  <link rel="stylesheet" href="/styles/site.css">
+  <link rel="stylesheet" href="/styles/blog.css">
+  <link rel="stylesheet" href="/styles/comments.css">
+  <script src="/xxd/icons.js"></script>
+  <script src="/xxd/xxd.js"></script>
+  {% if theme_config.xuiCustomCss %}<style>{{ theme_config.xuiCustomCss|safe }}</style>{% endif %}
+  {% if theme_config.customHead %}{{ theme_config.customHead|safe }}{% endif %}
+  {% block head %}{% endblock %}
+</head>
+<body class="xxd-page {% block body_class %}{% endblock %}">
+  <a class="xxd-sr-only-focusable" href="#main">跳到正文</a>
+  {% include "partials/header.html" %}
+  <div class="site-body">
+    {% include "partials/sidebar.html" %}
+    {% block main %}{% endblock %}
+  </div>
+  <div class="site-nav-scrim" id="site-nav-scrim"></div>
+  {% include "partials/search.html" %}
+  <script src="/scripts/site.js"></script>
+  {% block scripts %}{% endblock %}
+  {% if theme_config.customFooter %}{{ theme_config.customFooter|safe }}{% endif %}
+</body>
+</html>

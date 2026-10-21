@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}友链 · {{ config.siteName }}{% endblock %}
+{% block body_class %}page-links{% endblock %}
+
+{% block main %}
+<main id="main" class="site-main">
+  <div class="xxd-prose page-head">
+    <h1>友链</h1>
+    <p>{{ theme_config.linksLead|default:"常去的站点和朋友们的博客。" }}</p>
+  </div>
+  {% if links and links|length > 0 %}
+  <ul class="link-grid">
+    {% for link in links %}
+    <li>
+      <a class="link-card" href="{{ link.siteLink }}" target="_blank" rel="noopener">
+        <span class="link-card__avatar">{% if link.avatar %}<img src="{{ link.avatar }}" alt="" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">{% endif %}<span aria-hidden="true">{{ link.siteName|slice:":1" }}</span></span>
+        <span class="link-card__main">
+          <span class="link-card__name">{{ link.siteName }}<i data-xxd-icon="ArrowUpRight" data-size="12"></i></span>
+          <span class="link-card__desc">{% if link.description %}{{ link.description }}{% else %}{{ link.siteLink }}{% endif %}</span>
+        </span>
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <div class="empty-state"><i data-xxd-icon="Link" data-size="20"></i><p>还没有友链。</p></div>
+  {% endif %}
+  {% if theme_config.linksApply %}
+  <div class="xxd-banner links-apply"><i data-xxd-icon="Lightbulb"></i><div><p class="xxd-banner__title">交换友链</p><div class="xxd-banner__text">{{ theme_config.linksApply|safe }}</div></div></div>
+  {% endif %}
+  {% if theme_config.linksComments %}{% include "partials/comments.html" %}{% endif %}
+  {% include "partials/footer.html" %}
+</main>
+<aside class="site-toc" aria-hidden="true"></aside>
+{% endblock %}

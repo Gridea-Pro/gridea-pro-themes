@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category.name }} · 分类 · {{ config.siteName }}{% endblock %}
+{% block description %}{% if category.description %}{{ category.description }}{% else %}分类「{{ category.name }}」下的全部文章{% endif %}{% endblock %}
+{% block body_class %}page-category{% endblock %}
+{% block og_image %}{% if category.cover %}<meta property="og:image" content="{{ config.domain }}{{ category.cover }}">{% endif %}{% endblock %}
+
+{% block main %}
+<main id="main" class="site-main">
+  <header class="step-head">
+    <div class="step-head__eyebrow"><span><a href="/{{ config.categoriesPath|default:"categories" }}/">分类</a> · {{ category.name }}</span><span>{% if pagination and pagination.totalPosts %}{{ pagination.totalPosts }}{% else %}{{ category.count }}{% endif %} 篇</span></div>
+    <h1>{{ category.name }}</h1>
+    {% if category.description %}<p class="step-head__lead">{{ category.description }}</p>{% endif %}
+  </header>
+  {% if category.cover %}<figure class="shot shot--cover"><img src="{{ category.cover }}" alt="{{ category.name }}" onerror="this.parentNode.remove()"></figure>{% endif %}
+  {% include "partials/post-list.html" %}
+  {% include "partials/pagination.html" %}
+  {% include "partials/footer.html" %}
+</main>
+<aside class="site-toc" aria-label="其他分类">
+  {% if categories and categories|length > 1 %}
+  <h2>其他分类</h2>
+  <ul>{% for cat in categories %}{% if cat.slug != category.slug %}<li><a href="{{ cat.link }}">{{ cat.name }}<span class="site-toc__n">{{ cat.count }}</span></a></li>{% endif %}{% endfor %}</ul>
+  {% endif %}
+</aside>
+{% endblock %}

@@ -1,0 +1,8 @@
+{# 上一篇 / 下一篇。Gridea Pro 的 prevPost 是更新的一篇、nextPost 是更早的一篇：
+   这里按读者习惯，左侧「上一篇」= 更早，右侧「下一篇」= 更新 #}
+{% if post.nextPost or post.prevPost %}
+<nav class="prevnext" aria-label="上一篇和下一篇">
+  {% if post.nextPost %}<a href="{{ post.nextPost.link }}" data-dir="prev" rel="prev"><small>上一篇 · 更早</small>{{ post.nextPost.title }}</a>{% else %}<span data-dir="prev"><small>上一篇</small>已经是最早的一篇</span>{% endif %}
+  {% if post.prevPost %}<a href="{{ post.prevPost.link }}" data-dir="next" rel="next"><small>下一篇 · 更新</small>{{ post.prevPost.title }}</a>{% else %}<span data-dir="next"><small>下一篇</small>已经是最新的一篇</span>{% endif %}
+</nav>
+{% endif %}

@@ -1,0 +1,181 @@
+/* 3x-ui 主题 · 博客专用部件。全部沿用 xxd 令牌，保持原站「黑白灰、直角、细线、内容优先」的设计语言。 */
+@layer site {
+  /* ---------- 顶栏 / 左目录补充 ---------- */
+  .site-logo { width: 18px; height: 18px; object-fit: cover; border-radius: var(--r-xs); }
+  .site-nav__sub { padding-left: 12px; }
+  .site-nav__ext { flex: none; color: var(--muted-2); }
+  .site-nav__more summary { user-select: none; }
+
+  /* ---------- 右目录：兼容 Gridea 生成的嵌套 <ul> ---------- */
+  .site-toc ul ul { padding-left: 10px; }
+  .site-toc a { display: flex; align-items: baseline; gap: 8px; }
+  .site-toc a[aria-current="true"] { color: var(--ink); font-weight: var(--weight-medium); }
+  .site-toc__n { margin-left: auto; color: var(--muted-2); font: var(--text-2xs) var(--font-mono); }
+  .site-toc__list > ul > li > a { padding: 3px 0; }
+
+  /* ---------- 通用 ---------- */
+  .dot { margin: 0 6px; color: var(--muted-2); }
+  .page-head { margin-bottom: var(--space-6); }
+  .page-head p { color: var(--muted); font-size: var(--text-base); line-height: var(--leading-md); }
+  .empty-state {
+    display: flex; flex-direction: column; align-items: center; gap: var(--space-2);
+    max-width: var(--read-width); padding: var(--space-8) var(--space-4);
+    border: 1px dashed var(--line-strong); color: var(--muted); font-size: var(--text-sm); text-align: center;
+  }
+  .empty-state p { margin: 0; }
+  .home .empty-state { max-width: none; }
+
+  /* ---------- 页头（文章 / 标签 / 分类） ---------- */
+  .step-head__eyebrow a { color: inherit; text-decoration: none; }
+  .step-head__eyebrow a:hover { color: var(--ink); }
+  .step-head__eyebrow > span:first-child { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .step-head__eyebrow > span:last-child { flex: none; }
+  .step-head__hash { margin-right: 2px; color: var(--muted-2); font-weight: var(--weight-regular); }
+  .step-head__lead { margin: var(--space-3) 0 0; color: var(--muted); font-size: var(--text-base); line-height: var(--leading-md); }
+  .step-head__meta .xxd-badge .ui-icon { margin-right: 4px; }
+  .step-head .xxd-progress { transition: none; }
+
+  .shot--cover { max-width: var(--read-width); margin: 0 0 var(--space-6); }
+  .shot--cover img { width: 100%; max-height: 420px; object-fit: cover; }
+
+  /* ---------- 正文补充：表格横向滚动、图片 ---------- */
+  .post-body .table-scroll { overflow-x: auto; }
+  .post-body .table-scroll > table { min-width: 100%; }
+  .post-body > .table-scroll { margin-top: var(--space-5); }
+  .post-body img { display: block; margin-left: auto; margin-right: auto; }
+  .post-body pre:not(.xxd-code) { overflow-x: auto; }
+  .post-body .copy-block .xxd-code { white-space: pre; word-break: normal; overflow-x: auto; }
+  .post-body .xxd-code__head { text-transform: none; }
+
+  /* ---------- 分页 ---------- */
+  .pager {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
+    max-width: var(--read-width); margin-top: var(--space-6);
+  }
+  .home .pager { max-width: none; }
+  .pager__btn { gap: 6px; }
+  .pager__status { color: var(--muted); font-size: var(--text-xs); font-variant-numeric: tabular-nums; }
+
+  /* ---------- 文章列表（Wiki 列表行样式） ---------- */
+  .post-list { max-width: var(--read-width); margin: 0; padding: 0; list-style: none; }
+  .post-list .xxd-list__title { display: flex; align-items: center; gap: 8px; font-size: var(--text-base); }
+  .post-list .xxd-list__meta { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .post-list__foot { display: block; margin-top: 4px; color: var(--muted-2); font-size: var(--text-2xs); line-height: var(--leading-xs); }
+  .post-list__foot .dot { margin: 0 4px; }
+
+  /* ---------- 首页：文章路线 ---------- */
+  .roadmap__n .ui-icon { color: var(--ink); }
+  .roadmap__sum { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+  .roadmap__time { font-variant-numeric: tabular-nums; }
+  .route--link { display: block; color: var(--ink); text-decoration: none; transition: border-color var(--motion-quick) ease, background-color var(--motion-quick) ease; }
+  .route--link:hover { border-color: var(--line-strong); background: var(--wash); transition-duration: 0s; }
+  .route__count { margin-left: auto; color: var(--muted); font-size: var(--text-xs); font-weight: var(--weight-regular); }
+  .cat-cards { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+  .cat-card { display: flex; flex-direction: column; }
+  .cat-card__cover { display: block; margin: calc(var(--space-4) * -1) calc(var(--space-4) * -1) var(--space-3); aspect-ratio: 16 / 7; overflow: hidden; border-bottom: 1px solid var(--line); background: var(--wash); }
+  .cat-card__cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+  /* ---------- 归档 ---------- */
+  .archive-year { max-width: var(--read-width); }
+  .archive-year + .archive-year { margin-top: var(--space-8); }
+  .archive-year__title {
+    display: flex; align-items: baseline; gap: var(--space-2); margin: 0 0 var(--space-1);
+    font: var(--weight-strong) var(--text-xl) / var(--leading-lg) var(--font-title);
+  }
+  .archive-year__title span { color: var(--muted); font-size: var(--text-xs); font-weight: var(--weight-regular); }
+  .roadmap--dated li { grid-template-columns: 3.6em minmax(0, 1fr) auto; }
+
+  /* ---------- 标签 ---------- */
+  .tag-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--space-2);
+    max-width: var(--read-width); margin: 0; padding: 0; list-style: none;
+  }
+  .tag-grid a {
+    display: flex; align-items: baseline; gap: 4px; padding: 10px 12px;
+    border: 1px solid var(--line); color: var(--ink); font-size: var(--text-sm); text-decoration: none;
+    transition: border-color var(--motion-quick) ease, background-color var(--motion-quick) ease;
+  }
+  .tag-grid a:hover { border-color: var(--line-strong); background: var(--wash); transition-duration: 0s; }
+  .tag-grid__hash { color: var(--muted-2); font-family: var(--font-mono); }
+  .tag-grid__name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .tag-grid__count { margin-left: auto; color: var(--muted); font: var(--text-xs) var(--font-mono); }
+
+  /* ---------- 闪念 ---------- */
+  .memo-list { max-width: var(--read-width); margin: 0; padding: 0; list-style: none; }
+  .memo { padding: var(--space-4); border: 1px solid var(--line); scroll-margin-top: 72px; }
+  .memo:target { border-color: var(--line-strong); background: var(--wash); }
+  .memo + .memo { margin-top: var(--space-3); }
+  .memo__body.xxd-prose { font-size: var(--text-base); line-height: var(--leading-md); }
+  .memo__body.xxd-prose > * + * { margin-top: var(--space-2); }
+  .memo__body img { max-height: 360px; }
+  .memo__foot { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-top: var(--space-3); }
+  .memo__time { display: inline-flex; align-items: center; gap: 4px; margin-right: auto; color: var(--muted); font-size: var(--text-xs); text-decoration: none; }
+  .memo__time:hover { color: var(--ink); }
+
+  /* 热力图：53 周 × 7 天，色阶来自强调色（缺省为墨色） */
+  .heatmap { --cell: 10px; --gap: 3px; max-width: var(--read-width); margin-bottom: var(--space-6); padding: var(--space-4); border: 1px solid var(--line); }
+  .heatmap__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-2); margin-bottom: var(--space-3); }
+  .heatmap__title { margin: 0; font: var(--weight-strong) var(--text-sm) / 1.4 var(--font-body); }
+  .heatmap__stats { margin: 0; color: var(--muted); font-size: var(--text-xs); }
+  .heatmap__scroll { overflow-x: auto; scrollbar-width: thin; padding-bottom: 2px; }
+  .heatmap__months {
+    display: grid; grid-auto-flow: column; grid-auto-columns: var(--cell); gap: var(--gap);
+    height: 16px; margin-left: calc(18px + var(--gap)); color: var(--muted); font-size: var(--text-2xs); line-height: 1; white-space: nowrap;
+  }
+  .heatmap__body { display: flex; gap: var(--gap); width: max-content; }
+  .heatmap__days { display: grid; grid-template-rows: repeat(7, var(--cell)); gap: var(--gap); width: 18px; color: var(--muted-2); font-size: 9px; line-height: var(--cell); }
+  .heatmap__grid { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, var(--cell)); grid-auto-columns: var(--cell); gap: var(--gap); }
+  .heatmap__grid > i, .heatmap__legend > i { display: block; width: var(--cell); height: var(--cell); border-radius: var(--r-xs); background: var(--wash-strong); }
+  .heatmap__grid > i[data-out] { visibility: hidden; }
+  .heatmap [data-level="1"] { background: color-mix(in srgb, var(--action) 28%, var(--bg)); }
+  .heatmap [data-level="2"] { background: color-mix(in srgb, var(--action) 52%, var(--bg)); }
+  .heatmap [data-level="3"] { background: color-mix(in srgb, var(--action) 76%, var(--bg)); }
+  .heatmap [data-level="4"] { background: var(--action); }
+  .heatmap__legend { display: flex; align-items: center; justify-content: flex-end; gap: var(--gap); margin-top: var(--space-2); color: var(--muted); font-size: var(--text-2xs); }
+  .heatmap__legend span { margin: 0 4px; }
+
+  /* ---------- 友链 ---------- */
+  .link-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); max-width: var(--read-width); margin: 0; padding: 0; list-style: none; }
+  .link-card {
+    display: flex; align-items: center; gap: var(--space-3); height: 100%; padding: var(--space-4);
+    border: 1px solid var(--line); color: var(--ink); text-decoration: none;
+    transition: border-color var(--motion-quick) ease, background-color var(--motion-quick) ease;
+  }
+  .link-card:hover { border-color: var(--line-strong); background: var(--wash); transition-duration: 0s; }
+  .link-card__avatar {
+    position: relative; display: grid; place-items: center; flex: none; width: 40px; height: 40px; overflow: hidden;
+    border: 1px solid var(--line); border-radius: var(--r-circle); background: var(--wash); color: var(--muted); font-weight: var(--weight-strong);
+  }
+  .link-card__avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: var(--paper); }
+  .link-card__main { display: flex; flex-direction: column; min-width: 0; }
+  .link-card__name { display: flex; align-items: center; gap: 4px; font: var(--weight-strong) var(--text-base) / 1.5 var(--font-body); }
+  .link-card__name .ui-icon { color: var(--muted-2); }
+  .link-card__desc { color: var(--muted); font-size: var(--text-xs); line-height: 20px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .links-apply { max-width: var(--read-width); margin-top: var(--space-6); }
+  .links-apply .xxd-banner__text p { margin: 0; }
+
+  /* ---------- 关于 ---------- */
+  .about-head__who { display: flex; align-items: center; gap: var(--space-4); }
+  .about-head__who h1 { margin: 0; }
+  .about-head__avatar { flex: none; width: 64px; height: 64px; border: 1px solid var(--line); border-radius: var(--r-circle); object-fit: cover; }
+
+  /* ---------- 404 ---------- */
+  .notfound__code { margin: 0 0 var(--space-2); color: var(--muted); font: var(--weight-medium) var(--text-sm) / 1 var(--font-mono); letter-spacing: 0.2em; }
+
+  /* ---------- 搜索面板：日期提示不折行 ---------- */
+  .xxd-palette .xxd-option__hint { flex: none; padding-left: var(--space-2); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+  /* ---------- 响应式补充 ---------- */
+  @media (max-width: 820px) {
+    .link-grid { grid-template-columns: 1fr; }
+    .pager__status { font-size: var(--text-2xs); }
+    .cat-cards { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .roadmap--dated li { grid-template-columns: 3.6em minmax(0, 1fr); }
+    .roadmap--dated .roadmap__time { display: none; }
+    .tag-grid { grid-template-columns: 1fr 1fr; }
+    .pager__btn { padding: 0 var(--control-pad-x-sm); }
+    .about-head__avatar { width: 48px; height: 48px; }
+  }
+}
