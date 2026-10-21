@@ -1,0 +1,19 @@
+{# tag.html — 单个标签页 #}
+{% extends "base.html" %}
+{% block title %}{{ tag.name }} | {{ config.siteName }}{% endblock %}
+{% block head %}
+<link rel="canonical" href="{{ config.domain }}{{ tag.link }}" />
+{% endblock %}
+{% block body %}
+<div id="main">
+  <div class="inner">
+    <div class="current-tag-container">
+      <h2 class="tags-title">#{{ tag.name }}</h2>
+    </div>
+    <section class="tiles">
+      {% include "partials/post-list.html" %}
+    </section>
+    {% include "partials/pagination.html" %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{# index.html — 首页（磁贴列表） #}
+{% extends "base.html" %}
+{% block title %}{{ config.siteName }}{% endblock %}
+{% block wrapper_open %}<div id="mainpage-wrapper">{% endblock %}
+{% block body %}
+<div id="main">
+  <div class="inner">
+    <header>
+      <div class="site-description">{{ config.siteDescription|safe }}</div>
+    </header>
+    <section class="tiles">
+      {% include "partials/post-list.html" %}
+    </section>
+    {% include "partials/pagination.html" %}
+  </div>
+</div>
+{% endblock %}

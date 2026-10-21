@@ -1,0 +1,42 @@
+{# partials/comments.html — 评论区
+   Gridea Pro 在站点级「评论」中配置平台与参数，注入 commentSetting；
+   主题无需再声明 Twikoo/Waline 开关，直接按 commentSetting.commentPlatform 渲染即可。 #}
+{% if commentSetting and commentSetting.showComment %}
+<div class="post-comment-inner">
+  <h2>评论</h2>
+  {% if commentSetting.commentPlatform == "Twikoo" %}
+  <div id="tcomment"></div>
+  <script src="https://registry.npmmirror.com/twikoo/{{ theme_config.twikooVersion|default:'2.0.12' }}/files/dist/twikoo.all.min.js"></script>
+  <script>twikoo.init({ envId: '{{ commentSetting.envId }}', el: '#tcomment', path: window.location.pathname });</script>
+  {% elif commentSetting.commentPlatform == "Waline" %}
+  <div id="waline-comment"></div>
+  <link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css" />
+  <script src="https://unpkg.com/@waline/client@v2/dist/waline.js"></script>
+  <script>Waline.init({ el: '#waline-comment', serverURL: '{{ commentSetting.serverURLs }}', path: window.location.pathname });</script>
+  {% elif commentSetting.commentPlatform == "Valine" %}
+  <div id="valine-comment"></div>
+  <script src="https://unpkg.com/valine/dist/Valine.min.js"></script>
+  <script>
+    new Valine({ el: '#valine-comment', appId: '{{ commentSetting.appId }}', appKey: '{{ commentSetting.appKey }}', serverURLs: '{{ commentSetting.serverURLs }}', path: window.location.pathname });
+  </script>
+  {% elif commentSetting.commentPlatform == "Gitalk" %}
+  <div id="gitalk-container"></div>
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css" />
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <script>
+    new Gitalk({ clientID: '{{ commentSetting.clientId }}', clientSecret: '{{ commentSetting.clientSecret }}', repo: '{{ commentSetting.repo }}', owner: '{{ commentSetting.owner }}', admin: ['{{ commentSetting.owner }}'], id: (location.pathname).substring(0, 49), distractionFreeMode: false }).render('gitalk-container');
+  </script>
+  {% elif commentSetting.commentPlatform == "Giscus" %}
+  <div class="giscus"></div>
+  <script src="https://giscus.app/client.js" data-repo="{{ commentSetting.repo }}" data-repo-id="{{ commentSetting.repoId }}" data-category="{{ commentSetting.category }}" data-category-id="{{ commentSetting.categoryId }}" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-input-position="bottom" data-theme="preferred_color_scheme" data-lang="zh-CN" crossorigin="anonymous" async></script>
+  {% elif commentSetting.commentPlatform == "Disqus" %}
+  <div id="disqus_thread"></div>
+  <script>
+    (function () { var d = document, s = d.createElement('script'); s.src = 'https://{{ commentSetting.shortname }}.disqus.com/embed.js'; s.setAttribute('data-timestamp', +new Date()); (d.head || d.body).appendChild(s); })();
+  </script>
+  {% elif commentSetting.commentPlatform == "Cusdis" %}
+  <div id="cusdis_thread" data-host="{{ commentSetting.host }}" data-app-id="{{ commentSetting.appId }}" data-page-id="{% if post %}{{ post.link }}{% endif %}" data-page-url="{{ config.domain }}{% if post %}{{ post.link }}{% endif %}" data-page-title="{% if post %}{{ post.title }}{% endif %}"></div>
+  <script async src="https://cusdis.com/js/cusdis.es.js"></script>
+  {% endif %}
+</div>
+{% endif %}

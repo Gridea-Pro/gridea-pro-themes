@@ -1,0 +1,170 @@
+{
+  "name": "gridea-pro-theme-phantom",
+  "version": "1.0.0",
+  "author": "wherelse",
+  "description": "Phantom —— 由旧版 Gridea 主题 gridea-theme-phantom 转制的 Gridea Pro 主题（Jinja2 引擎，保留 HTML5UP Phantom 的磁贴式首页布局，支持评论、友链、相册、闪念、归档、代码高亮等完整功能）",
+  "repository": "https://github.com/wherelse/gridea-pro-theme-phantom",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "customConfig": [
+    {
+      "name": "github",
+      "label": "Github",
+      "group": "社交",
+      "value": "",
+      "type": "input",
+      "note": "链接地址"
+    },
+    {
+      "name": "twitter",
+      "label": "Twitter",
+      "group": "社交",
+      "value": "",
+      "type": "input",
+      "note": "链接地址"
+    },
+    {
+      "name": "weibo",
+      "label": "微博",
+      "group": "社交",
+      "value": "",
+      "type": "input",
+      "note": "链接地址"
+    },
+    {
+      "name": "zhihu",
+      "label": "知乎",
+      "group": "社交",
+      "value": "",
+      "type": "input",
+      "note": "链接地址"
+    },
+    {
+      "name": "bilibili",
+      "label": "bilibili",
+      "group": "社交",
+      "value": "",
+      "type": "input",
+      "note": "链接地址"
+    },
+    {
+      "name": "facebook",
+      "label": "Facebook",
+      "group": "社交",
+      "value": "",
+      "type": "input",
+      "note": "链接地址"
+    },
+    {
+      "name": "px500",
+      "label": "500px",
+      "group": "社交",
+      "value": "",
+      "type": "input",
+      "note": "链接地址"
+    },
+    {
+      "name": "dribbble",
+      "label": "dribbble",
+      "group": "社交",
+      "value": "",
+      "type": "input",
+      "note": "链接地址"
+    },
+    {
+      "name": "instagram",
+      "label": "instagram",
+      "group": "社交",
+      "value": "",
+      "type": "input",
+      "note": "链接地址"
+    },
+    {
+      "name": "codeHighlight",
+      "label": "代码高亮主题",
+      "group": "主题功能",
+      "value": true,
+      "type": "switch",
+      "note": "若不需要，可关闭以加快页面加载速度"
+    },
+    {
+      "name": "showPlaceholderCover",
+      "label": "无封面时显示自动封面",
+      "group": "主题功能",
+      "value": true,
+      "type": "switch",
+      "note": "开启后，没有特色图的文章自动生成一张渐变封面；关闭后则不显示封面"
+    },
+    {
+      "name": "beian",
+      "label": "备案信息",
+      "group": "主题功能",
+      "value": "",
+      "type": "input",
+      "note": "请填写备案号"
+    },
+    {
+      "name": "customCss",
+      "label": "自定义 CSS",
+      "group": "主题功能",
+      "value": "",
+      "type": "textarea",
+      "note": "追加到 </head> 前的自定义样式"
+    },
+    {
+      "name": "galleryPageName",
+      "label": "相册页面标题",
+      "group": "相册",
+      "value": "相册",
+      "type": "input",
+      "note": "根据喜好更改"
+    },
+    {
+      "name": "photos",
+      "label": "相册",
+      "group": "相册",
+      "type": "array",
+      "value": [],
+      "arrayItems": [
+        {
+          "label": "图片",
+          "name": "image",
+          "type": "picture-upload",
+          "value": "",
+          "note": "可直接上传，或填写图床/图片链接"
+        },
+        {
+          "label": "描述",
+          "name": "description",
+          "type": "textarea",
+          "value": ""
+        }
+      ],
+      "note": ""
+    },
+    {
+      "name": "linksPageName",
+      "label": "友链页面标题",
+      "group": "友链",
+      "value": "我的朋友们",
+      "type": "input",
+      "note": "根据喜好更改；友链条目在 Gridea Pro 的「友链」中管理"
+    },
+    {
+      "name": "memosPageName",
+      "label": "日常页面标题",
+      "group": "日常/memos",
+      "value": "日常",
+      "type": "input",
+      "note": "根据喜好更改"
+    },
+    {
+      "name": "twikooVersion",
+      "label": "Twikoo 前端版本",
+      "group": "评论",
+      "value": "2.0.12",
+      "type": "input",
+      "note": "使用 Twikoo 评论时生效，需与服务端大版本一致"
+    }
+  ]
+}

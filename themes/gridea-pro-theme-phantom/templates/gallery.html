@@ -1,0 +1,42 @@
+{# gallery.html — 相册页
+   数据来自主题配置「相册」（customConfig.photos 数组），经 theme_config.photos 访问。 #}
+{% extends "base.html" %}
+{% block title %}{{ theme_config.galleryPageName|default:'相册' }} | {{ config.siteName }}{% endblock %}
+{% block wrapper_open %}<div id="mainpage-wrapper">{% endblock %}
+{% block body %}
+<div id="main">
+  <div class="inner">
+    <div class="post-pagetitle">
+      <h2>{{ theme_config.galleryPageName|default:'相册' }}</h2>
+    </div>
+    <section class="tiles">
+      {% if theme_config.photos and theme_config.photos|length > 0 %}
+      {% for photo in theme_config.photos %}
+      <article class="style1">
+        <div class="gallery-image-wrapper">
+          <div class="gallery-image">
+            <img class="lazy" data-src="{{ photo.image }}" loading="lazy" alt="{{ photo.description }}" />
+          </div>
+          {% if photo.description %}
+          <div class="image-title">
+            <ul><li>{{ photo.description }}</li></ul>
+          </div>
+          {% endif %}
+        </div>
+      </article>
+      {% endfor %}
+      {% else %}
+      <div class="post-abstract">暂无照片，请在主题设置「相册」中添加</div>
+      {% endif %}
+    </section>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/media/scripts/view-image.min.js"></script>
+<script src="/media/scripts/lazyload.min.js"></script>
+<script>
+  if (window.ViewImage) { ViewImage.init('img'); }
+  if (window.LazyLoad) { new LazyLoad({}); }
+</script>
+{% endblock %}

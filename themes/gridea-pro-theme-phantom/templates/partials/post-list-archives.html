@@ -1,0 +1,21 @@
+{# partials/post-list-archives.html — 归档列表（按年份分组）
+   注意：archives 分组键是大写的 Year / Posts，写成小写会静默取空。 #}
+{% if archives and archives|length > 0 %}
+<div class="archives-container">
+  {% for group in archives %}
+  <h2 class="year">{{ group.Year }}</h2>
+  {% for post in group.Posts %}
+  <article>
+    <a href="{{ post.link }}">
+      <div class="archives-post-title">
+        {{ post.title }}
+        <small class="archives-times">{{ post.dateFormat }}</small>
+      </div>
+    </a>
+  </article>
+  {% endfor %}
+  {% endfor %}
+</div>
+{% else %}
+<div class="post-abstract">暂无文章</div>
+{% endif %}

@@ -1,0 +1,17 @@
+{# blog.html — 博客列表页（磁贴列表 + 分页） #}
+{% extends "base.html" %}
+{% block title %}博客 | {{ config.siteName }}{% endblock %}
+{% block wrapper_open %}<div id="mainpage-wrapper">{% endblock %}
+{% block body %}
+<div id="main">
+  <div class="inner">
+    <div class="post-pagetitle">
+      <h2>全部文章</h2>
+    </div>
+    <section class="tiles">
+      {% include "partials/post-list.html" %}
+    </section>
+    {% include "partials/pagination.html" %}
+  </div>
+</div>
+{% endblock %}

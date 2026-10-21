@@ -1,0 +1,22 @@
+{# tags.html — 标签汇总页 #}
+{% extends "base.html" %}
+{% block title %}标签 | {{ config.siteName }}{% endblock %}
+{% block head %}
+<link rel="canonical" href="{{ config.domain }}/tags/" />
+{% endblock %}
+{% block body %}
+<div id="main">
+  <div class="inner">
+    <h2 class="tags-title">标签</h2>
+    <div class="tags-container">
+      {% if tags and tags|length > 0 %}
+      {% for tag in tags %}
+      <a class="tag" href="{{ tag.link }}">{{ tag.name }}</a>
+      {% endfor %}
+      {% else %}
+      <div class="post-abstract">暂无标签</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{# partials/footer.html — 页脚：社交图标 + 版权 / RSS / 备案 #}
+<footer id="footer">
+  <div class="inner">
+    <section>
+      <h2>Follow</h2>
+      <ul class="icons">
+        {% if theme_config.github %}<li><a href="{{ theme_config.github }}" target="_blank" rel="noopener"><i class="icon brands style2 fab fa-github"></i></a></li>{% endif %}
+        {% if theme_config.twitter %}<li><a href="{{ theme_config.twitter }}" target="_blank" rel="noopener"><i class="icon brands style2 fab fa-twitter"></i></a></li>{% endif %}
+        {% if theme_config.weibo %}<li><a href="{{ theme_config.weibo }}" target="_blank" rel="noopener"><i class="icon brands style2 fab fa-weibo"></i></a></li>{% endif %}
+        {% if theme_config.zhihu %}<li><a href="{{ theme_config.zhihu }}" target="_blank" rel="noopener"><i class="icon brands style2 fab fa-zhihu"></i></a></li>{% endif %}
+        {% if theme_config.bilibili %}<li><a href="{{ theme_config.bilibili }}" target="_blank" rel="noopener"><i class="icon brands style2 fab fa-bilibili"></i></a></li>{% endif %}
+        {% if theme_config.facebook %}<li><a href="{{ theme_config.facebook }}" target="_blank" rel="noopener"><i class="icon brands style2 fab fa-facebook"></i></a></li>{% endif %}
+        {% if theme_config.px500 %}<li><a href="{{ theme_config.px500 }}" target="_blank" rel="noopener"><i class="icon brands style2 fab fa-500px"></i></a></li>{% endif %}
+        {% if theme_config.dribbble %}<li><a href="{{ theme_config.dribbble }}" target="_blank" rel="noopener"><i class="icon brands style2 fab fa-dribbble"></i></a></li>{% endif %}
+        {% if theme_config.instagram %}<li><a href="{{ theme_config.instagram }}" target="_blank" rel="noopener"><i class="icon brands style2 fab fa-instagram"></i></a></li>{% endif %}
+      </ul>
+    </section>
+    <ul class="copyright">
+      <li><a href="/atom.xml" target="_blank" rel="noopener">RSS</a></li>
+      <li><a href="https://github.com/wherelse/gridea-pro-theme-phantom" target="_blank" rel="noopener">Theme Phantom</a></li>
+      <li>{{ config.footerInfo|default:''|safe }}</li>
+      {% if theme_config.beian %}<li><a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener">{{ theme_config.beian }}</a></li>{% endif %}
+    </ul>
+  </div>
+</footer>

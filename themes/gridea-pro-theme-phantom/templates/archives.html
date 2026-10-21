@@ -1,0 +1,15 @@
+{# archives.html — 归档页 #}
+{% extends "base.html" %}
+{% block title %}归档 | {{ config.siteName }}{% endblock %}
+{% block head %}
+<link rel="canonical" href="{{ config.domain }}/archives/" />
+{% endblock %}
+{% block body %}
+<div id="main">
+  <div class="inner">
+    <h2 class="archives-title">归档</h2>
+    {% include "partials/post-list-archives.html" %}
+    {% include "partials/pagination.html" %}
+  </div>
+</div>
+{% endblock %}

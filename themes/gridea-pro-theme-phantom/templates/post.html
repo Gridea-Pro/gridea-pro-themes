@@ -1,0 +1,46 @@
+{# post.html — 文章详情页 #}
+{% extends "base.html" %}
+{% block title %}{{ post.title }} | {{ config.siteName }}{% endblock %}
+{% block head %}
+<link rel="canonical" href="{{ config.domain }}{{ post.link }}" />
+<meta name="description" content="{{ post.description|default:'' }}" />
+{% endblock %}
+{% block body %}
+<div id="main">
+  <div class="inner">
+    <div class="post-pagetitle">
+      <h1>{{ post.title }}</h1>
+    </div>
+    <div class="post-info">
+      <time class="post-time" datetime="{{ post.date }}">{{ post.dateFormat }}</time>
+      <span class="read-times">{{ post.stats.text }}</span>
+      {% for tag in post.tags %}<a href="{{ tag.link }}" class="post-tags"># {{ tag.name }}</a>{% endfor %}
+    </div>
+    {% if post.feature %}<img src="{{ post.feature }}" class="post-feature" alt="{{ post.title }}" />{% endif %}
+    <div class="post-content-wrapper">
+      <div class="post-content">{{ post.content|safe }}</div>
+      <div class="toc-container">{% if post.toc %}{{ post.toc|safe }}{% endif %}</div>
+    </div>
+  </div>
+
+  <div class="post-pagination inner">
+    {% if post.nextPost and not post.hideInList %}
+    <div class="next-post"><div><a href="{{ post.nextPost.link }}">下一篇</a></div></div>
+    {% endif %}
+    {% if post.prevPost and not post.hideInList %}
+    <div class="prev-post"><div><a href="{{ post.prevPost.link }}">上一篇</a></div></div>
+    {% endif %}
+  </div>
+</div>
+
+<div class="post-comment inner">
+  {% include "partials/comments.html" %}
+</div>
+{% endblock %}
+{% block scripts %}
+{% if theme_config.codeHighlight %}
+<script src="/media/scripts/prism.js"></script>
+<script>if (window.Prism) { Prism.highlightAll(); }</script>
+{% endif %}
+<script>post_scroll();</script>
+{% endblock %}

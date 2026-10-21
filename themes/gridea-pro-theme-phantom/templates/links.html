@@ -1,0 +1,31 @@
+{# links.html — 友链页（使用 Gridea Pro 原生友链 links） #}
+{% extends "base.html" %}
+{% block title %}{{ theme_config.linksPageName|default:'友链' }} | {{ config.siteName }}{% endblock %}
+{% block head %}
+<link rel="canonical" href="{{ config.domain }}/links/" />
+{% endblock %}
+{% block body %}
+<div id="main">
+  <div class="inner">
+    <div class="post-pagetitle">
+      <h2>{{ theme_config.linksPageName|default:'我的朋友们' }}</h2>
+    </div>
+    <div class="friendbox">
+      {% if links and links|length > 0 %}
+      {% for link in links %}
+      <div class="friend-box friendblock" onclick="window.open('{{ link.siteLink }}', '_blank')">
+        {% if link.avatar %}<img class="friend-avatar" src="{{ link.avatar }}" alt="{{ link.siteName }}" />{% endif %}
+        <div class="flink-info">
+          <a>{{ link.siteName }}</a>
+          <br />
+          {{ link.description }}
+        </div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <div class="post-abstract">暂无友链，可在 Gridea Pro 的「友链」中管理</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{# category.html — 单个分类页（引擎为每个分类渲染一份） #}
+{% extends "base.html" %}
+{% block title %}{{ category.name }} | {{ config.siteName }}{% endblock %}
+{% block head %}
+<link rel="canonical" href="{{ config.domain }}{{ category.link }}" />
+{% endblock %}
+{% block body %}
+<div id="main">
+  <div class="inner">
+    <div class="current-tag-container">
+      <h2 class="tags-title">{{ category.name }}</h2>
+    </div>
+    <section class="tiles">
+      {% include "partials/post-list.html" %}
+    </section>
+    {% include "partials/pagination.html" %}
+  </div>
+</div>
+{% endblock %}

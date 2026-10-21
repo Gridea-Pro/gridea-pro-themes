@@ -1,0 +1,28 @@
+{# memos.html — 日常/闪念页（使用 Gridea Pro 原生 memos 数据） #}
+{% extends "base.html" %}
+{% block title %}{{ theme_config.memosPageName|default:'日常' }} | {{ config.siteName }}{% endblock %}
+{% block wrapper_open %}<div id="mainpage-wrapper">{% endblock %}
+{% block body %}
+<div id="main">
+  <div class="inner">
+    <div class="post-pagetitle">
+      <h2>{{ theme_config.memosPageName|default:'日常' }}</h2>
+    </div>
+    <div class="memos-container">
+      {% if memos and memos|length > 0 %}
+      {% for memo in memos %}
+      <div class="memo">
+        <div class="memo-content">{{ memo.content|safe }}</div>
+        {% if memo.tags and memo.tags|length > 0 %}
+        <div class="memo-tags">{% for t in memo.tags %}<a href="/tags/">#{{ t }}</a>{% endfor %}</div>
+        {% endif %}
+        <div class="memo-date">{% if memo.createdAt %}{{ memo.createdAt }}{% else %}{{ memo.dateFormat }}{% endif %}</div>
+      </div>
+      {% endfor %}
+      {% else %}
+      <div class="post-abstract">暂无内容</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

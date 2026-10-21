@@ -1,0 +1,19 @@
+{# categories.html — 分类汇总页 #}
+{% extends "base.html" %}
+{% block title %}分类 | {{ config.siteName }}{% endblock %}
+{% block body %}
+<div id="main">
+  <div class="inner">
+    <h2 class="tags-title">分类</h2>
+    <div class="tags-container">
+      {% if categories and categories|length > 0 %}
+      {% for cat in categories %}
+      <a class="tag" href="{{ cat.link }}">{{ cat.name }}</a>
+      {% endfor %}
+      {% else %}
+      <div class="post-abstract">暂无分类</div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}
