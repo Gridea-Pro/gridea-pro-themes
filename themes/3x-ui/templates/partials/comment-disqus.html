@@ -1,0 +1,14 @@
+<div id="disqus_thread"></div>
+<script>
+  var disqus_config = function () {
+    this.page.url = location.origin + location.pathname;
+    this.page.identifier = SiteComments.path();
+  };
+  SiteComments.whenVisible(function () {
+    {% if commentSetting.api %}var src = '{{ commentSetting.api|escapejs }}/{{ commentSetting.shortname|escapejs }}/embed.js';{% else %}var src = 'https://{{ commentSetting.shortname|escapejs }}.disqus.com/embed.js';{% endif %}
+    SiteComments.js(src, null, { 'data-timestamp': String(+new Date()) });
+  });
+  // Disqus 按容器文字颜色自动判断明暗，切换外观后需要重载
+  SiteComments.onTheme(function () { if (window.DISQUS) DISQUS.reset({ reload: true, config: disqus_config }); });
+</script>
+<noscript>请启用 JavaScript 以查看 Disqus 评论。</noscript>

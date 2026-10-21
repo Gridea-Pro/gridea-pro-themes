@@ -1,0 +1,20 @@
+<div id="vcomments"></div>
+<script>
+  SiteComments.whenVisible(function () {
+    SiteComments.js('https://unpkg.com/valine@1/dist/Valine.min.js', function () {
+      new Valine({
+        el: '#vcomments',
+        appId: '{{ commentSetting.appId|escapejs }}',
+        appKey: '{{ commentSetting.appKey|escapejs }}',
+        serverURLs: '{{ commentSetting.serverURLs|escapejs }}' || undefined,
+        path: SiteComments.path(),
+        avatar: 'mp',
+        meta: ['nick', 'mail', 'link'],
+        placeholder: '写点什么吧……支持 Markdown',
+        visitor: false
+      });
+      var link = document.querySelector('#vcomments .vlink');
+      if (link) link.placeholder = '网址 (https://)';
+    });
+  });
+</script>

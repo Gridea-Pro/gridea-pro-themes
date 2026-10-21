@@ -1,0 +1,15 @@
+{# 闪念热力图：最近 53 周 × 7 天，由 site.js 统计页面上 .memo[data-date] 渲染 #}
+<section class="heatmap" aria-label="闪念热力图" data-heatmap>
+  <div class="heatmap__head">
+    <p class="heatmap__title">最近一年</p>
+    <p class="heatmap__stats" data-heatmap-stats></p>
+  </div>
+  <div class="heatmap__scroll">
+    <div class="heatmap__months" data-heatmap-months aria-hidden="true"></div>
+    <div class="heatmap__body">
+      <div class="heatmap__days" aria-hidden="true"><span></span><span>一</span><span></span><span>三</span><span></span><span>五</span><span></span></div>
+      <div class="heatmap__grid" data-heatmap-grid role="img" aria-label="每天发布的闪念数量"></div>
+    </div>
+  </div>
+  <div class="heatmap__legend" aria-hidden="true"><span>少</span><i data-level="0"></i><i data-level="1"></i><i data-level="2"></i><i data-level="3"></i><i data-level="4"></i><span>多</span></div>
+</section>

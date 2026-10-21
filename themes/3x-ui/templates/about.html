@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{% if post and post.title %}{{ post.title }}{% else %}关于{% endif %} · {{ config.siteName }}{% endblock %}
+{% block body_class %}page-about{% endblock %}
+
+{% block main %}
+<main id="main" class="site-main">
+  <header class="step-head about-head">
+    <div class="about-head__who">
+      {% if config.avatar %}<img class="about-head__avatar" src="{{ config.avatar }}" alt="">{% endif %}
+      <div>
+        <h1>{% if post and post.title %}{{ post.title }}{% else %}关于{% endif %}</h1>
+        <p class="step-head__lead">{{ config.siteDescription }}</p>
+      </div>
+    </div>
+  </header>
+  <article class="xxd-prose post-body" id="post-body"{% if theme_config.showCopyButton %} data-copy-code{% endif %}>
+    {% if post and post.content %}{{ post.content|safe }}{% elif theme_config.aboutFallback %}{{ theme_config.aboutFallback|safe }}{% else %}<p>这里是 {{ config.siteName }}。在 Gridea Pro 里新建一篇文件名为 <code>about</code> 的文章，它的内容会显示在这里。</p>{% endif %}
+  </article>
+  {% if post and post.content %}{% include "partials/comments.html" %}{% endif %}
+  {% include "partials/footer.html" %}
+</main>
+<aside class="site-toc" aria-label="本页目录"{% if theme_config.showToc %} data-auto-toc{% endif %}>
+  {% if theme_config.showToc and post and post.toc %}<h2>本页</h2><div class="site-toc__list" data-toc>{{ post.toc|safe }}</div>{% endif %}
+</aside>
+{% endblock %}

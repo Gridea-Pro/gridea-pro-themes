@@ -1,0 +1,16 @@
+{# 分页：上一页 / 当前页码 / 下一页。无多页时不输出 #}
+{% if pagination and (pagination.hasPrev or pagination.hasNext) %}
+<nav class="pager" aria-label="分页">
+  {% if pagination.hasPrev %}
+  <a class="xxd-btn pager__btn" href="{{ pagination.prevURL }}" rel="prev"><i data-xxd-icon="ArrowLeft" data-size="16"></i>上一页</a>
+  {% else %}
+  <span class="xxd-btn pager__btn" aria-disabled="true"><i data-xxd-icon="ArrowLeft" data-size="16"></i>上一页</span>
+  {% endif %}
+  <span class="pager__status">第 {{ pagination.currentPage }} / {{ pagination.totalPages }} 页</span>
+  {% if pagination.hasNext %}
+  <a class="xxd-btn pager__btn" href="{{ pagination.nextURL }}" rel="next">下一页<i data-xxd-icon="ArrowRight" data-size="16"></i></a>
+  {% else %}
+  <span class="xxd-btn pager__btn" aria-disabled="true">下一页<i data-xxd-icon="ArrowRight" data-size="16"></i></span>
+  {% endif %}
+</nav>
+{% endif %}

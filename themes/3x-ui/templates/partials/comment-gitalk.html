@@ -1,0 +1,17 @@
+<div id="gitalk-container"></div>
+<script>
+  SiteComments.whenVisible(function () {
+    SiteComments.css('https://unpkg.com/gitalk/dist/gitalk.css');
+    SiteComments.js('https://unpkg.com/gitalk/dist/gitalk.min.js', function () {
+      new Gitalk({
+        clientID: '{{ commentSetting.clientId|escapejs }}',
+        clientSecret: '{{ commentSetting.clientSecret|escapejs }}',
+        repo: '{{ commentSetting.repo|escapejs }}',
+        owner: '{{ commentSetting.owner|escapejs }}',
+        admin: '{{ commentSetting.admin|escapejs }}'.split(',').map(function (s) { return s.trim(); }).filter(Boolean),
+        id: SiteComments.path().slice(0, 50), // GitHub label 最长 50 字符
+        distractionFreeMode: false
+      }).render('gitalk-container');
+    });
+  });
+</script>

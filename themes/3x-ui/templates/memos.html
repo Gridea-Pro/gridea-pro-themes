@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}闪念 · {{ config.siteName }}{% endblock %}
+{% block body_class %}page-memos{% endblock %}
+
+{% block main %}
+<main id="main" class="site-main">
+  <div class="xxd-prose page-head">
+    <h1>闪念</h1>
+    <p>{{ theme_config.memosLead|default:"随手记下的短想法。" }}{% if memos and memos|length > 0 %}一共 {{ memos|length }} 条。{% endif %}</p>
+  </div>
+  {% if theme_config.showHeatmap and memos and memos|length > 0 %}{% include "partials/heatmap.html" %}{% endif %}
+  {% if memos and memos|length > 0 %}
+  <ol class="memo-list">
+    {% for memo in memos %}
+    <li class="memo" id="memo-{{ memo.id }}" data-date="{{ memo.createdAtISO }}">
+      <div class="memo__body xxd-prose">{{ memo.content|safe }}</div>
+      <div class="memo__foot">
+        <a class="memo__time" href="#memo-{{ memo.id }}"><i data-xxd-icon="Clock" data-size="12"></i><time datetime="{{ memo.createdAtISO }}">{{ memo.createdAt }}</time></a>
+        {% for t in memo.tags %}<span class="xxd-badge">#{{ t }}</span>{% endfor %}
+      </div>
+    </li>
+    {% endfor %}
+  </ol>
+  {% else %}
+  <div class="empty-state"><i data-xxd-icon="StickyNote" data-size="20"></i><p>还没有闪念。</p></div>
+  {% endif %}
+  {% include "partials/footer.html" %}
+</main>
+<aside class="site-toc" aria-label="按月份" data-memo-toc></aside>
+{% endblock %}

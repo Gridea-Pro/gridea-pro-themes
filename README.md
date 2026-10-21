@@ -42,6 +42,7 @@
 | <a href="./themes/fluid/"><img src="./themes/fluid/assets/media/preview.png" width="240" alt="Fluid 预览"></a> | [**fluid**](./themes/fluid/) | Jinja2 (Pongo2) | Material Design 风的全屏 hero banner + typed 打字标题 + 透明转白固定顶栏 + jellybean 彩色标签主题，复刻自 fluid-dev/hexo-theme-fluid（Hexo） |
 | <a href="./themes/simplecho/"><img src="./themes/simplecho/assets/media/preview.png" width="240" alt="Simplecho 预览"></a> | [**simplecho**](./themes/simplecho/) | Jinja2 (Pongo2) | Simple + Echo = 💖。1000px 卡片博客 + 4 套招牌配色（银光灰 / 简约白 / 墨草绿 / 暗夜黑）+ STAY VIBRANT 页脚，复刻自 yanranxiaoxi/Simplecho（Typecho） |
 | <a href="./themes/webinar/"><img src="./themes/webinar/assets/media/preview.png" width="240" alt="Webinar 预览"></a> | [**webinar**](./themes/webinar/) | Jinja2 (Pongo2) | 把博客刷成一条微博时间线：顶部资料卡 + 微博式卡片流 + 统计侧栏 + 闪念热力图，灵感来自 Sagittarius |
+| <a href="./themes/3x-ui/"><img src="./themes/3x-ui/assets/media/preview.png" width="240" alt="3x-ui 预览"></a> | [**3x-ui**](./themes/3x-ui/) | Jinja2 (Pongo2) | 文档站气质的极简博客：暖白 / 暖黑 + 墨色直角 + 顶栏 / 左目录 / 正文 / 本页目录三栏 + ⌘K 命令面板搜索 + 七种评论统一样式，复刻自 3x-ui 部署教程站 vps.xiaoxiaodong.ai |
 
 > 上方前 7 个为初始入库的种子主题（其中 `flavor` 为 Gridea Pro 官方旗舰），下方按入库顺序排列社区主题。
 

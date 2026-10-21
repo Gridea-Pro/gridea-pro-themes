@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}分类 · {{ config.siteName }}{% endblock %}
+{% block body_class %}page-categories{% endblock %}
+
+{% block main %}
+<main id="main" class="site-main site-main--wide">
+  <div class="home">
+    <h1>分类</h1>
+    <p class="home__lead">{% if categories and categories|length > 0 %}共 {{ categories|length }} 个分类。{% endif %}选一个方向，进去看该分类下的全部文章。</p>
+    {% if categories and categories|length > 0 %}
+    <section>
+      <div class="routes cat-cards">
+        {% for cat in categories %}
+        <a class="route route--link cat-card" href="{{ cat.link }}">
+          {% if cat.cover %}<span class="cat-card__cover"><img src="{{ cat.cover }}" alt="" loading="lazy" onerror="this.parentNode.remove()"></span>{% endif %}
+          <h3><i data-xxd-icon="Folder" data-size="18"></i>{{ cat.name }}<span class="route__count">{{ cat.count }} 篇</span></h3>
+          <p>{% if cat.description %}{{ cat.description }}{% else %}收录 {{ cat.count }} 篇文章。{% endif %}</p>
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+    {% else %}
+    <div class="empty-state"><i data-xxd-icon="Folders" data-size="20"></i><p>还没有分类。</p></div>
+    {% endif %}
+  </div>
+  {% include "partials/footer.html" %}
+</main>
+{% endblock %}

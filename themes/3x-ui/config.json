@@ -1,0 +1,357 @@
+{
+  "name": "3x-ui",
+  "version": "1.0.0",
+  "engine": "jinja2",
+  "templateEngine": "jinja2",
+  "author": "Eric (port) / 小小东 xiaoxiaodong.ai (xxd design system)",
+  "description": "3x-ui — 文档站气质的极简博客主题。视觉复刻自 3x-ui / Xray 部署教程站「小小东 VPS 教程」（vps.xiaoxiaodong.ai，MIT），沿用其 xxd 设计系统：暖白纸 / 暖黑底、墨色强调、默认直角、顶栏 + 左侧目录 + 正文 + 右侧本页目录三栏布局、⌘K 命令面板搜索。补全 Gridea Pro 全套页面（首页 / 文章列表 / 文章 / 归档 / 闪念热力图 / 标签 / 分类 / 友链 / 关于 / 404）、上下篇与分页、七种评论系统统一样式，以及浅色 / 深色 / 跟随系统三态切换。",
+  "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
+  "preview": "/media/preview.png",
+  "customConfig": [
+    {
+      "name": "brandText",
+      "label": "顶栏站名",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "顶栏左上角显示的名字。留空则使用站点名称"
+    },
+    {
+      "name": "brandLogo",
+      "label": "顶栏 Logo",
+      "group": "基础",
+      "type": "picture-upload",
+      "value": "",
+      "note": "18×18 的小图标。留空则使用原站的四格墨色标记"
+    },
+    {
+      "name": "favicon",
+      "label": "Favicon",
+      "group": "基础",
+      "type": "picture-upload",
+      "value": "",
+      "note": "浏览器标签页图标。留空则使用主题自带的四格标记"
+    },
+    {
+      "name": "githubUrl",
+      "label": "GitHub 地址",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "填写后顶栏右侧显示 GitHub 图标按钮"
+    },
+    {
+      "name": "extraNavText",
+      "label": "顶栏附加链接文字",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "对应原站顶栏的「English」位置，例如「RSS」「English」。留空不显示"
+    },
+    {
+      "name": "extraNavLink",
+      "label": "顶栏附加链接地址",
+      "group": "基础",
+      "type": "input",
+      "value": "",
+      "note": "上一项的跳转地址，例如 /feed.xml"
+    },
+    {
+      "name": "footerText",
+      "label": "页脚文字",
+      "group": "基础",
+      "type": "textarea",
+      "value": "",
+      "note": "支持 HTML。留空则使用 Gridea Pro「网站设置 → 页脚信息」；两者都为空时显示默认版权行"
+    },
+    {
+      "name": "xuiAppearance",
+      "label": "默认外观",
+      "group": "外观",
+      "type": "select",
+      "value": "system",
+      "options": [
+        {
+          "label": "跟随系统",
+          "value": "system"
+        },
+        {
+          "label": "浅色",
+          "value": "light"
+        },
+        {
+          "label": "深色",
+          "value": "dark"
+        }
+      ],
+      "note": "读者第一次访问时的外观；读者在顶栏切换后按其选择记住"
+    },
+    {
+      "name": "xuiCorners",
+      "label": "圆角",
+      "group": "外观",
+      "type": "select",
+      "value": "square",
+      "options": [
+        {
+          "label": "直角（原站默认）",
+          "value": "square"
+        },
+        {
+          "label": "圆角",
+          "value": "rounded"
+        }
+      ],
+      "note": "全站按钮、卡片、输入框的圆角风格"
+    },
+    {
+      "name": "xuiAccentColor",
+      "label": "强调色",
+      "group": "外观",
+      "type": "input",
+      "card": "color",
+      "value": "",
+      "note": "留空 = 原站的墨色（黑白灰）。填 HEX 色值后，主按钮、链接、进度条等改用该色，深色模式自动换算对比度"
+    },
+    {
+      "name": "heroTitle",
+      "label": "首页大标题",
+      "group": "首页",
+      "type": "input",
+      "value": "",
+      "note": "留空则使用站点名称"
+    },
+    {
+      "name": "heroLead",
+      "label": "首页引言",
+      "group": "首页",
+      "type": "textarea",
+      "value": "",
+      "note": "大标题下方的一段说明。留空则使用站点描述"
+    },
+    {
+      "name": "ctaPrimaryText",
+      "label": "主按钮文字",
+      "group": "首页",
+      "type": "input",
+      "value": "从最新一篇开始",
+      "note": "首页黑色主按钮。留空不显示"
+    },
+    {
+      "name": "ctaPrimaryLink",
+      "label": "主按钮地址",
+      "group": "首页",
+      "type": "input",
+      "value": "",
+      "note": "留空则跳到最新一篇文章"
+    },
+    {
+      "name": "ctaSecondaryText",
+      "label": "次按钮文字",
+      "group": "首页",
+      "type": "input",
+      "value": "浏览归档",
+      "note": "首页描边次按钮。留空不显示"
+    },
+    {
+      "name": "ctaSecondaryLink",
+      "label": "次按钮地址",
+      "group": "首页",
+      "type": "input",
+      "value": "/archives/",
+      "note": "次按钮跳转地址"
+    },
+    {
+      "name": "showFlow",
+      "label": "显示「一张图看懂」",
+      "group": "首页",
+      "type": "toggle",
+      "value": true,
+      "note": "原站招牌的三格流程图"
+    },
+    {
+      "name": "flowTitle",
+      "label": "流程图标题",
+      "group": "首页",
+      "type": "input",
+      "value": "一张图看懂",
+      "note": ""
+    },
+    {
+      "name": "flowLead",
+      "label": "流程图说明",
+      "group": "首页",
+      "type": "input",
+      "value": "这个站点只做三件事：记下来、整理好、分享出去。",
+      "note": ""
+    },
+    {
+      "name": "flowItems",
+      "label": "流程图三格",
+      "group": "首页",
+      "type": "textarea",
+      "value": "PencilLine|记下来|把想法、笔记和踩过的坑写成文章或闪念。|整理\nFolders|整理好|按分类和标签归档，⌘K 一键搜到。|发布\nGlobe|分享出去|生成静态页面，部署到任意服务器，读者直接访问。",
+      "note": "每行一格，格式：图标|标题|描述|通往下一格的箭头文字。中间那一格会以灰底高亮。图标名见 lucide.dev（如 Server、Laptop、Globe、BookOpen）"
+    },
+    {
+      "name": "flowNote",
+      "label": "流程图脚注",
+      "group": "首页",
+      "type": "input",
+      "value": "",
+      "note": "流程图下方的一行小字，留空不显示"
+    },
+    {
+      "name": "latestTitle",
+      "label": "文章列表标题",
+      "group": "首页",
+      "type": "input",
+      "value": "最新文章",
+      "note": "首页文章列表（对应原站「完整路线」）的标题"
+    },
+    {
+      "name": "latestLead",
+      "label": "文章列表说明",
+      "group": "首页",
+      "type": "input",
+      "value": "按发布时间倒序。置顶文章始终在最前。",
+      "note": ""
+    },
+    {
+      "name": "showHomeCategories",
+      "label": "首页显示分类卡片",
+      "group": "首页",
+      "type": "toggle",
+      "value": true,
+      "note": "对应原站「两种做法，选一种」的双列卡片"
+    },
+    {
+      "name": "showToc",
+      "label": "文章页显示右侧目录",
+      "group": "文章",
+      "type": "toggle",
+      "value": true,
+      "note": "宽屏（≥1180px）时在正文右侧显示「本页」目录，并随滚动高亮"
+    },
+    {
+      "name": "showReadingProgress",
+      "label": "文章页阅读进度条",
+      "group": "文章",
+      "type": "toggle",
+      "value": true,
+      "note": "对应原站标题上方的步骤进度条，这里表示阅读进度"
+    },
+    {
+      "name": "showCopyButton",
+      "label": "代码块复制按钮",
+      "group": "文章",
+      "type": "toggle",
+      "value": true,
+      "note": "代码块顶部显示语言名和「复制」按钮"
+    },
+    {
+      "name": "showFeedback",
+      "label": "文末反馈条",
+      "group": "文章",
+      "type": "toggle",
+      "value": true,
+      "note": "正文末尾的灰底反馈条"
+    },
+    {
+      "name": "feedbackText",
+      "label": "反馈条文字",
+      "group": "文章",
+      "type": "input",
+      "value": "这一篇有没看懂、或者发现写错的地方？",
+      "note": ""
+    },
+    {
+      "name": "feedbackLinkText",
+      "label": "反馈链接文字",
+      "group": "文章",
+      "type": "input",
+      "value": "在评论区告诉我",
+      "note": ""
+    },
+    {
+      "name": "feedbackLink",
+      "label": "反馈链接地址",
+      "group": "文章",
+      "type": "input",
+      "value": "#comments",
+      "note": "默认跳到评论区；也可以填 GitHub Issues 或邮箱（mailto:）"
+    },
+    {
+      "name": "memosLead",
+      "label": "闪念页说明",
+      "group": "闪念",
+      "type": "input",
+      "value": "随手记下的短想法，不成文，但值得留下。",
+      "note": ""
+    },
+    {
+      "name": "showHeatmap",
+      "label": "显示闪念热力图",
+      "group": "闪念",
+      "type": "toggle",
+      "value": true,
+      "note": "最近一年每天的闪念数量"
+    },
+    {
+      "name": "linksLead",
+      "label": "友链页说明",
+      "group": "友链",
+      "type": "input",
+      "value": "常去的站点和朋友们的博客。",
+      "note": ""
+    },
+    {
+      "name": "linksApply",
+      "label": "申请友链说明",
+      "group": "友链",
+      "type": "textarea",
+      "value": "欢迎交换友链：请在下方评论区留下站点名称、地址、一句话介绍和头像链接。",
+      "note": "以提示横幅显示在友链列表下方，支持 HTML。留空不显示"
+    },
+    {
+      "name": "linksComments",
+      "label": "友链页开启评论",
+      "group": "友链",
+      "type": "toggle",
+      "value": true,
+      "note": "需要 Gridea Pro「评论设置」已启用"
+    },
+    {
+      "name": "aboutFallback",
+      "label": "关于页默认内容",
+      "group": "关于",
+      "type": "textarea",
+      "value": "",
+      "note": "关于页优先显示文件名为 about 的文章；没有该文章时显示这里的内容（支持 HTML）"
+    },
+    {
+      "name": "customHead",
+      "label": "头部注入代码",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "插入到 </head> 前，可放统计代码、meta 标签"
+    },
+    {
+      "name": "xuiCustomCss",
+      "label": "自定义 CSS",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": ""
+    },
+    {
+      "name": "customFooter",
+      "label": "底部注入代码",
+      "group": "高级",
+      "type": "textarea",
+      "value": "",
+      "note": "插入到 </body> 前"
+    }
+  ]
+}

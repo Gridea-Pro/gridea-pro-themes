@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}{% if pagination and pagination.currentPage > 1 %}第 {{ pagination.currentPage }} 页 · {% endif %}{{ config.siteName }}{% endblock %}
+{% block body_class %}page-home{% endblock %}
+
+{% block main %}
+<main id="main" class="site-main site-main--wide">
+  <div class="home">
+    {% if not pagination or pagination.currentPage <= 1 %}
+    <h1>{% if theme_config.heroTitle %}{{ theme_config.heroTitle }}{% else %}{{ config.siteName }}{% endif %}</h1>
+    <p class="home__lead">{% if theme_config.heroLead %}{{ theme_config.heroLead|safe }}{% else %}{{ config.siteDescription }}{% endif %}</p>
+    {% if theme_config.ctaPrimaryText or theme_config.ctaSecondaryText %}
+    <div class="home__cta">
+      {% if theme_config.ctaPrimaryText %}<a class="xxd-btn" data-variant="primary" href="{% if theme_config.ctaPrimaryLink %}{{ theme_config.ctaPrimaryLink }}{% else %}{% for p in posts %}{% if loop.first %}{{ p.link }}{% endif %}{% endfor %}{% endif %}">{{ theme_config.ctaPrimaryText }}<i data-xxd-icon="ArrowRight" data-size="16"></i></a>{% endif %}
+      {% if theme_config.ctaSecondaryText %}<a class="xxd-btn" href="{{ theme_config.ctaSecondaryLink|default:"/archives/" }}">{{ theme_config.ctaSecondaryText }}</a>{% endif %}
+    </div>
+    {% endif %}
+
+    {% if theme_config.showFlow and theme_config.flowItems %}
+    <section aria-labelledby="h-flow">
+      <h2 id="h-flow">{{ theme_config.flowTitle|default:"一张图看懂" }}</h2>
+      {% if theme_config.flowLead %}<p>{{ theme_config.flowLead }}</p>{% endif %}
+      <div class="flow">
+        {% for line in theme_config.flowItems|linebreaksbr|split:"<br />" %}{% if line %}{% set parts = line|split:"|" %}
+        <div class="flow__box"{% if loop.index == 2 %} data-mine{% endif %}>
+          <i class="flow__icon" data-xxd-icon="{{ parts.0|default:"Circle" }}" data-size="20"></i>
+          <p class="flow__title">{{ parts.1 }}</p>
+          <p class="flow__desc">{{ parts.2 }}</p>
+        </div>
+        {% if not loop.last %}<div class="flow__arrow" aria-hidden="true"><i data-xxd-icon="ArrowRight" data-size="16"></i>{{ parts.3 }}</div>{% endif %}
+        {% endif %}{% endfor %}
+      </div>
+      {% if theme_config.flowNote %}<p class="flow__note">{{ theme_config.flowNote }}</p>{% endif %}
+    </section>
+    {% endif %}
+    {% else %}
+    <h1>{{ theme_config.latestTitle|default:"最新文章" }}</h1>
+    <p class="home__lead">第 {{ pagination.currentPage }} 页，共 {{ pagination.totalPages }} 页。</p>
+    {% endif %}
+
+    <section aria-labelledby="h-latest">
+      {% if not pagination or pagination.currentPage <= 1 %}
+      <h2 id="h-latest">{{ theme_config.latestTitle|default:"最新文章" }}</h2>
+      {% if theme_config.latestLead %}<p>{{ theme_config.latestLead }}</p>{% endif %}
+      {% endif %}
+      {% if posts and posts|length > 0 %}
+      <ol class="roadmap">
+        {% for post in posts %}{% if not post.hideInList %}
+        <li>
+          <span class="roadmap__n">{% if post.isTop %}<i data-xxd-icon="Pin" data-size="12" aria-label="置顶"></i>{% else %}{{ loop.index }}{% endif %}</span>
+          <span>
+            <span class="roadmap__title"><a href="{{ post.link }}">{{ post.title }}</a></span>
+            <span class="roadmap__sum">{% if post.description %}{{ post.description|truncatechars:72 }}{% else %}{{ post.content|striptags|truncatechars:72 }}{% endif %}</span>
+          </span>
+          <span class="roadmap__time"><time datetime="{{ post.date }}">{{ post.dateFormat }}</time></span>
+        </li>
+        {% endif %}{% endfor %}
+      </ol>
+      {% else %}
+      <div class="empty-state"><i data-xxd-icon="FileText" data-size="20"></i><p>还没有发布文章。在 Gridea Pro 里写下第一篇吧。</p></div>
+      {% endif %}
+      {% include "partials/pagination.html" %}
+    </section>
+
+    {% if theme_config.showHomeCategories and categories and categories|length > 0 %}{% if not pagination or pagination.currentPage <= 1 %}
+    <section aria-labelledby="h-cats">
+      <h2 id="h-cats">按分类浏览</h2>
+      <p>共 {{ categories|length }} 个分类，点进去看该分类下的全部文章。</p>
+      <div class="routes">
+        {% for cat in categories %}
+        <a class="route route--link" href="{{ cat.link }}">
+          <h3><i data-xxd-icon="Folder" data-size="18"></i>{{ cat.name }}<span class="route__count">{{ cat.count }} 篇</span></h3>
+          <p>{% if cat.description %}{{ cat.description }}{% else %}收录 {{ cat.count }} 篇文章。{% endif %}</p>
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+    {% endif %}{% endif %}
+  </div>
+  {% include "partials/footer.html" %}
+</main>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}标签 · {{ config.siteName }}{% endblock %}
+{% block body_class %}page-tags{% endblock %}
+
+{% block main %}
+<main id="main" class="site-main">
+  <div class="xxd-prose page-head">
+    <h1>标签</h1>
+    <p>{% if tags and tags|length > 0 %}共 {{ tags|length }} 个标签。{% endif %}每个标签后面是它下面的文章数。</p>
+  </div>
+  {% if tags and tags|length > 0 %}
+  <ul class="tag-grid">
+    {% for t in tags %}
+    <li><a href="{{ t.link }}"><span class="tag-grid__hash" aria-hidden="true">#</span><span class="tag-grid__name">{{ t.name }}</span><span class="tag-grid__count">{{ t.count }}</span></a></li>
+    {% endfor %}
+  </ul>
+  {% else %}
+  <div class="empty-state"><i data-xxd-icon="Tags" data-size="20"></i><p>还没有标签。</p></div>
+  {% endif %}
+  {% include "partials/footer.html" %}
+</main>
+<aside class="site-toc" aria-label="按分类">
+  {% if categories and categories|length > 0 %}
+  <h2>也可以按分类看</h2>
+  <ul>{% for cat in categories %}<li><a href="{{ cat.link }}">{{ cat.name }}<span class="site-toc__n">{{ cat.count }}</span></a></li>{% endfor %}</ul>
+  {% endif %}
+</aside>
+{% endblock %}

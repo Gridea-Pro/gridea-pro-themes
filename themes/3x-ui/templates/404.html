@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}页面不存在 · {{ config.siteName }}{% endblock %}
+{% block body_class %}page-404{% endblock %}
+
+{% block main %}
+<main id="main" class="site-main site-main--wide">
+  <div class="home notfound">
+    <p class="notfound__code">404</p>
+    <h1>这一页不存在</h1>
+    <p class="home__lead">链接可能写错了，或者文章已经改了地址。试试搜索，或者从首页重新找。</p>
+    <div class="home__cta">
+      <a class="xxd-btn" data-variant="primary" href="/">回到首页<i data-xxd-icon="ArrowRight" data-size="16"></i></a>
+      <button class="xxd-btn" type="button" data-open-search><i data-xxd-icon="Search" data-size="16"></i>搜索全站</button>
+    </div>
+  </div>
+  {% include "partials/footer.html" %}
+</main>
+{% endblock %}

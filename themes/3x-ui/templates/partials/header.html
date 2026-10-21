@@ -1,0 +1,18 @@
+<header class="site-top">
+  <button class="xxd-btn site-menu" data-variant="ghost" data-icon-only aria-label="打开目录" id="site-menu" aria-controls="site-nav" aria-expanded="false"><i data-xxd-icon="Menu" data-size="18"></i></button>
+  <a class="site-brand" href="/">
+    {% if theme_config.brandLogo %}<img class="site-logo" src="{{ theme_config.brandLogo }}" alt="" width="18" height="18">{% else %}<span class="site-mark" aria-hidden="true"></span>{% endif %}
+    <span class="site-brand__name">{% if theme_config.brandText %}{{ theme_config.brandText }}{% else %}{{ config.siteName }}{% endif %}</span>
+  </a>
+  <button class="site-search" id="site-search" type="button" aria-label="搜索文章"><i data-xxd-icon="Search" data-size="14"></i><span>搜索文章</span><kbd class="xxd-kbd" data-kbd-mod>⌘K</kbd></button>
+  <span class="site-top__spacer"></span>
+  <div class="site-appearance">
+    <div class="xxd-segmented" data-xxd-segmented data-name="theme" aria-label="外观" id="site-theme">
+      <button role="radio" data-value="light" aria-label="亮色" data-tooltip="亮色" data-tooltip-placement="bottom"><i data-xxd-icon="Sun" data-size="14"></i></button>
+      <button role="radio" data-value="dark" aria-label="暗色" data-tooltip="暗色" data-tooltip-placement="bottom"><i data-xxd-icon="Moon" data-size="14"></i></button>
+      <button role="radio" data-value="system" aria-label="跟随系统" data-tooltip="跟随系统" data-tooltip-placement="bottom"><i data-xxd-icon="Contrast" data-size="14"></i></button>
+    </div>
+    {% if theme_config.extraNavText and theme_config.extraNavLink %}<a class="xxd-btn site-lang" data-size="sm" data-variant="ghost" href="{{ theme_config.extraNavLink }}">{{ theme_config.extraNavText }}</a>{% endif %}
+    {% if theme_config.githubUrl %}<a class="xxd-btn" data-size="sm" data-variant="ghost" data-icon-only href="{{ theme_config.githubUrl }}" target="_blank" rel="noopener" aria-label="GitHub" data-tooltip="GitHub" data-tooltip-placement="bottom-end"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path></svg></a>{% endif %}
+  </div>
+</header>

@@ -1,0 +1,29 @@
+<div id="giscus-container"></div>
+<script>
+  (function () {
+    // giscus 的 light 与原站纸色接近；暗色用透明底，让暖黑背景透出来
+    var theme = function (dark) { return dark ? 'transparent_dark' : 'light'; };
+    SiteComments.whenVisible(function () {
+      SiteComments.js('https://giscus.app/client.js', null, {
+        'data-repo': '{{ commentSetting.repo|escapejs }}',
+        'data-repo-id': '{{ commentSetting.repoId|escapejs }}',
+        'data-category': '{{ commentSetting.category|escapejs }}',
+        'data-category-id': '{{ commentSetting.categoryId|escapejs }}',
+        'data-mapping': 'pathname',
+        'data-strict': '0',
+        'data-reactions-enabled': '1',
+        'data-emit-metadata': '0',
+        'data-input-position': 'top',
+        'data-theme': theme(SiteComments.isDark()),
+        'data-lang': 'zh-CN',
+        'data-loading': 'lazy',
+        'crossorigin': 'anonymous',
+        __mount: document.getElementById('giscus-container')
+      });
+    });
+    SiteComments.onTheme(function (dark) {
+      var f = document.querySelector('iframe.giscus-frame');
+      if (f) f.contentWindow.postMessage({ giscus: { setConfig: { theme: theme(dark) } } }, 'https://giscus.app');
+    });
+  })();
+</script>

@@ -1,0 +1,58 @@
+{# 评论组件：读取 Gridea Pro「评论设置」注入的 commentSetting，按平台分发。
+   七个平台共用同一个外壳和一套样式（/styles/comments.css），并跟随深浅模式切换。
+   评论脚本在评论区接近视口时才加载，不拖慢正文首屏。 #}
+{% if commentSetting and commentSetting.showComment %}
+<section class="comments" id="comments" aria-labelledby="comments-title" data-platform="{{ commentSetting.commentPlatform|lower }}">
+  <h2 class="comments__title" id="comments-title"><i data-xxd-icon="MessagesSquare" data-size="18"></i>评论</h2>
+  <script>
+    window.SiteComments = window.SiteComments || {
+      isDark: function () { return document.documentElement.getAttribute('data-theme') === 'dark'; },
+      onTheme: function (cb) {
+        new MutationObserver(function () { cb(window.SiteComments.isDark()); })
+          .observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+      },
+      css: function (href) {
+        var l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l);
+      },
+      js: function (src, cb, attrs) {
+        var s = document.createElement('script'); s.src = src; s.async = true;
+        if (attrs) { for (var k in attrs) { if (k.indexOf('__') !== 0) s.setAttribute(k, attrs[k]); } }
+        if (cb) s.onload = cb;
+        s.onerror = function () { window.SiteComments.fail(); };
+        (attrs && attrs.__mount ? attrs.__mount : document.body).appendChild(s);
+      },
+      whenVisible: function (fn) {
+        var el = document.getElementById('comments');
+        if (!el || !('IntersectionObserver' in window)) return fn();
+        var io = new IntersectionObserver(function (es) {
+          if (es.some(function (e) { return e.isIntersecting; })) { io.disconnect(); fn(); }
+        }, { rootMargin: '600px 0px' });
+        io.observe(el);
+      },
+      fail: function () {
+        var box = document.querySelector('.comments__state');
+        if (box) { box.hidden = false; box.textContent = '评论加载失败，可能是网络问题或评论服务暂时不可用。刷新页面再试一次。'; }
+      },
+      path: function () { return decodeURI(location.pathname); }
+    };
+  </script>
+  <div class="comments__body">
+    {% if commentSetting.commentPlatform == "Valine" %}
+      {% include "partials/comment-valine.html" %}
+    {% elif commentSetting.commentPlatform == "Waline" %}
+      {% include "partials/comment-waline.html" %}
+    {% elif commentSetting.commentPlatform == "Twikoo" %}
+      {% include "partials/comment-twikoo.html" %}
+    {% elif commentSetting.commentPlatform == "Gitalk" %}
+      {% include "partials/comment-gitalk.html" %}
+    {% elif commentSetting.commentPlatform == "Giscus" %}
+      {% include "partials/comment-giscus.html" %}
+    {% elif commentSetting.commentPlatform == "Disqus" %}
+      {% include "partials/comment-disqus.html" %}
+    {% elif commentSetting.commentPlatform == "Cusdis" %}
+      {% include "partials/comment-cusdis.html" %}
+    {% endif %}
+  </div>
+  <p class="comments__state" hidden></p>
+</section>
+{% endif %}

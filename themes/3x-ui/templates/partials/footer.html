@@ -1,0 +1,3 @@
+<footer class="site-foot">
+  {% if theme_config.footerText %}<p>{{ theme_config.footerText|safe }}</p>{% elif config.footerInfo %}<p>{{ config.footerInfo|safe }}</p>{% else %}<p>© {{ now|date:"2006" }} {{ config.siteName }}。内容版权归作者所有，转载请注明出处。由 <a href="https://gridea.pro" target="_blank" rel="noopener">Gridea Pro</a> 生成，主题 3x-ui。</p>{% endif %}
+</footer>

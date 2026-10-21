@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}#{{ tag.name }} · {{ config.siteName }}{% endblock %}
+{% block description %}标签「{{ tag.name }}」下的全部文章{% endblock %}
+{% block body_class %}page-tag{% endblock %}
+
+{% block main %}
+<main id="main" class="site-main">
+  <header class="step-head">
+    <div class="step-head__eyebrow"><span><a href="/{{ config.tagsPath|default:"tags" }}/">标签</a> · {{ tag.name }}</span><span>{% if pagination and pagination.totalPosts %}{{ pagination.totalPosts }}{% else %}{{ tag.count }}{% endif %} 篇</span></div>
+    <h1><span class="step-head__hash">#</span>{{ tag.name }}</h1>
+  </header>
+  {% include "partials/post-list.html" %}
+  {% include "partials/pagination.html" %}
+  {% include "partials/footer.html" %}
+</main>
+<aside class="site-toc" aria-label="其他标签">
+  {% if tags and tags|length > 1 %}
+  <h2>其他标签</h2>
+  <ul>{% for t in tags %}{% if t.slug != tag.slug %}<li><a href="{{ t.link }}">#{{ t.name }}<span class="site-toc__n">{{ t.count }}</span></a></li>{% endif %}{% endfor %}</ul>
+  {% endif %}
+</aside>
+{% endblock %}

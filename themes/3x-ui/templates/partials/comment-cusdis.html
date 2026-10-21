@@ -1,0 +1,21 @@
+<div id="cusdis_thread"
+  data-host="{{ commentSetting.host }}"
+  data-app-id="{{ commentSetting.appId }}"
+  data-page-id=""
+  data-page-url=""
+  data-page-title=""
+  data-theme="light"></div>
+<script>
+  (function () {
+    var box = document.getElementById('cusdis_thread');
+    box.setAttribute('data-page-id', SiteComments.path());
+    box.setAttribute('data-page-url', location.origin + location.pathname);
+    box.setAttribute('data-page-title', document.title);
+    box.setAttribute('data-theme', SiteComments.isDark() ? 'dark' : 'light');
+    SiteComments.whenVisible(function () {
+      SiteComments.js('{{ commentSetting.host|escapejs }}/js/widget/lang/zh-cn.js');
+      SiteComments.js('{{ commentSetting.host|escapejs }}/js/cusdis.es.js', null, { type: 'module' });
+    });
+    SiteComments.onTheme(function (dark) { if (window.CUSDIS && CUSDIS.setTheme) CUSDIS.setTheme(dark ? 'dark' : 'light'); });
+  })();
+</script>
