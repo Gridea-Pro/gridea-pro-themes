@@ -20,7 +20,10 @@
   {% if post and post.content %}{% include "partials/comments.html" %}{% endif %}
   {% include "partials/footer.html" %}
 </main>
-<aside class="site-toc" aria-label="本页目录"{% if theme_config.showToc %} data-auto-toc{% endif %}>
-  {% if theme_config.showToc and post and post.toc %}<h2>本页</h2><div class="site-toc__list" data-toc>{{ post.toc|safe }}</div>{% endif %}
+{% if theme_config.showToc %}
+<aside class="site-toc" aria-label="目录" data-auto-toc>
+  <h2 class="site-toc__title">目录</h2>
+  <div class="site-toc__list" data-toc></div>
 </aside>
+{% endif %}
 {% endblock %}

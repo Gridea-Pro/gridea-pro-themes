@@ -1,4 +1,4 @@
-/* 3x-ui 主题脚本。依赖 /xxd/boot.js（XxdTheme）、/xxd/icons.js、/xxd/xxd.js（Xxd）。
+/* 3x-ui 主题脚本。依赖 /xxd/boot.js（XxdTheme）、/xxd/icons.js（XxdIcons，Lucide）、/xxd/xxd.js（Xxd）。
    外观切换、窄屏目录抽屉沿用原站 vps.xiaoxiaodong.ai 的写法（MIT）。 */
 (() => {
   const T = window.XxdTheme, X = window.Xxd;
@@ -29,12 +29,14 @@
   /* ---------- 快捷键文字：非 Mac 显示 Ctrl K ---------- */
   if (!isMac) for (const k of $$("[data-kbd-mod]")) k.textContent = "Ctrl K";
 
-  /* ---------- 左目录：标记当前页 ---------- */
+  /* ---------- 路径归一化（左目录高亮、推荐阅读匹配都用它） ---------- */
   const norm = (p) => {
     try { p = decodeURI(new URL(p, location.href).pathname); } catch { return ""; }
     return p.replace(/index\.html$/, "").replace(/\/+$/, "") || "/";
   };
   const here = norm(location.href);
+
+  /* ---------- 左目录：标记当前页 ---------- */
   const navLinks = $$(".site-nav a[href]");
   let current = navLinks.find((a) => norm(a.getAttribute("href")) === here);
   // 首页分页（/page/2/）也算在「首页」下
@@ -61,12 +63,18 @@
     const toggle = (on) => {
       nav.toggleAttribute("data-open", on); scrim.toggleAttribute("data-open", on);
       menu.setAttribute("aria-expanded", String(on));
+      document.documentElement.classList.toggle("nav-open", on);
       if (on) (nav.querySelector('[aria-current="page"]') || nav.querySelector("a"))?.focus();
       else if (nav.contains(document.activeElement)) menu.focus();
     };
     menu.addEventListener("click", () => toggle(!nav.hasAttribute("data-open")));
     scrim.addEventListener("click", () => toggle(false));
+    // 点目录里的链接后自动收起，避免挡住刚打开的页面
+    nav.addEventListener("click", (e) => {
+      if (e.target.closest("a") && nav.hasAttribute("data-open")) toggle(false);
+    });
     nav.addEventListener("keydown", (e) => { if (e.key === "Escape" && nav.hasAttribute("data-open")) { e.preventDefault(); toggle(false); } });
+    addEventListener("resize", () => { if (innerWidth > 900 && nav.hasAttribute("data-open")) toggle(false); });
   }
 
   /* ---------- 正文：代码块包装 + 复制 + 高亮；表格横向滚动 ---------- */
@@ -120,7 +128,8 @@
   }
 
   /* ---------- 阅读进度（标题上方的进度条） ---------- */
-  const bar = $("[data-reading-progress]"), article = $("#post-body");
+  const article = $("#post-body");
+  const bar = $("[data-reading-progress]");
   if (bar && article) {
     let ticking = false;
     const update = () => {
@@ -135,25 +144,40 @@
     update();
   }
 
-  /* ---------- 右目录：引擎没给 post.toc 时，从正文 h2 / h3 生成 ---------- */
+  /* ---------- 右侧目录：由正文的 h2 / h3 / h4 生成，1~4 级带层级；窄屏克隆一份到正文上方 ---------- */
   const autoToc = $("[data-auto-toc]");
-  if (autoToc && !autoToc.querySelector("[data-toc]") && article) {
+  const tocBox = autoToc && autoToc.querySelector("[data-toc]");
+  if (autoToc && tocBox && article) {
     const seen = new Set();
-    const heads = $$("h2, h3", article).filter((h) => !h.closest(".xxd-code-block, .comments"));
+    const heads = $$("h1, h2, h3, h4", article).filter((h) => !h.closest(".xxd-code-block, .comments, .post-toc-inline"));
     for (const h of heads) {
       let id = h.id;
-      if (!id || seen.has(id)) id = (h.textContent.trim().replace(/[\s#?&/\\]+/g, "-").slice(0, 48) || "section") + (seen.has(h.id) ? "-" + seen.size : "");
+      if (!id || seen.has(id)) id = (h.textContent.trim().replace(/[\s#?&/\\]+/g, "-").slice(0, 48) || "section") + (seen.has(id) ? "-" + seen.size : "");
       while (seen.has(id)) id += "-" + seen.size;
       h.id = id; seen.add(id);
     }
     if (heads.length >= 2) {
       const esc = (t) => t.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
-      autoToc.innerHTML = '<h2>本页</h2><div class="site-toc__list" data-toc><ul>' + heads.map((h) =>
-        `<li${h.tagName === "H3" ? ' class="is-sub"' : ""}><a href="#${encodeURIComponent(h.id)}">${esc(h.textContent.trim())}</a></li>`).join("") + "</ul></div>";
+      // 取正文里最浅的一级作为第 1 级，避免只有 h3 时整列都被缩进
+      const ranks = heads.map((h) => Number(h.tagName.slice(1)));
+      const top = Math.min(...ranks);
+      const html = '<ul>' + heads.map((h) => {
+        const lv = Math.min(4, Math.max(1, Number(h.tagName.slice(1)) - top + 1));
+        return `<li data-level="${lv}"><a href="#${encodeURIComponent(h.id)}" title="${esc(h.textContent.trim())}">${esc(h.textContent.trim())}</a></li>`;
+      }).join("") + "</ul>";
+      tocBox.innerHTML = html;
+
+      const mobWrap = $("[data-mobile-toc-wrap]"), mobBox = $("[data-mobile-toc]");
+      if (mobWrap && mobBox) {
+        mobBox.innerHTML = html;
+        mobWrap.removeAttribute("hidden");
+        if (X && X.spyToc) X.spyToc(mobBox);
+      }
+    } else {
+      // 只有一两个小标题的短文章：目录没有意义，整列让出来给正文
+      autoToc.remove();
     }
   }
-
-  /* ---------- 右目录：随滚动高亮 ---------- */
   const toc = $("[data-toc]");
   if (toc && X && X.spyToc) X.spyToc(toc);
 
@@ -213,7 +237,7 @@
       byMonth.get(ym).n++;
     }
     if (byMonth.size) {
-      memoToc.innerHTML = "<h2>按月份</h2><ul>" + [...byMonth].map(([ym, v]) =>
+      memoToc.innerHTML = '<h2 class="site-toc__title">按月份</h2><ul>' + [...byMonth].map(([ym, v]) =>
         `<li><a href="#${v.id}">${ym.replace("-", " 年 ")} 月<span class="site-toc__n">${v.n}</span></a></li>`).join("") + "</ul>";
     }
   }
@@ -231,14 +255,15 @@
     }
     return out;
   };
-  let items = null, loading = null;
+  let items = null, loading = null, searchPosts = null;
   const load = () => {
     if (loading) return loading;
     loading = fetch(cfg.index || "/api/search.json")
       .then((r) => (r.ok ? r.json() : []))
       .catch(() => [])
       .then((list) => {
-        const posts = (Array.isArray(list) ? list : []).map((p) => ({
+        searchPosts = Array.isArray(list) ? list : [];
+        const posts = searchPosts.map((p) => ({
           label: p.title || "（无标题）",
           hint: p.date ? String(p.date).slice(0, 10).replace(/(\d{4})\D(\d{2})\D(\d{2}).*/, "$1-$2-$3") : "",
           group: "文章",
@@ -250,11 +275,74 @@
       });
     return loading;
   };
+
+  /* 命中关键词高亮：面板每次重绘后，把选项标题里命中的词包进 <mark> */
+  const markPalette = (dialog) => {
+    const list = dialog.querySelector(".xxd-palette__list");
+    const input = dialog.querySelector(".xxd-palette__search input");
+    if (!list || !input) return;
+    const paint = () => {
+      const raw = input.value.trim();
+      if (!raw) return;
+      const terms = raw.toLowerCase().split(/\s+/).filter(Boolean);
+      for (const li of list.querySelectorAll("li.xxd-option")) {
+        if (li.dataset.hl === raw) continue;
+        li.dataset.hl = raw;
+        const node = li.firstChild;
+        if (!node || node.nodeType !== 3) continue;
+        const text = node.nodeValue, lower = text.toLowerCase();
+        const ranges = [];
+        for (const t of terms) {
+          let i = lower.indexOf(t);
+          while (i !== -1) { ranges.push([i, i + t.length]); i = lower.indexOf(t, i + t.length); }
+        }
+        if (!ranges.length) continue;
+        ranges.sort((a, b) => a[0] - b[0]);
+        const merged = [];
+        for (const r of ranges) {
+          const last = merged[merged.length - 1];
+          if (last && r[0] <= last[1]) last[1] = Math.max(last[1], r[1]);
+          else merged.push([r[0], r[1]]);
+        }
+        const frag = document.createDocumentFragment();
+        let pos = 0;
+        for (const [s, e] of merged) {
+          if (s > pos) frag.append(text.slice(pos, s));
+          const mark = document.createElement("mark");
+          mark.className = "search-hit";
+          mark.textContent = text.slice(s, e);
+          frag.append(mark);
+          pos = e;
+        }
+        if (pos < text.length) frag.append(text.slice(pos));
+        li.replaceChild(frag, node);
+      }
+    };
+    let scheduled = false;
+    const schedule = () => {
+      if (scheduled) return;
+      scheduled = true;
+      requestAnimationFrame(() => { scheduled = false; paint(); });
+    };
+    const obs = new MutationObserver(schedule);
+    obs.observe(list, { childList: true, subtree: true });
+    input.addEventListener("input", schedule);
+    dialog.addEventListener("close", () => {
+      obs.disconnect();
+      input.removeEventListener("input", schedule);
+    }, { once: true });
+  };
+
   const openSearch = () => {
     if (!X || !X.openCommandPalette) return;
     const opts = { placeholder: cfg.placeholder, empty: cfg.empty, recentKey: "gridea-3x-ui:recent" };
-    if (items) return X.openCommandPalette({ items, ...opts });
-    load().then((list) => X.openCommandPalette({ items: list, ...opts }));
+    const open = (list) => {
+      const dialog = X.openCommandPalette({ items: list, ...opts });
+      if (dialog && dialog.querySelector) markPalette(dialog);
+      return dialog;
+    };
+    if (items) return open(items);
+    load().then(open);
   };
   $("#site-search")?.addEventListener("click", openSearch);
   for (const b of $$("[data-open-search]")) b.addEventListener("click", openSearch);
@@ -264,6 +352,81 @@
     else if (e.key === "/" && !/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName || "") && !document.activeElement?.isContentEditable) { e.preventDefault(); openSearch(); }
   });
   (window.requestIdleCallback || ((f) => setTimeout(f, 1500)))(load);
+
+  /* ---------- 首页推荐阅读：服务端没匹配到的卡片，从 /archives/ 的 data-post-* 补全 ---------- */
+  const recPending = $$(".rec-card__pending");
+  if (recPending.length) {
+    const archiveMap = new Map();
+    let archivePromise = null;
+    const loadArchives = () => {
+      if (archivePromise) return archivePromise;
+      archivePromise = fetch("/archives/", { credentials: "same-origin" })
+        .then((r) => (r.ok ? r.text() : ""))
+        .then((html) => {
+          if (!html) return archiveMap;
+          const doc = new DOMParser().parseFromString(html, "text/html");
+          for (const el of doc.querySelectorAll("[data-post-link]")) {
+            const d = el.dataset;
+            archiveMap.set(norm(d.postLink), {
+              title: d.postTitle || "", date: d.postDate || "", cover: d.postCover || "",
+              cat: d.postCat || "", desc: d.postDesc || "", min: d.postMin || "",
+            });
+          }
+          return archiveMap;
+        })
+        .catch(() => archiveMap);
+      return archivePromise;
+    };
+
+    const paint = (card, data) => {
+      const slot = card.querySelector(".rec-card__cover");
+      if (data.cover && slot && !slot.querySelector("img")) {
+        const img = document.createElement("img");
+        img.src = data.cover; img.alt = ""; img.loading = "lazy"; img.decoding = "async";
+        img.onerror = () => img.remove();
+        slot.prepend(img);
+        const ph = slot.querySelector(".rec-card__ph");
+        if (ph) ph.remove();
+      }
+      const desc = card.querySelector("[data-rec-desc]");
+      if (desc && data.desc && !desc.textContent.trim()) desc.textContent = data.desc;
+      const meta = card.querySelector("[data-rec-meta]");
+      if (meta && !meta.childElementCount) {
+        const bits = [];
+        if (data.date) bits.push(`<time datetime="${data.date.replace(/[^\d-]/g, "")}">${data.date}</time>`);
+        if (data.cat) bits.push(data.cat);
+        if (data.min && data.min !== "0") bits.push(`约 ${data.min} 分钟`);
+        if (bits.length) {
+          meta.innerHTML = bits.join('<span class="dot" aria-hidden="true">·</span>');
+          meta.removeAttribute("hidden");
+        }
+      }
+    };
+
+    loadArchives().then((map) => {
+      const left = [];
+      for (const card of recPending) {
+        const key = norm(card.dataset.recLink || "");
+        const data = map.get(key);
+        if (data) paint(card, data);
+        else left.push(card);
+      }
+      if (!left.length) return null;
+      // 归档页没收录（或没渲染）时，退回搜索索引：至少有日期和摘要
+      return load().then(() => {
+        for (const card of left) {
+          const key = norm(card.dataset.recLink || "");
+          const p = (searchPosts || []).find((x) => norm(x.link) === key);
+          if (!p) continue;
+          paint(card, {
+            date: String(p.date || "").slice(0, 10),
+            desc: String(p.content || "").replace(/\s+/g, " ").trim().slice(0, 80),
+            cat: "", min: "", cover: "",
+          });
+        }
+      });
+    }).catch(() => {});
+  }
 
   /* ---------- 交给 xxd：图标、分段控件、提示、复制按钮 ---------- */
   if (X && X.init) X.init(document);

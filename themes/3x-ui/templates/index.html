@@ -7,30 +7,79 @@
 <main id="main" class="site-main site-main--wide">
   <div class="home">
     {% if not pagination or pagination.currentPage <= 1 %}
-    <h1>{% if theme_config.heroTitle %}{{ theme_config.heroTitle }}{% else %}{{ config.siteName }}{% endif %}</h1>
-    <p class="home__lead">{% if theme_config.heroLead %}{{ theme_config.heroLead|safe }}{% else %}{{ config.siteDescription }}{% endif %}</p>
-    {% if theme_config.ctaPrimaryText or theme_config.ctaSecondaryText %}
-    <div class="home__cta">
-      {% if theme_config.ctaPrimaryText %}<a class="xxd-btn" data-variant="primary" href="{% if theme_config.ctaPrimaryLink %}{{ theme_config.ctaPrimaryLink }}{% else %}{% for p in posts %}{% if loop.first %}{{ p.link }}{% endif %}{% endfor %}{% endif %}">{{ theme_config.ctaPrimaryText }}<i data-xxd-icon="ArrowRight" data-size="16"></i></a>{% endif %}
-      {% if theme_config.ctaSecondaryText %}<a class="xxd-btn" href="{{ theme_config.ctaSecondaryLink|default:"/archives/" }}">{{ theme_config.ctaSecondaryText }}</a>{% endif %}
-    </div>
-    {% endif %}
-
-    {% if theme_config.showFlow and theme_config.flowItems %}
-    <section aria-labelledby="h-flow">
-      <h2 id="h-flow">{{ theme_config.flowTitle|default:"一张图看懂" }}</h2>
-      {% if theme_config.flowLead %}<p>{{ theme_config.flowLead }}</p>{% endif %}
-      <div class="flow">
-        {% for line in theme_config.flowItems|linebreaksbr|split:"<br />" %}{% if line %}{% set parts = line|split:"|" %}
-        <div class="flow__box"{% if loop.index == 2 %} data-mine{% endif %}>
-          <i class="flow__icon" data-xxd-icon="{{ parts.0|default:"Circle" }}" data-size="20"></i>
-          <p class="flow__title">{{ parts.1 }}</p>
-          <p class="flow__desc">{{ parts.2 }}</p>
-        </div>
-        {% if not loop.last %}<div class="flow__arrow" aria-hidden="true"><i data-xxd-icon="ArrowRight" data-size="16"></i>{{ parts.3 }}</div>{% endif %}
-        {% endif %}{% endfor %}
+    <header class="home__hero">
+      <h1>{% if theme_config.heroTitle %}{{ theme_config.heroTitle }}{% else %}{{ config.siteName }}{% endif %}</h1>
+      <p class="home__lead">{% if theme_config.heroLead %}{{ theme_config.heroLead|safe }}{% else %}{{ config.siteDescription }}{% endif %}</p>
+      {% if theme_config.ctaPrimaryText or theme_config.ctaSecondaryText %}
+      <div class="home__cta">
+        {% if theme_config.ctaPrimaryText %}<a class="xxd-btn" data-variant="primary" href="{% if theme_config.ctaPrimaryLink %}{{ theme_config.ctaPrimaryLink }}{% else %}{% for p in posts %}{% if loop.first %}{{ p.link }}{% endif %}{% endfor %}{% endif %}">{{ theme_config.ctaPrimaryText }}<i data-xxd-icon="ArrowRight" data-size="16"></i></a>{% endif %}
+        {% if theme_config.ctaSecondaryText %}<a class="xxd-btn" href="{{ theme_config.ctaSecondaryLink|default:"/archives/" }}">{{ theme_config.ctaSecondaryText }}</a>{% endif %}
       </div>
-      {% if theme_config.flowNote %}<p class="flow__note">{{ theme_config.flowNote }}</p>{% endif %}
+      {% endif %}
+    </header>
+
+    {# ---------- 推荐阅读：卡片由主题设置里的「推荐阅读文章」驱动 ----------
+       标题 / 链接来自设置；封面、摘要、发布时间、分类、阅读时长从对应文章读取。
+       当前页 posts 里能匹配到的直接服务端渲染；匹配不到的由 site.js 读取 /archives/ 里的
+       data-post-* 补全（见 archives.html），所以任何一篇文章都能显示完整卡片。 #}
+    {% if theme_config.showRecommend %}
+    {% set recCount = theme_config.recommendCount|default:"3"|to_int %}
+    {% set recCols = 3 %}{% if recCount == 4 or recCount == 8 %}{% set recCols = 4 %}{% endif %}
+    <section class="rec" aria-labelledby="h-rec">
+      <div class="sec-head">
+        <h2 id="h-rec">{{ theme_config.recommendTitle|default:"推荐阅读" }}</h2>
+        {% if theme_config.recommendLead %}<p class="sec-head__lead">{{ theme_config.recommendLead }}</p>{% endif %}
+      </div>
+      {% if theme_config.recommendItems %}
+      <ul class="rec-grid" style="--rec-cols: {{ recCols }}">
+        {% for line in theme_config.recommendItems|linebreaksbr|split:"<br />" %}{% if line and loop.index <= recCount %}{% set parts = line|split:"|" %}{% set ri = loop.index %}
+        {% if parts.1 %}
+        <li class="rec-card">
+          {% for p in posts %}{% if p.link == parts.1 %}
+          <div class="rec-card__full">
+            <a class="rec-card__link" href="{{ p.link }}">
+              <span class="rec-card__cover">{% if p.feature %}<img src="{{ p.feature }}" alt="" loading="lazy" decoding="async" onerror="this.remove()">{% else %}<span class="rec-card__ph" aria-hidden="true"><b>{{ ri }}</b></span>{% endif %}</span>
+              <span class="rec-card__body">
+                <span class="rec-card__title">{{ p.title }}</span>
+                <span class="rec-card__desc">{% if p.description %}{{ p.description|truncatechars:84 }}{% else %}{{ p.content|striptags|truncatechars:84 }}{% endif %}</span>
+                <span class="rec-card__meta"><time datetime="{{ p.date }}">{{ p.dateFormat }}</time>{% for cat in p.categories %}<span class="dot" aria-hidden="true">·</span>{{ cat.name }}{% endfor %}{% if p.stats.minutes %}<span class="dot" aria-hidden="true">·</span>约 {{ p.stats.minutes }} 分钟{% endif %}</span>
+              </span>
+            </a>
+          </div>
+          {% endif %}{% endfor %}
+          <div class="rec-card__pending" data-rec-link="{{ parts.1 }}" data-rec-title="{{ parts.0 }}"{% if parts.2 %} data-rec-cover="{{ parts.2 }}"{% endif %}>
+            <a class="rec-card__link" href="{{ parts.1 }}">
+              <span class="rec-card__cover">{% if parts.2 %}<img src="{{ parts.2 }}" alt="" loading="lazy" decoding="async" onerror="this.remove()">{% else %}<span class="rec-card__ph" aria-hidden="true"><b>{{ ri }}</b></span>{% endif %}</span>
+              <span class="rec-card__body">
+                <span class="rec-card__title">{{ parts.0 }}</span>
+                <span class="rec-card__desc" data-rec-desc></span>
+                <span class="rec-card__meta" data-rec-meta hidden></span>
+              </span>
+            </a>
+          </div>
+        </li>
+        {% endif %}
+        {% endif %}{% endfor %}
+      </ul>
+      {% elif posts and posts|length > 0 %}
+      {# 没配置推荐文章时，自动取最新几篇，保证这块不会空着 #}
+      <ul class="rec-grid" style="--rec-cols: {{ recCols }}">
+        {% for p in posts %}{% if loop.index <= recCount and not p.hideInList %}
+        <li class="rec-card">
+          <div class="rec-card__full">
+            <a class="rec-card__link" href="{{ p.link }}">
+              <span class="rec-card__cover">{% if p.feature %}<img src="{{ p.feature }}" alt="" loading="lazy" decoding="async" onerror="this.remove()">{% else %}<span class="rec-card__ph" aria-hidden="true"><b>{{ loop.index }}</b></span>{% endif %}</span>
+              <span class="rec-card__body">
+                <span class="rec-card__title">{{ p.title }}</span>
+                <span class="rec-card__desc">{% if p.description %}{{ p.description|truncatechars:84 }}{% else %}{{ p.content|striptags|truncatechars:84 }}{% endif %}</span>
+                <span class="rec-card__meta"><time datetime="{{ p.date }}">{{ p.dateFormat }}</time>{% for cat in p.categories %}<span class="dot" aria-hidden="true">·</span>{{ cat.name }}{% endfor %}{% if p.stats.minutes %}<span class="dot" aria-hidden="true">·</span>约 {{ p.stats.minutes }} 分钟{% endif %}</span>
+              </span>
+            </a>
+          </div>
+        </li>
+        {% endif %}{% endfor %}
+      </ul>
+      {% endif %}
     </section>
     {% endif %}
     {% else %}
@@ -38,18 +87,18 @@
     <p class="home__lead">第 {{ pagination.currentPage }} 页，共 {{ pagination.totalPages }} 页。</p>
     {% endif %}
 
-    <section aria-labelledby="h-latest">
-      {% if not pagination or pagination.currentPage <= 1 %}
-      <h2 id="h-latest">{{ theme_config.latestTitle|default:"最新文章" }}</h2>
-      {% if theme_config.latestLead %}<p>{{ theme_config.latestLead }}</p>{% endif %}
-      {% endif %}
+    <section class="latest" aria-labelledby="h-latest">
+      <div class="sec-head">
+        <h2 id="h-latest">{{ theme_config.latestTitle|default:"最新文章" }}{% if pagination and pagination.currentPage > 1 %} · 第 {{ pagination.currentPage }} 页{% endif %}</h2>
+        {% if theme_config.latestLead %}<p class="sec-head__lead">{{ theme_config.latestLead }}</p>{% endif %}
+      </div>
       {% if posts and posts|length > 0 %}
       <ol class="roadmap">
         {% for post in posts %}{% if not post.hideInList %}
         <li>
-          <span class="roadmap__n">{% if post.isTop %}<i data-xxd-icon="Pin" data-size="12" aria-label="置顶"></i>{% else %}{{ loop.index }}{% endif %}</span>
-          <span>
-            <span class="roadmap__title"><a href="{{ post.link }}">{{ post.title }}</a></span>
+          <span class="roadmap__n" aria-hidden="true">{{ loop.index }}</span>
+          <span class="roadmap__main">
+            <span class="roadmap__title">{% if post.isTop %}<span class="xxd-badge" data-variant="solid">置顶</span>{% endif %}<a href="{{ post.link }}">{{ post.title }}</a></span>
             <span class="roadmap__sum">{% if post.description %}{{ post.description|truncatechars:72 }}{% else %}{{ post.content|striptags|truncatechars:72 }}{% endif %}</span>
           </span>
           <span class="roadmap__time"><time datetime="{{ post.date }}">{{ post.dateFormat }}</time></span>
@@ -61,21 +110,6 @@
       {% endif %}
       {% include "partials/pagination.html" %}
     </section>
-
-    {% if theme_config.showHomeCategories and categories and categories|length > 0 %}{% if not pagination or pagination.currentPage <= 1 %}
-    <section aria-labelledby="h-cats">
-      <h2 id="h-cats">按分类浏览</h2>
-      <p>共 {{ categories|length }} 个分类，点进去看该分类下的全部文章。</p>
-      <div class="routes">
-        {% for cat in categories %}
-        <a class="route route--link" href="{{ cat.link }}">
-          <h3><i data-xxd-icon="Folder" data-size="18"></i>{{ cat.name }}<span class="route__count">{{ cat.count }} 篇</span></h3>
-          <p>{% if cat.description %}{{ cat.description }}{% else %}收录 {{ cat.count }} 篇文章。{% endif %}</p>
-        </a>
-        {% endfor %}
-      </div>
-    </section>
-    {% endif %}{% endif %}
   </div>
   {% include "partials/footer.html" %}
 </main>

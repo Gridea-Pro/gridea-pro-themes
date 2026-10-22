@@ -15,7 +15,7 @@
     <h2 class="archive-year__title" id="y-{{ group.Year }}">{{ group.Year }}<span>{{ group.Posts|length }} 篇</span></h2>
     <ol class="roadmap roadmap--dated">
       {% for post in group.Posts %}
-      <li>
+      <li data-post-link="{{ post.link }}" data-post-title="{{ post.title }}" data-post-date="{{ post.dateFormat }}" data-post-cover="{{ post.feature }}" data-post-min="{{ post.stats.minutes }}" data-post-cat="{% for c in post.categories %}{{ c.name }}{% if not loop.last %} / {% endif %}{% endfor %}" data-post-desc="{% if post.description %}{{ post.description|truncatechars:110 }}{% else %}{{ post.content|striptags|truncatechars:110 }}{% endif %}">
         <span class="roadmap__n">{{ post.date|slice:"5:10" }}</span>
         <span>
           <span class="roadmap__title"><a href="{{ post.link }}">{{ post.title }}</a></span>
@@ -35,7 +35,7 @@
 </main>
 <aside class="site-toc" aria-label="本页目录">
   {% if archives and archives|length > 0 %}
-  <h2>本页</h2>
+  <h2 class="site-toc__title">目录</h2>
   <ul>{% for group in archives %}<li><a href="#y-{{ group.Year }}">{{ group.Year }}<span class="site-toc__n">{{ group.Posts|length }}</span></a></li>{% endfor %}</ul>
   {% endif %}
 </aside>

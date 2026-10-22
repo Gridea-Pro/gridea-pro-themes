@@ -28,6 +28,14 @@
 
   {% if post.feature %}<figure class="shot shot--cover"><img src="{{ post.feature }}" alt="{{ post.title }}" onerror="this.parentNode.remove()"></figure>{% endif %}
 
+  {% if theme_config.showToc %}
+  {# 窄屏：目录折叠到正文上方，和右侧目录是同一份数据（site.js 生成后克隆过来） #}
+  <details class="post-toc-inline" data-mobile-toc-wrap hidden>
+    <summary><i data-xxd-icon="ListTree" data-size="16"></i>本文目录</summary>
+    <div class="post-toc-inline__list" data-mobile-toc></div>
+  </details>
+  {% endif %}
+
   <article class="xxd-prose post-body" id="post-body"{% if theme_config.showCopyButton %} data-copy-code{% endif %}>
     {{ post.content|safe }}
   </article>
@@ -40,10 +48,11 @@
   {% include "partials/comments.html" %}
   {% include "partials/footer.html" %}
 </main>
-<aside class="site-toc" aria-label="本页目录"{% if theme_config.showToc %} data-auto-toc{% endif %}>
-  {% if theme_config.showToc and post.toc %}
-  <h2>本页</h2>
-  <div class="site-toc__list" data-toc>{{ post.toc|safe }}</div>
-  {% endif %}
+{% if theme_config.showToc %}
+<aside class="site-toc" aria-label="目录" data-auto-toc>
+  <h2 class="site-toc__title">目录</h2>
+  <div class="site-toc__list" data-toc></div>
+  <a class="site-toc__top" href="#main">回到顶部<i data-xxd-icon="ArrowUp" data-size="12"></i></a>
 </aside>
+{% endif %}
 {% endblock %}

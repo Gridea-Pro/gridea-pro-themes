@@ -16,7 +16,7 @@
 </main>
 <aside class="site-toc" aria-label="其他标签">
   {% if tags and tags|length > 1 %}
-  <h2>其他标签</h2>
+  <h2 class="site-toc__title">其他标签</h2>
   <ul>{% for t in tags %}{% if t.slug != tag.slug %}<li><a href="{{ t.link }}">#{{ t.name }}<span class="site-toc__n">{{ t.count }}</span></a></li>{% endif %}{% endfor %}</ul>
   {% endif %}
 </aside>

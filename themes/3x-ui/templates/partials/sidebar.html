@@ -1,12 +1,17 @@
-{# 左侧目录：导航菜单 / 分类（带序号与篇数）/ 标签（可折叠）。当前页由 site.js 按路径标记 aria-current #}
+{# 左侧目录：菜单（图标 + 名称，行高更宽松）/ 分类（序号 + 篇数）/ 标签（默认展开，# + 篇数）。
+   当前页由 site.js 按路径标记 aria-current。图标名取自 Lucide（见 /xxd/icons.js）。 #}
 <nav class="site-nav" id="site-nav" aria-label="网站目录">
   {% if menus and menus|length > 0 %}
   <section class="site-nav__group">
-    <h2>开始</h2>
-    <ul>
+    <h2 class="site-nav__title">{{ theme_config.navMenuTitle|default:"菜单" }}</h2>
+    <ul class="site-nav__menus">
       {% for menu in menus %}
       <li>
-        <a href="{{ menu.link }}"{% if menu.openType == "External" %} target="_blank" rel="noopener"{% endif %}><span class="site-nav__label">{{ menu.name }}</span>{% if menu.openType == "External" %}<i class="site-nav__ext" data-xxd-icon="ArrowUpRight" data-size="12"></i>{% endif %}</a>
+        <a href="{{ menu.link }}"{% if menu.openType == "External" %} target="_blank" rel="noopener"{% endif %}>
+          <span class="site-nav__icon" aria-hidden="true"><i data-xxd-icon="{% if menu.link == "/" or menu.name == "首页" or menu.name == "Home" %}House{% elif "memo" in menu.link or menu.name == "闪念" %}StickyNote{% elif "archive" in menu.link or menu.name == "归档" %}Archive{% elif "categor" in menu.link or menu.name == "分类" %}FolderTree{% elif "tag" in menu.link or menu.name == "标签" %}Tags{% elif "link" in menu.link or menu.name == "友链" %}Link{% elif "about" in menu.link or menu.name == "关于" %}UserRound{% elif "post" in menu.link or "blog" in menu.link or menu.name == "博客" or menu.name == "文章" %}Newspaper{% else %}Circle{% endif %}" data-size="16"></i></span>
+          <span class="site-nav__label">{{ menu.name }}</span>
+          {% if menu.openType == "External" %}<span class="site-nav__ext" aria-hidden="true"><i data-xxd-icon="ArrowUpRight" data-size="12"></i></span>{% endif %}
+        </a>
         {% if menu.children and menu.children|length > 0 %}
         <ul class="site-nav__sub">
           {% for child in menu.children %}
@@ -22,23 +27,25 @@
 
   {% if categories and categories|length > 0 %}
   <section class="site-nav__group">
-    <h2>分类</h2>
-    <ul>
+    <h2 class="site-nav__title">分类</h2>
+    <ul class="site-nav__cats">
       {% for cat in categories %}
-      <li><a href="{{ cat.link }}"><span class="site-nav__num">{{ loop.index0 }}</span><span class="site-nav__label">{{ cat.name }}</span><span class="site-nav__tag">{{ cat.count }}</span></a></li>
+      <li><a href="{{ cat.link }}"><span class="site-nav__num">{{ loop.index }}</span><span class="site-nav__label">{{ cat.name }}</span><span class="site-nav__tag">{{ cat.count }}</span></a></li>
       {% endfor %}
     </ul>
   </section>
   {% endif %}
 
   {% if tags and tags|length > 0 %}
-  <details class="site-nav__more">
-    <summary>标签（{{ tags|length }}）</summary>
-    <ul>
-      {% for t in tags %}
-      <li><a href="{{ t.link }}"><span class="site-nav__label">{{ t.name }}</span><span class="site-nav__tag">{{ t.count }}</span></a></li>
-      {% endfor %}
-    </ul>
+  <details class="site-nav__group site-nav__tags" open>
+    <summary class="site-nav__title">标签<span class="site-nav__title-n">{{ tags|length }}</span></summary>
+    <div class="site-nav__tagscroll">
+      <ul>
+        {% for t in tags %}
+        <li><a href="{{ t.link }}"><span class="site-nav__hash" aria-hidden="true">#</span><span class="site-nav__label">{{ t.name }}</span><span class="site-nav__tag">{{ t.count }}</span></a></li>
+        {% endfor %}
+      </ul>
+    </div>
   </details>
   {% endif %}
 </nav>

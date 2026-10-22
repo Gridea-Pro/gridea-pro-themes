@@ -19,7 +19,7 @@
 </main>
 <aside class="site-toc" aria-label="其他分类">
   {% if categories and categories|length > 1 %}
-  <h2>其他分类</h2>
+  <h2 class="site-toc__title">其他分类</h2>
   <ul>{% for cat in categories %}{% if cat.slug != category.slug %}<li><a href="{{ cat.link }}">{{ cat.name }}<span class="site-toc__n">{{ cat.count }}</span></a></li>{% endif %}{% endfor %}</ul>
   {% endif %}
 </aside>

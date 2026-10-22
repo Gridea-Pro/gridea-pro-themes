@@ -1,10 +1,10 @@
 {
   "name": "3x-ui",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "engine": "jinja2",
   "templateEngine": "jinja2",
   "author": "Eric (port) / 小小东 xiaoxiaodong.ai (xxd design system)",
-  "description": "3x-ui — 文档站气质的极简博客主题。视觉复刻自 3x-ui / Xray 部署教程站「小小东 VPS 教程」（vps.xiaoxiaodong.ai，MIT），沿用其 xxd 设计系统：暖白纸 / 暖黑底、墨色强调、默认直角、顶栏 + 左侧目录 + 正文 + 右侧本页目录三栏布局、⌘K 命令面板搜索。补全 Gridea Pro 全套页面（首页 / 文章列表 / 文章 / 归档 / 闪念热力图 / 标签 / 分类 / 友链 / 关于 / 404）、上下篇与分页、七种评论系统统一样式，以及浅色 / 深色 / 跟随系统三态切换。",
+  "description": "3x-ui — 文档站气质的极简博客主题。视觉复刻自 3x-ui / Xray 部署教程站「小小东 VPS 教程」（vps.xiaoxiaodong.ai，MIT），沿用其 xxd 设计系统：暖白纸 / 暖黑底、墨色强调、默认直角、顶栏 + 左侧目录 + 正文 + 右侧目录三栏居中布局、⌘K 命令面板搜索（命中关键词高亮）。补全 Gridea Pro 全套页面（首页 / 文章列表 / 文章 / 归档 / 闪念热力图 / 标签 / 分类 / 友链 / 关于 / 404）、可配置的首页推荐阅读卡片、上下篇与分页、七种评论系统统一样式，以及浅色 / 深色 / 跟随系统三态切换。",
   "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
   "preview": "/media/preview.png",
   "customConfig": [
@@ -63,6 +63,14 @@
       "type": "textarea",
       "value": "",
       "note": "支持 HTML。留空则使用 Gridea Pro「网站设置 → 页脚信息」；两者都为空时显示默认版权行"
+    },
+    {
+      "name": "navMenuTitle",
+      "label": "左侧菜单标题",
+      "group": "基础",
+      "type": "input",
+      "value": "菜单",
+      "note": "左侧目录第一个分组的标题（原来的「开始」）"
     },
     {
       "name": "xuiAppearance",
@@ -162,46 +170,6 @@
       "note": "次按钮跳转地址"
     },
     {
-      "name": "showFlow",
-      "label": "显示「一张图看懂」",
-      "group": "首页",
-      "type": "toggle",
-      "value": true,
-      "note": "原站招牌的三格流程图"
-    },
-    {
-      "name": "flowTitle",
-      "label": "流程图标题",
-      "group": "首页",
-      "type": "input",
-      "value": "一张图看懂",
-      "note": ""
-    },
-    {
-      "name": "flowLead",
-      "label": "流程图说明",
-      "group": "首页",
-      "type": "input",
-      "value": "这个站点只做三件事：记下来、整理好、分享出去。",
-      "note": ""
-    },
-    {
-      "name": "flowItems",
-      "label": "流程图三格",
-      "group": "首页",
-      "type": "textarea",
-      "value": "PencilLine|记下来|把想法、笔记和踩过的坑写成文章或闪念。|整理\nFolders|整理好|按分类和标签归档，⌘K 一键搜到。|发布\nGlobe|分享出去|生成静态页面，部署到任意服务器，读者直接访问。",
-      "note": "每行一格，格式：图标|标题|描述|通往下一格的箭头文字。中间那一格会以灰底高亮。图标名见 lucide.dev（如 Server、Laptop、Globe、BookOpen）"
-    },
-    {
-      "name": "flowNote",
-      "label": "流程图脚注",
-      "group": "首页",
-      "type": "input",
-      "value": "",
-      "note": "流程图下方的一行小字，留空不显示"
-    },
-    {
       "name": "latestTitle",
       "label": "文章列表标题",
       "group": "首页",
@@ -218,12 +186,62 @@
       "note": ""
     },
     {
-      "name": "showHomeCategories",
-      "label": "首页显示分类卡片",
+      "name": "showRecommend",
+      "label": "显示「推荐阅读」",
       "group": "首页",
       "type": "toggle",
       "value": true,
-      "note": "对应原站「两种做法，选一种」的双列卡片"
+      "note": "首页大标题下方、最新文章上方的推荐阅读卡片；关掉则整块不显示"
+    },
+    {
+      "name": "recommendTitle",
+      "label": "推荐阅读标题",
+      "group": "首页",
+      "type": "input",
+      "value": "推荐阅读",
+      "note": ""
+    },
+    {
+      "name": "recommendLead",
+      "label": "推荐阅读说明",
+      "group": "首页",
+      "type": "input",
+      "value": "挑几篇还值得再读一次的旧文。",
+      "note": "留空不显示"
+    },
+    {
+      "name": "recommendCount",
+      "label": "推荐阅读数量",
+      "group": "首页",
+      "type": "select",
+      "value": "3",
+      "options": [
+        {
+          "label": "3 篇（一行 3 个）",
+          "value": "3"
+        },
+        {
+          "label": "4 篇（一行 4 个）",
+          "value": "4"
+        },
+        {
+          "label": "6 篇（两行，每行 3 个）",
+          "value": "6"
+        },
+        {
+          "label": "8 篇（两行，每行 4 个）",
+          "value": "8"
+        }
+      ],
+      "note": "决定卡片数量与每行个数"
+    },
+    {
+      "name": "recommendItems",
+      "label": "推荐阅读文章",
+      "group": "首页",
+      "type": "textarea",
+      "value": "",
+      "note": "每行一篇，格式：文章标题|文章链接 （可选的第三段写封面图地址）。例如：\n写在三十岁之前|/post/before-30/\n关于写作的十件事|/post/ten-things-about-writing/|/media/images/cover.jpg\n摘要、发布时间、分类、阅读时长会自动从对应文章读取；链接留空则自动使用最新文章。"
     },
     {
       "name": "showToc",
@@ -231,7 +249,7 @@
       "group": "文章",
       "type": "toggle",
       "value": true,
-      "note": "宽屏（≥1180px）时在正文右侧显示「本页」目录，并随滚动高亮"
+      "note": "宽屏（≥1181px）时在正文右侧显示「目录」，并随滚动高亮；窄屏时目录折叠到正文上方"
     },
     {
       "name": "showReadingProgress",

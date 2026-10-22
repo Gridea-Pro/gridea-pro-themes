@@ -22,7 +22,7 @@
 </main>
 <aside class="site-toc" aria-label="按分类">
   {% if categories and categories|length > 0 %}
-  <h2>也可以按分类看</h2>
+  <h2 class="site-toc__title">按分类看</h2>
   <ul>{% for cat in categories %}<li><a href="{{ cat.link }}">{{ cat.name }}<span class="site-toc__n">{{ cat.count }}</span></a></li>{% endfor %}</ul>
   {% endif %}
 </aside>
