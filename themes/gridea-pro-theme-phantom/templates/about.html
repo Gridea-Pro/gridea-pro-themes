@@ -1,0 +1,19 @@
+{# about.html — 关于页（由 fileName 为 about 的页面渲染，正文取 post.content） #}
+{% extends "base.html" %}
+{% block title %}关于 | {{ config.siteName }}{% endblock %}
+{% block body %}
+<div id="main">
+  <div class="inner">
+    <div class="post-pagetitle">
+      <h1>{{ config.siteName }}</h1>
+    </div>
+    <div class="post-content-wrapper">
+      <div class="post-content">{% if post %}{{ post.content|safe }}{% endif %}</div>
+    </div>
+  </div>
+
+  <div class="post-comment inner">
+    {% include "partials/comments.html" %}
+  </div>
+</div>
+{% endblock %}

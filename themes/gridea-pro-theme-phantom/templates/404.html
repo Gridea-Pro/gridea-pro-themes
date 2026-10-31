@@ -1,0 +1,16 @@
+{# 404.html — 404 页面 #}
+{% extends "base.html" %}
+{% block title %}404 | {{ config.siteName }}{% endblock %}
+{% block body %}
+<div id="main">
+  <div class="inner">
+    <div class="post-pagetitle">
+      <h1>404</h1>
+    </div>
+    <div class="post-content">
+      <p>页面走丢了，要不回首页看看？</p>
+      <p><a href="/">返回首页</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}

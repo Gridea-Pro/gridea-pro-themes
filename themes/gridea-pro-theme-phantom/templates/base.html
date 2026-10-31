@@ -1,0 +1,25 @@
+{# base.html — Phantom Pro 基础布局（Jinja2 / Pongo2）
+   页面通过 {% extends "base.html" %} 继承，覆写 title / head / wrapper_id / body / scripts 块。
+   磁贴式页面（首页 / 相册 / 日常）把 wrapper_id 覆写为 mainpage-wrapper 以获得更宽的内容区。 #}
+<!DOCTYPE html>
+<html lang="{{ config.language|default:'zh-CN' }}">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>{% block title %}{{ config.siteName }}{% endblock %}</title>
+  {% include "partials/head.html" %}
+  {% block head %}{% endblock %}
+</head>
+<body class="is-preload">
+  {% block wrapper_open %}<div id="wrapper">{% endblock %}
+    {% include "partials/header.html" %}
+    {% block body %}{% endblock %}
+    {% include "partials/footer.html" %}
+  {% block wrapper_close %}</div>{% endblock %}
+
+  <button id="BackToTop" title="回到顶部">TOP</button>
+
+  {% include "partials/scripts.html" %}
+  {% block scripts %}{% endblock %}
+</body>
+</html>

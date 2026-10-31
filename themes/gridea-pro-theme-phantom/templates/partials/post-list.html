@@ -1,0 +1,28 @@
+{# partials/post-list.html — 文章磁贴列表
+   1) 无封面时渲染「自动封面」占位（柔和渐变 + 纹理 + 图标，纯 CSS），保证每张卡片都有统一比例的封面；
+   2) 标题固定 2 行、摘要固定 3 行（CSS line-clamp），卡片高度整齐、悬停不抖动。 #}
+{% if posts and posts|length > 0 %}
+{% for post in posts %}
+<article class="style1">
+  {% if post.feature %}
+  <span class="image">
+    <a href="{{ post.link }}"><img src="{{ post.feature }}" alt="{{ post.title }}" loading="lazy" /></a>
+  </span>
+  {% elif theme_config.showPlaceholderCover %}
+  <span class="image">
+    <a href="{{ post.link }}"><span class="cover-placeholder" role="img" aria-label="{{ post.title }}"></span></a>
+  </span>
+  {% endif %}
+  <div class="post-title">
+    <a href="{{ post.link }}"><h2>{{ post.title }}</h2></a>
+  </div>
+  <div class="post-info">
+    <time class="post-time" datetime="{{ post.date }}">{{ post.dateFormat }}</time>
+    {% for tag in post.tags %}<a href="{{ tag.link }}" class="post-tag"># {{ tag.name }}</a>{% endfor %}
+  </div>
+  <div class="post-abstract content">{% if post.abstract %}{{ post.abstract|striptags }}{% else %}{{ post.description }}{% endif %}</div>
+</article>
+{% endfor %}
+{% else %}
+<div class="post-abstract">暂无文章</div>
+{% endif %}

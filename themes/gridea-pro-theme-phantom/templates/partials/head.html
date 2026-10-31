@@ -1,0 +1,12 @@
+{# partials/head.html — meta / 样式引用
+   Font Awesome 与霞鹜文楷字体以 <link> 引入，不放进 main.less：
+   Gridea Pro 的 LESS 编译器会把 @import 当成 .less 内联，引用外部 .css 会编译失败。 #}
+<meta name="description" content="{{ config.siteDescription|default:'' }}" />
+<meta name="referrer" content="always" />
+<link rel="shortcut icon" href="/favicon.ico?v={{ now|date:'20060102' }}" />
+<link rel="stylesheet" href="/media/css/fontawesome-all.min.css" />
+<link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css" />
+<link rel="stylesheet" href="/styles/main.css" />
+{% if theme_config.codeHighlight %}<link rel="stylesheet" href="/media/css/prism.css" />{% endif %}
+<noscript><link rel="stylesheet" href="/media/css/noscript.css" /></noscript>
+{% if theme_config.customCss %}<style>{{ theme_config.customCss|safe }}</style>{% endif %}

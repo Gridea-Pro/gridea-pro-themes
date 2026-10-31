@@ -1,0 +1,21 @@
+{# partials/header.html — 页头 Logo + 顶部导航
+   菜单直接平铺在页头，不再使用右侧滑出菜单；窄屏自动换行。 #}
+<header id="header">
+  <div class="inner">
+    <a href="/" class="logo">
+      <span class="symbol"><img src="{{ config.avatar|default:'/images/avatar.png' }}" alt="{{ config.siteName }}" /></span>
+      <div class="site-title">{{ config.siteName }}</div>
+    </a>
+    <nav class="site-nav">
+      <ul>
+        {% for menu in menus %}
+        {% if menu.openType == "External" %}
+        <li><a href="{{ menu.link }}" target="_blank" rel="noopener">{{ menu.name }}</a></li>
+        {% else %}
+        <li><a href="{{ menu.link }}">{{ menu.name }}</a></li>
+        {% endif %}
+        {% endfor %}
+      </ul>
+    </nav>
+  </div>
+</header>
