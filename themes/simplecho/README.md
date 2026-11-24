@@ -117,7 +117,7 @@ themes/simplecho/
 
 ```
 Original: Simplecho (https://github.com/yanranxiaoxi/Simplecho) © XiaoXi
-Port:     Simplecho · Gridea Pro © Eric, 2026
+Port:     Simplecho · Gridea Pro © Eliauk, 2026
 License:  GPL-3.0
 ```
 

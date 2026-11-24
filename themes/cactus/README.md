@@ -10,7 +10,7 @@
 
 - **主题名称**：Cactus
 - **模板引擎**：Jinja2 (Pongo2)
-- **作者**：Seevil（Typecho 原作者）/ probberechts（Hexo 原作者）/ Gridea Pro 社区（Jinja2 移植）
+- **作者**：Eliauk（Jinja2 移植）；原作者 Seevil（Typecho）、probberechts（Hexo）
 - **许可证**：MIT（见 `LICENSE`）
 
 ## 特性
@@ -57,4 +57,4 @@
 
 - [probberechts/hexo-theme-cactus](https://github.com/probberechts/hexo-theme-cactus) — Hexo 原版作者
 - [Seevil/cactus](https://github.com/Seevil/cactus) — Typecho 移植作者
-- Gridea Pro 社区贡献者
+- Jinja2 移植：Eliauk

@@ -1,6 +1,6 @@
 # Jasmine — Gridea Pro 主题
 
-> 100% 视觉复刻自 [liaocp666/Jasmine](https://github.com/liaocp666/Jasmine)（Typecho 主题，作者 Kent Liao），由 Gridea Pro 主题团队移植到 Jinja2 模板引擎。原作官网 <https://www.sanji.one>。
+> 100% 视觉复刻自 [liaocp666/Jasmine](https://github.com/liaocp666/Jasmine)（Typecho 主题，作者 Kent Liao），由 Eliauk 移植到 Jinja2 模板引擎。原作官网 <https://www.sanji.one>。
 
 Bootstrap 5 + Tabler Icons + MiSans VF + 三栏极简布局，蓝色主色 + 链接下划线高亮条是它的标志性视觉。
 

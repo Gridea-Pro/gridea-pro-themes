@@ -4,6 +4,7 @@
   "engine": "jinja2",
   "templateEngine": "jinja2",
   "author": "Eliauk",
+  "credits": "视觉灵感：nuoea.com",
   "description": "Nacre — 温柔、舒适、静谧的 Gridea Pro 主题。默认深色底配柔和暖光，如珍珠母质在暗处静静生辉。支持 Swiper 头图、闪念 / 动态 / 相册 / 好物 / 最近 多种内容面板。",
   "repository": "",
   "customConfig": [

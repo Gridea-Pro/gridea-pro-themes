@@ -5,7 +5,8 @@
   "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
   "engine": "jinja2",
   "templateEngine": "jinja2",
-  "author": "willow-god / Liushen (Ported by Gridea Pro Theme Team)",
+  "author": "Eliauk",
+  "credits": "原作：willow-god（Hexo Liushen）",
   "license": "Apache-2.0",
   "preview": "/media/preview.png",
   "customConfig": [

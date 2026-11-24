@@ -5,7 +5,8 @@
   "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
   "engine": "jinja2",
   "templateEngine": "jinja2",
-  "author": "Kent Liao (Origin) / Gridea Pro Theme Team (Port)",
+  "author": "Eliauk",
+  "credits": "原作：Kent Liao（Typecho Jasmine）",
   "license": "GPL-3.0",
   "preview": "/media/preview.png",
   "customConfig": [

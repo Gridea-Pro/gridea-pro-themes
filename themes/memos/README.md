@@ -106,7 +106,7 @@
 ## 致谢
 
 主题设计 & 灵感：[jkjoy](https://github.com/jkjoy)（原 Typecho 主题 Once / 绘主题，[源仓库](https://github.com/jkjoy/Typecho-Theme-Once)）。
-Gridea Pro Jinja2 移植由 Eric 完成，欢迎 PR / Issue。
+Gridea Pro Jinja2 移植由 Eliauk 完成，欢迎 PR / Issue。
 
 ## 授权
 

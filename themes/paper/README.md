@@ -25,7 +25,7 @@
 | 目录名 | `paper` |
 | 版本 | `1.0.0` |
 | 原作者 | [nanxiaobei](https://github.com/nanxiaobei) |
-| Jinja2 移植 | Gridea Pro 社区 |
+| Jinja2 移植 | Eliauk |
 | 模板引擎 | `jinja2` (Pongo2) |
 | CSS 框架 | Tailwind CSS 4（已编译） |
 | 原版授权 | [MIT](https://github.com/nanxiaobei/hugo-paper/blob/main/LICENSE) |

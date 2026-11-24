@@ -1,7 +1,8 @@
 {
   "name": "Hello Friend",
   "version": "1.0.0",
-  "author": "Djordje Atlialp (原版), Gridea Pro 社区（Jinja2 移植）",
+  "author": "Eliauk",
+  "credits": "原作：Djordje Atlialp（Hugo hello-friend-ng）",
   "description": "Minimal, clean, bilingual-ready personal blog theme. Jinja2 port of the Hugo hello-friend-ng theme by @rhazdon. Dark/light toggle, Inter font, Prism code highlighting.",
   "engine": "jinja2",
   "templateEngine": "jinja2",

@@ -1,7 +1,8 @@
 {
   "name": "memos",
   "version": "1.0.0",
-  "author": "Eric",
+  "author": "Eliauk",
+  "credits": "原作：jkjoy（Typecho Once）",
   "description": "双栏博客主题 Once 的 Jinja2 移植：sticky 顶栏 + 卡片列表 + 多模块侧栏 + 友链横条 + 闪念时间线（含热力图）。",
   "templateEngine": "jinja2",
   "engine": "jinja2",

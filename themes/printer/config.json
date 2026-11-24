@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "engine": "jinja2",
   "templateEngine": "jinja2",
-  "author": "原 Typecho 主题：zhinan (https://zhinan.blog) · Gridea Pro Jinja2 移植：Eric",
+  "author": "Eliauk",
+  "credits": "原作：zhinan（Typecho Printer）",
   "description": "仿打印机面板 / 网格纸 / 宋体衬线的复古博客主题。单栏极简、深浅自适应、内置阅读进度 / 搜索 / 估读时长 / 回到顶部。从 Ouxxxxxjoe/Printer-Typecho 移植。",
   "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
   "customConfig": [

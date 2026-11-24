@@ -67,7 +67,7 @@ Printer 是为 [Gridea Pro](https://github.com/Gridea-Pro/gridea-pro) 移植的 
 
 ## 致谢
 
-设计 & 灵感：[zhinan](https://zhinan.blog)（[Printer-Typecho](https://github.com/Ouxxxxxjoe/Printer-Typecho)），原作品又复刻自 [NOOC](https://nooc.me/)。Gridea Pro Jinja2 移植由 Eric 完成。
+设计 & 灵感：[zhinan](https://zhinan.blog)（[Printer-Typecho](https://github.com/Ouxxxxxjoe/Printer-Typecho)），原作品又复刻自 [NOOC](https://nooc.me/)。Gridea Pro Jinja2 移植由 Eliauk 完成。
 
 ## 授权
 
