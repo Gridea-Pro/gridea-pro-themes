@@ -10,9 +10,7 @@
 {% block banner %}{% endblock %}
 
 {% block content %}
-{% set crumbs = [] %}
-{% if post.categories and post.categories|length > 0 %}{% set firstCat = post.categories|first %}{% set crumbs = [{"label": firstCat.name, "link": firstCat.link}, {"label": post.title}] %}{% else %}{% set crumbs = [{"label": post.title}] %}{% endif %}
-{% set breadcrumb_items = crumbs %}
+{% if post.categories and post.categories|length > 0 %}{% set firstCat = post.categories|first %}{% set bc1_label = firstCat.name %}{% set bc1_link = firstCat.link %}{% set bc2_label = post.title %}{% else %}{% set bc1_label = post.title %}{% endif %}
 {% include "partials/breadcrumbs.html" %}
 
 <main class="plain width-half single">

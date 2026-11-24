@@ -7,7 +7,7 @@
 {% block banner %}{% endblock %}
 
 {% block content %}
-{% set breadcrumb_items = [{"label": "标签", "link": "/tags/"}, {"label": tag.name}] %}
+{% set bc1_label = "标签" %}{% set bc1_link = "/tags/" %}{% set bc2_label = tag.name %}
 {% include "partials/breadcrumbs.html" %}
 
 <main id="main" class="width-half index" role="main">

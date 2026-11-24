@@ -1,13 +1,9 @@
 {% if theme_config.showBreadcrumbs %}
 <aside id="aside" class="center">
 <div class="nowrap">
-<a href="{{ config.domain }}/">Home</a> &raquo;
-{% if breadcrumb_items %}
-{% for item in breadcrumb_items %}
-{% if item.link %}<a href="{{ item.link }}">{{ item.label }}</a>{% else %}{{ item.label }}{% endif %}
-{% if not loop.last %} &raquo;{% endif %}
-{% endfor %}
-{% endif %}
+<a href="{{ config.domain }}/">Home</a>{% if bc1_label %} &raquo;
+{% if bc1_link %}<a href="{{ bc1_link }}">{{ bc1_label }}</a>{% else %}{{ bc1_label }}{% endif %}{% endif %}{% if bc2_label %} &raquo;
+{% if bc2_link %}<a href="{{ bc2_link }}">{{ bc2_label }}</a>{% else %}{{ bc2_label }}{% endif %}{% endif %}
 </div>
 </aside>
 {% endif %}

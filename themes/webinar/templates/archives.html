@@ -17,7 +17,7 @@
     {% set last_year = "" %}
 
     {% for post in posts %}
-      {% set p_year = post.date[0:4] %}
+      {% set p_year = post.date|slice:":4" %}
 
       {% if p_year != last_year %}
         {% if loop.index > 1 %}</div>{% endif %}
@@ -27,7 +27,7 @@
       {% endif %}
 
       <div class="archive-post">
-        <span class="archive-post__date">{{ post.date[0:10] }}</span>
+        <span class="archive-post__date">{{ post.date|slice:":10" }}</span>
         <a href="{{ post.link }}" class="archive-post__title">{{ post.title }}</a>
       </div>
 

@@ -8,9 +8,7 @@
 {% block og_extra %}{% if post.feature %}<meta property="og:image" content="{{ post.feature }}">{% endif %}<meta property="article:published_time" content="{{ post.dateFormat }}">{% if post.tagsString %}<meta name="keywords" content="{{ post.tagsString }}">{% endif %}{% endblock %}
 
 {% block content %}
-{% set crumbs = [] %}
-{% if post.categories and post.categories|length > 0 %}{% set firstCat = post.categories|first %}{% set crumbs = [{"label": firstCat.name, "link": firstCat.link}, {"label": post.title}] %}{% else %}{% set crumbs = [{"label": post.title}] %}{% endif %}
-{% set breadcrumb_items = crumbs %}
+{% if post.categories and post.categories|length > 0 %}{% set firstCat = post.categories|first %}{% set bc1_label = firstCat.name %}{% set bc1_link = firstCat.link %}{% set bc2_label = post.title %}{% else %}{% set bc1_label = post.title %}{% endif %}
 {% include "partials/breadcrumbs.html" %}
 
 <article class="post post-detail">
