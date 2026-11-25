@@ -3,7 +3,7 @@
 
 {# 最新文章 — 用 search-index 当作数据源 #}
 {% set widgets = theme_config.sidebarWidgets %}
-{% if not widgets %}{% set widgets = ["recent","categories","tags","archives","links","rss"] %}{% endif %}
+{% if not widgets %}{% set widgets = "recent,categories,tags,archives,links,rss" %}{% endif %}
 
 {% if "recent" in widgets %}
 <section class="widget" data-widget="recent">

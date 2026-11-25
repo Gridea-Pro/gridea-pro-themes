@@ -23,7 +23,7 @@
 | 目录名 | `hello-friend` |
 | 版本 | `1.0.0` |
 | 原作者 | [Djordje Atlialp (@rhazdon)](https://github.com/rhazdon) |
-| Jinja2 移植 | Gridea Pro 社区 |
+| Jinja2 移植 | Eliauk |
 | 模板引擎 | `jinja2` (Pongo2) |
 | 原版授权 | MIT（[LICENSE.md](https://github.com/rhazdon/hugo-theme-hello-friend-ng/blob/master/LICENSE.md)） |
 

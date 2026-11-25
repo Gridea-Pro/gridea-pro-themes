@@ -1,7 +1,8 @@
 {
   "name": "Paper",
   "version": "1.0.0",
-  "author": "nanxiaobei (原版), Gridea Pro 社区（Jinja2 移植）",
+  "author": "Eliauk",
+  "credits": "原作：nanxiaobei（Hugo Paper）",
   "description": "A simple, clean, flexible blog theme. Jinja2 port of the Hugo Paper theme by @nanxiaobei. Light/dark mode, Tailwind CSS, typography-focused.",
   "engine": "jinja2",
   "templateEngine": "jinja2",

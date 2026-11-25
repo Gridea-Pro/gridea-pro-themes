@@ -95,7 +95,7 @@ https://www.tmetu.cn/api/img/720/?token=<post>   （文章封面 720px 宽）
 ## 致敬
 
 - 原主题 [Xc-Three](https://www.tmetu.cn) 由 [Miss](https://www.tmetu.cn/me.html) 设计与开发，Typecho 1.3.0 驱动
-- 移植到 Gridea Pro / Jinja2 由本仓库贡献者完成
+- 移植到 Gridea Pro / Jinja2 由 Eliauk 完成
 - 双重许可遵循各自原始声明（详见 LICENSE）
 
 ## License

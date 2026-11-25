@@ -6,7 +6,7 @@
 {% block banner %}{% endblock %}
 
 {% block content %}
-{% set breadcrumb_items = [{"label": (theme_config.memosTitle if theme_config.memosTitle else "微博碎碎念")}] %}
+{% if theme_config.memosTitle %}{% set bc1_label = theme_config.memosTitle %}{% else %}{% set bc1_label = "微博碎碎念" %}{% endif %}
 {% include "partials/breadcrumbs.html" %}
 
 <main class="plain width-half single">

@@ -96,4 +96,4 @@
 MIT，沿用原作 License。详见 [LICENSE](./LICENSE)。
 
 - Original Copyright (c) Meayair（Typecho-Theme-MeaWord）
-- Port Copyright (c) Eric（Gridea Pro 移植版）
+- Port Copyright (c) Eliauk（Gridea Pro 移植版）

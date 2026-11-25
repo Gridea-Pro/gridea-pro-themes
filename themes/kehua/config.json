@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "engine": "jinja2",
   "templateEngine": "jinja2",
-  "author": "kehua / 刻画 (https://kehua.me) · Gridea Pro 移植：Eric",
+  "author": "Eliauk",
+  "credits": "设计灵感：刻画 kehua.me",
   "description": "刻画 · 留白主题 — 来自 kehuame/whitespace 的 Gridea Pro Jinja2 移植版。单栏极简、PC + 移动响应、深浅模式、内置搜索 / 闪念热力图 / 评论。",
   "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
   "customConfig": [

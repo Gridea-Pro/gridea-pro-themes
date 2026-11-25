@@ -5,7 +5,7 @@
 {% block meta_description %}标签 {{ tag.name }} 下共有 {{ tag.count }} 篇文章 - {{ config.siteName }}{% endblock %}
 
 {% block content %}
-{% set breadcrumb_items = [{"label": "标签", "link": "/tags/"}, {"label": tag.name}] %}
+{% set bc1_label = "标签" %}{% set bc1_link = "/tags/" %}{% set bc2_label = tag.name %}
 {% include "partials/breadcrumbs.html" %}
 
 <h1 class="taxonomy-title">标签：<em>{{ tag.name }}</em></h1>

@@ -87,7 +87,7 @@
 GPL-3.0（沿用上游 Writecho 授权）。
 
 - 原版 Writecho © 2021 SkyWT — https://github.com/Skywt2003/Writecho
-- 本 Gridea Pro 移植版 © 2026 Eric
+- 本 Gridea Pro 移植版 © 2026 Eliauk
 
 ## 鸣谢
 

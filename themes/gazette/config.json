@@ -2,6 +2,7 @@
   "name": "Gazette",
   "version": "1.0.0",
   "author": "Eliauk",
+  "credits": "设计灵感：nanxiaobei（Hugo Paper）",
   "description": "Editorial 编辑感博客主题。衬线体全局 + 暖奶油底 + 桑红重点 + 等宽数字 + 发丝分割线 + 开篇 drop cap。手写 CSS，无 Tailwind，无外部字体依赖，支持深浅模式。",
   "engine": "jinja2",
   "templateEngine": "jinja2",

@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2026 Eric (Gridea Pro Muse theme port)
+Copyright (c) 2026 Eliauk (Gridea Pro Muse theme port)
 Visual & structural inspiration from the Typecho theme "Xc-Three" by Miss
 (demo: https://www.tmetu.cn). The original Xc-Three theme is closed-source;
 this port is an independent re-implementation in Jinja2 / Pongo2 + vanilla JS

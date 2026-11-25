@@ -16,10 +16,10 @@
 | <a href="./themes/amore/"><img src="./themes/amore/assets/media/preview.png" width="240" alt="Amore 预览"></a> | [**amore**](./themes/amore/) | EJS | 极简博客主题，聚焦阅读体验，支持明/暗双主题、阅读进度、闪念热力图 |
 | <a href="./themes/amore-jinja2/"><img src="./themes/amore-jinja2/assets/media/preview.png" width="240" alt="Amore Jinja2 预览"></a> | [**amore-jinja2**](./themes/amore-jinja2/) | Jinja2 (Pongo2) | Amore 主题的 Jinja2 版，特性同 amore |
 | <a href="./themes/amore-plus/"><img src="./themes/amore-plus/assets/media/preview.png" width="240" alt="amore-plus 预览"></a> | [**amore-plus**](./themes/amore-plus/) | Jinja2 (Pongo2) | 极简博客主题，文章目录自动跟随、顶部阅读进度细线、Giscus / Gitalk / Valine / Waline / Disqus 五套评论适配 |
-| — | [**fly**](./themes/fly/) | EJS | 现代简洁的博客主题，响应式布局（EryouHao） |
+| <a href="./themes/fly/"><img src="./themes/fly/assets/media/preview.png" width="240" alt="Fly 预览"></a> | [**fly**](./themes/fly/) | EJS | 现代简洁的博客主题，响应式布局（原作 EryouHao） |
 | <a href="./themes/inotes/"><img src="./themes/inotes/assets/media/preview.png" width="240" alt="iNotes 预览"></a> | [**inotes**](./themes/inotes/) | Go Templates | Notes 主题升级版（Eliauk） |
-| — | [**notes**](./themes/notes/) | EJS | 经典笔记风格主题，Gridea 社区老牌主题，简洁易读 |
-| — | [**simple**](./themes/simple/) | EJS | 极简风格主题，专注阅读体验（EryouHao） |
+| <a href="./themes/notes/"><img src="./themes/notes/assets/media/preview.png" width="240" alt="Notes 预览"></a> | [**notes**](./themes/notes/) | EJS | 经典笔记风格主题，Gridea 社区老牌主题，简洁易读（原作 EryouHao） |
+| <a href="./themes/simple/"><img src="./themes/simple/assets/media/preview.png" width="240" alt="Simple 预览"></a> | [**simple**](./themes/simple/) | EJS | 极简风格主题，专注阅读体验（原作 EryouHao） |
 | <a href="./themes/hello-friend/"><img src="./themes/hello-friend/assets/media/preview.png" width="240" alt="Hello Friend 预览"></a> | [**hello-friend**](./themes/hello-friend/) | Jinja2 (Pongo2) | Hugo `hello-friend-ng` 主题的 Jinja2 移植，Inter 字体 + Prism 高亮 + 深浅切换 |
 | <a href="./themes/paper/"><img src="./themes/paper/assets/media/preview.png" width="240" alt="Paper 预览"></a> | [**paper**](./themes/paper/) | Jinja2 (Pongo2) | Hugo `Paper` 主题的 Jinja2 移植，Tailwind CSS、排版优先、深浅模式 |
 | <a href="./themes/bitcron-pro/"><img src="./themes/bitcron-pro/assets/media/preview.png" width="240" alt="bitcron-pro 预览"></a> | [**bitcron-pro**](./themes/bitcron-pro/) | Jinja2 (Pongo2) | Bitcron 风格博客主题，支持博客/闪念/友链页面 |

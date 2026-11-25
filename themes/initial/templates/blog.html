@@ -4,7 +4,7 @@
 {% block og_title %}博客 - {{ config.siteName }}{% endblock %}
 
 {% block content %}
-{% set breadcrumb_items = [{"label": "博客"}] %}
+{% set bc1_label = "博客" %}
 {% include "partials/breadcrumbs.html" %}
 
 {% if posts and posts|length > 0 %}

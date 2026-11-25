@@ -1,7 +1,8 @@
 {
   "name": "webinar",
   "version": "1.0.0",
-  "author": "Gridea Pro",
+  "author": "Eliauk",
+  "credits": "设计灵感：Sagittarius",
   "description": "A Weibo-style microblog theme inspired by Sagittarius. Features avatar cards, category tabs, sidebar stats, and a social-media-like post stream.",
   "engine": "jinja2",
   "templateEngine": "jinja2",

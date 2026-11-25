@@ -100,4 +100,4 @@
 MIT，沿用原作 License。详见 [LICENSE](./LICENSE)。
 
 - Original Copyright (c) fluid-dev (Hexo Theme Fluid)
-- Port Copyright (c) Eric (Gridea Pro Jinja2 port)
+- Port Copyright (c) Eliauk (Gridea Pro Jinja2 port)

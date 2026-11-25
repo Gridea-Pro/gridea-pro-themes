@@ -75,7 +75,7 @@
 
 ## 关于致谢
 
-设计灵感来自 [刻画 · kehua.me](https://kehua.me)。Gridea Pro Jinja2 移植由 Eric 完成，欢迎 PR / Issue。
+设计灵感来自 [刻画 · kehua.me](https://kehua.me)。Gridea Pro Jinja2 移植由 Eliauk 完成，欢迎 PR / Issue。
 
 ## 授权
 

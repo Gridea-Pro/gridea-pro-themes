@@ -10,7 +10,8 @@
 |---|---|
 | 目录名 | `simple` |
 | 版本 | `1.1.0` |
-| 作者 | EryouHao |
+| 作者 | Eliauk |
+| 原作者 | EryouHao（Gridea 原版主题） |
 | 模板引擎 | `ejs` |
 
 ## 自定义参数

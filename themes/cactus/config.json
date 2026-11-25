@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "engine": "jinja2",
   "templateEngine": "jinja2",
-  "author": "Seevil (Typecho 原作者), probberechts (Hexo 原作者), Gridea Pro 社区（Jinja2 移植）",
+  "author": "Eliauk",
+  "credits": "原作：Seevil（Typecho）、probberechts（Hexo）",
   "description": "🌵 优雅简洁的暗色 Hacker 风主题。等宽字体、仙人掌绿点缀、# 前缀标题，复刻自 Seevil/cactus（Typecho），追溯至 probberechts/hexo-theme-cactus。新增亮色模式与 Gridea Pro 全特性支持。",
   "repository": "https://github.com/Gridea-Pro/gridea-pro-themes",
   "customConfig": [
